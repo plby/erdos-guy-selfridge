@@ -26,6 +26,7 @@
 # 10 10 10 10
 # 11 13 17 19
 
+import gzip
 import sys
 
 if len(sys.argv) != 2:
@@ -33,8 +34,12 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 filename = sys.argv[1]
-with open(filename, "r") as f:
-    integers = [int(x) for x in f.read().split()]
+if filename.lower().endswith(".gz"):
+    with gzip.open(filename, "rt") as f:
+        integers = [int(x) for x in f.read().split()]
+else:
+    with open(filename, "r") as f:
+        integers = [int(x) for x in f.read().split()]
 
 N, F, M, *factors = integers
 

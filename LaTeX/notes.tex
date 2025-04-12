@@ -499,15 +499,17 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
   \end{equation}
   \item[(ii)] (Large surpluses at tiny primes) 
   Whenever $n_{**}, m_{**}$ are natural numbers obeying the bounds
-  \begin{align*}
+  \begin{equation}\label{nstarb}
+    \begin{split}
    n_{**} \log 2 + m_{**} \log 3 &\leq 
     \sum_{3 < p \leq t/K}
     \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log \sqrt{tK} + \kappa_K}{\log\sqrt{t/K}} \log p,\log p+\kappa_p}\\
   &\quad  + \log t + \kappa_K,
-  \end{align*}
+  \end{split}
+\end{equation}
     then one has
-  $$\left( \nu_2\left(\frac{N!}{\prod \tuple^{(3)}}\right) - n_{**}, \nu_3\left(\frac{N!}{\prod \tuple^{(3)}}\right) - m_{**}\right) \in \Gamma_{t,L}.
-  $$  
+  \begin{equation}\label{sector}\left( \nu_2\left(\frac{N!}{\prod \tuple^{(3)}}\right) - n_{**}, \nu_3\left(\frac{N!}{\prod \tuple^{(3)}}\right) - m_{**}\right) \in \Gamma_{t,L}.
+  \end{equation}
   \end{itemize}
      Then $t(N) \geq t$.
 \end{proposition}
@@ -601,8 +603,9 @@ One still has balance \eqref{3-balance} at primes $p>t/K$, but now the $p$-surpl
    \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}) -
 \sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).\end{equation}
 Similarly, at tiny primes $p=2,3$ we have
-$$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!) -
-\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).$$
+\begin{equation}\label{tinycon} \nu_p(N!/\tuple^{(3)}) = \nu_p(N!) -
+\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).
+\end{equation}
 
 \section{Powers of 2 and 3}\label{power-sec}
 
@@ -700,7 +703,9 @@ It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close 
 \section{Asymptotic evaluation of $t(N)$}
 
 In this section we establish the lower bound
-$$ \frac{t}{N} \geq \frac{1}{e} - \frac{c_0}{\log N} + \frac{1}{\log^{1+c_1} N}$$
+\begin{equation}\label{main-lower}
+   \frac{t}{N} \geq \frac{1}{e} - \frac{c_0}{\log N} + \frac{1}{\log^{1+c_1} N}
+\end{equation}
 for some small absolute constant $0 < c_1 < 1$, if $N$ is sufficiently large.  With this choice of parameters, one has
 $$ \delta = \frac{ec_0}{\log N} + \frac{1}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
 
@@ -710,7 +715,7 @@ and
 $$ K \coloneqq \lfloor \log^3 N \rfloor$$
 and
 $$ L \coloneqq N^{0.1}.$$
-We apply the algorithm from \Cref{alg-desc}, using the first option for Step 3.  With these parameters, we see from \Cref{baker} that the right-hand side of \eqref{new-balance-5} is at least
+We apply the algorithm from \Cref{alg-desc}, using the first option for Step 3, and invoke \Cref{step4-reduce}.  With these parameters, we see from \Cref{baker} that the right-hand side of \eqref{new-balance-5} is at least
 $$ ec_0 \frac{N}{\log N} + \frac{N}{2 \log^{1+c_1} N}$$
 if $c_1$ is small enough and $N$ is large enough.  
 
@@ -725,10 +730,11 @@ Thus, to establish \eqref{new-balance-5}, and bounding $\kappa_K, \kappa_p = O(1
 \sum_{3 < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1} \ll \frac{N (\log\log N)^2}{\log^2 N}.
 \end{equation}
 We begin by considering primes $p$ in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$.  In this range, the second term in the right-hand side of \eqref{mod} vanishes (because $\lceil t/p' K \rceil < K(1+\frac{3N/t}{A})$), so by \eqref{nup-21}, \eqref{nup} we have
-$$
+\begin{equation}\label{anp}
 \nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right) =
 \nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right)
-\ll A \frac{\log N}{\log p};$$
+\ll A \frac{\log N}{\log p};
+\end{equation}
 bounding $\log p/\log N$ crudely by $O(1)$, we then have
 $$
 \sum_{K(1+\frac{3N/t}{A}) < p \leq t/K}
@@ -737,20 +743,22 @@ $$
 using the prime number theorem to bound the sum over primes (dividing into the regions $p \leq \sqrt{N}$ and $p > \sqrt{N}$ if desired).  Thus the contribution of these primes to \eqref{excise} is acceptable.
 
 Now we deal with the (technical) contribution of those primes in the range $K < p \leq K(1+\frac{3N/t}{A})$.  Again, the second term in the right-hand side of \eqref{mod} vanishes, but the second term in the right-hand side of \eqref{nup-2} has one non-trivial term, namely when $m=p$.  By the Brun--Titchmarsh theorem, the contribution of this term is $O(\frac{N}{K \log N})$.  Hence in this range we have the crude bound
-$$
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1}
-\ll \frac{N}{K \log N} $$
+\begin{equation}\label{tech} 
+\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|
+\ll \frac{N}{K \log N}  \end{equation}
 and hence the contribution of this case is $O(N/A \log N) = O(N/\log^3 N)$, which is acceptable.
 
 Now we consider the primes in the range $3 < p \leq K$.  From \eqref{mop}, \eqref{nup-2}, \eqref{nup} and the Brun--Titchmarsh inequality we have the crude  upper bound
-\begin{align*}
-\nu_p(N!/\tuple^{(3)}) &\leq
+\begin{equation}\label{crude-upper}
+\begin{split}
+  \nu_p(N!/\tuple^{(3)}) &\leq
 \nu_p(N!/\tuple^{(2)})  \\
 &\leq \nu_p(N!/\tuple^{(1)}) + A \sum_{m \ll K} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \pi\left(\frac{t}{m}\right)\right) \\
 &\ll A \frac{\log N}{\log p} + A \sum_{m \ll K} \nu_p(m) \frac{N}{Am \log N} \\
 &\ll \log^3 N + \sum_{j \leq \log\log N} \sum_{m \ll K/p^j} \frac{N}{p^j m \log N} \\
 &\ll \frac{N \log\log N}{p \log N}.
-\end{align*}
+\end{split}
+\end{equation}
 We can thus control the net contribution of the surpluses at these primes by
 \begin{align*}
   \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,0} &\ll \sum_{3 < p \leq K}
@@ -758,17 +766,91 @@ We can thus control the net contribution of the surpluses at these primes by
   &\ll \frac{(N \log\log N)^2}{\log^2 N}
 \end{align*}
 by Mertens' theorem.  Hence this contribution is acceptable.  It remains to control the deficits:
-$$
-\sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, 1} \ll \frac{N (\log\log N)^2}{\log^2 N}.$$
+\begin{equation}\label{deficit-targ}
+\sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, 1} \ll \frac{N (\log\log N)^2}{\log^2 N}.
+\end{equation}
 Here the situation is more delicate.  From \eqref{nup-2}, \eqref{nup} and the prime number theorem (with classical error term) we have
 \begin{align*}
-  \nu_p(N!/\tuple^{(3)}) &\geq
+  \nu_p(N!/\tuple^{(2)}) &\geq
 -O( A \frac{\log N}{\log p}) + A \sum_{m \leq K; (m,6)=1} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \
 pi\left(\frac{t}{m}\right)\right) \\
-&\geq -O(\log^3 N) + \left(1 + O\left(\frac{\log \log N}{\log N}\right)\right) \sum_{m \leq K; (m,6)=1} \frac{3N}{m \log N} \\ 
-&= \frac{N}{\log N} \sum_{m \leq K; (m,6)=1} \frac{3}{m} + O\left( \frac{N(\log\log N)^2}{\log^2 N} \right).
+&\geq -O(\log^3 N) + \left(1 + O\left(\frac{\log \log N}{\log N}\right)\right) \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3N}{m \log N} \\ 
+&= \frac{N}{\log N} \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m} + O\left( \frac{N(\log\log N)^2}{p \log^2 N} \right).
 \end{align*}
-Using \eqref{mop} and the prime number theorem
+Next, we control the final term in \eqref{mod} using \eqref{legendre} and the prime number theorem:
+\begin{align*}
+  \sum_{p' > t/K} \nu_{p'}(N!) \nu_p(\lceil t/p' \rceil)
+  &\leq \sum_{p' > t/K} \frac{N}{p'} \nu_p(\lceil t/p' \rceil) \\
+  &= \sum_{m \leq K} \nu_p(m) \sum_{t/m \leq p' < t/(m-1)} \frac{N}{p'} \\
+  &= \left(1 + O\left(\frac{\log\log N}{\log N}\right)\right)\sum_{m \leq K} \nu_p(m) \int_{t/m}^{t/(m-1)} \frac{N}{x} \frac{dx}{\log N} \\
+  &= \frac{N}{\log N} \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1} + O\left( \frac{N(\log\log N)^2}{p \log^2 N} \right).
+\end{align*}
+
+We now have a crucial inequality:
+
+\begin{lemma}[Key inequality] We have
+$$ \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m}
+\geq \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1}.$$
+\end{lemma}
+
+\begin{proof} Writing $\nu_p(m) = \sum_{j \geq 1} 1_{p^j|m}$, it suffices to show that
+$$ \sum_{m \leq K; (m,6)=1, p^j|m} \frac{3}{m}
+\geq \sum_{m \leq K, p^j|m} \log \frac{m}{m-1}$$
+for all $j$.  Making the change of variables $m = p^j n$, it suffices to show that
+$$ \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p^j \log \frac{p^j n}{p^j n - 1} \geq 0$$
+for any $K' > 0$.  From the Taylor expansion
+$$ p^j \log \frac{p^j n}{p^j n - 1}  = \frac{1}{n} + \frac{1}{2 p^j n^2} + \frac{1}{3 p^{2j} n^3} + \dots$$
+and the fact that $p^j \geq 5$, it suffices to show that
+$$
+  \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - 5 \log \frac{5n}{5n - 1} \geq 0.
+$$
+Using the bound
+$$ \log \frac{5n}{5n - 1} = \int_{5n-1}^{5n} \frac{dx}{x} \leq \frac{1}{5n-1}$$
+it suffices to show that
+\begin{equation}\label{kb}
+  \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n-0.2} \geq 0.
+\end{equation}
+
+This can be numerically verified for $K' \leq 98$, with the value exceeding $0.8$ for at $K=98$; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, one can compute
+\begin{align*}
+\sum_{6a-1 \leq n \leq 6a+4} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n - 0.2} = \frac{3}{6a-1} + \frac{3}{6a+1} - \frac{1}{6a-1.2} - \frac{1}{6a-0.2} - \frac{1}{6a+0.8} - \frac{1}{6a+1.8} - \frac{1}{6a+2.8} - \frac{1}{6a+3.8}\\
+&\geq \frac{1}{6a-1} - \frac{1}{6a-1.2} \\
+&= -\frac{1}{5(6a-1)(6a-1.2)}.
+\end{align*}
+Since $\sum_{a \geq 16} \frac{1}{5(6a-1)(6a-1.2)} < 0.1$ (say), we thus see that 
+$$\sum_{99 \leq n \leq 6a+4} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n - 0.2} \geq -0.1$$
+for any $a \geq 16$, and from this and the triangle inequality one can easily establish \eqref{kb} in the remaining ranges $K \geq 98$.
+\end{proof}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{discrepancy.png}
+\caption{A plot of \eqref{kb}}
+\label{fig:kb}
+\end{figure}
+
+From this inequality and \eqref{mod}, we
+\begin{equation}\label{nup3-lower} 
+\nu_p(N!/\tuple^{(3)}) \geq - O\left( \frac{N(\log\log N)^2}{p \log^2 N} \right)
+\end{equation}
+and thus by Mertens' theorem we obtain \eqref{deficit-targ}.  This completes the proof of \eqref{new-balance-5}.
+
+To finish the proof of \eqref{main-lower}, it suffices by \Cref{step4-reduce} to establish the condition \eqref{sector} whenever $n_{**}, m_{**}$ obey \eqref{nstarb}.  The left-hand side of \eqref{nstarb} can be bounded by
+$$ \ll \sum_{3 < p \leq t/K} \left| \nu_p\left(\frac{N!}{\tuple^{(3)}}\right) \right|\log p + \log N.$$
+We claim that this expression is $O( N (\log\log N)^2 / \log N )$, which implies
+$$ n_{**}, m_{**} \ll \frac{N (\log\log N)^2}{\log N}.$$
+For the contribution of the primes in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$ this follows readily from \eqref{anp}; the contribution of $K < p \leq K(1+\frac{3N/t}{A})$ follows readily from \eqref{tech}; and the contribution of $3 < p \leq K$ follows readily from \eqref{crude-upper}, \eqref{nup3-lower}, and Mertens' theorem.  Also, from \eqref{tiny-con}, \eqref{legendre} we see for a tiny prime $p=2,3$ that
+\begin{align*}
+  \nu_p(N!/\tuple^{(3)}) &= \frac{N}{p-1} + O(\log N) -
+O\left( \sum_{p' > t/K} \frac{N}{p'} \nu_{p}(\lceil t/p' \rceil) \right) \\
+&= \frac{N}{p-1} + O(\log N)
+- O\left( \sum_{p' > t/K} \frac{N}{p'} \log \log N \right)\\
+&= \frac{N}{p-1} + O\left( \frac{N (\log\log N)^2}{\log N} \right)
+\end{align*}
+(with room to spare), and so
+$$   \nu_2(N!/\tuple^{(3)}) - n_{**} = N + O\left( \frac{N (\log\log N)^2}{\log N} \right); \quad 
+\nu_2(N!/\tuple^{(3)}) - n_{**} = \frac{N}{2} + O\left( \frac{N (\log\log N)^2}{\log N} \right).$$
+By choice of $L$, this implies \eqref{sector} for $N$ large enough.  The proof of \eqref{main-lower} is now complete.
 
 \section{Guy--Selfridge conjecture for $N > 10^{19}$}
 

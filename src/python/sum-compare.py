@@ -13,7 +13,7 @@ def sum( m ):
     for i in range(1,m+1):
         if i % 6 == 1 or i % 6 == 5:
             sum += 3/i
-        sum -= 5 * math.log((5*i)/(5*i-1))
+        sum -= 5/(5*i-1)
     return sum
 
 def plot():
@@ -22,8 +22,8 @@ def plot():
 
     plt.figure(figsize=(8, 6))
     plt.plot(base, exact, label='Discrepancy' )
-    plt.title('$\\sum_{m \\leq M; (m,6)=1} 3/m - \\sum_{m \\leq M} 5 \\log \\frac{5m}{5m-1} $')
-    plt.xlabel('$M$')
+    plt.title('$\\sum_{n \\leq K\'; (n,6)=1} \\frac{3}{n} - \\sum_{m \\leq K\'} \\frac{1}{n-0.2}$')
+    plt.xlabel('$K\'$')
     plt.legend()
     plt.grid(True)
     plt.show()

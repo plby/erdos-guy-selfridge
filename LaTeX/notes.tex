@@ -187,14 +187,18 @@ We will use this lemma to control primes.  One form of the prime number theorem 
 $$ \pi(x) \coloneqq \sum_{p \leq x} 1 = \int_2^x \frac{dt}{\log t} + O(\frac{x}{\log^{10} x})$$
 (say). 
 
-  \begin{theorem}[Buthe's bounds]\cite{buthe}  For any $2 \leq x \leq 10^{19}$, we have
-  $$ \mathrm{li}(x) - \frac{\sqrt{x}}{\log x}\left(1.95 + \frac{3.9}{\log x} + \frac{19.5}{\log^2 x}\right) \leq \pi(x) < \mathrm{li}(x)$$
-  and
-  $$ \mathrm{li}(x) - \frac{\sqrt{x}}{\log x} \leq \pi^*(x) < \mathrm{li}(x) + \frac{\sqrt{x}}{{\log x}}.$$
-  \end{theorem}
-  
-  For $x > 10^{19}$ we have the bounds of Dusart \cite{dusart}.  One such bound is
-  $$ \psi(x) = x + O_{\leq}\left(59.18 \frac{x}{\log^4 x}\right).$$
+In \cite[Theorem 2]{buthe-2} the bound
+  $$ \psi(x) = x + O_{\leq}(0.94 \sqrt{x})$$
+was demonstrated for $11 \leq x \leq 10^{19}$.  For $10^{19} \leq x \leq 10^{21} \approx e^{48.35}$, the slightly weaker bounds
+  $$ \psi(x) = x + O_{\leq}(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3))$$
+were obtained in \cite[(7.3)]{buthe}.  On the other hand, in \cite[Theorem 1, Table 1]{buthe} the bound
+$$ \psi(x) = x + O_{\leq}(1.11742 \times 10^{-8} x)$$
+was shown for $x \geq e^{45} \approx 10^{19.54}$.  We may simply combine the latter two bounds to conclude that
+$$ \psi(x) = x + O_{\leq}(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3) + 1.11742 \times 10^{-8} x)$$
+whenever $x \geq 10^{19}$.
+
+    
+    
 
   
 \section{Criteria for upper bounding \texorpdfstring{$t(N)$}{t(N)}}
@@ -314,10 +318,10 @@ Call a natural number \emph{$3$-smooth} if it is of the form $2^n 3^m$ for some 
 We now describe an algorithm that, for given $1 \leq t \leq N$, either successfully demonstrates that $t(N) \geq t$, or halts with an error.
 
 \begin{enumerate}
-\item[(0)] Select a natural number $A$ and another parameter $K \geq 1$ such that $K^2 (1+\frac{3N/t}{A}) < t$.  There is some freedom to select parameters here, but roughly speaking one would like to have $\log N \lll A \lll K \lll \sqrt{t}$.
+\item[(0)] Select natural numbers $A,K$ such that $K^2 (1+\frac{3N/t}{A}) < t$.  There is some freedom to select parameters here, but roughly speaking one would like to have $1 \lll A \lll K \lll \sqrt{t}$.
 \item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t+ 3N/A]$ instead of the half-open interval $(t,t+3N/A]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t+3N/A]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for $3 < p \leq t/K$, though it may have quite different prime factorization at primes $p>t/K$.)
-\item[(2)] Remove any element from $\tuple^{(1)}$ that contains a prime factor $p$ with $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors.
-\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil^{\langle 2,3\rangle}$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.  (A variant of the method: add in $p \lceil t/p \rceil$ instead. This is slightly more efficient, but slightly trickier to analyze.)  Now $\tuple^{(3)}$ is $t$-admissible and in balance at all primes $p>t/K$, but will typically be in a slight deficit at primes $3 < p \leq t/K$, particularly in the range $3 < p \leq K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
+\item[(2)] Remove any element from $\tuple^{(1)}$ that contains a prime factor $p$ with $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors, though it tends to acquire a $p$-surplus in the range $3 < p \leq K$.
+\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.   Now $\tuple^{(3)}$ is $t$-admissible and in balance at all primes $p>t/K$, but will typically be in a slight deficit at primes $3 < p \leq t/K$, particularly in the range $3 < p \leq K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
 \item[(4)] For each prime $3 < p \leq t/K$ at which there is a surplus $\nu_p(N!/\prod \tuple) > 0$, replace $\nu_p(N!/\prod \tuple)$ copies of $p$ in the prime factorizations of elements of $\tuple^{(3)}$ with $\lceil p \rceil^{\langle 2,3 \rangle}$ instead, and call this new multiset $\tuple^{(4)}$.  Thus $\tuple^{(4)}$ has no surplus at primes $3 < p \leq t/K$ (and is still $t$-admissible and in balance for $p>t/K$).
 \item [(5)]For the primes $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
 $(\sqrt{t/K}, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}$ to $\tuple^{(4)}$, and call this new multiset $\tuple^{(5)}$.  
@@ -325,9 +329,40 @@ $(\sqrt{t/K}, t/K]$, together with possibly one exceptional factor $x_*$ in the 
 \item[(7)] If the multiset $\tuple^{(6)}$ has cardinality less than $N$, \texttt{HALT} the algorithm with an error.  Otherwise, delete elements from $\tuple^{(6)}$ to bring the cardinality to $N$, and arbitrarily distribute any surplus primes to one of the remaining elements, and call the resulting multiset $\tuple^{(7)}$.  By construction, $\tuple^{(7)}$ is a $t$-admissible factorization of $N!$ into $N$ numbers, demonstrating that $t(N) \geq t$.
 \end{enumerate}
 
+It will be convenient to divide the set of primes into the following ranges:
+\begin{itemize}
+\item \emph{Tiny primes} $p=2,3$.
+\item \emph{Small primes} $3 < p \leq K$.
+\item \emph{Borderline small primes} $K < p \leq K(1+\frac{3N/t}{A})$.
+\item \emph{Medium primes} $K(1+\frac{3N/t}{A}) < p \leq t/K$.
+\item \emph{Large primes} $p > t/K$.
+\end{itemize}
+
+The expected $p$-surpluses or $p$-deficits at various stages of this process are summarized in \Cref{algorithm-table}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+   & Tiny $p$ & Small $p$ & Borderline $p$ & Medium $p$ & Large $p$ \\
+  \hline
+  $\tuple^{(1)}$ & Max. surplus & Near balance & Near balance & Near balance & ??? \\
+  $\tuple^{(2)}$ & Max. surplus & Med. surplus & Med. surplus? & Near balance & Max. surplus \\
+  $\tuple^{(3)}$ & Lg. surplus & Sm. surplus? & Med. surplus? & Near balance & Balance \\
+  $\tuple^{(4)}$ & Lg. surplus & Balance? & Balance?
+ & Balance/sm. deficit & Balance \\
+  $\tuple^{(5)}$ & Lg. surplus & Balance & Balance & Balance  & Balance \\
+  $\tuple^{(6)}$ & Sm. surplus & Balance & Balance & Balance  & Balance \\
+  $\tuple^{(7)}$ & Balance & Balance & Balance & Balance  & Balance \\
+  \hline
+  \end{tabular}
+  \caption{Evolution of the surpluses and deficits of the multisets $\tuple^{(i)}$, $i=1,\dots,7$; we describe the size of these surpluses and deficits informally as ``small'', ``medium'', ``large'', or ``maximal''.  For entries with a question mark, we allow the possibility of a tiny deficit.  For the entry marked ???, all behavior from large surpluses to large deficits are possible.}\label{algorithm-table}
+  \end{table}
+  
+
 \subsection{Analysis of Step 7}
 
-We now analyze the above algorithm, starting from the final step (7) and working backwards to (1), to establish sufficient conditions for the algorithm to successfully demonstrate that $t(N) \geq t$.
+We now analyze the above algorithm, starting from the final Step 7 and working backwards to Step 1, to establish sufficient conditions for the algorithm to successfully demonstrate that $t(N) \geq t$.
 
 It will be convenient to introduce the following notation.
 For $a_+,a_- \in [0,+\infty]$, we define the asymmetric norm $|x|_{a_+,a_-}$ of a real number $x$ by the formula
@@ -459,7 +494,7 @@ Then $t(N) \geq t$.
 
 \begin{proposition}\label{balance-23'}  Let $1 \leq K \leq t \leq N$, $A \geq 1$, and $L \geq 1$ be parameters such that $9L < t = N/e^{1+\delta}$ for some $\delta>0$.  Suppose that the algorithm in \Cref{alg-desc} with the indicated parameters reaches the end of Step 4 to produce a multiset $\tuple^{(4)}$ obeying the following hypotheses.
 \begin{itemize}
-\item[(i)] (Small excess and surplus at non-tiny primes)
+\item[(i)] (Small excess and surplus at small/medium primes)
 \begin{equation}\label{new-balance-4}
   \begin{split}
 &      \excess_t(\tuple^{(4)}) + \sum_{3 < p \leq t/K}
@@ -478,7 +513,7 @@ Then $t(N) \geq t$.
   Then $t(N) \geq t$.
 \end{proposition}
 
-\begin{proof} By \eqref{new-balance-4}, $\tuple^{(4)}$ is a subfactorization of $N!$. Consider all the $p$-surplus primes in the range $3 < p \leq t/K$, thus each such prime is considered with multiplicity $\nu_p(N!/\prod \tuple^{(4)})$.  
+\begin{proof} By \eqref{new-balance-4}, $\tuple^{(4)}$ is a subfactorization of $N!$, and by construction it is in balance at all primes $p>t/K$. Consider all the $p$-surplus primes in the small, borderline small, and medium range $3 < p \leq t/K$, thus each such prime is considered with multiplicity $\nu_p(N!/\prod \tuple^{(4)})$.  
 Using the greedy algorithm, one can factor the product of all these primes into $M$ factors $c_1,\dots,c_M$ in the interval $(\sqrt{t/K}, t/K]$, times at most one exceptional factor $c_*$ in $(1,\sqrt{t/K}]$, for some $M$.  If we let $M'$ denote the number of factors in $c_1,\dots,c_M$ that are not divisible by a prime larger than $\sqrt{t/K}$, we have the bound
 $$ \left(\sqrt{t/K}\right)^{M'} \leq
 \prod_{3 < p \leq \sqrt{t/K}} \nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)$$
@@ -508,7 +543,7 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
 
 \begin{proposition}\label{step4-reduce}  Let $L \geq 1$.  Let $9L < t = N/e^{1+\delta}$ for some $\delta>0$, and suppose that the algorithm reaches the end of Step 3 to produce a multiset $\tuple^{(3)}$ obeying the following hypotheses:
   \begin{itemize}
-  \item[(i)] (Small excess and surplus at non-tiny primes) One has
+  \item[(i)] (Small excess and surplus at small/medium primes) One has
 \begin{equation}\label{new-balance-5}
     \begin{split}
 &      \excess_t(\tuple^{(3)}) + \sum_{3 < p \leq t/K}
@@ -534,7 +569,7 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
 \end{proposition}
 
 \begin{proof} Suppose there is a non-tiny prime $p>3$ with a positive $p$-deficit
-$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and decrements $\nu_2(N!/\prod \tuple^{(3)})$, $\nu_3(N!/\prod \tuple^{(3)})$ by $n_{p}, m_{p}$ respectively.  Since $n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$, if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
+$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and decrements $\nu_2(N!/\prod \tuple^{(3)})$, $\nu_3(N!/\prod \tuple^{(3)})$ by $n_{p}, m_{p}$ respectively.  Since $n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$, if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
 $$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} |\nu_p(N!/\prod \tuple)|_{0,\kappa_p}$$
 and we have
 $$ \nu_2(N!/\prod \tuple^{(4)}) = \nu_2(N!/\prod \tuple^{(3)}) - n', \quad \nu_3(N!/\prod \tuple^{(4)}) = \nu_3(N!/\prod \tuple^{(3)}) - m'$$
@@ -582,7 +617,7 @@ and thus
 O_{\leq}\left(\frac{4A+6}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{equation}
 
-Now we pass to $\tuple^{(2)}$ by performing Step 3 of the algorithm.  Removing elements from a $t$-admissible multiset cannot increase the $t$-excess, so from \eqref{excess1-bound} we have
+Now we pass to $\tuple^{(2)}$ by performing Step 2 of the algorithm.  Removing elements from a $t$-admissible multiset cannot increase the $t$-excess, so from \eqref{excess1-bound} we have
 \begin{equation}\label{excess2-bound} 
   \excess_t(\tuple^{(2)}) \leq \frac{3N^2}{2tA} + 4.
 \end{equation}
@@ -590,34 +625,29 @@ The elements removed are of the form $pm$ with $m \leq K(1+\frac{3N/t}{A})$ copr
 \begin{equation}\label{nup-21}
    \nu_p( N!/\tuple^{(2)} ) = \nu_p( N!/\tuple^{(1)})
 \end{equation}
-for $K(1+\frac{3N/t}{A}) < p \leq t/K$.  For $3 < p \leq K(1+\frac{3}{A})$ one has
+for medium primes $K(1+\frac{3N/t}{A}) < p \leq t/K$.  For small and borderline small primes $3 < p \leq K(1+\frac{3}{A})$ one has
 \begin{equation}\label{nup-2}
  \nu_p( N!/\tuple^{(2)} ) = \nu_p(N!/\tuple^{(1)}) + A \sum_{\stackrel{m \leq K(1+\frac{3N/t}{A})}{(m,6)=1}} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right)
 - \pi\left(\frac{t}{\min(m,K)}\right) \right).
 \end{equation}
 Finally, by construction we are in balance
 $$ \nu_p(N!/\tuple^{(2)}) = 0$$
-for $p>t/K$, while for tiny primes $p=2,3$ we have
+for large primes $p>t/K$, while for tiny primes $p=2,3$ we have
 $$ \nu_p(N!/\tuple^{(2)}) = \nu_p(N!)$$
 
 
-We now pass to $\tuple^{(3)}$ by performing Step 3 of the algorithm.  We first consider the simpler version of this step in which we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil^{\langle 2,3 \rangle}$ for each prime $p > t/K$.  The excess here is given by
-\begin{equation}\label{excess-eq}
-  \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil^{\langle 2,3 \rangle}}{t/p}.
-\end{equation}
-For primes $p >t/K$, one is now in balance:
-\begin{equation}\label{3-balance}  
-  \nu_p(N!/\tuple^{(3)}) = 0. \end{equation}
-For primes $3 < p \leq t/K$, no change has been made to the $p$-surplus or $p$-deficit:
-$$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}).$$
-Finally, at a tiny prime $p=2,3$ we have
-$$ \nu_{p}(N!/\tuple^{(3)}) = \nu_{p}(N!) - \sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil^{\langle 2,3 \rangle}).$$
-
-Now suppose we use the alternate version of Step 3, in which we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil$ for each prime $p > t/K$.  The excess is now given by
+We now pass to $\tuple^{(3)}$ by performing Step 3 of the algorithm.  In other words, we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil$ for each prime large $p > t/K$.  The $t$-excess is now given by
 \begin{equation}\label{excess-eq-alt}
   \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}.
 \end{equation}
-One still has balance \eqref{3-balance} at primes $p>t/K$, but now the $p$-surplus or $p$-deficit at primes $3 < p \leq t/K$ is modified:
+By construction one has balance \eqref{3-balance} at primes large $p>t/K$, 
+\begin{equation}\label{3-balance}  
+  \nu_p(N!/\tuple^{(3)}) = 0\end{equation}
+and no modification at borderline small or medium primes $K < p \leq t/K$,
+\begin{equation}\label{3-medium}  
+  \nu_p(N!/\tuple^{(3)}) = 0\end{equation}
+but now the $p$-surplus or $p$-deficit at small
+ primes $3 < p \leq K$ is modified:
 \begin{equation}\label{mod}
    \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}) -
 \sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).\end{equation}
@@ -719,7 +749,7 @@ The claim then follows from \eqref{bj1}, \eqref{bj2} after optimizing in $j$.
 It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that irrationality measure of $\log 3 / \log 2$ is equal to $2$.
 
 
-\section{Asymptotic evaluation of $t(N)$}
+\section{Asymptotic evaluation of \texorpdfstring{$t(N)$}{t(N)}}
 
 In this section we establish the lower bound
 \begin{equation}\label{main-lower}
@@ -748,7 +778,7 @@ Thus, to establish \eqref{new-balance-5}, and bounding $\kappa_K, \kappa_p = O(1
 \begin{equation}\label{excise}
 \sum_{3 < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1} \ll \frac{N (\log\log N)^2}{\log^2 N}.
 \end{equation}
-We begin by considering primes $p$ in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$.  In this range, the second term in the right-hand side of \eqref{mod} vanishes (because $\lceil t/p' K \rceil < K(1+\frac{3N/t}{A})$), so by \eqref{nup-21}, \eqref{nup} we have
+We begin by considering medium primes $K(1+\frac{3N/t}{A}) < p \leq t/K$.  In this range, we have from \eqref{nup-21}, \eqref{nup}, \eqref{3-medium} that
 \begin{equation}\label{anp}
 \nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right) =
 \nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right)
@@ -761,13 +791,13 @@ $$
 \ll A \sum_{K(1+\frac{3N/t}{A}) < p \leq t/K} \frac{\log N}{\log p} \ll \frac{AN}{K\log N} \ll \frac{N}{\log^2 N}$$
 using the prime number theorem to bound the sum over primes (dividing into the regions $p \leq \sqrt{N}$ and $p > \sqrt{N}$ if desired).  Thus the contribution of these primes to \eqref{excise} is acceptable.
 
-Now we deal with the (technical) contribution of those primes in the range $K < p \leq K(1+\frac{3N/t}{A})$.  Again, the second term in the right-hand side of \eqref{mod} vanishes, but the second term in the right-hand side of \eqref{nup-2} has one non-trivial term, namely when $m=p$.  By the Brun--Titchmarsh theorem, the contribution of this term is $O(\frac{N}{K \log N})$.  Hence in this range we have the crude bound
+Now we deal with the (technical) contribution of the borderline small $K < p \leq K(1+\frac{3N/t}{A})$.  We still have \eqref{3-medium}, but the second term in the right-hand side of \eqref{nup-2} has one non-trivial term, namely when $m=p$.  By the Brun--Titchmarsh theorem, the contribution of this term is $O(\frac{N}{K \log N})$.  Hence in this range we have the crude bound
 \begin{equation}\label{tech} 
 \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|
 \ll \frac{N}{K \log N}  \end{equation}
 and hence the contribution of this case is $O(N/A \log N) = O(N/\log^3 N)$, which is acceptable.
 
-Now we consider the primes in the range $3 < p \leq K$.  From \eqref{mop}, \eqref{nup-2}, \eqref{nup} and the Brun--Titchmarsh inequality we have the crude  upper bound
+Now we consider the small primes $3 < p \leq K$.  From \eqref{mop}, \eqref{nup-2}, \eqref{nup} and the Brun--Titchmarsh inequality we have the crude  upper bound
 \begin{equation}\label{crude-upper}
 \begin{split}
   \nu_p(N!/\tuple^{(3)}) &\leq
@@ -778,13 +808,13 @@ Now we consider the primes in the range $3 < p \leq K$.  From \eqref{mop}, \eqre
 &\ll \frac{N \log\log N}{p \log N}.
 \end{split}
 \end{equation}
-We can thus control the net contribution of the surpluses at these primes by
+We can thus control the net contribution of the surpluses at small primes by
 \begin{align*}
   \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,0} &\ll \sum_{3 < p \leq K}
   \frac{N \log\log N}{p \log N} \frac{\log p}{\log N} \\
   &\ll \frac{(N \log\log N)^2}{\log^2 N}
 \end{align*}
-by Mertens' theorem.  Hence this contribution is acceptable.  It remains to control the deficits:
+by Mertens' theorem.  Hence this contribution is acceptable.  It remains to control the deficits at small primes:
 \begin{equation}\label{deficit-targ}
 \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, 1} \ll \frac{N (\log\log N)^2}{\log^2 N}.
 \end{equation}
@@ -858,7 +888,7 @@ To finish the proof of \eqref{main-lower}, it suffices by \Cref{step4-reduce} to
 $$ \ll \sum_{3 < p \leq t/K} \left| \nu_p\left(\frac{N!}{\tuple^{(3)}}\right) \right|\log p + \log N.$$
 We claim that this expression is $O( N (\log\log N)^2 / \log N )$, which implies
 $$ n_{**}, m_{**} \ll \frac{N (\log\log N)^2}{\log N}.$$
-For the contribution of the primes in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$ this follows readily from \eqref{anp}; the contribution of $K < p \leq K(1+\frac{3N/t}{A})$ follows readily from \eqref{tech}; and the contribution of $3 < p \leq K$ follows readily from \eqref{crude-upper}, \eqref{nup3-lower}, and Mertens' theorem.  Also, from \eqref{tinycon}, \eqref{legendre} we see for a tiny prime $p=2,3$ that
+For the contribution of medium primes $K(1+\frac{3N/t}{A}) < p \leq t/K$ this follows readily from \eqref{anp}; the contribution of borderline small primes $K < p \leq K(1+\frac{3N/t}{A})$ follows readily from \eqref{tech}; and the contribution of small primes $3 < p \leq K$ follows readily from \eqref{crude-upper}, \eqref{nup3-lower}, and Mertens' theorem.  Also, from \eqref{tinycon}, \eqref{legendre} we see for a tiny prime $p=2,3$ that
 \begin{align*}
   \nu_p(N!/\tuple^{(3)}) &= \frac{N}{p-1} + O(\log N) -
 O\left( \sum_{p' > t/K} \frac{N}{p'} \nu_{p}(\lceil t/p' \rceil) \right) \\
@@ -885,8 +915,15 @@ By choice of $L$, this implies \eqref{sector} for $N$ large enough.  The proof o
 \bibitem{buthe}
 J. B\"uthe, \emph{Estimating $\pi(x)$ and related functions under partial RH assumptions}, Math. Comp., 85(301), 2483--2498, Jan. 2016.
 
+\bibitem{buthe-2}
+J. B\"uthe, \emph{An analytic method for bounding $\psi(x)$
+}. Math. Comp., \textbf{87} (312), 1991--2009.
+
 \bibitem{dusart}
 P. Dusart, \emph{Explicit estimates of some functions over primes}, Ramanujan J. \textbf{45} (2018) 227--251.
+
+\bibitem{faber-kadiri}
+L. Faber, H. Kadiri, \emph{Corrigendum to: New bounds for $\psi(x)$}, Math. Comp. \textbf{87} (2018) 1451--1455.
 
 \bibitem{guy-selfridge}
 R. K. Guy, J. L. Selfridge, \emph{Factoring factorial $n$}, Amer. Math. Monthly \textbf{105} (1998) 766--767.

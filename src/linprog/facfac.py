@@ -329,13 +329,13 @@ def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = 
     if save:
         write_factorization(N, T, fact, save)
 
-    return meets_bound
+    return meets_bound # return whether the upper bound is >= N
 
 
 
 def oeis(N: int, dirname: str = None):
 
-    Tlb = ceil(2*N//7)
+    Tlb = ceil(N/3)
     if N == 56:
         Tlb -= 1  # well, well...
     Tub = None
@@ -393,7 +393,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     N = args.N
-    T = args.T or ceil(2*N/7)
+    T = args.T or ceil(N/3)
 
     if not args.oeis:
         main(N, T, args.rigorous, args.ilp, args.save)

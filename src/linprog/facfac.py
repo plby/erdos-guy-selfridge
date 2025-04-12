@@ -153,6 +153,7 @@ def lpfac(prob: Problem, ilp: bool = False, rigorous: bool = False) -> Optional[
     # compute a strictly feasible upper bound
     ub = mod.ObjVal
     sa = {}
+    meets_bound = False
     if not ilp:
         with localcontext(rounding=ROUND_CEILING) as _:
             for (i, ri) in row.items():
@@ -171,6 +172,7 @@ def lpfac(prob: Problem, ilp: bool = False, rigorous: bool = False) -> Optional[
                 assert sum(sa[i]*fij for (i, fij) in f[j].items()) >= 1, f"f={j}: {sum(sa[i]*fij for (i, fij) in f[j].items())}"
             rigorous = all(ap <= aq for (ap, aq) in pairwise(sa.values()))
             print(f"strict upper bound: {sub} ({'not ' if not rigorous else ''}rigorous)")
+            meets_bound = sub >= N
 
     res = Factorization(
         {i: rc[i] for i in c.keys() if rc[i] > 0},
@@ -209,7 +211,7 @@ def lpfac(prob: Problem, ilp: bool = False, rigorous: bool = False) -> Optional[
     #             print(f"    ·", end='')
     #     print(f" {ci:4d}")
 
-    return res
+    return res, meets_bound
 
 
 
@@ -317,7 +319,7 @@ def write_factorization(N: int, T: int, fact: Factorization, filename: str):
 def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = None):
     prob = sieve(N, T)
 
-    fact = lpfac(prob, ilp, rigorous)
+    fact, meets_bound = lpfac(prob, ilp, rigorous)
     if fact is None:
         return  # just computing a rigorous LP upper bound
 
@@ -326,6 +328,8 @@ def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = 
 
     if save:
         write_factorization(N, T, fact, save)
+
+    return meets_bound
 
 
 

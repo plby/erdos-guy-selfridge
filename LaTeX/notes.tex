@@ -227,18 +227,18 @@ The expression $\prod_{t \leq j \leq N} j^{\lfloor m_j\rfloor}$ will then be a s
 
 We refine the upper bound in \cite{tao} slightly.
 
-\begin{proposition}  For large $N$, one has
+\begin{proposition}\label{upper-bound}  For large $N$, one has
 $$ \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^2 N} \right).$$
 \end{proposition}
 
 \begin{proof}  We apply \Cref{upper-crit} with
   $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} + \frac{C_0}{\log^2 N}$$
 with $C_0$ a large absolute constant to be chosen later.  From the Stirling approximation one sees that
-$$ \log N! - N \log t \geq c_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
+$$ \log N! - N \log t \geq ec_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
 so it will suffice to establish the upper bound
-$$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq c_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+$$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
 For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
-$$ \sum_{\frac{N}{\log N} \leq p \leq N} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq c_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+$$ \sum_{\frac{N}{\log N} \leq p \leq N} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
 The summand is a piecewise monotone function of $p$, with $O(\log N)$ pieces, and bounded in size by $O(N)$.  A routine application of the prime number theorem (with classical error term) and summation by parts then allows one to express the left-hand side as
 $$ \int_{N/\log N}^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log x} + O\left( \frac{N}{\log^2 N} \right)$$
 (in fact the error term can be made much stronger than this). We use the approximation 
@@ -295,10 +295,10 @@ Call a natural number \emph{$3$-smooth} if it is of the form $2^n 3^m$ for some 
 We now describe an algorithm that, for given $1 \leq t \leq N$, either successfully demonstrates that $t(N) \geq t$, or halts with an error.
 
 \begin{enumerate}
-\item[(0)] Select a natural number $A$ and another parameter $K \geq 1$ such that $K^2 (1+\frac{3}{A}) < t$.  There is some freedom to select parameters here, but roughly speaking one would like to have $\log N \lll A \lll K \lll \sqrt{t}$.
-\item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t(1+3/A)]$ instead of the half-open interval $(t,t(1+3/A)]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t(1+3/A)]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for $3 < p \leq t/K$, though it may have quite different prime factorization at primes $p>t/K$.)
+\item[(0)] Select a natural number $A$ and another parameter $K \geq 1$ such that $K^2 (1+\frac{3N/t}{A}) < t$.  There is some freedom to select parameters here, but roughly speaking one would like to have $\log N \lll A \lll K \lll \sqrt{t}$.
+\item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t+ 3N/A]$ instead of the half-open interval $(t,t+3N/A]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t+3N/A]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for $3 < p \leq t/K$, though it may have quite different prime factorization at primes $p>t/K$.)
 \item[(2)] Remove any element from $\tuple^{(1)}$ that contains a prime factor $p$ with $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors.
-\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.  (A variant of the method: add in $p \lceil t/p \rceil^{\langle 2,3\rangle}$ instead. This is slightly less efficient, but slightly easier to analyze.)  Now $\tuple^{(3)}$ is $t$-admissible and in balance at all primes $p>t/K$, but will typically be in a slight deficit at primes $3 < p \leq t/K$, particularly in the range $3 < p \leq K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
+\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil^{\langle 2,3\rangle}$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.  (A variant of the method: add in $p \lceil t/p \rceil$ instead. This is slightly more efficient, but slightly trickier to analyze.)  Now $\tuple^{(3)}$ is $t$-admissible and in balance at all primes $p>t/K$, but will typically be in a slight deficit at primes $3 < p \leq t/K$, particularly in the range $3 < p \leq K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
 \item[(4)] For each prime $3 < p \leq t/K$ at which there is a surplus $\nu_p(N!/\prod \tuple) > 0$, replace $\nu_p(N!/\prod \tuple)$ copies of $p$ in the prime factorizations of elements of $\tuple^{(3)}$ with $\lceil p \rceil^{\langle 2,3 \rangle}$ instead, and call this new multiset $\tuple^{(4)}$.  Thus $\tuple^{(4)}$ has no surplus at primes $3 < p \leq t/K$ (and is still $t$-admissible and in balance for $p>t/K$).
 \item [(5)]For the primes $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
 $(\sqrt{t/K}, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}$ to $\tuple^{(4)}$, and call this new multiset $\tuple^{(5)}$.  
@@ -541,35 +541,37 @@ By the fundamental theorem of calculus, this is
 $$ A \int_0^{3t/A} |I \cap (t, t+h]|\ \frac{dh}{t+h}.$$
 Bounding $\frac{1}{t+h}$ by $\frac{1}{t}$ and applying \Cref{lit}, we conclude that
 \begin{equation}\label{excess1-bound}
- \excess_t(\tuple^{(1)}) \leq A \int_0^{3t/A} \left(h + \frac{4}{3}\right) \frac{dh}{t} = \frac{9t}{2A} + 4.
+ \excess_t(\tuple^{(1)}) \leq A \int_0^{3N/A} \left(h + \frac{4}{3}\right) \frac{dh}{t} = \frac{9N^2}{2tA} + 4.
 \end{equation}
 Next, we compute $p$-valuations $\nu_p(\tuple^{(1)})$.  By construction, this quantity vanishes at tiny primes $p=2,3$.  For $p>3$, we can use \Cref{lit} again to conclude
 \begin{align*}
   \nu_p(\tuple^{(1)}) &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} |I \cap p^j \Z| \\
-  &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{t}{p^j A} + O_{\leq}(4/3)\right) \\
-  &= \frac{t}{p-1} + O_{\leq}\left(\frac{3t}{N(p-1)}\right)
+  &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{N}{p^j A} + O_{\leq}(4/3)\right) \\
+  &= \frac{N}{p-1} + O_{\leq}\left(\frac{3}{p-1}\right)
   + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) \\
-  &= \frac{t}{p-1} +
-  + O_{\leq}\left(\frac{4A+1}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) 
+  &= \frac{N}{p-1} +
+  + O_{\leq}\left(\frac{4A+3}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) 
 \end{align*}
-since $\frac{3t}{N(p-1)} \leq \frac{3}{4e} \leq \frac{1}{3}$.
+since $\frac{3}{p-1} \leq \frac{3}{4}$.
 Meanwhile, from \eqref{legendre} one has
-$$ \nu_p(N!) = \frac{t}{p-1} + O_{\leq}\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
+$$ \nu_p(N!) = \frac{N}{p-1} + O_{\leq}\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
 and thus
 \begin{equation}\label{nup} 
   \nu_p(N!/\tuple^{(1)}) =  
-O_{\leq}\left(\frac{4A+4}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
+O_{\leq}\left(\frac{4A+6}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{equation}
 
 Now we pass to $\tuple^{(2)}$ by performing Step 3 of the algorithm.  Removing elements from a $t$-admissible multiset cannot increase the $t$-excess, so from \eqref{excess1-bound} we have
 \begin{equation}\label{excess2-bound} 
   \excess_t(\tuple^{(2)}) \leq \frac{9t}{2A} + 4.
 \end{equation}
-The elements removed are of the form $pm$ with $m \leq K(1+\frac{3}{A})$ coprime to $6$, and $p$ in the interval $(\frac{t}{\min(m,K)}, \frac{t}{m}(1+\frac{3}{A})]$.  We conclude that
-$$ \nu_p( N!/\tuple^{(2)} ) = \nu_p( N!/\tuple^{(1)})$$
-for $K(1+\frac{3}{A}) < p \leq t/K$.  For $3 < p < K(1+\frac{3}{K})$ one has
+The elements removed are of the form $pm$ with $m \leq K(1+\frac{3N/t}{A})$ coprime to $6$, and $p$ in the interval $(\frac{t}{\min(m,K)}, \frac{t}{m}+\frac{3N}{mA}]$.  We conclude that
+\begin{equation}\label{nup-21}
+   \nu_p( N!/\tuple^{(2)} ) = \nu_p( N!/\tuple^{(1)})
+\end{equation}
+for $K(1+\frac{3N/t}{A}) < p \leq t/K$.  For $3 < p \leq K(1+\frac{3}{A})$ one has
 \begin{equation}\label{nup-2}
- \nu_p( N!/\tuple^{(2)} ) = \nu_p(N!/\tuple^{(1)}) + A \sum_{m \leq K(1+\frac{3}{A})} \nu_p(m) \left(\pi\left(\frac{t}{m}(1+\frac{3}{A})\right)
+ \nu_p( N!/\tuple^{(2)} ) = \nu_p(N!/\tuple^{(1)}) + A \sum_{\stackrel{m \leq K(1+\frac{3N/t}{A})}{(m,6)=1}} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right)
 - \pi\left(\frac{t}{\min(m,K)}\right) \right).
 \end{equation}
 Finally, by construction we are in balance
@@ -595,8 +597,9 @@ Now suppose we use the alternate version of Step 3, in which we add $\nu_p(N!)$ 
   \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}.
 \end{equation}
 One still has balance \eqref{3-balance} at primes $p>t/K$, but now the $p$-surplus or $p$-deficit at primes $3 < p \leq t/K$ is modified:
-$$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}) -
-\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).$$
+\begin{equation}\label{mod}
+   \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}) -
+\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).\end{equation}
 Similarly, at tiny primes $p=2,3$ we have
 $$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!) -
 \sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).$$
@@ -609,13 +612,6 @@ We now obtain good bounds on the quantity $\kappa_L$.  Clearly $\kappa_L$ is a n
 $$ 1 \leq \frac{3^{m_1}}{2^{n_1}}, \frac{2^{n_2}}{3^{m_2}}$$
 then
 $$ \kappa_{\min( 2^{n_1+n_2},3^{m_1+m_2})/6} \leq \log \max\left(\frac{3^{m_1}}{2^{n_1}}, \frac{2^{n_2}}{3^{m_2}}\right).$$
-Thus, for instance, setting $n_1=3$, $m_1=2$, $n_2=2$, $m_2=1$, we have
-$$ \kappa_{4.5} \leq \log \frac{2^2}{3} = 0.28768\dots,$$
-setting $n_1 = 3$, $m_1 = 2$, $n_2 = 5$, $m_2 = 3$, we have
-$$\kappa_{40.5} \leq \log \frac{2^5}{3^3} = 0.16989\dots$$ 
-and setting $n_1 = 11$, $m_1 = 7$, $n_2 = 8$, $m_2 = 5$, we have 
-$$\kappa_{2^{18}/3} \leq \log \frac{3^7}{2^{11}} = 0.06566\dots$$
-($2^{18}/3 = 87381.33\dots$).
 \end{lemma}
 
 \begin{proof}  If $\min( 2^{n_1+n_2},3^{m_1+m_2})/6 \leq t \leq 2^{n_2-1} 3^{m_1-1}$, then we have
@@ -635,6 +631,7 @@ Some efficient choices of parameters for this lemma are given in \Cref{approx-ta
 $n_1$ & $m_1$ & $n_2$ & $m_2$ & $\min(2^{n_1+n_2},3^{m_1+m_2})/6$ & $\log \max(3^{m_1}/2^{n_1}, 2^{n_2}/3^{m_2})$ \\
 \hline
 $1$ & $1$ & $\mathbf{1}$ & $\mathbf{0}$ & $1/2 = 0.5$ & $\log 2 = 0.69314\dots$ \\
+\hline
 $\mathbf{1}$ & $\mathbf{1}$ & $2$ & $1$ & $2^2/3 = 1.33\dots$ & $\log (3/2) = 0.40546\dots$\\
 \hline
 $3$ & $2$ & $\mathbf{2}$ & $\mathbf{1}$ & $3^2/2 = 4.5$ & $\log (2^2/3) = 0.28768\dots$ \\
@@ -643,14 +640,18 @@ $3$ & $2$ & $\mathbf{5}$ & $\mathbf{3}$ & $3^4/2 = 40.5$ & $\log (2^5/3^3) = 0.1
 $\mathbf{3}$ & $\mathbf{2}$ & $8$ & $5$ & $2^{10}/3 = 341.33\dots$ & $\log (3^2/2^3) = 0.11778\dots$\\ 
 $\mathbf{11}$ & $\mathbf{7}$ & $8$ & $5$ & $2^{18}/3 = 87381.33\dots$ & $\log (3^7/2^{11}) = 0.06566\dots$ \\
 \hline
+$19$ & $12$ & $\mathbf{8}$ & $\mathbf{5}$ & $3^{17}/2 \approx 6.4 \times 10^7$ & $\log (2^8/3^5) = 0.05211\dots$ \\
+$19$ & $12$ & $\mathbf{27}$ & $\mathbf{17}$ & $3^{29}/2 \approx 3.4 \times 10^{13}$ & $\log (2^{27}/3^{17}) = 0.03856\dots$ \\
+$19$ & $12$ & $\mathbf{46}$ & $\mathbf{29}$ & $3^{41}/2 \approx 1.8 \times 10^{19} $ & $\log (2^{46}/3^{29}) = 0.02501\dots$ \\
+\hline
 \end{tabular}
-\caption{Efficient parameter choices for \Cref{lemcount-0}.  The parameters which attain the minimum or maximum are indicated in \textbf{boldface}.}\label{approx-table}
+\caption{Efficient parameter choices for \Cref{lemcount-0}.  The parameters used to attain the minimum or maximum are indicated in \textbf{boldface}. Note how the number of rows in each group matches the terms $1,1,2,2,3,\dots$ in the continued fraction expansion.}\label{approx-table}
 \end{table}
 
 \begin{remark}
 It should be unsurprising that the continued fraction convergents $1/1$, $2/1$, $3/2$, $8/5$, $19/12$, $\dots$ to 
 $$\frac{\log 3}{\log 2} = 1.5849\dots = [1; 1,1,2,2,3,1,\dots]$$
-are often excellent choices for $n_1/m_1$ or $n_2/m_2$, although occasionally other approximants such as $11/7$ are also usable.
+are often excellent choices for $n_1/m_1$ or $n_2/m_2$, although other approximants such as $5/3$ or $11/7$ are also usable.
 \end{remark}
 
 Asymptotically, we have logarithmic-type decay:
@@ -699,23 +700,75 @@ It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close 
 \section{Asymptotic evaluation of $t(N)$}
 
 In this section we establish the lower bound
-$$ \frac{t}{N} \geq \frac{1}{e} - \frac{c_0}{\log N} - O(\log^{1-c} N)$$
-for some absolute constant $c>0$.
+$$ \frac{t}{N} \geq \frac{1}{e} - \frac{c_0}{\log N} + \frac{1}{\log^{1+c_1} N}$$
+for some small absolute constant $0 < c_1 < 1$, if $N$ is sufficiently large.  With this choice of parameters, one has
+$$ \delta = \frac{ec_0}{\log N} + \frac{1}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
 
 Let $N$ be sufficiently large.  We introduce parameters
 $$ A \coloneqq \lfloor \log^2 N \rfloor$$
 and
-$$ K \coloneqq \log^3 N.$$
+$$ K \coloneqq \lfloor \log^3 N \rfloor$$
+and
+$$ L \coloneqq N^{0.1}.$$
+We apply the algorithm from \Cref{alg-desc}, using the first option for Step 3.  With these parameters, we see from \Cref{baker} that the right-hand side of \eqref{new-balance-5} is at least
+$$ ec_0 \frac{N}{\log N} + \frac{N}{2 \log^{1+c_1} N}$$
+if $c_1$ is small enough and $N$ is large enough.  
 
-Let $I$ denote the integers in the interval $[t, t+3t/A]$ that are coprime to $6$, and let $\tuple$ be the tuple consisting of these integers, each appearing with multiplicity $A$.  This tuple is $t$-admissible, and the $t$-excess can be estimated as
-$$ \excess_t(\tuple) \leq |\tuple| \log(1+3/A) \ll A \frac{t}{A} \frac{1}{A} \ll \frac{N}{\log^2 N}$$
-by choice of $A$.  As none of the elements of $\tuple$ are divisible by tiny primes, we have a considerable surplus at those primes.  Indeed, from \eqref{legendre} we have
-$$ \nu_p(N!/\prod \tuple) = \nu_p(N!) = \frac{N}{p-1} - O(\log N)$$
-for the tiny primes $p=2,3$.
+Now we work on the left-hand side of \eqref{new-balance-5}.  From \eqref{excess2-bound} one has
+$$ \excess_t(\tuple^{(2)}) \ll \frac{t}{A} + 1\ll \frac{N}{\log^2 N}.$$
+By repeating the proof of \Cref{upper-bound}, we see that
+$$ \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p} = ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right)$$
+and hence by \eqref{excess-eq-alt}
+$$ \excess_t(\tuple^{(2)}) = ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+Thus, to establish \eqref{new-balance-5}, and bounding $\kappa_K, \kappa_p = O(1)$ and $\min(\frac{\log p}{\log\sqrt{t/K}},1) = O(\log p/\log N)$, it will suffice to show that
+\begin{equation}\label{excise}
+\sum_{3 < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1} \ll \frac{N (\log\log N)^2}{\log^2 N}.
+\end{equation}
+We begin by considering primes $p$ in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$.  In this range, the second term in the right-hand side of \eqref{mod} vanishes (because $\lceil t/p' K \rceil < K(1+\frac{3N/t}{A})$), so by \eqref{nup-21}, \eqref{nup} we have
+$$
+\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right) =
+\nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right)
+\ll A \frac{\log N}{\log p};$$
+bounding $\log p/\log N$ crudely by $O(1)$, we then have
+$$
+\sum_{K(1+\frac{3N/t}{A}) < p \leq t/K}
+\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1}
+\ll A \sum_{K(1+\frac{3N/t}{A}) < p \leq t/K} \frac{\log N}{\log p} \ll \frac{AN}{K\log N} \ll \frac{N}{\log^2 N}$$
+using the prime number theorem to bound the sum over primes (dividing into the regions $p \leq \sqrt{N}$ and $p > \sqrt{N}$ if desired).  Thus the contribution of these primes to \eqref{excise} is acceptable.
 
+Now we deal with the (technical) contribution of those primes in the range $K < p \leq K(1+\frac{3N/t}{A})$.  Again, the second term in the right-hand side of \eqref{mod} vanishes, but the second term in the right-hand side of \eqref{nup-2} has one non-trivial term, namely when $m=p$.  By the Brun--Titchmarsh theorem, the contribution of this term is $O(\frac{N}{K \log N})$.  Hence in this range we have the crude bound
+$$
+\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,1}
+\ll \frac{N}{K \log N} $$
+and hence the contribution of this case is $O(N/A \log N) = O(N/\log^3 N)$, which is acceptable.
 
-
-
+Now we consider the primes in the range $3 < p \leq K$.  From \eqref{mop}, \eqref{nup-2}, \eqref{nup} and the Brun--Titchmarsh inequality we have the crude  upper bound
+\begin{align*}
+\nu_p(N!/\tuple^{(3)}) &\leq
+\nu_p(N!/\tuple^{(2)})  \\
+&\leq \nu_p(N!/\tuple^{(1)}) + A \sum_{m \ll K} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \pi\left(\frac{t}{m}\right)\right) \\
+&\ll A \frac{\log N}{\log p} + A \sum_{m \ll K} \nu_p(m) \frac{N}{Am \log N} \\
+&\ll \log^3 N + \sum_{j \leq \log\log N} \sum_{m \ll K/p^j} \frac{N}{p^j m \log N} \\
+&\ll \frac{N \log\log N}{p \log N}.
+\end{align*}
+We can thus control the net contribution of the surpluses at these primes by
+\begin{align*}
+  \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\log p/\log N,0} &\ll \sum_{3 < p \leq K}
+  \frac{N \log\log N}{p \log N} \frac{\log p}{\log N} \\
+  &\ll \frac{(N \log\log N)^2}{\log^2 N}
+\end{align*}
+by Mertens' theorem.  Hence this contribution is acceptable.  It remains to control the deficits:
+$$
+\sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, 1} \ll \frac{N (\log\log N)^2}{\log^2 N}.$$
+Here the situation is more delicate.  From \eqref{nup-2}, \eqref{nup} and the prime number theorem (with classical error term) we have
+\begin{align*}
+  \nu_p(N!/\tuple^{(3)}) &\geq
+-O( A \frac{\log N}{\log p}) + A \sum_{m \leq K; (m,6)=1} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \
+pi\left(\frac{t}{m}\right)\right) \\
+&\geq -O(\log^3 N) + \left(1 + O\left(\frac{\log \log N}{\log N}\right)\right) \sum_{m \leq K; (m,6)=1} \frac{3N}{m \log N} \\ 
+&= \frac{N}{\log N} \sum_{m \leq K; (m,6)=1} \frac{3}{m} + O\left( \frac{N(\log\log N)^2}{\log^2 N} \right).
+\end{align*}
+Using \eqref{mop} and the prime number theorem
 
 \section{Guy--Selfridge conjecture for $N > 10^{19}$}
 

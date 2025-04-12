@@ -1,15 +1,14 @@
 from facfac import main
 import math
 
-results = open("../../Data/results.txt", "a")
+lower = 42000
+upper = 42999
 
-lower = 43000
-upper = 43631
-
-save_path_partial = "../../Data/low_factorizations2/"
+results = open(f"../../Data/results_{lower}-{upper}.txt", "a")
+save_path_partial = "../../Data/low_factorizations/"
 
 for i in range(lower, upper+1):
-    check = main(i, math.ceil(i/3), save=save_path_partial + "factors_" + str(i) + ".txt")
+    check = main(i, math.ceil(i/3), save=save_path_partial + f"factors_{i}.txt")
     if check:
         results.write(f"{i}: SUCCESS\n")
     else:

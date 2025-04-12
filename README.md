@@ -44,7 +44,7 @@ Secondary goals are
 3. The OEIS tables have been extended to $N \leq 600$.  For $N \neq 155$, the linear programming method systematically computes all values of $t(N)$ up to $t(600)$; for $N=155$, the bound is off by one, and integer programming methods are needed instead.
 4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.
 
-## Timeline 
+## Timeline on controlling $t(N)$
 
 | Date | Contributor | Goal | $N$ | Method | Comments |
 | --- | --- | --- | --- | --- | --- |

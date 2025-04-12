@@ -144,13 +144,13 @@ for any positive rational $r$.
 Asymptotically, it is known that
 $$ \frac{1}{e} - \frac{O(1)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0+o(1)}{\log N}$$
 where
-  \begin{align*}
+  \begin{equation}\label{c0-def}
+    \begin{split}
     c_0 &\coloneqq \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx \\
     &= \frac{1}{e} \int_1^\infty \lfloor y \rfloor \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} \\
-    &= 0.3044\dots
-  \end{align*}
-
-
+    &= 0.3044190\dots
+    \end{split}
+  \end{equation}
 
 We recall Legendre's formula
 \begin{equation}\label{legendre}
@@ -164,9 +164,9 @@ To bound the factorial, we have the explicit Stirling approximation \cite{robbin
 \end{equation}
 valid for all natural numbers $N$. 
 
-We use $O_{\leq}(X)$ to denote any quantity whose magnitude is bounded by at most $X$ (note the absence of an additional constant factor).
+In addition to the usual asymptotic notation, we use $O_{\leq}(X)$ to denote any quantity whose magnitude is bounded by at most $X$ (note the absence of an additional constant factor).
 
-To estimate the prime counting function, we have the following good asymptotics up to a large height.
+To estimate the prime counting function $\pi(x)$, we have the following good asymptotics up to a large height.
 
   \begin{theorem}[Buthe's bounds]\cite{buthe}  For any $2 \leq x \leq 10^{19}$, we have
   $$ \mathrm{li}(x) - \frac{\sqrt{x}}{\log x}\left(1.95 + \frac{3.9}{\log x} + \frac{19.5}{\log^2 x}\right) \leq \pi(x) < \mathrm{li}(x)$$
@@ -250,9 +250,11 @@ To control the error term, we observe from Taylor expansion that
 \end{equation}
 and the contribution of the error term is
 $$ \ll \int_{N/\log N}^N \frac{N}{x} \frac{x}{N} \frac{\log (N/x)}{\log^2 N}\ dx \ll \frac{N}{\log^2 N}$$
-which is acceptable.  As for the main term, we see from \eqref{tax} that we can complete the integral to
-$$ \int_0^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log N}$$
-up to an acceptable error of $O(N/\log^2 N)$.  But this expression rescales to $c_0 \frac{N}{\log N}$, giving the claim.
+which is acceptable.  As for the main term, we can rescale it to
+$$ \frac{et}{\log N} \int_{N/et\log N}^{N/et} \left\lfloor \frac{N/et}{x} \right\rfloor \log \left( ex \left\lceil \frac{1}{ex} \right\rceil \right) dx.$$
+Since $N/et = 1 + O(1/\log N)$, we see that the integrand here is within $O(1/\log N)$ of $\lfloor \frac{1}{x} \rfloor \log \left( e x \lceil \frac{1}{e x} \rceil \right)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure zero.  A variant of \eqref{tax} shows that both integrandd are bounded by $O(1)$ for all $x \in [0,N/et]$, so by the triangle inequality the above expression can be rewritten as
+$$ \frac{N}{\log N} \int_0^1 \left\lfloor \frac{1}{x} \right\rfloor \log \left( e x \left\lceil \frac{1}{e x} \right\rceil \right) dx + O\left( \frac{N}{\log^2 N}\right),$$
+and the claim follows from \eqref{c0-def}.
 \end{proof}
 
 
@@ -417,9 +419,9 @@ We now use this lemma to analyze Step 6 as follows.
     \excess_t(\tuple^{(5)}) + \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(5)}}\right)\right|_{\log p,\infty} \leq \delta N + \log \sqrt{2\pi} - \frac{3}{2} \log N - (\kappa_L \log \sqrt{12}) \frac{N}{\log t}.
   \end{equation}
   \item[(ii)] (Large surpluses at tiny primes)
-The surpluses $\nu_2(N!/\prod \tuple^{(5)}), \nu_3(N!/\prod \tuple^{(5)})$ are positive (so in particular Step 7 does not halt with an error) and obey the bounds
+The surpluses $\nu_2(N!/\prod \tuple^{(5)}), \nu_3(N!/\prod \tuple^{(5)})$ lie in the sector $\Gamma_{t,L} \subset \R^2$, defined to be the set of pairs $(n,m)$ with $n,m > 0$ and
 $$
-\frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{\nu_2(N!/\prod \tuple^{(5)}) \log 2}{\nu_3(N!/\prod \tuple^{(5)}) \log 3} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
+\frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{n}{m} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
 $$
 \end{itemize}
 Then $t(N) \geq t$.
@@ -451,9 +453,8 @@ Then $t(N) \geq t$.
  \sum_{3 < p \leq t/K}
  \left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\frac{\log \sqrt{tK} + \kappa_K}{\log\sqrt{t/K}} \log p,\infty}
  + \log t + \kappa_L,$$
- then $\nu_2(N!/\prod \tuple^{(4)}) > n_{**}$, $\nu_3(N!/\prod \tuple^{(4)}) > m_{**}$, and furthermore
- $$
- \frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{(\nu_2(N!/\prod \tuple^{(4)})-n_{**}) \log 2}{(\nu_3(N!/\prod \tuple^{(4)})-m_{**}) \log 3} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.$$
+ then one has
+ $$\left( \nu_2\left(\frac{N!}{\prod \tuple^{(4)}}\right) - n_{**}, \nu_3\left(\frac{N!}{\prod \tuple^{(4)}}\right) - m_{**}\right) \in \Gamma_{t,L}.$$
  \end{itemize}
   Then $t(N) \geq t$.
 \end{proposition}
@@ -504,10 +505,9 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
     \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log \sqrt{tK} + \kappa_K}{\log\sqrt{t/K}} \log p,\log p+\kappa_p}\\
   &\quad  + \log t + \kappa_K,
   \end{align*}
-    then $\nu_2(N!/\prod \tuple^{(3)}) > n_{**}$, $\nu_3(N!/\prod \tuple^{(3)}) > m_{**}$, and furthermore
-  $$
-  \frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{(\nu_2(N!/\prod \tuple^{(3)})-n_{**}) \log 2}{(\nu_3(N!/\prod \tuple^{(3)})-m_{**}) \log 3} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
-  $$
+    then one has
+  $$\left( \nu_2\left(\frac{N!}{\prod \tuple^{(3)}}\right) - n_{**}, \nu_3\left(\frac{N!}{\prod \tuple^{(3)}}\right) - m_{**}\right) \in \Gamma_{t,L}.
+  $$  
   \end{itemize}
      Then $t(N) \geq t$.
 \end{proposition}
@@ -583,16 +583,23 @@ We now pass to $\tuple^{(3)}$ by performing Step 3 of the algorithm.  We first c
   \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil^{\langle 2,3 \rangle}}{t/p}.
 \end{equation}
 For primes $p >t/K$, one is now in balance:
-$$ \nu_p(N!/\tuple^{(3)}) = 0.$$
+\begin{equation}\label{3-balance}  
+  \nu_p(N!/\tuple^{(3)}) = 0. \end{equation}
 For primes $3 < p \leq t/K$, no change has been made to the $p$-surplus or $p$-deficit:
 $$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}).$$
-Finally, at a tiny prime $p_0=2,3$ we have
-$$ \nu_{p_0}(N!/\tuple^{(3)}) = \nu_{p_0}(N!) - \sum_{p > t/K} \nu_p(N!) \nu_{p_0}(\lceil t/p \rceil^{\langle 2,3 \rangle}).$$
+Finally, at a tiny prime $p=2,3$ we have
+$$ \nu_{p}(N!/\tuple^{(3)}) = \nu_{p}(N!) - \sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil^{\langle 2,3 \rangle}).$$
 
-
-
-
-
+Now suppose we use the alternate version of Step 3, in which we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil$ for each prime $p > t/K$.  The excess is now given by
+\begin{equation}\label{excess-eq-alt}
+  \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}.
+\end{equation}
+One still has balance \eqref{3-balance} at primes $p>t/K$, but now the $p$-surplus or $p$-deficit at primes $3 < p \leq t/K$ is modified:
+$$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)}) -
+\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).$$
+Similarly, at tiny primes $p=2,3$ we have
+$$ \nu_p(N!/\tuple^{(3)}) = \nu_p(N!) -
+\sum_{p' > t/K} \nu_{p'}(N!) \nu_{p}(\lceil t/p' \rceil).$$
 
 \section{Powers of 2 and 3}\label{power-sec}
 

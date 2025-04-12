@@ -166,7 +166,26 @@ valid for all natural numbers $N$.
 
 In addition to the usual asymptotic notation, we use $O_{\leq}(X)$ to denote any quantity whose magnitude is bounded by at most $X$ (note the absence of an additional constant factor).
 
-To estimate the prime counting function $\pi(x)$, we have the following good asymptotics up to a large height.
+\begin{lemma}[Integration by parts]  Let $(y,x]$ be a half-open interval in $(0,+\infty)$.  Suppose that one has a function $a \colon \N \to \R$ and a continuous function $f: (y,x] \to \R$ such that 
+  $$ \sum_{y < n \leq z} a_n = \int_z^y f(t)\ dt + C + O_{\leq}(A)$$
+  for all $y \leq z \leq x$, and some $C \in \R$, $A>0$.  Then, for any function $b: (y,x] \to \R$ of bounded total variation, one has
+\begin{equation}\label{tve}
+   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ du + O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}))
+\end{equation}
+\end{lemma}
+
+\begin{proof}  If, for every natural number $y < n \leq x$, one modifies $b$ to be equal to the constant $b(n)$ in a small neighborhood of $n$, then one does not affect the left-hand side of \eqref{tve} or increase the total variation of $b$, while only modifying the integral in \eqref{tve} by an arbitrarily small amount.  Hence, by the usual limiting argument, we may assume without loss of generality that $b$ is locally constant at each such $n$.  If we define the function $g \colon (y,x] \to \R$ by
+$$ g(z) \coloneqq  \sum_{y < n \leq z} a_n - \int_z^y f(u)\ du - C$$
+then $g$ has jump discontinuities at the natural numbers, but is otherwise continuously differentiable, and is also bounded uniformly in magnitude by $A$.  We can then compute the Riemann--Stieltjes integral
+$$ \int_{(y,x]} b\ dg = \sum_{y < n \leq x} b(n) a_n - \int_y^x f(t) b(t)\ dt.$$
+Since the discontinuities of $g$ and $b$ do not coincide, we may integrate by parts to obtain
+$$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g db.$$
+The left-hand side is $O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}))$, and the claim follows.
+\end{proof}
+
+We will use this lemma to control primes.  One form of the prime number theorem with classical error term is that
+$$ \pi(x) \coloneqq \sum_{p \leq x} 1 = \int_2^x \frac{dt}{\log t} + O(\frac{x}{\log^{10} x})$$
+(say). 
 
   \begin{theorem}[Buthe's bounds]\cite{buthe}  For any $2 \leq x \leq 10^{19}$, we have
   $$ \mathrm{li}(x) - \frac{\sqrt{x}}{\log x}\left(1.95 + \frac{3.9}{\log x} + \frac{19.5}{\log^2 x}\right) \leq \pi(x) < \mathrm{li}(x)$$
@@ -543,7 +562,7 @@ By the fundamental theorem of calculus, this is
 $$ A \int_0^{3t/A} |I \cap (t, t+h]|\ \frac{dh}{t+h}.$$
 Bounding $\frac{1}{t+h}$ by $\frac{1}{t}$ and applying \Cref{lit}, we conclude that
 \begin{equation}\label{excess1-bound}
- \excess_t(\tuple^{(1)}) \leq A \int_0^{3N/A} \left(h + \frac{4}{3}\right) \frac{dh}{t} = \frac{9N^2}{2tA} + 4.
+ \excess_t(\tuple^{(1)}) \leq A \int_0^{3N/A} \left(\frac{h}{3} + \frac{4}{3}\right) \frac{dh}{t} = \frac{3N^2}{2tA} + 4.
 \end{equation}
 Next, we compute $p$-valuations $\nu_p(\tuple^{(1)})$.  By construction, this quantity vanishes at tiny primes $p=2,3$.  For $p>3$, we can use \Cref{lit} again to conclude
 \begin{align*}
@@ -565,7 +584,7 @@ O_{\leq}\left(\frac{4A+6}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\rig
 
 Now we pass to $\tuple^{(2)}$ by performing Step 3 of the algorithm.  Removing elements from a $t$-admissible multiset cannot increase the $t$-excess, so from \eqref{excess1-bound} we have
 \begin{equation}\label{excess2-bound} 
-  \excess_t(\tuple^{(2)}) \leq \frac{9t}{2A} + 4.
+  \excess_t(\tuple^{(2)}) \leq \frac{3N^2}{2tA} + 4.
 \end{equation}
 The elements removed are of the form $pm$ with $m \leq K(1+\frac{3N/t}{A})$ coprime to $6$, and $p$ in the interval $(\frac{t}{\min(m,K)}, \frac{t}{m}+\frac{3N}{mA}]$.  We conclude that
 \begin{equation}\label{nup-21}
@@ -839,7 +858,7 @@ To finish the proof of \eqref{main-lower}, it suffices by \Cref{step4-reduce} to
 $$ \ll \sum_{3 < p \leq t/K} \left| \nu_p\left(\frac{N!}{\tuple^{(3)}}\right) \right|\log p + \log N.$$
 We claim that this expression is $O( N (\log\log N)^2 / \log N )$, which implies
 $$ n_{**}, m_{**} \ll \frac{N (\log\log N)^2}{\log N}.$$
-For the contribution of the primes in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$ this follows readily from \eqref{anp}; the contribution of $K < p \leq K(1+\frac{3N/t}{A})$ follows readily from \eqref{tech}; and the contribution of $3 < p \leq K$ follows readily from \eqref{crude-upper}, \eqref{nup3-lower}, and Mertens' theorem.  Also, from \eqref{tiny-con}, \eqref{legendre} we see for a tiny prime $p=2,3$ that
+For the contribution of the primes in the range $K(1+\frac{3N/t}{A}) < p \leq t/K$ this follows readily from \eqref{anp}; the contribution of $K < p \leq K(1+\frac{3N/t}{A})$ follows readily from \eqref{tech}; and the contribution of $3 < p \leq K$ follows readily from \eqref{crude-upper}, \eqref{nup3-lower}, and Mertens' theorem.  Also, from \eqref{tinycon}, \eqref{legendre} we see for a tiny prime $p=2,3$ that
 \begin{align*}
   \nu_p(N!/\tuple^{(3)}) &= \frac{N}{p-1} + O(\log N) -
 O\left( \sum_{p' > t/K} \frac{N}{p'} \nu_{p}(\lceil t/p' \rceil) \right) \\
@@ -848,14 +867,16 @@ O\left( \sum_{p' > t/K} \frac{N}{p'} \nu_{p}(\lceil t/p' \rceil) \right) \\
 &= \frac{N}{p-1} + O\left( \frac{N (\log\log N)^2}{\log N} \right)
 \end{align*}
 (with room to spare), and so
-$$   \nu_2(N!/\tuple^{(3)}) - n_{**} = N + O\left( \frac{N (\log\log N)^2}{\log N} \right); \quad 
-\nu_2(N!/\tuple^{(3)}) - n_{**} = \frac{N}{2} + O\left( \frac{N (\log\log N)^2}{\log N} \right).$$
+\begin{align*}
+   \nu_2(N!/\tuple^{(3)}) - n_{**} &= N + O\left( \frac{N (\log\log N)^2}{\log N} \right)\\
+   \nu_3(N!/\tuple^{(3)}) - m_{**} &= \frac{N}{2} + O\left( \frac{N (\log\log N)^2}{\log N} \right).
+\end{align*}
 By choice of $L$, this implies \eqref{sector} for $N$ large enough.  The proof of \eqref{main-lower} is now complete.
 
-\section{Guy--Selfridge conjecture for $N > 10^{19}$}
+\section{Guy--Selfridge conjecture for \texorpdfstring{$N>10^{19}$}{N > 10\^19}}
 
 
-\section{Guy--Selfridge conjecture for medium values of $N$}
+\section{Guy--Selfridge conjecture for medium values of \texorpdfstring{$N$}{N}}
 
 
 

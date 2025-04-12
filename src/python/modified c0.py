@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-# code for generating a modification of the c0 constant
+# code for generating a modification of the c0 constant.  Unfortunately, its average is too large for applications
 
 def is_smooth(n):
     m = n

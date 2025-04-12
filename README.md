@@ -40,7 +40,7 @@ Secondary goals are
 ## Current status
 
 1. Conjecture 1 has been reduced to Conjecture 2; in particular, it has been verified up to $N \leq 2 \times 10^{10}$ and for sufficiently large $N$, and for the remaining $N$ it would follow from the corresponding instance of Conjecture 2.
-2. Conjecture 2 is known in the range $43632 \leq N \leq 2 \times 10^{10}$, and for sufficiently large $N$, and fails for $N = 43631$.  Thus, contingent on verifying the conjecture for $N > 2 \times 10^{10}$, the optimal threshold is $43632$.
+2. Conjecture 2 is known in the range $43632 \leq N \leq 2 \times 10^{10}$, and for sufficiently large $N$, and fails for $N = 43631$.  Thus, contingent on verifying the conjecture for $N > 2 \times 10^{10}$, the optimal threshold is $43632$.  The smallest known $N$ for which the conjecture holds is $N=41006$; this is tentatively believed to be the true minimum.
 3. The OEIS tables have been extended to $N \leq 600$.  For $N \neq 155$, the linear programming method systematically computes all values of $t(N)$ up to $t(600)$; for $N=155$, the bound is off by one, and integer programming methods are needed instead.
 4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.
 
@@ -64,7 +64,7 @@ Secondary goals are
 | [11 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/comment-page-1/#comment-687728) | Matthieu Rosenfeld | 2 | $[8 \times 10^4, 2 \times 10^{10}]$ | Improved greedy
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/5) | plby | 2 | $[43632, 80973]$ | Linear programming | 
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/2#issuecomment-2796186186) | Uhrmar | 2 | $\neg 43631$; $[43632,8 \times 10^4]$ | Linear programming | Provisional limit of Conjecture 2 reached 
-| [12 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/8) | Straw17 | 2 | $\neg[200,15000]$; $\subset [42000,43631]$ | Linear programming | Some possible successes of conjecture in $[42000,43631]$
+| [12 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/8) | Evan Conway | 2 | $\neg[200,15000] \cup [38000,42000] \backslash \{41006\}$ | Linear programming | $41006$ is the smallest known $N$ where Conjecture 2 holds
 
 ## Computations of $c_0$
 
@@ -72,7 +72,7 @@ Secondary goals are
 | --- | --- | --- | --- | --- | 
 | [26 Mar 2025](https://arxiv.org/abs/2503.20170v1) | Terence Tao | $c_0 \approx 0.3044$ | Naive Riemann sum | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6) | Terence Tao | $c_0 \approx 0.30441901087$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
-| [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Straw17 | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
+| [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Evan Conway | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
 
 ## Data
 

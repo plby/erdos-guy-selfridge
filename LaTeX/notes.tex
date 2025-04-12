@@ -113,7 +113,7 @@
 \renewcommand\gcd{{\operatorname{gcd}}}
 \newcommand\eps{\varepsilon}
 \newcommand\tuple{{\mathcal B}}
-\newcommand\excess{{\mathrm{E}}}
+\newcommand\excess{{\mathcal{E}}}
 
 \renewcommand{\mod}{\bmod}
 
@@ -166,12 +166,13 @@ valid for all natural numbers $N$.
 
 In addition to the usual asymptotic notation, we use $O_{\leq}(X)$ to denote any quantity whose magnitude is bounded by at most $X$ (note the absence of an additional constant factor).
 
-\begin{lemma}[Integration by parts]  Let $(y,x]$ be a half-open interval in $(0,+\infty)$.  Suppose that one has a function $a \colon \N \to \R$ and a continuous function $f: (y,x] \to \R$ such that 
+\begin{lemma}[Integration by parts]\label{integ-lemma}  Let $(y,x]$ be a half-open interval in $(0,+\infty)$.  Suppose that one has a function $a \colon \N \to \R$ and a continuous function $f: (y,x] \to \R$ such that 
   $$ \sum_{y < n \leq z} a_n = \int_z^y f(t)\ dt + C + O_{\leq}(A)$$
   for all $y \leq z \leq x$, and some $C \in \R$, $A>0$.  Then, for any function $b: (y,x] \to \R$ of bounded total variation, one has
 \begin{equation}\label{tve}
-   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ du + O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}))
+   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ du + O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}})),
 \end{equation}
+where $b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$.
 \end{lemma}
 
 \begin{proof}  If, for every natural number $y < n \leq x$, one modifies $b$ to be equal to the constant $b(n)$ in a small neighborhood of $n$, then one does not affect the left-hand side of \eqref{tve} or increase the total variation of $b$, while only modifying the integral in \eqref{tve} by an arbitrarily small amount.  Hence, by the usual limiting argument, we may assume without loss of generality that $b$ is locally constant at each such $n$.  If we define the function $g \colon (y,x] \to \R$ by
@@ -193,10 +194,13 @@ was demonstrated for $11 \leq x \leq 10^{19}$.  For $10^{19} \leq x \leq 10^{21}
   $$ \psi(x) = x + O_{\leq}(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3))$$
 were obtained in \cite[(7.3)]{buthe}.  On the other hand, in \cite[Theorem 1, Table 1]{buthe} the bound
 $$ \psi(x) = x + O_{\leq}(1.11742 \times 10^{-8} x)$$
-was shown for $x \geq e^{45} \approx 10^{19.54}$.  We may simply combine the latter two bounds to conclude that
-$$ \psi(x) = x + O_{\leq}(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3) + 1.11742 \times 10^{-8} x)$$
-whenever $x \geq 10^{19}$.
-
+was shown for $x \geq e^{45} \approx 10^{19.54}$.  We may  combine these bounds together to obtain
+\begin{equation}\label{psi-combined}
+  \psi(x) = x + O_{\leq}(E(x))
+\end{equation}
+for all $x \geq 11$, where the error function $E(x)$ is defined as
+$$ E(x) \coloneqq 0.94 \sqrt{x} + \frac{\sqrt{x}}{8\pi} \log x(\log x - 3) 1_{x \geq 10^{19}} + 1.11742 \times 10^{-8} x 1_{x \geq e^{45}}.$$
+Note that this function is monotone increasing.
     
     
 
@@ -475,7 +479,7 @@ We now use this lemma to analyze Step 6 as follows.
   \item[(ii)] (Large surpluses at tiny primes)
 The surpluses $\nu_2(N!/\prod \tuple^{(5)}), \nu_3(N!/\prod \tuple^{(5)})$ lie in the sector $\Gamma_{t,L} \subset \R^2$, defined to be the set of pairs $(n,m)$ with $n,m > 0$ and
 $$
-\frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{n}{m} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
+\frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{n \log 2}{m \log 3} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
 $$
 \end{itemize}
 Then $t(N) \geq t$.
@@ -637,8 +641,11 @@ $$ \nu_p(N!/\tuple^{(2)}) = \nu_p(N!)$$
 
 
 We now pass to $\tuple^{(3)}$ by performing Step 3 of the algorithm.  In other words, we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil$ for each prime large $p > t/K$.  The $t$-excess is now given by
+$$  \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}
+$$
+and hence by \eqref{excess-2-bound}
 \begin{equation}\label{excess-eq-alt}
-  \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}.
+\excess_t(\tuple^{(3)}) = \frac{3N^2}{2tA} + 4 + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}.
 \end{equation}
 By construction one has balance \eqref{3-balance} at primes large $p>t/K$, 
 \begin{equation}\label{3-balance}  
@@ -768,9 +775,7 @@ We apply the algorithm from \Cref{alg-desc}, using the first option for Step 3, 
 $$ ec_0 \frac{N}{\log N} + \frac{N}{2 \log^{1+c_1} N}$$
 if $c_1$ is small enough and $N$ is large enough.  
 
-Now we work on the left-hand side of \eqref{new-balance-5}.  From \eqref{excess2-bound} one has
-$$ \excess_t(\tuple^{(2)}) \ll \frac{t}{A} + 1\ll \frac{N}{\log^2 N}.$$
-By repeating the proof of \Cref{upper-bound}, we see that
+Now we work on the left-hand side of \eqref{new-balance-5}.  By repeating the proof of \Cref{upper-bound}, we see that
 $$ \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p} = ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right)$$
 and hence by \eqref{excess-eq-alt}
 $$ \excess_t(\tuple^{(2)}) = ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
@@ -821,8 +826,7 @@ by Mertens' theorem.  Hence this contribution is acceptable.  It remains to cont
 Here the situation is more delicate.  From \eqref{nup-2}, \eqref{nup} and the prime number theorem (with classical error term) we have
 \begin{align*}
   \nu_p(N!/\tuple^{(2)}) &\geq
--O( A \frac{\log N}{\log p}) + A \sum_{m \leq K; (m,6)=1} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \
-pi\left(\frac{t}{m}\right)\right) \\
+-O( A \frac{\log N}{\log p}) + A \sum_{m \leq K; (m,6)=1} \nu_p(m) \left(\pi\left(\frac{t}{m}+\frac{3N}{Am}\right) - \pi\left(\frac{t}{m}\right)\right) \\
 &\geq -O(\log^3 N) + \left(1 + O\left(\frac{\log \log N}{\log N}\right)\right) \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3N}{m \log N} \\ 
 &= \frac{N}{\log N} \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m} + O\left( \frac{N(\log\log N)^2}{p \log^2 N} \right).
 \end{align*}
@@ -838,43 +842,50 @@ Next, we control the final term in \eqref{mod} using \eqref{legendre} and the pr
 We now have a crucial inequality:
 
 \begin{lemma}[Key inequality] We have
-$$ \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m}
-\geq \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1}.$$
+$$ 0 \leq \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m}
+- \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1} \leq \frac{2}{p-1}.$$
 \end{lemma}
 
 \begin{proof} Writing $\nu_p(m) = \sum_{j \geq 1} 1_{p^j|m}$, it suffices to show that
-$$ \sum_{m \leq K; (m,6)=1, p^j|m} \frac{3}{m}
-\geq \sum_{m \leq K, p^j|m} \log \frac{m}{m-1}$$
+$$ 0 \leq \sum_{m \leq K; (m,6)=1, p^j|m} \frac{3}{m}
+- \sum_{m \leq K, p^j|m} \log \frac{m}{m-1} \leq \frac{2}{p^j}$$
 for all $j$.  Making the change of variables $m = p^j n$, it suffices to show that
-$$ \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p^j \log \frac{p^j n}{p^j n - 1} \geq 0$$
-for any $K' > 0$.  From the Taylor expansion
-$$ p^j \log \frac{p^j n}{p^j n - 1}  = \frac{1}{n} + \frac{1}{2 p^j n^2} + \frac{1}{3 p^{2j} n^3} + \dots$$
-and the fact that $p^j \geq 5$, it suffices to show that
-$$
-  \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - 5 \log \frac{5n}{5n - 1} \geq 0.
-$$
-Using the bound
-$$ \log \frac{5n}{5n - 1} = \int_{5n-1}^{5n} \frac{dx}{x} \leq \frac{1}{5n-1}$$
-it suffices to show that
+$$ 0 \leq \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p^j \log \frac{p^j n}{p^j n - 1} \leq 2$$
+for any $K' > 0$.   Using the bound
+$$ \log \frac{p^jn}{p^jn - 1} = \int_{p^jn-1}^{p^jn} \frac{dx}{x} \in [\frac{1}{p^j n}, \frac{1}{p^jn-1}]$$
+and $p^j \geq 5$, we have
+$$ \frac{1}{n} \leq p^j \log \frac{p^j n}{p^j n - 1} \leq \frac{1}{n-0.2}$$
+and so it suffices to show that
 \begin{equation}\label{kb}
-  \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n-0.2} \geq 0.
+0 \leq \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n-0.2} 
+\leq
+\sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n} \geq 2.
 \end{equation}
-
-This can be numerically verified for $K' \leq 98$, with the value exceeding $0.8$ for at $K=98$; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, one can compute
+Since 
+$$ \sum_{n=1}^\infty \frac{1}{n-0.2}-\frac{1}{n} = \psi(0.8)-\psi(1) = 0.353473,$$
+where $\psi$ here denotes the digamma function rather than the von Mangoldt summatory function, it will suffice to show that
+\begin{equation}\label{kb-2} 0.4 \leq
+\sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n} \geq 2.\end{equation}
+This can be numerically verified for $K' \leq 100$, with substantial room to spare for $K'$ large; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, the sum is positive:
 \begin{align*}
-\sum_{6a-1 \leq n \leq 6a+4} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n - 0.2} = \frac{3}{6a-1} + \frac{3}{6a+1} - \frac{1}{6a-1.2} - \frac{1}{6a-0.2} - \frac{1}{6a+0.8} - \frac{1}{6a+1.8} - \frac{1}{6a+2.8} - \frac{1}{6a+3.8}\\
-&\geq \frac{1}{6a-1} - \frac{1}{6a-1.2} \\
-&= -\frac{1}{5(6a-1)(6a-1.2)}.
+\sum_{6a-1 \leq n \leq 6a+4} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n } = (\frac{1}{6a-1} - \frac{1}{6a}) + (\frac{1}{6a-1} - \frac{1}{6a+2}) + (\frac{1}{6a+1} - \frac{1}{6a+3}) +
++ (\frac{
+  1}{6a+1} - \frac{1}{6a+4}) > 0.
 \end{align*}
-Since $\sum_{a \geq 16} \frac{1}{5(6a-1)(6a-1.2)} < 0.1$ (say), we thus see that 
-$$\sum_{99 \leq n \leq 6a+4} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n - 0.2} \geq -0.1$$
-for any $a \geq 16$, and from this and the triangle inequality one can easily establish \eqref{kb} in the remaining ranges $K \geq 98$.
+Similarly, on a block $6a-4 \leq n \leq 6a+1$, the sum is negative:
+\begin{align*}
+  \sum_{6a-4 \leq n \leq 6a+1} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n } = (\frac{1}{6a+1} - \frac{1}{6a}) + (\frac{1}{6a+1} - \frac{1}{6a-2}) + (\frac{1}{6a-1} - \frac{1}{6a-3}) +
+  + (\frac{1}{6a-1} - \frac{1}{6a-4}) < 0.
+\end{align*}
+Thus the sum in \eqref{kb-2} is increasing for $K' = 4\ (6)$ and decreasing for $K' = 1\ (6)$, and the inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data and the triangle inequality
+
+  From this and the triangle inequality one can easily establish \eqref{kb} in the remaining ranges $K' \geq 98$.
 \end{proof}
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{discrepancy.png}
-\caption{A plot of \eqref{kb}}
+\caption{A plot of \eqref{kb}.}
 \label{fig:kb}
 \end{figure}
 
@@ -903,11 +914,46 @@ O\left( \sum_{p' > t/K} \frac{N}{p'} \nu_{p}(\lceil t/p' \rceil) \right) \\
 \end{align*}
 By choice of $L$, this implies \eqref{sector} for $N$ large enough.  The proof of \eqref{main-lower} is now complete.
 
-\section{Guy--Selfridge conjecture for \texorpdfstring{$N>10^{19}$}{N > 10\^19}}
+\section{Guy--Selfridge conjecture}
 
+We now establish the Guy--Selfridge conjecture $t(N) \geq \delta$ in the range
+$$ N \geq ???.$$
+We will apply \Cref{step4-reduce} with the choice of parameters
+\begin{align*}
+  t &\coloneqq N/3\\
+  A &\coloneqq ???\\
+  K &\coloneqq 342 \\
+  L &\coloneqq 342.
+\end{align*}
+Clearly $\delta = \log \frac{3}{e} = 0.09861\dots$.   From \Cref{lemcount-0}, we have
+\begin{equation}\label{kappa-k}
+  \kappa_K  = \kappa_L \leq \log \frac{9}{8} = 0.11778\dots
+\end{equation}
+Thus the right-hand side of \eqref{new-balance-5} is at least
+$$ N \log \frac{3}{e} - \frac{3}{2} \log N - (\log \frac{9}{8}) (\log \sqrt{12}) \frac{N}{\log(N/3)}.$$
+Now we compute the $t$-excess.  From \eqref{excess-eq-alt} and \eqref{legendre} (noting that $N/3K \geq \sqrt{N}$) we have
+$$\excess_t(\tuple^{(3)}) \leq \frac{9N}{2A} + 4 + \sum_{p > N/3K} \left\lfloor \frac{N}{p} \right\rfloor \log \frac{\lceil N/3p \rceil}{N/3p}.$$
+At primes $p > N/3K$, the von Mangoldt function $\Lambda(p)$ is lower bounded by $\log N/3K$, hence
+$$\excess_t(\tuple^{(3)}) \leq \frac{9N}{2A} + 4 + \frac{1}{\log(N/3K)} \sum_{N/3K < n \leq N} \Lambda(n) f(n/N)$$
+where $f : (1/3K,1] \to \R$ is the piecewise smooth function
+$$ f(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil 1/3x \rceil}{1/3x}.$$
+Applying \Cref{integ-lemma} and \eqref{psi-combined}, we thus have
+$$\excess_t(\tuple^{(3)}) \leq \frac{9N}{2A} + 4 + \frac{N}{\log(N/3K)} \int_{1/3K}^1 f(x)\ dx
++ \frac{E(N)}{\log(N/3K)} (f(1/3K+) + f(1) + \|f\|_{\mathrm{TV}}).$$
+Direct numerical calculation (cf. \Cref{fig-f}) reveals that
+\begin{align*}
+  \int_{1/3K}^1 f(x)\ dx &\leq 0.9201  \\
+  f(1/3K+) + f(1) + \|f\|_{\mathrm{TV}} &\leq 2044
+\end{align*}
+and thus
+$$\excess_t(\tuple^{(3)}) \leq \frac{9N}{2A} + 4 + \frac{N}{\log(N/3K)} (0.9201 + 2044 \frac{E(N)}{N}).$$
 
-\section{Guy--Selfridge conjecture for medium values of \texorpdfstring{$N$}{N}}
-
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{discrepancy.png}
+  \caption{A plot of $f(x)$.  The integral $c_1 = \int_{1/K}^1 f(x)\ dx \approx 0.9200$ is slightly larger than $ec_0 \approx 0.8244$.}
+  \label{fig-f}
+  \end{figure}
 
 
 \begin{thebibliography}{10}

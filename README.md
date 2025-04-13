@@ -48,6 +48,7 @@ Secondary goals are
 
 | Date | Contributor | Goal | $N$ | Method | Comments |
 | --- | --- | --- | --- | --- | --- |
+| [Oct 1998](https://www.jstor.org/stable/2588996) | Richard Guy and John Selfridge | 1,3 | $[1,79]$ | Unknown | Exact value computed
 | [12 May 2001](https://oeis.org/A034258) | Robert G. Wilson | 1, 3 | $[1,79]$ | Unknown | Exact value computed
 | [29 Nov 2001](https://oeis.org/A034259) | Don Reble | 1,  3 | $[1, 200]$ | Unknown | Exact value computed
 | [26 Mar 2025](https://arxiv.org/abs/2503.20170v1) | Terence Tao | 1, 2 | Sufficiently large | Modify an approximate factorization | Back of the envelope calculations suggest that this construction works for $N \gtrapprox 10^{11}$
@@ -64,7 +65,7 @@ Secondary goals are
 | [11 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/comment-page-1/#comment-687728) | Matthieu Rosenfeld | 2 | $[8 \times 10^4, 2 \times 10^{10}]$ | Improved greedy
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/5) | plby | 2 | $[43632, 80973]$ | Linear programming | 
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/2#issuecomment-2796186186) | Uhrmar | 2 | $\neg 43631$; $[43632,8 \times 10^4]$ | Linear programming | Provisional limit of Conjecture 2 reached 
-| [12 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/8) | Evan Conway | 2 | $\neg[200,15000] \cup [38000,42000] \backslash \{41006\}$ | Linear programming | $41006$ is the smallest known $N>9$ where Conjecture 2 holds
+| [12 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/8) | Evan Conway | 2 | $\neg[1,15000] \cup [38000,42000]$ $\backslash \{1,2,3,4,5,6,9,41006\}$ | Linear programming | $41006$ is the smallest known $N>9$ where Conjecture 2 holds
 
 ## Computations of $c_0$
 

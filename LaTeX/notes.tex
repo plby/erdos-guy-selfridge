@@ -123,9 +123,24 @@
 
 \begin{document}
 
-\title{Notes on upper and lower bounding $t(N)$}
+\title{Decomposing a factorial into large factors}
 
-\author{Terence Tao, ...}
+
+\author{...}
+\address{???}
+\email{???}
+
+\author{Terence Tao}
+\address{UCLA Department of Mathematics, Los Angeles, CA 90095-1555.}
+\email{tao@math.ucla.edu}
+\subjclass[2020]{11A51}
+
+\begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
+The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
+$$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
+for an explicit constant $c_0 = 0.3044190\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible.\end{abstract}
+
+
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,7 +151,7 @@ Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite 
 $$ \prod \tuple \coloneqq \prod_{a \in \tuple} a$$
 (where the product is counted with multiplicity) is equal to $M$; more generally, define a \emph{subfactorization} of $M$ to be a finite multiset $\tuple$ such that $\prod \tuple$ divides $M$.  Given a threshold $t$, we say that a multiset $\tuple$ is \emph{$t$-admissible} if $a \geq t$ for all $a \in \tuple$.  For a given natural number $N$, we then define $t(N)$ to be the largest $t$ for which there exists a $t$-admissible factorization $\tuple$ of $N!$ of cardinality $|\tuple|=N$.  
 
-\begin{example}  The multiset
+\begin{example}\label{nine}  The multiset
   $$ \{ 3,3,3,3,4,4,5,7,8\}$$
   is a $3$-admissible factorization of $9!$ of cardinality $9$, hence $t(9) \geq 3$.  One can check that no $4$-admissible factorization of $9!$ of this cardinality exists, hence $t(9) = 3$.
 \end{example}
@@ -145,7 +160,7 @@ The first few elements of this sequence are
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 and the values of $t(N)$ for $N \leq 79$ were computed in \cite{guy} and also found at \href{https://oeis.org/A034258}{OEIS A034258}.  It is easy to see that $t(N)$ is non-decreasing in $N$ (basically because any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The values for $N \leq 200$ can also be recovered from the entries of the inverse sequence of $t$ at \href{https://oeis.org/A034259}{OEIS A034259}.  
 
-When the factorial $N!$ is replaced with an arbitrary number, this problem is essentially the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of small prime factors such as $2$ and $3$) make it more tractable than the general case.
+When the factorial $N!$ is replaced with an arbitrary number, this problem is essentially the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable than the general case.
 
 \begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient for both theoretical analysis of $t(N)$ and numerical computations.
 \end{remark}
@@ -169,19 +184,19 @@ for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com};
 \begin{enumerate}
 \item One has $t(N) \leq N/e$ for $N \neq 1,2,4$.
 \item One has $t(N) \geq \lfloor 2N/7 \rfloor$ for $N \neq 56$.
-\item One has $t(N) \geq N/3$ for $N \geq 300000$.  (It was also asked if the threshold $300000$ could be lowered.) 
+\item One has $t(N) \geq N/3$ for $N \geq 3 \times 10^5$.  (It was also asked if the threshold $3 \times 10^5$ could be lowered.) 
 \end{enumerate}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_200.png}
-  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which is a lower bound for $N \neq 56$ \cite{guy}.  \Cref{main} implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange).  The threshold $1/3$ (red) is permanently crossed at $N=43632$.}\label{fig1}
+  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which is a lower bound for $N \neq 56$ \cite{guy}.  \Cref{main} implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange).  The threshold $1/3$ (red) is permanently crossed at $N=43632$. {\bf TODO: relabel image to reflect new lemma numbering}}\label{fig1}
   \end{figure}
   
   \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{newplot_600_all.png}
-    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$.}\label{fig1-alt}
+    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$. {\bf TODO: relabel image to reflect new lemma numbering}}\label{fig1-alt}
   \end{figure}
   
 In this paper we answer all of these questions.
@@ -196,7 +211,7 @@ In this paper we answer all of these questions.
     \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)
   \end{equation}
 for some constant $c>0$, where $c_0$ is the explicit quantity
-\begin{equation}\label{cdef}
+\begin{equation}\label{c0-def}
   \begin{split}
   c_0 &\coloneqq \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx \\
   &= 0.3044190\dots
@@ -208,7 +223,7 @@ for some constant $c>0$, where $c_0$ is the explicit quantity
 
 In \Cref{c0-app} we give some details on the numerical computation of the constant $c_0$.
 
-\begin{remark} In a previous version \cite{tao} of this manuscript, the weaker bounds
+\begin{remark}\label{old} In a previous version \cite{tao} of this manuscript, the weaker bounds
   $$ \frac{1}{e} - \frac{O(1)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0+o(1)}{\log N}$$
 were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \Cref{main}(i). 
 \end{remark}  
@@ -222,22 +237,148 @@ were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \
 As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows:
 
 \begin{itemize}
-  \item An \emph{accounting identity} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$;
-  \item A \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
-  \item \emph{Greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
-  \item A \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
+  \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
+  \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
+  \item In \Cref{accounting-sec}, we introduce an \emph{accounting identity} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
+  \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
 
-We now briefly discuss each of these methods in more detail.
+The final approach is significantly more complicated than the other three, but is the only one which gives efficient lower bounds in the asymptotic limit $N \to \infty$.  The key idea is to start with an approximate factorization
+$$ N! \approx \left(\prod_{j \in I} j\right)^A$$
+for some small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloor$) and a suitable set $I$ of natural numbers greater than or equal to $t$; there is some freedom to select parameters here, and we will take $I$ to be the natural numbers in $(t, t + 3N/A]$ that are coprime to $6$, where $t$ is the target lower bound for $t(N)$ we wish to establish.  With a suitable choice of $I$, this product contains approximately the right number of copies of $p$ for medium-sized primes $p$; but it has the ``wrong'' number of copies of large primes, and is also constructed to avoid the ``tiny'' primes $p=2,3$.  One then performs a number of alterations to this approximate factorization to correct for the ``surpluses'' or ``deficits'' at various primes $p>3$, using the supply of available tiny primes $p=2,3$ as a sort of ``liquidity pool'' to efficiently reallocate primes in the factorization.  A key point will be that the incommensurability of $\log 2$ and $\log 3$ (i.e., the irrationality of $\log 3/\log 2$) means that the $3$-smooth numbers (numbers of the form $2^n 3^m$) are asymptotically dense (in logarithmic scale), allowing for other factors to be exchanged for $3$-smooth factors with little loss\footnote{The weaker results alluded to in \Cref{old} only used the prime $2$ as a supply of ``liquidity'', and thus encountered inefficiencies due to the inability to ``make change'' when approximating another factor by a power of two.}.
 
-\subsection{The accounting identity}
+\subsection{Author contributions and data}
+
+This project was initially concieved as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories at \url{https://credit.niso.org/}, are as follows:
+
+{\bf authors should be arranged in alphabetical order of surname.  }
+
+\begin{itemize}
+\item ...
+\item Terence Tao: Conceptualization, Formal Analysis, Methodology, Project Administration, Visualization, Writing -- original draft, Writing -- review \& editing.
+\end{itemize}
+
+\subsection{Acknowledgments}
+
+TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where the author learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
+
+{\bf list here all contributors to the project who did not wish to be listed as co-authors.}
+
+
+\section{Notation and basic estimates}
+
+If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $S$ is true and $1_S=0$ when $S$ is false.  If $x$ is a real number, we use $\lfloor x \rfloor$ to denote the greatest integer less than or equal to $x$, and $\lceil x \rceil$ to be the least integer greater than or equal to $x$.
+
+Throughout this paper, the symbol $p$ (or $p'$, $p_1$, $p_2$, etc.) is always understood to be restricted to be prime.  The primes $2,3$ will play a special role in this paper and will be referred to as \emph{tiny primes}. 
+Call a natural number \emph{$3$-smooth} if it is the product of tiny primes, i.e., it is of the form $2^n 3^m$ for some natural numbers $n,m$.  Given a positive real number $x$, we use $\lceil x \rceil^{\langle 2,3 \rangle}$ to denote the smallest $3$-smooth number greater than or equal to $x$.  For instance, $\lceil 5 \rceil^{\langle 2,3 \rangle} = 6$ and $\lceil 10 \rceil^{\langle 2,3 \rangle} = 12$. 
+For any $L \geq 1$, let $\kappa_L$ be the least quantity such that
+\begin{equation}\label{kappa-def}  
+  x \leq \lceil x \rceil^{\langle 2,3\rangle} \leq \exp(\kappa_L) x 
+\end{equation}
+holds for all $x \geq L$. Just from considering the powers of two, we have the trivial upper bound
+\begin{equation}\label{kl-triv}
+  \kappa_L \leq \log 2.
+\end{equation}
+In fact $\kappa_L$ decays to zero as $L$ goes to infinity, due to the incommensurability of $\log 2$ and $\log 3$; we quantify this decay in \Cref{power-sec}. 
+
+In practice, $\lceil x \rceil^{\langle 2,3 \rangle}$ will only be slightly larger than $x$; we quantify this in \Cref{power-sec}.
+
+We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function. The effective and asymptotic estimates over primes that we will use are summarized in \Cref{primes-sec}.
 
 We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
-If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity\footnote{Throughout this paper, the symbol $p$ (or $p'$, $p_1$, $p_2$, etc.) is always understood to be restricted to be prime.}
+If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
 \begin{equation}\label{ftoa}
   \sum_p \nu_p(r) \log p = \log r
 \end{equation}
-for any positive rational $r$.  Given a $t$-admissible subfactorization $\tuple$ of $N!$, we can apply the above identity to $r \coloneqq N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
+for any positive rational $r$.  
+
+For a natural number $n$, we can write
+\begin{equation}\label{nup-form} 
+  \nu_p(n) = \sum_{j=1}^\infty 1_{p^j|n}.
+\end{equation}
+Upon taking partial sums, we recover Legendre's formula
+\begin{equation}\label{legendre}
+  \nu_p(N!) = \sum_{j=1}^\infty \left\lfloor \frac{N}{p^j} \right\rfloor = \frac{N - s_p(N)}{p-1}
+\end{equation}
+where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
+
+Given a putative factorization $\tuple$ of $N!$,  
+we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$; if it is negative, we refer to $-\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
+
+We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$.  For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$.
+
+To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
+\begin{equation}\label{stirling}
+  N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N+1} \leq \log N! \leq N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N},
+\end{equation}
+valid for all natural numbers $N$. 
+
+
+\section{Linear programming}\label{linprog-sec}
+
+A surprisingly sharp upper bound on $t(N)$ comes from linear programming.
+
+\begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that
+  \begin{equation}\label{pj}
+   \sum_p w_p \nu_p(j) \geq 1
+  \end{equation}
+  for all $t \leq j \leq N$, and such that
+  \begin{equation}\label{hyp}
+  \sum_p w_p \nu_p(N!) < N.
+  \end{equation}
+  Then $t(N) < t$.
+  \end{lemma}
+  
+  \begin{proof}
+  We first observe that the bound \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decerasing hypothesis on $w_p$, we have
+  $$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
+  and hence by the minimality of $j$ we have
+  $$ \sum_p w_p \nu_p(j) > 1, $$
+  a contradiction.
+  
+  Now suppose for contradiction that $t(N) \geq t$, thus we have a factorization $N! = \prod_{j \geq t} j^{m_j}$ for some natural numbers $m_j$ summing to $N$.  Taking $p$-valuations, we conclude that
+  $$ \sum_{j \geq t} m_j \nu_p(j) \leq \nu_p(N!)$$
+  for all $p \leq N$.  Multiplying by $w_p$ and summing, we conclude from \eqref{pj} that
+  $$ N = \sum_{j \geq t} m_j \leq \sum_p w_p \nu_p(N!),$$
+  contradicting \eqref{hyp}.
+  \end{proof}
+  
+  This bound is sharp for all $N \leq 600$, with the exception of $N=155$, where it gives the upper bound $t(155) \leq 46$.  A more precise integer program (discussed below) gives $t(155) = 45$.
+
+  
+A variant of the linear programming method also gives good lower bound constructions. Specifically, one can use linear programming to find non-negative real numbers $m_j$ for $t \leq j \leq N$ that maximize the quantity $\sum_{t \leq j \leq N} m_j$ subject to the constraints
+    $$ \sum_{t \leq j \leq N} m_j \nu_p(j) \leq \nu_p(N!).$$
+  The expression $\prod_{t \leq j \leq N} j^{\lfloor m_j\rfloor}$ will then be a subfactorization of $N!$ into $\sum_{t \leq j \leq N} \lfloor m_j \rfloor$ factors $j$, each of which is at least $t$. If $\sum_{t \leq j \leq N} \lfloor m_j \rfloor \geq N$, this demonstrates that $t(N) \geq t$.  Numerically, this procedure attains the exact value of $t(N)$ for all $N \leq 600$; for instance for $N=155$, it shows that $t(155) \geq 45$.
+
+{\bf discuss integer programming, need to restrict $j$ to a finite set of "useful" integers}
+
+These methods also give quite precise upper and lower bounds for larger values of $N$, but with quite slow runtime. For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, the upper bound method can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the lower bound method produces a $t$-admissible factorization of exactly this cardinality.
+
+{\bf more discussion here}
+
+By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $8 \times 10^4 \leq N \leq ???$.  The linear programming method can also estabalish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$.  Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $N > ???$.
+
+\section{Greedy algorithms}\label{greedy-sec}
+
+The following simple greedy algorithm gives reasonably good performance to obtain large $t$-admissible subfactorizations $\tuple$ of $N!$ for a given choice of $t$ and $N$:
+
+\begin{enumerate}
+\item[(0)] Initialize $\tuple$ to be the empty multiset. 
+\item[(1)] If $\tuple$ is not a factorization, locate the largest prime $p$ which is currently in surplus: $\nu_p(N!/\prod \tuple) > 0$. 
+\item[(2)] If $N! / \prod \tuple$ contains a multiple of $p$ that is greater than or equal to $t$, locate the smallest such multiple, add it to $\tuple$, and return to Step 1.  Otherwise, \texttt{HALT} the algorithm. 
+\end{enumerate}
+
+This procedure clearly halts in finite time to produce a $t$-admissible subfactoriation of $N!$.  For instance, applying this procedure with $N=9$, $t=3$ produces the $3$-admissible subfactorization
+$$ \{7 \times 1, 5 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 2 \times 2, 2 \times 2, 2 \times 2 \}$$
+which recovers the bound $t(9) \geq 3$ from \Cref{nine} (though with a slightly different subfactorization, in which the $8$ is replaced by $4$).
+
+This procedure is efficient for small $N$, for instance attaining the exact value of $t(N)$ for all $N \leq 79$.  The performance is also respectable (though not optimal) for medium $N$; for instance, when $N=3 \times 10^5$ and $t=N/3$, it locates a $t$-admissible subfactorization of $N!$ of cardinality $N+372$, which is close to the linear programming limit of $N+455$.
+
+{\bf discuss modifications to the algorithm to make it perform both faster and more accurately}
+
+\section{The accounting identity}\label{accounting-sec}
+
+Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply \eqref{ftoa} to the  $r \coloneqq N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
 \begin{equation}\label{accounting} 
   \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p = \log N! - |\tuple| \log t
 \end{equation}
@@ -245,7 +386,6 @@ where we define the \emph{$t$-excess} $\excess_t(\tuple)$ of the multiset $\tupl
 \begin{equation}\label{excess-def}
   \excess_t(\tuple) \coloneqq \sum_{a \in \tuple} \log \frac{a}{t}.
 \end{equation}
-We refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ (as a proposed factorization of $N!$); if it is negative, we refer to $-\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Note that the $t$-excess will be non-negative if $\tuple$ is $t$-admissible, and the $p$-surpluses will be non-negative if $\tuple$ is a subfactorization of $N!$.  
 
 \begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_2(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
   $$ \excess_3(\tuple) = \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3} + \log \frac{5}{3} = 1.3093\dots$$
@@ -263,171 +403,111 @@ $t(N)$ as follows:
 $$ \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p \leq \log N! - N \log t.$$
 \end{lemma}
 
-One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend'' on some combination of $t$-excess and $p$-surpluses.  For $t$ of the form $t = N/e^{1+\delta}$ for some $\delta>0$, the budget can be computed using the Stirling approximation \eqref{stirling} to be $\delta N + O(\log N)$.  The non-negativity of the $t$-excess and $p$-surpluses recovers the trivial upper bound \eqref{trivial}; but one can improve upon this bound by observing that large prime factors of $N!$ inevitably generate a noticeable $t$-excess.  In ??? we develop this idea to establish the upper bound portions of \Cref{main}, namely part (i) and the upper bound in part (iv).
+One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend'' on some combination of $t$-excess and $p$-surpluses.  For $t$ of the form $t = N/e^{1+\delta}$ for some $\delta>0$, the budget can be computed using the Stirling approximation \eqref{stirling} to be $\delta N + O(\log N)$.  The non-negativity of the $t$-excess and $p$-surpluses recovers the trivial upper bound \eqref{trivial}; but one can improve upon this bound by observing that large prime factors of $N!$ inevitably generate a noticeable $t$-excess, as follows.  
 
-
-
-
-
-
-
-\subsection{Linear programming}
-
-\subsection{Greedy algorithms}
-
-\subsection{Modified approximate factorizations}
-
-
-
-...
-
-
-\subsection{Author contributions and data}
-
-This project was initially concieved as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories at \url{https://credit.niso.org/}, are as follows:
-
-{\bf authors should be arranged in alphabetical order of surname.  }
-
-\begin{itemize}
-\item ...
-\item Terence Tao: Conceptualization, Formal Analysis, Methodology, Project Administration, Visualization, Writing -- original draft, Writing -- review \& editing.
-\end{itemize}
-
-\subsection{Acknowledgments}
-
-...
-
-\section{Basics}
-
-The symbol $p$ will always denote a prime.  The primes $2,3$ will play a special role here and will be referred to as \emph{tiny primes}.
-
-
-
-We recall Legendre's formula
-\begin{equation}\label{legendre}
-  \nu_p(N!) = \sum_{j=1}^\infty \left\lfloor \frac{N}{p^j} \right\rfloor = \frac{N - s_p(N)}{p-1}.
-\end{equation}
-
-
-To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
-\begin{equation}\label{stirling}
-  N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N+1} \leq \log N! \leq N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N},
-\end{equation}
-valid for all natural numbers $N$. 
-
-In addition to the usual asymptotic notation, we use $O_{\leq}(X)$ to denote any quantity whose magnitude is bounded by at most $X$ (note the absence of an additional constant factor).
-
-
-  
-\section{Criteria for upper bounding \texorpdfstring{$t(N)$}{t(N)}}
-
-We have the trivial upper bound $t(N) \leq (N!)^{1/N}$.  This can be improved to $t(N) \leq N/e$ for $N \neq 1,2,4$, answering a conjecture of Guy and Selfridge \cite{guy-selfridge}; see \cite{tao}.  This was derived from the following slightly stronger criterion, which asymptotically gives $\frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0+o(1)}{\log N}$:
-
-\begin{lemma}[Upper bound criterion]\label{upper-crit}  \cite[Lemma 2.1]{tao} Suppose that $1 \leq t \leq N$ are such that
+\begin{lemma}[Upper bound criterion]\label{upper-crit}  Suppose that $1 \leq t \leq N$ are such that
   \begin{equation}\label{contra}
      \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) > \log N! - N \log t
   \end{equation}
   Then $t(N) < t$.
   \end{lemma}
 
-A surprisingly sharp upper bound comes from linear programming.
+  \begin{proof} Suppose for contradiction that $t(N) \geq t$, then we can find a $t$-admissible factorization $\tuple$ of $N!$.  The accounting identity then gives
+  \begin{equation}\label{ai}
+  \sum_{a \in \tuple} \log \frac{a}{t} = \excess_t(\tuple) = \log N! - N \log t.
+  \end{equation}
+  Let $f_t(p) \coloneqq \log (\frac{p}{t} \lceil \frac{t}{p} \rceil)$.  We claim that 
+    \begin{equation}\label{ai2}
+      \log \frac{a}{t} \geq f_t(p_{a,1}) + \dots + f_t(p_{a,k_a})
+    \end{equation}
+for all $a \in \tuple$, where $p_{a,1},\dots,p_{a,k_a}$ are the primes greater than $\frac{t}{\lfloor \sqrt{t}\rfloor}$ that divide $a$ (counting multiplicity).  For $k_a=0$ this is clear since $a \geq t$.  For $k_a=1$, we can write $a = d_a p_{a,1}$ where $p_{a,1} > \frac{t}{\sqrt{t}+1}$ and $d_a \geq \lceil \frac{t}{p_{a,1}} \rceil$, so that
+    $$ \log \frac{a}{t} = \log \left(\frac{p_{a,1}}{t}d_a \right) \geq f_t(p_{a,1}),$$
+    again giving \eqref{ai2}.  For $k_a \geq 2$, we have $a \geq p_{a,1} \dots p_{a,k}$, hence
+    \begin{align*}
+      \log \frac{a}{t} - \sum_{j=1}^{k_a} f_t(p_{a,j}) &\geq \sum_{j=1}^{k_a} (\log p_{a,j} - f_t(p_{a,j})) - \log t \\
+      &= \sum_{j=1}^{k_a} \left(\log t - \log \left \lceil \frac{t}{p_{a,j}} \right\rceil \right) - \log t \\
+      &\geq \sum_{j=1}^{k_a} \left(\log t - \log \sqrt{t} \right) - \log t \\
+      &\geq 0
+    \end{align*}
+    which again gives \eqref{ai2}.  Summing \eqref{ai2} over all $a \in \tuple$ and inserting into \eqref{ai}, we conclude that
+    $$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \nu_p(N!) f_t(p) \leq \log N! - N \log t.$$    
+    By \eqref{legendre}, this contradicts \eqref{contra}, giving the claim. 
+  \end{proof}
+    
+We can now prove the upper bound portion of \Cref{main}(iv):
 
-\begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that
-\begin{equation}\label{pj}
- \sum_p w_p \nu_p(j) \geq 1
-\end{equation}
-for all $t \leq j \leq N$, and such that
-\begin{equation}\label{hyp}
-\sum_p w_p \nu_p(N!) < N.
-\end{equation}
-Then $t(N) < t$.
-\end{lemma}
-
-\begin{proof}
-We first observe that the bound \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decerasing hypothesis on $w_p$, we have
-$$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
-and hence by the minimality of $j$ we have
-$$ \sum_p w_p \nu_p(j) > 1, $$
-a contradiction.
-
-Now suppose for contradiction that $t(N) \geq t$, thus we have a factorization $N! = \prod_{j \geq t} j^{m_j}$ for some natural numbers $m_j$ summing to $N$.  Taking $p$-valuations, we conclude that
-$$ \sum_{j \geq t} m_j \nu_p(j) \leq \nu_p(N!)$$
-for all $p \leq N$.  Multiplying by $w_p$ and summing, we conclude from \eqref{pj} that
-$$ N = \sum_{j \geq t} m_j \leq \sum_p w_p \nu_p(N!),$$
-contradicting \eqref{hyp}.
+  \begin{proposition}\label{upper-bound}  For large $N$, one has
+    $$ \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^2 N} \right).$$
+    \end{proposition}
+    
+    \begin{proof}  We apply \Cref{upper-crit} with
+      $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} + \frac{C_0}{\log^2 N}$$
+    with $C_0$ a large absolute constant to be chosen later.  From the Stirling approximation one sees that
+    $$ \log N! - N \log t \geq ec_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
+    so it will suffice to establish the upper bound
+    $$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+    For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
+    $$ \sum_{\frac{N}{\log N} \leq p \leq N} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+    The summand is a piecewise monotone function of $p$, with $O(\log N)$ pieces, and bounded in size by $O(N)$.  A routine application of the prime number theorem (with classical error term) and summation by parts then allows one to express the left-hand side as
+    $$ \int_{N/\log N}^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log x} + O\left( \frac{N}{\log^2 N} \right)$$
+    (in fact the error term can be made much stronger than this). We use the approximation 
+    $$\frac{1}{\log x} = \frac{1}{\log N} + O\left( \frac{\log (N/x)}{\log^2 N} \right).$$ 
+    To control the error term, we observe from Taylor expansion that
+    \begin{equation}\label{tax} 
+    \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right)
+    \ll \frac{\lceil \frac{t}{x} \rceil - \frac{t}{x}}{t/x} \ll \frac{x}{t} \ll \frac{x}{N}
+    \end{equation}
+    and the contribution of the error term is
+    $$ \ll \int_{N/\log N}^N \frac{N}{x} \frac{x}{N} \frac{\log (N/x)}{\log^2 N}\ dx \ll \frac{N}{\log^2 N}$$
+    which is acceptable.  As for the main term, we can rescale it to
+    $$ \frac{et}{\log N} \int_{N/et\log N}^{N/et} \left\lfloor \frac{N/et}{x} \right\rfloor \log \left( ex \left\lceil \frac{1}{ex} \right\rceil \right) dx.$$
+    Since $N/et = 1 + O(1/\log N)$, we see that the integrand here is within $O(1/\log N)$ of $\lfloor \frac{1}{x} \rfloor \log \left( e x \lceil \frac{1}{e x} \rceil \right)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure zero.  A variant of \eqref{tax} shows that both integrandd are bounded by $O(1)$ for all $x \in [0,N/et]$, so by the triangle inequality the above expression can be rewritten as
+    $$ \frac{N}{\log N} \int_0^1 \left\lfloor \frac{1}{x} \right\rfloor \log \left( e x \left\lceil \frac{1}{e x} \right\rceil \right) dx + O\left( \frac{N}{\log^2 N}\right),$$
+    and the claim follows from \eqref{c0-def}.
 \end{proof}
+    
+We can now establish \Cref{main}(i): 
 
-This bound is sharp for all $N \leq 600$, with the exception of $N=155$, where it gives the upper bound $t(155) \leq 46$.  A more precise integer program gives $t(155) = 45$.
-
-\begin{remark}\label{lp-rem} A variant of the linear programming method also gives good lower bound constructions. Specifically, one can use linear programming to find non-negative real numbers $m_j$ for $t \leq j \leq N$ that maximize the quantity $\sum_{t \leq j \leq N} m_j$ subject to the constraints
-  $$ \sum_{t \leq j \leq N} m_j \nu_p(j) \leq \nu_p(N!).$$
-The expression $\prod_{t \leq j \leq N} j^{\lfloor m_j\rfloor}$ will then be a subfactorization of $N!$ into $\sum_{t \leq j \leq N} \lfloor m_j \rfloor$ factors $j$, each of which is at least $t$. If $\sum_{t \leq j \leq N} \lfloor m_j \rfloor \geq N$, this demonstrates that $t(N) \geq t$.  Numerically, this procedure attains the exact value of $t(N)$ for all $N \leq 600$; for instance for $N=155$, it shows that $t(155) \geq 45$.
-\end{remark}
-
-\subsection{Asymptotic analysis of upper bound}
-
-We refine the upper bound in \cite{tao} slightly.
-
-\begin{proposition}\label{upper-bound}  For large $N$, one has
-$$ \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^2 N} \right).$$
+\begin{proposition}\label{tne} One has $t(N)/N < 1/e$ for $N \neq 1,2,4$.
 \end{proposition}
 
-\begin{proof}  We apply \Cref{upper-crit} with
-  $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} + \frac{C_0}{\log^2 N}$$
-with $C_0$ a large absolute constant to be chosen later.  From the Stirling approximation one sees that
-$$ \log N! - N \log t \geq ec_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
-so it will suffice to establish the upper bound
-$$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
-$$ \sum_{\frac{N}{\log N} \leq p \leq N} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-The summand is a piecewise monotone function of $p$, with $O(\log N)$ pieces, and bounded in size by $O(N)$.  A routine application of the prime number theorem (with classical error term) and summation by parts then allows one to express the left-hand side as
-$$ \int_{N/\log N}^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log x} + O\left( \frac{N}{\log^2 N} \right)$$
-(in fact the error term can be made much stronger than this). We use the approximation 
-$$\frac{1}{\log x} = \frac{1}{\log N} + O\left( \frac{\log (N/x)}{\log^2 N} \right).$$ 
-To control the error term, we observe from Taylor expansion that
-\begin{equation}\label{tax} 
-\log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right)
-\ll \frac{\lceil \frac{t}{x} \rceil - \frac{t}{x}}{t/x} \ll \frac{x}{t} \ll \frac{x}{N}
+\begin{proof}  From the linear programming method one can verify this claim for $N < 599$ (see \Cref{fig1-alt}), so we assume that $N\geq 599$, so that the prime number theorem bound \eqref{pi-lower} becomes available.  
+  
+Applying \Cref{upper-crit}, \eqref{stirling}, it suffices to show that
+\begin{equation}\label{test-ineq}
+   \sum_{p \geq \frac{N/e}{\lfloor\sqrt{N/e}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor f_{N/e}(p) > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}
 \end{equation}
-and the contribution of the error term is
-$$ \ll \int_{N/\log N}^N \frac{N}{x} \frac{x}{N} \frac{\log (N/x)}{\log^2 N}\ dx \ll \frac{N}{\log^2 N}$$
-which is acceptable.  As for the main term, we can rescale it to
-$$ \frac{et}{\log N} \int_{N/et\log N}^{N/et} \left\lfloor \frac{N/et}{x} \right\rfloor \log \left( ex \left\lceil \frac{1}{ex} \right\rceil \right) dx.$$
-Since $N/et = 1 + O(1/\log N)$, we see that the integrand here is within $O(1/\log N)$ of $\lfloor \frac{1}{x} \rfloor \log \left( e x \lceil \frac{1}{e x} \rceil \right)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure zero.  A variant of \eqref{tax} shows that both integrandd are bounded by $O(1)$ for all $x \in [0,N/et]$, so by the triangle inequality the above expression can be rewritten as
-$$ \frac{N}{\log N} \int_0^1 \left\lfloor \frac{1}{x} \right\rfloor \log \left( e x \left\lceil \frac{1}{e x} \right\rceil \right) dx + O\left( \frac{N}{\log^2 N}\right),$$
-and the claim follows from \eqref{c0-def}.
+where $f_{N/e}(p) = \log(\frac{ep}{N} \lceil \frac{N}{ep} \rceil)$ is as in the proof of the proposition. As the left-hand side is $\asymp N/\log N$, while the right-hand side is $\asymp \log N$, there is significant room to spare here, and we can use somewhat lossy arguments.
+
+For $N/\sqrt{2e} < p \leq N$ one can obtain the lower bound $\lfloor \frac{N}{p} \rfloor f_{N/e}(p) \geq \log (e/2)$ (see \Cref{fig-mean}), and (since $\frac{N/e}{\lfloor \sqrt{N/e}\rfloor} \leq N/2e$ in the regime $N \geq 599$), so we may crudely bound the left-hand side of \eqref{test-ineq} from below by
+$$ \left(\pi(N) - \pi(N/\sqrt{2e})\right) \log(e/2).$$
+Applying \eqref{pi-lower}, \eqref{pi-upper}, we reduce to showing that
+\begin{equation}\label{test-2}
+\begin{split}
+  &  \left(\frac{N}{\log N} \left(1 +\frac{1}{\log N}\right)
+- \frac{N/\sqrt{2e}}{\log(N/\sqrt{2e})} \left(1 +\frac{1.2762}{\log(N/\sqrt{2e})}\right)\right) \log (e/2) \\
+&\quad > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}
+\end{split}
+\end{equation}
+for $N \geq 599$. This can be numerically verified for $N=599$ (see Figure \ref{fig2}), so by the fundamental theorem of calculus it suffices to show that the derivative of the left-hand side is at least that of the right hand side for (real) $N \geq 599$.  Computing this derivative, dividing by $\log(e/2)$, and discarding some terms with a favorable sign, we reduce to showing that
+$$ \frac{1}{\log N} - \frac{2}{\log^3 N} - \frac{1}{\sqrt{2e} \log(N/\sqrt{2e})} - \frac{0.2762}{\sqrt{2e} \log^2(N/\sqrt{2e})}  \geq \frac{1}{2\log(e/2) N}$$
+for $N \geq 599$.  But in this range we have the crude lower bounds $\log N \geq \log(N/\sqrt{2e})\geq 5$, $\sqrt{2e} \log(N/\sqrt{2e}) \geq 2 \log N$, and $2 \log(e/2) N \geq 50 \log N$, and the claim then follows (with room to spare) by estimating all terms here by constant multiples of $\frac{1}{\log N}$.
 \end{proof}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{lhs_rhs.png}
+  \caption{A plot of the left and right-hand sides of \eqref{test-ineq}, \eqref{test-2} for $80 \leq N < 599$.  For $N \geq 599$, the effective prime number theorem from \eqref{pi-upper}, \eqref{pi-lower} rigorously establishes the left-hand side of \eqref{test-2} as a lower bound for the left-hand side of \eqref{test-ineq}.}\label{fig2}
+\end{figure}
 
 
-\section{A general factorization algorithm}
+\subsection{Modified approximate factorizations}\label{approx-sec}
 
-In this section we present and then analyze an algorithm that, when given parameters $1 \leq t \leq N$, will attempt to construct a factorization $N! = \prod \tuple$ of $N!$ by a finite multiset $\tuple$ of $N$ elements that are all at least $t$.  The algorithm will not always succeed, but when it does, it will certify that $t(N) \geq t$.
-
-\subsection{Notational preliminaries}
-
-We begin with some key definitions.
-
-
-
-By the fundamental theorem of arithmetic (or \eqref{ftoa}), we see that a finite multiset $\tuple$ is a factorization of $M$ if and only if
-$$ \nu_p( M / \prod \tuple ) = 0$$
-for all primes $p$, and a subfactorization if and only if
-$$ \nu_p( M / \prod \tuple ) \geq 0$$
-for all primes $p$.  We refer to $\nu_p( M / \prod \tuple )$ as the \emph{$p$-surplus} of $\tuple$ (as an attempted factorization of $M$) at prime $p$, and $-\nu_p(M/\prod\tuple) = \nu_p(\prod\tuple/M)$ as the \emph{$p$-deficit}, and say that the factorization is \emph{$p$-balanced} if $\nu_p(M/\prod \tuple)=0$.  Thus a subfactorization (resp. factorization) occurs when one has non-negative surpluses (resp. balance) at all primes $p$.
-
-\begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted factorization ${\mathcal B} \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod {\mathcal B}) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_2(\prod {\mathcal B}/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  However, if one replaces one of the copies of $5$ in ${\mathcal B}$ with a $2$, this erases both the $2$-surplus and the $5$-deficit, and creates a factorization $\{2,3,4,5\}$ of $5!$.
-\end{example}
-
-
-
-A finite multiset $\tuple$ is said to be \emph{$t$-admissible} for some $t>0$ if $b \geq t$ for all $b \in \tuple$.  Then $t(N)$ is largest quantity such that there exists a $t(N)$-admissible factorization of $N!$ of cardinality $N$.  
-
-Call a natural number \emph{$3$-smooth} if it is of the form $2^n 3^m$ for some natural numbers $n,m$.  Given a positive real number $x$, we use $\lceil x \rceil^{\langle 2,3 \rangle}$ to denote the smallest $3$-smooth number greater than or equal to $x$.  For instance, $\lceil 5 \rceil^{\langle 2,3 \rangle} = 6$ and $\lceil 10 \rceil^{\langle 2,3 \rangle} = 12$.
+In this section we present and then analyze an algorithm that, when given parameters $1 \leq t \leq N$, will attempt to construct a $t$-admissible subfactorization $\prod \tuple$ of $N!$ that obeys the criterion in \Cref{t-descrip}.  The algorithm will not always succeed, but when it does, it will certify that $t(N) \geq t$.
 
 \subsection{Description of algorithm}\label{alg-desc}
 
-We now describe an algorithm that, for given $1 \leq t \leq N$, either successfully demonstrates that $t(N) \geq t$, or halts with an error.
+Given parameters $1 \leq t \leq N$, we can consider the following algorithm.
 
 \begin{enumerate}
 \item[(0)] Select natural numbers $A,K$ such that $K^2 (1+\sigma) < t$, where
@@ -442,10 +522,10 @@ There is some freedom to select parameters here, but roughly speaking one would 
 \item [(5)]For the primes $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
 $(\sqrt{t/K}, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}$ to $\tuple^{(4)}$, and call this new multiset $\tuple^{(5)}$.  
 \item[(6)] By construction, $\tuple^{(5)}$ is $t$-admissible and will be in balance at all primes $p>3$, and is thus $N!/\prod \tuple^{(5)}$ is of the form $2^n 3^m$ for some integers $n,m$.  If at least one of $n,m$ is negative, then \texttt{HALT} the algorithm with an error.  Otherwise, select a $3$-smooth number $2^{n_1} 3^{m_1}$ greater than equal to $t$ with $n_1/m_1 \leq n/m$ (which one can interpret as $n_1 m \leq nm_1$ in case some of the denominators here vanish), and similarly select a $3$-smooth number $2^{n_2} 3^{m_2}$ greater than or equal to $t$ with $n_2/m_2 \geq n/m$.  (It is reasonable to select the smallest such $3$-smooth numbers in both cases, although this is not absolutely necessary for the algorithm to be successful.) By construction, we can express $(n,m)$ as a positive linear combination $\alpha_1 (n_1,m_1) + \alpha_2 (n_2,m_2)$ of $(n_1,m_1)$ and $(n_2,m_2)$.  Add $\lfloor \alpha_1 \rfloor$ copies of $2^{n_1} 3^{m_1}$ and $\lfloor \alpha_2 \rfloor$ copies of $2^{n_2} 3^{m_2}$ to $\tuple^{(5)}$, and call this tuple $\tuple^{(6)}$.  (This will largely eliminate the surplus at $2$ and $3$.)
-\item[(7)] If the multiset $\tuple^{(6)}$ has cardinality less than $N$, \texttt{HALT} the algorithm with an error.  Otherwise, delete elements from $\tuple^{(6)}$ to bring the cardinality to $N$, and arbitrarily distribute any surplus primes to one of the remaining elements, and call the resulting multiset $\tuple^{(7)}$.  By construction, $\tuple^{(7)}$ is a $t$-admissible factorization of $N!$ into $N$ numbers, demonstrating that $t(N) \geq t$.
+\item[(7)] If the criterion in \Cref{t-descrip} is obeyed by $\tuple^{(6)}$, then we have successfully established\footnote{If desired, one could implement the proof of \Cref{t-descrip} as a final component of this algorithm, that is to say one removes elements from $\tuple^{(6)}$ to make the cardinality exactly $N$, and then distributes any surplus primes arbitrarily to create a $t$-admissible factorization of $N!$ of cardinality exactly $N$.} that $t(N) \geq t$.  Otherwise, \texttt{HALT} the algorithm with an error. 
 \end{enumerate}
 
-It will be convenient to divide the set of primes into the following ranges:
+To analyze this algorithm, it will be convenient to divide the set of primes into the following ranges:
 \begin{itemize}
 \item \emph{Tiny primes} $p=2,3$.
 \item \emph{Small primes} $3 < p \leq K$.
@@ -456,7 +536,7 @@ It will be convenient to divide the set of primes into the following ranges:
 
 The expected $p$-surpluses or $p$-deficits at various stages of this process are summarized in \Cref{algorithm-table}.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \begin{tabular}{|c|c|c|c|c|c|}
   \hline
@@ -468,11 +548,10 @@ The expected $p$-surpluses or $p$-deficits at various stages of this process are
   $\tuple^{(4)}$ & Lg. surplus & Balance? & Balance?
  & Balance/sm. deficit & Balance \\
   $\tuple^{(5)}$ & Lg. surplus & Balance & Balance & Balance  & Balance \\
-  $\tuple^{(6)}$ & Sm. surplus & Balance & Balance & Balance  & Balance \\
-  $\tuple^{(7)}$ & Balance & Balance & Balance & Balance  & Balance \\
+  $\tuple^{(6)}$ & Sm. surplus & Balance & Balance & Balance  & Balance 
   \hline
   \end{tabular}
-  \caption{Evolution of the surpluses and deficits of the multisets $\tuple^{(i)}$, $i=1,\dots,7$; we describe the size of these surpluses and deficits informally as ``small'', ``medium'', ``large'', or ``maximal''.  For entries with a question mark, we allow the possibility of a tiny deficit.  For the entry marked ???, all behavior from large surpluses to large deficits are possible.}\label{algorithm-table}
+  \caption{Evolution of the surpluses and deficits of the multisets $\tuple^{(i)}$, $i=1,\dots,6$; we describe the size of these surpluses and deficits informally as ``small'', ``medium'', ``large'', or ``maximal''.  For entries with a question mark, we allow the possibility of a tiny deficit.  For the entry marked ???, all behavior from large surpluses to large deficits are possible.}\label{algorithm-table}
   \end{table}
   
 
@@ -489,17 +568,7 @@ $$
 \end{cases}
 $$
 If $a_+,a_-$ are finite, this function is Lipschitz with constant $\max(a_+,a_-)$.  One can think of $a_+$ as the ``cost'' of making $x$ positive, and $a_-$ as the
-``cost'' of making $x$ negative.
-
-We now begin the analysis of Step 9.  This procedure will terminate successfully as long as the length $|\tuple^{(6)}|$ of the tuple is at least $N$.  To ensure this, we introduce the \emph{$t$-excess} of a multiset $\tuple$ by the formula
-$$
-\excess_t(\tuple) \coloneqq \prod_{b \in \tuple} \log \frac{b}{t} = \log \prod \tuple - |\tuple| \log t.$$
-Thus, to ensure the success of this step, it suffices to establish the inequality
-$$
-\excess_t(\tuple^{(6)}) \leq \log \prod \tuple^{(6)} - N \log t.$$
-From \eqref{ftoa} we have
-$$ \log \prod \tuple^{(6)} = \log N! - \sum_p \nu_p\left(\frac{N!}{\prod \tuple^{(6)}}\right) \log p,$$
-so we can rewrite the previous condition (using the fact that $\tuple^{(6)}$ is a subfactorization of $N!$) as
+``cost'' of making $x$ negative. We can then rewrite the termination condition of \Cref{t-descrip} (using the fact that $\tuple^{(6)}$ is a subfactorization of $N!$) as
 $$
 \excess_t(\tuple^{(6)}) + \sum_p \left| \nu_p\left(\frac{N!}{\prod \tuple^{(6)}}\right) \right|_{\log p,\infty}
 \leq \log N! - N \log t.$$
@@ -511,15 +580,7 @@ If we assume that $t = N/e^{1+\delta}$ for some $\delta > 0$, we can use the Sti
 
 \subsection{Analysis of Step 6}
 
-Now we analyze Step 6. For any $L \geq 1$, let $\kappa_L$ be the least quantity such that
-\begin{equation}\label{kappa-def}  
-  x \leq \lceil x \rceil^{\langle 2,3\rangle} \leq \exp(\kappa_L) x 
-\end{equation}
-holds for all $x \geq L$. Just from considering the powers of two, we have the trivial upper bound
-\begin{equation}\label{kl-triv}
-  \kappa_L \leq \log 2.
-\end{equation}
-We shall obtain better estimates on this quantity in Section \ref{power-sec}. For now we use this quantity to help achieve efficient subfactorizations of $3$-smooth numbers, as follows.
+Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-def}.
 
 \begin{lemma}\label{bound23}  Let $L \geq 1$.  Let $t > 3L$ and let $2^n 3^m$ be a $3$-smooth number with $n,m > 0$ obeying the conditions
   \begin{equation}\label{B-bound}
@@ -949,7 +1010,7 @@ By choice of $L$, this implies \eqref{sector} for $N$ large enough.  The proof o
 
 \section{Guy--Selfridge conjecture}
 
-We now establish the Guy--Selfridge conjecture $t(N) \geq \delta$ in the range
+We now establish the Guy--Selfridge conjecture $t(N) \geq N/3$ in the range
 $$ N \geq ???.$$
 We will apply \Cref{step4-reduce} with the choice of parameters
 \begin{align*}
@@ -1008,7 +1069,7 @@ $$\sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil \leq (\frac
 
 \section{Powers of 2 and 3}\label{power-sec}
 
-We now obtain good bounds on the quantity $\kappa_L$.  Clearly $\kappa_L$ is a non-increasing function of $L$ with $\kappa_1 = \log 2$.  The following lemma gives improved control on $\kappa_L$ for large $L$:
+We now obtain good bounds on the quantity $\kappa_L$ introduced in \eqref{kappa-def}.  Clearly $\kappa_L$ is a non-increasing function of $L$ with $\kappa_1 = \log 2$.  The following lemma gives improved control on $\kappa_L$ for large $L$:
 
 \begin{lemma}\label{lemcount-0}  If $n_1,n_2,m_1,m_2$ are natural numbers such that $n_1+n_2, m_1+m_2 \geq 1$ and
 $$ 1 \leq \frac{3^{m_1}}{2^{n_1}}, \frac{2^{n_2}}{3^{m_2}}$$
@@ -1026,7 +1087,7 @@ If we write $\lceil t \rceil^{\langle 2,3 \rangle} =2^n 3^m$ be the smallest $3$
 
 Some efficient choices of parameters for this lemma are given in \Cref{approx-table}.  For instance, $\kappa_{4.5} \leq 0.28768\dots$ and $\kappa_{40.5} \leq 0.16989\dots$.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -1146,7 +1207,20 @@ We now prove \Cref{key-ineq}. Writing $\nu_p(m) = \sum_{j \geq 1} 1_{p^j|m}$, it
   \label{fig:kb}
   \end{figure}
 
-\section{Estimating sums over primes}
+\section{Estimating sums over primes}\label{primes-sec}
+
+In this section we collect some estimates on sums over primes from the literature that we will use in this paper.
+
+We recall the effective prime number theorem from \cite[Corollary 5.2]{dusart}, which asserts that
+\begin{equation}\label{pi-lower}
+  \pi(x) \geq \frac{x}{\log x} + \frac{x}{\log^2 x}
+\end{equation}
+for $x \geq 599$ and
+\begin{equation}\label{pi-upper}
+  \pi(x) \leq \frac{x}{\log x} + \frac{1.2762 x}{\log^2 x}
+\end{equation}
+for $x >1$.  
+
 
 \begin{lemma}[Integration by parts]\label{integ-lemma}  Let $(y,x]$ be a half-open interval in $(0,+\infty)$.  Suppose that one has a function $a \colon \N \to \R$ and a continuous function $f: (y,x] \to \R$ such that 
   $$ \sum_{y < n \leq z} a_n = \int_z^y f(t)\ dt + C + O_{\leq}(A)$$
@@ -1178,10 +1252,16 @@ We have the following explicit version of the above estimate, where it is conven
 \begin{lemma}[Buthe effective prime number theorem]\label{buthe}  Under the above hypotheses 
 with $1423 \leq y \leq x$, one has
 $$  \sum_{y < p \leq x} b(p) \log p = \int_y^x b(t) (1 - \frac{2}{\sqrt{t}}) \ dt
-+ O\left((|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}) E(x) \right)$$
++ O_\leq\left((|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}) E(x) \right)$$
 where
 $$ E(x) \coloneqq 0.95 \sqrt{x} + \frac{\sqrt{x}}{8\pi} \log x(\log x - 3) 1_{x \geq 10^{19}} + 1.11742 \times 10^{-8} x 1_{x \geq e^{45}}.$$
 \end{lemma}
+
+Applying the above lemma to $b(t) = 1/\log t$, we conclude in particular that
+\begin{equation}\label{pi-est} \pi(x) - \pi(y) = \int_y^x(1 - \frac{2}{\sqrt{t}}) \ \frac{dt}{\log t}
++ O_\leq(2 E(x))
+\end{equation}
+for $1423 \leq y \leq x$.
 
 \begin{proof} Observe that $E$ is monotone non-decreasing. Thus by \Cref{integ-lemma}, it will suffice to show that
 $$ \sum_{p \leq x} \log p = x - \sqrt{x} + O_{\leq}(E(x))
@@ -1206,7 +1286,8 @@ $$ \psi(x) = x + O_{\leq}(1.11742 \times 10^{-8} x)$$
 for $x \geq e^{45} \approx 10^{19.54}$, and the claim follows by repeating the previous arguments.
 \end{proof}
     
-We remark that assuming the Riemann hypothesis, the final term in the definition of $E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.
+\begin{remark} Assuming the Riemann hypothesis, the final term in the definition of $E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.
+\end{remark}
 
 \section{Computation of \texorpdfstring{$c_0$}{c\_0}}\label{c0-app}
 

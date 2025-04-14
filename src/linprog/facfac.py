@@ -329,7 +329,12 @@ def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = 
     if save:
         write_factorization(N, T, fact, save)
 
-    return meets_bound # return whether the upper bound is >= N
+    # If the greedy algorithm returns a valid factorization, use that. Otherwise, fall back to checking the linear programming upper bound.
+    if sum(fact[1].values()) >= N:
+        meets_bound = True
+
+    # return whether this seems to meet the requirements
+    return meets_bound
 
 
 

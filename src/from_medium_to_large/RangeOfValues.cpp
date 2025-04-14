@@ -18,7 +18,7 @@ cc_hash_table<long long, long long> largestDivisor;
 // these constant define the interval for which we run the program
 // we require minN*minN >= maxN
 #define minN 10000000LL
-#define maxN 100000000LL
+#define maxN 100000000000LL
 
 // this is the number of consecutive intervals that are used for precomputing primes and the factorization
 #define NUMBEROFINTERVALS 400
@@ -209,7 +209,6 @@ long long bestFact(long long n, long long eps = 0){
   long long i = findIndexLargerPrime(n);
   for(; primes[i]>n; i--){}
   for(; primes[i]>=targetVal; i--){
-    long long p = primes[i];
     factorizer.addToFactorization(factorizer.factors[i], 1, i);
   }
   long long prevGoal = 2;

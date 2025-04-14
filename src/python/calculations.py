@@ -43,8 +43,35 @@ def pi(N):
             count += 1
     return count
 
+def nu(p,m):
+    count = 0
+    n = m
+    while n % p == 0:
+        count += 1
+        n //= p
+    return count
+
+def coprime_6(n):
+    return n%6 == 1 or n%6 == 5
+
+# An effective upper bound for pi(N)
+
 def pi_upper(N):
+    assert N > 1, "Error: this bound is only valid for N > 1"
     return N/math.log(N) + 1.2762 * N / (math.log(N) ** 2)
+
+
+def pixy_upper(y,x):
+    assert N > 1423, "Error: this bound is only valid for N > 1423"
+    return (x-y)/math.log(y) + 2 * E(x) / math.log(y)
+
+def Z(p):
+    sum = 0
+    for m in range(K+1, math.floor(K*(1+sigma))+1):
+        if coprime_6(m):
+            sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma)/m)
+    return A*sum
+
 
 print(f"Raw budget: {N * delta}")
 
@@ -73,16 +100,20 @@ print(f"log(N/3K) = {math.log(N/(3*K))}; log(N) = {math.log(N)}")
 
 X1_1 = ((4*A+3.75)/3) * pi_upper(t/K)
 X1_2 = ((4*A+3.75)/3) * pi_upper(math.sqrt(N)) * math.log(N) / math.log(5)
+X1_3 = A * (pi(K*(1+sigma)) - pi(K)) * pixy_upper(t/K, (t*(1+sigma))/K)
 
-X1_3 = A * (pi(K*(1+sigma)) - pi(K)) * (t*sigma/K) / math.log(t/K)
+X1_4 = 0
+for p in range(4,K+1):
+    if is_prime(p):
+        X1_4 += Z(p) * math.log(p) / math.log(math.sqrt(t/K))
 
-X1 = X1_1 + X1_2 + X1_3
+
+X1 = X1_1 + X1_2 + X1_3 + X1_4
 
 print(f"First component of X1: {X1_1}; {X1_1 / X1 * 100:.2f}% of X1")
 print(f"Second component of X1: {X1_2}; {X1_2 / X1 * 100:.2f}% of X1")
 print(f"Third component of X1: {X1_3}; {X1_3 / X1 * 100:.2f}% of X1")
-
-
+print(f"Fourth component of X1: {X1_4}; {X1_4 / X1 * 100:.2f}% of X1")
 
 
 X2_1 = (4*A+3.75)/3 * (pi(K)-2) * (math.log(N) / math.log(5))
@@ -93,13 +124,18 @@ print(f"X1: {X1}")
 
 print(f"X2: {X2}")
 
+print(f"Excess / budget: {excess / budget * 100:.2f}%")
+
 print(f"X1 / budget: {X1 * kappa_K / budget * 100:.2f}%")
 
 print(f"X2 / budget: {X2 * kappa_5 / budget * 100:.2f}%")
 
+print(f"Remaining: {(budget - excess - X1 * kappa_K - X2 * kappa_5) / budget * 100:.2f}%")
 
-volume = N * math.log(2) + N * math.log(3) / 2
+
+volume = N * math.log(3) / 2 - math.log(N) - ((math.log(3*L)+kappa_L) / (math.log(t) - math.log(3*L))) * N * math.log(2)
 
 print(f"X1 / volume: {(math.log(math.sqrt(t*K))+kappa_K)*(X1+2) / volume * 100:.2f}%")
 
 print(f"X2 / volume: {(math.log(K)+kappa_5)*X2 / volume * 100:.2f}%")
+

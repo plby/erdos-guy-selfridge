@@ -12,11 +12,6 @@ def log_random(lower, upper):
     random = math.exp(random_log)
     return math.floor(random) # convert to integer
 
-LOW = 10**1 # low end of intitial range
-HIGH = 10**6 # high end of initial range
-SAMPLE_COUNT = 50 # number of samples to take
-CUTOFF = 25 # number of successes to cut off after
-
 def f(x):
     return main(x, math.ceil(x/3)) # change T here
 
@@ -58,4 +53,10 @@ def last_failure(lower, upper):
         # recurse on the restricted range
         return last_failure(highest_failure, sample)
 
-print(last_failure(LOW, HIGH))
+if __name__ == '__main__':
+    LOW = 10**1 # low end of intitial range
+    HIGH = 10**6 # high end of initial range
+    SAMPLE_COUNT = 50 # number of samples to take
+    CUTOFF = 25 # number of successes to cut off after
+    
+    print(last_failure(LOW, HIGH))

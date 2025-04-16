@@ -770,7 +770,7 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
   \item[(ii)] One has
   \begin{equation}\label{nstarb}
     \begin{split}
-&\sum_{p_0=2,3} \nu_{p_0}(\prod \tuple^{(3)}) \log p_0\\
+&\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
 &\quad + \sum_{3 < p \leq t/K}
     \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{(\log \sqrt{tK} + \kappa_K) \min(\frac{\log p}{\log\sqrt{t/K}},1),\log p+\kappa_p}\\
   &\quad  + \log t + \kappa_K \\
@@ -802,8 +802,11 @@ Since $\kappa_K \min(\frac{\log p}{\log\sqrt{t/K}},1),\kappa_p$ are both bounded
 \end{equation}
 Similarly, since $\log p + \kappa_p$ is bounded by $\log\sqrt{tK} + \kappa_K$ for $K < p \leq t/K$, and $\log p + \kappa_p$ is bounded by $\log K + \kappa_5$ for $3 < p \leq K$, we can replace \eqref{nstarb} with
 \begin{equation}\label{nstarb-2}
-  \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 +
- (\log\sqrt{tK} + \kappa_K) (X_1+2) + (\log K+\kappa_5) X_2 \leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2
+  \begin{split}
+&  \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 +
+ (\log\sqrt{tK} + \kappa_K) (X_1+2) + (\log K+\kappa_5) X_2 \\
+ &\quad \leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2
+  \end{split}
 \end{equation}
 
 

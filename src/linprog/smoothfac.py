@@ -199,7 +199,7 @@ def main(N: int, T: int, filename: Optional[str], lp_filename: Optional[str]):
             break
         # record greedy factor
         nf_grdy += m
-        sc[j] = sc.setdefault(j, 0) + 1
+        sc[j] = sc.setdefault(j, 0) + m
         # 'deflate' LP factors
         while j > 1:
             k = f[j]

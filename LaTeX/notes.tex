@@ -536,7 +536,7 @@ In addition to the given parameters $1 \leq t \leq N$, we require additional nat
   K^2 (1+\sigma) < t; \quad K\sqrt{N} < t; \quad \sigma < 1; \quad K \geq 3; 
 \end{equation}
 where
-\begin{equation}\label{nu-def}
+\begin{equation}\label{sigma-def}
   \sigma \coloneqq \frac{3N/t}{A}.
 \end{equation}  
 There is some freedom to select parameters here, but roughly speaking one would like to have $1 \lll A \lll K \lll \sqrt{t}$.
@@ -781,16 +781,14 @@ The surplus tiny primes can also be used to deal with any larger primes that are
     Y_1^- &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,1}.\label{y1m-def} \\
     Y^\pm_2 \coloneqq \frac{1}{N} \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|\label{y2pm-def}
   \end{align}
-    obeying the following hypotheses involving:
-  \begin{itemize}
-  \item[(i)] (Small excess and surplus at small/medium primes) One has
+    obey the hypotheses
 \begin{equation}\label{new-balance-5}
     \begin{split}
 &     \frac{1}{N} \excess_t(\tuple^{(3)}) + \kappa_K Y_1^+ + \kappa_5 Y_1^- + \kappa_K Y_\pm\\
 &\quad + \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N}  \leq \delta.
     \end{split}
   \end{equation}
-  \item[(ii)] One has
+and
   \begin{equation}\label{nstarb}
     \begin{split}
 &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
@@ -799,7 +797,6 @@ The surplus tiny primes can also be used to deal with any larger primes that are
   &\quad  \leq \min( Q_{N,t,L}, Q'_{N,t,L} )
   \end{split}
 \end{equation}
- \end{itemize}
      Then $t(N) \geq t$.
 \end{proposition}
 
@@ -846,10 +843,10 @@ and hence by \eqref{legendre} and \eqref{falpha-def}
 $$
 \excess_t(\tuple^{(3)}) = 
 \excess_t(\tuple^{(2)}) + \sum_{t/K < p \leq N} f_{N/t}(p/N).$$
-Hence by \Cref{buthe}
+If we bound $f_{N/t}(p/N)$ by $\frac{1}{\log(t/K)} f_{N/t}(p/N) \log p$ and apply \Cref{buthe}, we conclude
 \begin{equation}\label{step3-excess}
 \frac{1}{N} \excess_t(\tuple^{(3)}) \leq 
- \frac{1}{N}\excess_t(\tuple^{(2)}) + \int_{t/NK}^1 f_{N/t}(x)\ dx + \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N}.  
+ \frac{1}{N}\excess_t(\tuple^{(2)}) + \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx + \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N \log(t/K)}.  
 \end{equation}
 
 
@@ -879,8 +876,10 @@ where the notation $\sum^*$ indicates that the summation variable $m$ is require
   A \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) + A N Z_{p_1}
 \end{equation}
 where
-$$ Z_{p_1} \coloneqq 
-\frac{1}{N} \sum_{K < m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{K}\right)\right).$$
+\begin{equation}\label{zp-def}
+   Z_{p_1} \coloneqq 
+\frac{1}{N} \sum_{K < m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{K}\right)\right).
+\end{equation}
 As for the excess, we simply use the trivial bound
 \begin{equation}\label{step2-excess}
 \excess_t(\tuple^{(2)}) \leq \excess_t(\tuple^{(1)}).
@@ -934,7 +933,7 @@ Y_1^+ &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K}
  &\quad + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \label{y1p-bound}\\
 Y_1^- &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
 \left\lceil \frac{\log N}{\log p_1} \right\rceil 
-+ \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \label{y2p-bound} \\
++ \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \label{y1m-bound} \\
 Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p_1} \right\rceil \\
 &\quad + \frac{A}{N} \sum_{K < p \leq K(1+\sigma)} 
 \left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) - \pi\left(\frac{t}{K}\right)\right)
@@ -954,108 +953,114 @@ A key point will be that in practice, the $W_{p_1}$ will be positive (or only ba
 
 With the above estimates, we can now establish the lower bound in \Cref{main}(iv).  Thus we aim to show that $t(N) \geq t$ for sufficiently large $N$, where
 \begin{equation}\label{main-lower}
-   t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c_1} N}
+   t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c_1} N} \asymp N
 \end{equation}
 and $0 < c_1 < 1$ is a small absolute constant.  With this choice of parameters, one has
 $$ \delta = \frac{ec_0}{\log N} + \frac{1}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
 
 Let $N$ be sufficiently large.  We introduce parameters
-$$ A \coloneqq \lfloor \log^2 N \rfloor$$
-and
-$$ K \coloneqq \lfloor \log^3 N \rfloor$$
-and
-$$ L \coloneqq N^{0.1},$$
+\begin{align}
+  A &\coloneqq \lfloor \log^2 N \rfloor\label{a-asym}\\
+K &\coloneqq \lfloor \log^3 N \rfloor \label{k-asym} \\
+L &\coloneqq N^{0.1},\label{l-asym}
+\end{align}
 so from \eqref{sigma-def} one has
-$$ \sigma = \frac{3N}{tA} \asymp \frac{1}{\log^2 N}.$$
-The conditions $K^2 (1+\sigma) < t$ and $t>9L$ are easily verified for $N$ large enough.
+$$ \sigma = \frac{3N}{tA} \asymp \frac{1}{A} \asymp \frac{1}{\log^2 N}.$$
+The conditions \eqref{condition} and $t>9L$ are easily verified for $N$ large enough.
 
-By \Cref{crit}, it suffices to verify the criteria \eqref{first-criterion}, \eqref{second-criterion}. From \Cref{baker} we have
-$$ \delta N - \frac{3}{2} \log N - \kappa_L (\log \sqrt{12}) \frac{N}{\log t} \geq ec_0 \frac{N}{\log N} + \frac{N}{2 \log^{1+c_1} N}$$
-if $c_1$ is small enough and $N$ is large enough, while from
-the choice of $t,L$ one has
-$$ \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2 \gg N.$$
-By repeating the proof of \Cref{upper-bound}, we see that
-$$ \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p} = ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right)$$
+By \Cref{step4-reduce}, it suffices to verify the criteria 
+\eqref{new-balance-5}, \eqref{nstarb}.  From \eqref{qnt1}, \eqref{qnt2} we have
+$$ Q_{N,t,L} , Q'_{N,t,L} \asymp 1$$
+so by \Cref{baker} it will suffice to establish the bounds
+\begin{align}
+  \frac{1}{N} \excess_t(\tuple^{(3)}) &\leq
+  \frac{ec_0}{\log N} + O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right) \label{est-1}\\
+  Y_1^+ &\ll \frac{(\log\log N)^{O(1)}}{\log N} \label{y1p-est}\\
+  Y_1^- &\ll \frac{(\log\log N)^{O(1)}}{\log^2 N}\label{y1m-est}\\
+  Y_2^\pm &\ll \frac{(\log\log N)^{O(1)}}{\log^2 N}\label{y2pm-est} \\
+\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 &\ll \frac{(\log\log N)^{O(1)}}{\log N}.\label{23-est}
+\end{align}
 
-Thus, it will suffice to establish the bounds
-\begin{equation}\label{first-criterion'}
-  \begin{split}
-&\frac{3N^2}{2tA} + 4  \\
-&\quad + \kappa_K X'_1 + \kappa_5 X'_2 \\
-&\quad \ll \frac{N (\log\log N)^3}{\log^2 N}
-  \end{split}
-\end{equation}
-and
-\begin{equation}\label{second-criterion'}
-  \begin{split}
-  &\sum_{p_0=2,3} \sum_{p > t/K} \left \lfloor \frac{N}{p} \right \rfloor \nu_{p_0}(\lceil t/p \rceil) \log p_0 \\
-&\quad +
-(\log\sqrt{tK} + \kappa_K) (X'_1+2) + (\log K+\kappa_5) X'_2 \\
-& \ll  \frac{N (\log\log N)^3}{\log N}.
-\end{split}
-\end{equation}
+We begin with \eqref{est-1}.  The function $f_{N/t}$ is piecewise monotone on $(t/NK,1]$ with $O(K)$ pieces, and is bounded by $1$, so that 
+$$ \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \ll K.$$
+Applying \eqref{excess-3-bound}, \eqref{ecx}, \eqref{main-lower}, \eqref{A-asym}, \eqref{K-asym} we see that
+$$ \excess_t(\tuple^{(3)}) \leq \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx + O\left( \frac{1}{\log^2 N} \right).$$
+But by repeating the arguments used to prove \Cref{tne} we have
+\begin{align*}
+\frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx &= \left(1 + O\left( \frac{\log\log N}{\log^2 N} \right)\right) \int_{1/eK}^{N/et} f_{N/t}(etx/N)\ dx \\
+&= \left(1 + O\left( \frac{\log\log N}{\log^2 N} \right)\right) \left(ec_0 + O\left( \frac{\log\log N}{\log^2 N} \right)\right),
+\end{align*}
+giving the claim.
 
-From the choice of parameters $t,A$, we see that the $\frac{3N^2}{2tA} + 4$ term in \eqref{first-criterion'} is acceptable.   For a tiny prime $p_0=2,3$, we have from \eqref{nup-up} that
-$$ \sum_{p > t/K} \lfloor \frac{N}{p} \rfloor \nu_{p_0}(\lceil t/p\rceil)
-\ll \sum_{m \leq K} \nu_{p_0}(m) \frac{N}{m \log N}.$$
-Using the bound
-\begin{equation}\label{nupsum}
-  \begin{split}
-    \sum_{m \leq K(1+\sigma)} \frac{\nu_p(m)}{m}
-    &= \sum_{j=1}^\infty \sum_{m \leq K(1+\sigma): p^j|m} \frac{1}{m} \\
-    &\ll \sum_{j=1}^\infty \frac{\log K}{p^j} \\
-    &\ll \frac{\log\log N}{p}
-  \end{split}
-\end{equation}
-we thus see that the first term on the left-hand side of \eqref{second-criterion'} is acceptable.  It will now suffice to show that
-\begin{equation}\label{xb} X'_1, X'_2 \ll \frac{N (\log\log N)^3}{\log^2 N}.
-\end{equation}
-From \eqref{x11-est} and the prime number theorem we have
-$$ \frac{4A+3}{3} \sum_{3 < p \leq t/K}  \left\lceil \frac{\log N}{\log p} \right\rceil \ll A \frac{t/K}{\log N} \ll \frac{N}{\log^2 N}$$
-so the contribution of the first term in \eqref{x1-upper} is acceptable.  Next, from the Brun--Titchmarsh inequality (or \eqref{pixy-upper}) we have
-$$ A \left( \pi(K(1+\sigma))-\pi(K)\right) \left(\pi\left(\frac{t(1+\sigma)}{K}\right) - \pi \left(\frac{t}{K} \right) \right) \ll A \frac{K \sigma}{\log K} \frac{t\sigma/K}{\log N} \ll \frac{N}{\log^3 N}$$
-so the contribution of the second term in \eqref{x1-upper} is also acceptable.  From \eqref{zp-bound} one has
-$$ Z_p \ll  A \sum_{K < m < K(1+\sigma)} \nu_{p}(m) \frac{\sigma N}{K \log N} \ll A \frac{\sigma^2 N \log K}{p \log N}
-\ll \frac{N \log\log N}{p \log^3 N}$$
-so the contribution of these terms to \eqref{x1-upper} is also acceptable.  From \eqref{crudo} we have
-$$ \frac{4A+3}{3} \sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil \ll A (\log N) \frac{K}{\log N} \ll \log^6 N
+
+From \eqref{y2pm-bound} and the Brun--Titchmarsh inequality one has 
 $$
-which is certainly acceptable for \eqref{x2-upper}. By Mertens' theorem, it will now suffice to show that
-\begin{equation}\label{yp}  
-  |Y_{p_1}|_{1,0} \leq \frac{N (\log\log N)^2}{p_1 \log N}
-\end{equation}
-and
-\begin{equation}\label{yp-neg} 
-  |Y_{p_1}|_{0,1}  \ll\frac{N (\log\log N)^2}{p_1 \log^2 N}
-\end{equation}
-for all small primes $p$.
+Y^\pm_2 \ll \frac{A}{N} \frac{t/K}{\log N} + \frac{A}{N} \frac{K\sigma}{\log K} \frac{t\sigma/K}{\log K}$$
+and the claim \eqref{y2pm-est} follows from \eqref{a-asym}, \eqref{k-asym}, \eqref{main-lower}.
 
-For the first bound \eqref{yp}, we crudely discard the second term of \eqref{yp-def} and use the Brun--Titchmarsh inequality to obtain
-\begin{align*}
-|Y_{p_1}|_{1,0} & \ll  A \sum_{m \leq K} \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
-&\ll \frac{At\sigma}{\log N} \sum_{m \leq K} \frac{\nu_{p_1}(m)}{m} \\
-&\ll \frac{N \log\log N}{p_1 \log N}
-\end{align*}
-which is acceptable.  For the second bound \eqref{yp-neg}, we argue more carefully.  From \Cref{buthe} we have
-\begin{align*}
-A \sum_{m \leq K: (m,6)=1}& \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
-  &= A \sum_{m \leq K: (m,6)=1} \nu_{p_1}(m) (1+O(\frac{\log\log N}{\log N})) \frac{t\sigma m}{\log N} \\
-  &= \frac{N}{\log N} \sum_{m \leq K: (m,6)=1} \frac{3\nu_{p_1}(m)}{m}
- + O\left(\frac{N (\log\log N)^2}{p_1 \log^2 N}\right)
-\end{align*}
-where we again used \eqref{nupsum} to control the error.  From the upper bound \eqref{nup-up} we also have
-\begin{align*}
-  \sum_{p > t/K} \left\lfloor \frac{N}{p} \right\rfloor \nu_{p_1}(\lceil t/p \rceil)
-  &\leq \sum_{m \leq K}\nu_{p_1}(m) (1+O(\frac{\log\log N}{\log N}))  \int_{t/m}^{t/(m-1)} \frac{N}{x} \frac{dx}{\log N} \\
-  &= \frac{N}{\log N} \sum_{m \leq K}\nu_{p_1}(m) \log \frac{m}{m-1} O\left(\frac{N (\log\log N)^2}{p_1 \log^2 N}\right)
-\end{align*}
-and thus
+From \eqref{small-bound} and the Brun--Titchmarsh inequality as well as the trivial bound $\nu_{p_0}(m) \ll \log\log N$ for $m \ll K$, one has
 $$
-|Y_{p_1}|_{0,1} \ll \frac{N}{\log N} |\sum_{m \leq K: (m,6)=1} \frac{3\nu_{p_1}(m)}{m} - \sum_{m \leq K}\nu_{p_1}(m) \log \frac{m}{m-1}|_{0,1} + \frac{N (\log\log N)^2}{p_1 \log^2 N}.$$
-The claim now follows from the following numerical inequality.
+\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 \ll \sum_{p_0=2,3} \sum_{m \leq K} (\log\log N) \frac{t}{m \log N}$$
+and from \eqref{nupsum} we obtain \eqref{23-est}.  
 
-\begin{lemma}[Key inequality]\label{key-ineq} For $p\geq 5$ and $K > 0$, we have
-$$ 0 \leq \sum_{m \leq K; (m,6)=1} \nu_p(m) \frac{3}{m} - \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1} \leq \frac{2}{p-1}.$$
+Applying similar estimates to \eqref{zp-def} gives
+\begin{align*}
+  Z_{p_1} \ll
+\frac{1}{N} \sum_{K < m \leq K(1+\sigma): p_1|m} (\log\log N) \frac{\sigma t}{K \log N} \\
+&\ll \frac{\log\log N}{AK\log N} (\frac{K\sigma}{p_1}+1) \\
+&\ll \frac{\log\log N}{A p_1 \log^2 N} + \frac{\log\log N}{A K \log N}
+\end{align*}
+and hence by \eqref{y1p-bound} and Mertens' theorem
+\begin{align*}
+  Y_1^+ &\ll \frac{A}{N} \sum_{p_1 \leq K} \log N \frac{\log\log N}{\log N} + \sum_{p_1 \leq K} \frac{\log\log N}{p_1 \log^2 N} + \frac{\log\log N}{K \log N} \\
+  &\quad + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \\
+  &\ll \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} + \frac{(\log\log N)^{O(1)}}{\log N}
+\end{align*}
+while from \eqref{y1m-bound} we similarly have
+\begin{align*} 
+Y_1^- &\ll \frac{A}{N} \sum_{p_1 \leq K} \log N 
++ \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \\
+&\ll \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1}  + \frac{\log^{O(1)} N}{N}
+\end{align*}
+and so to verify the remaining claims \eqref{y1p-est}, \eqref{y1m-est} it will suffice from Mertens' theorem to show the bounds
+\begin{align}
+  |W_{p_1}|_{1,0} &\ll \frac{(\log\log N)^{O(1)}}{p_1 \log N}\label{wp-plus}\\
+  |W_{p_1}|_{0,1} &\ll \frac{(\log\log N)^{O(1)}}{p_1 \log^2 N}\label{wp-minus}
+\end{align}
+for all small primes $3 < p_1 \leq K$.
+
+For the first bound \eqref{wp-plus}, we crudely discard the negative term in \eqref{W-def} and use the Brun--Titchmarsh inequality and the crude bound
+\begin{equation}\label{nupim-crude} 
+  \nu_{p_1}(m) \ll 1_{p_1|m} \log\log N
+\end{equation}
+for $m \ll K$ to obtain
+\begin{align*}
+|W_{p_1}|_{1,0} &\leq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
+&\ll \frac{A}{N} \sum_{m \leq K:p_1|m} (\log\log N) \frac{t\sigma/m}{\log N} \\
+&\ll \frac{(\log\log N)^2}{p_1 \log N}
+\end{align*}
+as required.  For the second bound \eqref{wp-minus}, we need to be more careful.  From \Cref{buthe}, \eqref{ecx} we have
+\begin{align*}
+\frac{A}{N} \sum_{m \leq K}^*& \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
+  &= \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) (1+O(\frac{\log\log N}{\log N})) \frac{t\sigma m}{\log N} \\
+  &= \frac{1}{\log N} \sum_{m \leq K}^* \frac{3\nu_{p_1}(m)}{m}
+ + O\left(\frac{N (\log\log N)^{O(1)}}{p_1 \log^2 N}\right)
+\end{align*}
+where we used \eqref{nupim-crude} to control the error.  We can also use \Cref{buthe}, \eqref{ecx} to bound
+\begin{align*}
+  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor
+&\leq  \left(1 + O\left(\frac{\log\log N}{\log N}\right)\right)  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m)
+\sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \frac{N}{p} \log p \\
+&\leq  \left(1 + O\left(\frac{\log\log N}{\log N}\right)\right)  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m)
+\int_{\frac{t}{m}}^{\frac{t}{m-1}} \frac{N}{x}\ dx +
+O\left( \frac{1}{p_1 \log^2 N} \right) \\
+&\leq \sum_{m \leq K} \nu_{p_1}(m) \log\frac{m}{m-1} +
+O\left( \frac{(\log\log N)^{O(1)}}{p_1 \log^2 N} \right) 
+\end{align*}
+where we again used \eqref{nupim-crude} to control the error.  Inserting these bounds into \eqref{W-def}, it will now suffice to establish the following bound.
+
+\begin{lemma}[Key inequality]\label{key-ineq} For any prime $p\geq 5$ and any real $K > 0$, we have
+$$ 0 \leq \sum_{m \leq K}^* \nu_p(m) \frac{3}{m} - \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1} \leq \frac{2}{p-1}.$$
 \end{lemma}
 
 But this can be easily verified; see \Cref{key-app}.  The proof of \eqref{main-lower} is now complete.

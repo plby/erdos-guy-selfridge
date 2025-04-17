@@ -529,11 +529,51 @@ which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \
 
 In this section we present and then analyze an algorithm that, when given parameters $1 \leq t \leq N$, will attempt to construct a $t$-admissible subfactorization $\prod \tuple$ of $N!$ that obeys the criterion in \Cref{t-descrip}.  The algorithm will not always succeed, but when it does, it will certify that $t(N) \geq t$.
 
+The basic idea is to start with an initial approximate factorization $\tuple^{(1)}$ that has small $t$-excess and is close to balance at all small and medium primes, but has no tiny primes, and also has the ``wrong'' selections of large primes.  One then modifies this factorization in a number of ways to return to balance at all non-tiny primes, as well as near-balance at the tiny primes. 
+
+As part of the algorithm, one will often wish to replace a non-$3$-smooth number $x$ with a $3$-smooth upper bound $2^n 3^m$.  A natural choice here would be the least such upper bound $\lceil x \rceil^{\langle 2,3 \rangle}$.  However, this bound may contain an imbalanced number of powers of $2$ and $3$; because $\nu_2(N!) \approx N$ and $\nu_3(N!) \approx N/2$, we would ideally like this $3$-smooth upper bound to have twice as many powers of $2$ as of $3$, that is to say it is a power of $12$.  We therefore introduce the variant quantity
+$$ \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}$$
+for any real $x \geq L \geq 1$, where $a \coloneqq \lfloor \frac{x/L}{\log 12} \rfloor$ is the largest integer such that $12^a \leq x/L$.  This quantity is $3$-smooth, and has the following bound:
+
+\begin{lemma}[Valuation bounds]\label{val} If $x \geq L \geq 1$ are real numbers, then
+$$ x \leq \lceil x \rceil^{\langle 2,3\rangle}_L \leq x e^{\kappa_L}$$
+and
+$$ \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}_L) \leq \frac{2}{\log 12} \log x + \kappa^*_L$$
+where
+\begin{equation}\label{kappastar-def}
+\kappa^*_L \coloneqq (\frac{2}{\log 3} - \frac{2}{\log 12}) \log(12L) + \frac{2}{\log 3} \kappa_L.
+\end{equation}
+\end{lemma}
+
+This can be compared with the bound
+$$ \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}) \leq \frac{2}{\log 3} x + \frac{2}{\log 3} \kappa_x$$
+that can be obtained from \eqref{kl-def} and the observation that $\log 2 \leq \frac{2}{\log 3}$.  
+
+\begin{proof} The first claim is clear from \eqref{kl-def}, so we focus on the second.  If we write $\lceil x/12^a \rceil^{\langle 2,3 \rangle} = 2^n 3^m$, then by \eqref{kl-def} we have
+$$ n \log 2 + m \log 3 \leq \log \frac{x}{12^a} + \kappa_L;$$
+since $\log 2 \leq \frac{2}{\log 3}$, this implies that
+$$ \max( n, 2m ) \leq \frac{2}{\log 3} \log \frac{x}{12^a}
++ \frac{2}{\log 3} \kappa_L.$$
+Hence 
+\begin{align*}
+  \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}) &= \max(2a+n, 2a+2m) \\
+  &\leq 2a + \frac{2}{\log 3} \log \frac{x}{12^a}
+  + \frac{2}{\log 3} \kappa_L \\
+  &= \frac{2}{\log 12} \log x + 
+  \left(\frac{2}{\log 3} - \frac{2}{\log 12}\right) \log \frac{x}{12^a}
+  + \frac{2}{\log 3} \kappa_L \\
+  \frac{2}{\log 12} \log x + 
+  \left(\frac{2}{\log 3} - \frac{2}{\log 12}\right) \log(12L)
+  + \frac{2}{\log 3} \kappa_L,
+\end{align*}
+giving the claim.
+\end{proof}
+
 \subsection{Description of algorithm}\label{alg-desc}
 
-In addition to the given parameters $1 \leq t \leq N$, we require additional natural number parameters $A,K$ obeying the hypotheses
+In addition to the given parameters $1 \leq t \leq N$, we require additional natural number parameters $A,K$ and a real parameter $L \geq 1$ obeying the hypotheses
 \begin{equation}\label{condition}
-  K^2 (1+\sigma) < t; \quad K\sqrt{N} < t; \quad \sigma < 1; \quad K \geq 3; 
+  9L, K^2 (1+\sigma) < t; \quad K\sqrt{N} < t; \quad \sigma < 1; \quad K \geq L \geq 4.5; 
 \end{equation}
 where
 \begin{equation}\label{sigma-def}
@@ -541,20 +581,7 @@ where
 \end{equation}  
 There is some freedom to select parameters here, but roughly speaking one would like to have $1 \lll A \lll K \lll \sqrt{t}$.
 
-With such parameters in hand, we can consider the following algorithm.
-
-\begin{enumerate}
-\item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t(1+\sigma)]$ instead of the half-open interval $(t,t(1+\sigma)]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t(1+\sigma)]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for $3 < p \leq t/K$, though it may have quite different prime factorization at primes $p>t/K$.)
-\item[(2)] Remove any element from $\tuple^{(1)}$ that contains a prime factor $p$ with $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors, though it tends to acquire a $p$-surplus in the range $3 < p \leq K$.
-\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.   Now $\tuple^{(3)}$ is $t$-admissible and in balance at all primes $p>t/K$, but will typically be in a slight deficit at primes $3 < p \leq t/K$, particularly in the range $3 < p \leq K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
-\item[(4)] For each prime $3 < p \leq t/K$ at which there is a surplus $\nu_p(N!/\prod \tuple) > 0$, replace $\nu_p(N!/\prod \tuple)$ copies of $p$ in the prime factorizations of elements of $\tuple^{(3)}$ with $\lceil p \rceil^{\langle 2,3 \rangle}$ instead, and call this new multiset $\tuple^{(4)}$.  Thus $\tuple^{(4)}$ has no surplus at primes $3 < p \leq t/K$ (and is still $t$-admissible and in balance for $p>t/K$).
-\item [(5)] For the primes $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
-$(\sqrt{t/K}, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}$ to $\tuple^{(4)}$, and call this new multiset $\tuple^{(5)}$.  
-\item[(6)] By construction, $\tuple^{(5)}$ is $t$-admissible and will be in balance at all primes $p>3$, and is thus $N!/\prod \tuple^{(5)}$ is of the form $2^n 3^m$ for some integers $n,m$.  If at least one of $n,m$ is negative, then \texttt{HALT} the algorithm with an error.  Otherwise, select a $3$-smooth number $2^{n_1} 3^{m_1}$ greater than equal to $t$ with $n_1/m_1 \leq n/m$ (which one can interpret as $n_1 m \leq nm_1$ in case some of the denominators here vanish), and similarly select a $3$-smooth number $2^{n_2} 3^{m_2}$ greater than or equal to $t$ with $n_2/m_2 \geq n/m$.  (It is reasonable to select the smallest such $3$-smooth numbers in both cases, although this is not absolutely necessary for the algorithm to be successful.) By construction, we can express $(n,m)$ as a positive linear combination $\alpha_1 (n_1,m_1) + \alpha_2 (n_2,m_2)$ of $(n_1,m_1)$ and $(n_2,m_2)$.  Add $\lfloor \alpha_1 \rfloor$ copies of $2^{n_1} 3^{m_1}$ and $\lfloor \alpha_2 \rfloor$ copies of $2^{n_2} 3^{m_2}$ to $\tuple^{(5)}$, and call this tuple $\tuple^{(6)}$.  (This will largely eliminate the surplus at $2$ and $3$.)
-\item[(7)] If the criterion in \Cref{t-descrip} is obeyed by $\tuple^{(6)}$, then we have successfully established\footnote{If desired, one could implement the proof of \Cref{t-descrip} as a final component of this algorithm, that is to say one removes elements from $\tuple^{(6)}$ to make the cardinality exactly $N$, and then distributes any surplus primes arbitrarily to create a $t$-admissible factorization of $N!$ of cardinality exactly $N$.} that $t(N) \geq t$.  Otherwise, \texttt{HALT} the algorithm with an error. 
-\end{enumerate}
-
-To analyze this algorithm, it will be convenient to divide the set of primes into the following ranges:
+It will be convenient to divide the set of primes into the following ranges:
 \begin{itemize}
 \item \emph{Tiny primes} $p=2,3$.
 \item \emph{Small primes} $3 < p \leq K$.
@@ -562,6 +589,20 @@ To analyze this algorithm, it will be convenient to divide the set of primes int
 \item \emph{Medium primes} $K(1+\sigma) < p \leq t/K$.
 \item \emph{Large primes} $p > t/K$.
 \end{itemize}
+
+With such parameters in hand, we can consider the following algorithm.
+
+
+\begin{enumerate}
+\item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t(1+\sigma)]$ instead of the half-open interval $(t,t(1+\sigma)]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t(1+\sigma)]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for small, borderline, and medium $3 < p \leq t/K$, though it may have quite different prime factorization at large primes $p>t/K$.)
+\item[(2)] Remove any element from $\tuple^{(1)}$ that contains a large prime factor $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors, though it tends to acquire a $p$-surplus at small primes $3 < p \leq K$.
+\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.   Now $\tuple^{(3)}$ is $t$-admissible and in balance at all large primes $p>t/K$, but will expected to enjoy some surplus at small and borderline primes $3 < p \leq K(1+\sigma)$, and be in balance for medium priems $K(1+\sigma) < p \leq t/K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
+\item [(4)] For small primes $3 < p \leq K$ at which there is a surplus $\nu_p(\N!/\prod \tuple) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
+$(t/K^2, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}_{4.5}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(3)}$, and call this new multiset $\tuple^{(4)}$.  We apply the same procedure for borderline or medium primes $K < p \leq t/K$, but without the initial grouping procedure. Thus $\tuple^{(4)}$ has no surplus at small, borderline, or medium primes $3 < p \leq t/K$ (and is still $t$-admissible and in balance for $p>t/K$).
+\item[(5)] For each small, borderline, or medium prime $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, replace $\nu_p(\prod \tuple/N!)$ copies of $p$ in the prime factorizations of elements of $\tuple^{(4)}$ with $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ instead, and call this new multiset $\tuple^{(5)}$.  
+\item[(6)] By construction, $\tuple^{(5)}$ is $t$-admissible and will be in balance at all non-tiny primes $p>3$, and is thus $N!/\prod \tuple^{(5)}$ is of the form $2^n 3^m$ for some integers $n,m$.  Let $2^{n_0}, 3^{m_0}$ be the largest powers of $2$ and $3$ respectively less than or equal to $t/L$, and set $2^{n_1} 3^{m_1} \coloneqq \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle}$ and $2^{n_2} 3^{m_2} \coloneqq \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle}$.  If one cannot express $(n,m)$ as a positive linear combination $\alpha_1 (n_1,m_1) + \alpha_2 (n_2,m_2)$ of $(n_1,m_1)$ and $(n_2,m_2)$, \texttt{HALT} with an error.  Otherwise, add $\lfloor \alpha_1 \rfloor$ copies of $2^{n_1} 3^{m_1}$ and $\lfloor \alpha_2 \rfloor$ copies of $2^{n_2} 3^{m_2}$ to $\tuple^{(5)}$, and call this tuple $\tuple^{(6)}$.  (This will largely eliminate the surplus at $2$ and $3$.)
+\item[(7)] If the criterion in \Cref{t-descrip} is obeyed by $\tuple^{(6)}$, then we have successfully established\footnote{If desired, one could implement the proof of \Cref{t-descrip} as a final component of this algorithm, that is to say one removes elements from $\tuple^{(6)}$ to make the cardinality exactly $N$, and then distributes any surplus primes arbitrarily to create a $t$-admissible factorization of $N!$ of cardinality exactly $N$.} that $t(N) \geq t$.  Otherwise, \texttt{HALT} the algorithm with an error. 
+\end{enumerate}
 
 The expected $p$-surpluses or $p$-deficits at various stages of this process are summarized in \Cref{algorithm-table}.
 
@@ -739,14 +780,14 @@ We can use the surplus tiny primes to efficiently deal with larger surplus prime
   obeying the bounds
 \begin{equation}\label{new-balance-4}
   \begin{split}
-&    \frac{1}{N}  \excess_t(\tuple^{(4)}) + \kappa_K Y_1 + \kappa_K Y_2 
+&    \frac{1}{N}  \excess_t(\tuple^{(4)}) + \kappa_{4.5} (Y_1 + Y_2) 
  \\
 &\quad  + \frac{\kappa_L \log \sqrt{12}}{\log t}  + \frac{3}{2} \frac{\log N}{N}   \leq \delta. 
   \end{split}
  \end{equation}
 and
  \begin{align*}
-  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 3} (\log(K^2)+\kappa_K) Y_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 12} (\log(K^2)+\kappa^*_{4.5}) Y_1 + \frac{2}{\log 12} (\log(t/K)+\kappa^*_{4.5}) (Y_2+\frac{1}{N}) \\
 &\quad
   \leq 1 - \alpha.
  \end{align*}
@@ -763,24 +804,24 @@ M \leq NY_1.
 $$
 Also, the number of borderline or medium primes $K < p \leq t/K$ appearing in $N!/\prod \tuple^{(4)}$, counting multiplicity, is $NY_2$.
 
-For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle} = 2^{n_i} 3^{m_i}$, which by \eqref{kappa-def} lies in the interval $[t/c_i,e^{\kappa_K} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_K} t/c_*]$.  Finally, for the $Y_2$ borderline or medium primes $K < p \leq t/K$ discussed above, we introduce the $3$-smooth number $\lceil t/p\rceil^{\langle 2,3\rangle} = 2^{n_p} 3^{m_p}$, which lies in the interval $[t/p,e^{\kappa_K} t/p]$.  We adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well $\lceil t/c_*\rceil^{\langle 2,3\rangle} c_* = 2^{n_*} 3^{m_*} c_*$ and $\lceil t/p \rceil^{\langle 2,3\rangle} p = 2^{n'_p} 3^{m'_p} c_p$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  
+For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle}_{4.5} = 2^{n_i} 3^{m_i}$, which by \Cref{val} lies in the interval $[t/c_i,e^{\kappa_{4.5}} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle}_{4.5} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_{4.5}} t/c_*]$.  Finally, for the $Y_2$ borderline or medium primes $K < p \leq t/K$ discussed above, we introduce the $3$-smooth number $\lceil t/p\rceil^{\langle 2,3\rangle}_{4.5} = 2^{n'_p} 3^{m'_p}$, which lies in the interval $[t/p,e^{\kappa_{4.5}} t/p]$.  We adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle}_{4.5} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well $\lceil t/c_*\rceil^{\langle 2,3\rangle}_{4.5} c_* = 2^{n_*} 3^{m_*} c_*$ and $\lceil t/p \rceil^{\langle 2,3\rangle}_{4.5} p = 2^{n'_p} 3^{m'_p} c_p$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  
 
-For each $i=1,\dots,M$, the quantities $\log \lceil t/c_i\rceil^{\langle 2,3\rangle} = n_i \log 2 + m_i \log 3$ are bounded by $\log K^2 + \kappa_K$, and hence
-$$ \max( n_i, 2m_i ) \leq \frac{2}{\log 3} (\log K^2 + \kappa_K).$$
+For each $i=1,\dots,M$, we have from \Cref{val} that
+$$ \max( n_i, 2m_i ) \leq \frac{2}{\log 12} (\log K^2 + \kappa^*_{4.5}).$$
 Similarly we have
-$$ \max( n_*, 2m_* ) \leq \frac{2}{\log 3} (\log (t/K) + \kappa_K)$$
+$$ \max( n_*, 2m_* ) \leq \frac{2}{\log 12} (\log (t/K) + \kappa^*_{4.5})$$
 and
-$$ \max( n'_p, 2m'_p ) \leq \frac{2}{\log 3} (\log (t/K) + \kappa_K)$$
+$$ \max( n'_p, 2m'_p ) \leq \frac{2}{\log 12} (\log (t/K) + \kappa^*_{4.5})$$
 for the medium primes $m$.
 Hence
 \begin{align*} 
   & \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(5)}\right) \\
   &\quad \leq \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0 \\
-  &\quad + \frac{2}{\log 3} NY_1 (\log K^2 + \kappa_K) + \frac{2}{\log 3} (NY_2+1) (\log(t/K) + \kappa_K).
+  &\quad + \frac{2}{\log 12} NY_1 (\log K^2 + \kappa^*_{4.5}) + \frac{2}{\log 12} (NY_2+1) (\log(t/K) + \kappa^*_{4.5}).
 \end{align*}
-Each of the new factors in $\tuple^{(5)}$ contributes an excess of at most $\kappa_K$, so that
-$$ \excess_t(\tuple^{(5)})  \leq \excess_t(\tuple^{(4)}) + \kappa_K (NY_1+NY_2+1).$$
-We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (using \eqref{kl-triv} to bound $\kappa_K$ by $\log\sqrt{2\pi}$ to clean up some lower order terms), and the claim follows.
+Each of the new factors in $\tuple^{(5)}$ contributes an excess of at most $\kappa_L$, so that
+$$ \excess_t(\tuple^{(5)})  \leq \excess_t(\tuple^{(4)}) + \kappa_L (NY_1+NY_2+1).$$
+We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (using \eqref{kl-triv} to bound $\kappa_L$ by $\log\sqrt{2\pi}$ to clean up some lower order terms), and the claim follows.
 \end{proof}
 
 \subsection{Analysis of Step 4}
@@ -796,7 +837,7 @@ The surplus tiny primes can also be used to deal with any larger primes that are
     obey the hypotheses
 \begin{equation}\label{new-balance-5}
     \begin{split}
-&     \frac{1}{N} \excess_t(\tuple^{(3)}) + \kappa_K Y_1^+ + \kappa_5 Y_1^- + \kappa_K Y_\pm\\
+&     \frac{1}{N} \excess_t(\tuple^{(3)}) + \kappa_{4.5} (Y_1^+ + Y_1^- + Y_\pm)\\
 &\quad + \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N}  \leq \delta.
     \end{split}
   \end{equation}
@@ -804,7 +845,7 @@ and
   \begin{equation}\label{nstarb}
     \begin{split}
 &\frac{1}{N} \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) \\
-&\quad + \frac{2}{\log 3} (\log K^2 +\kappa_K) Y_1^+ + \frac{2}{\log 3} (\log K + \kappa_5) Y_1^- + \frac{2}{\log 3} (\log(t/K) +\kappa_K) (Y_2^\pm+\frac{1}{N})  
+&\quad + \frac{2}{\log 12} (\log K^2 +\kappa^*_{4.5}) Y_1^+ + \frac{2}{\log 12} (\log K + \kappa^*_{4.5}) Y_1^- + \frac{2}{\log 12} (\log(t/K) +\kappa^*_{4.5}) (Y_2^\pm+\frac{1}{N})  
 \\
   &\quad  \leq 1-\alpha
   \end{split}
@@ -813,28 +854,24 @@ and
 \end{proposition}
 
 \begin{proof} Suppose there is a non-tiny prime $p>3$ with a positive $p$-deficit
-$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and increments $\sum_{p_0=2,3} \nu_{p_0}(N!/\prod \tuple^{(3)}) \log p_0$ by  $n_{p}\log 2 + m_{p} \log 3$.  We have
-$$n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$$
-and hence
-$$ \max(n_p, 2m_p) \leq \frac{2}{\log 3} (\log p + \kappa_{p}).$$
+$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{4.5})$ thanks to \Cref{val}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{4.5}$ to the $t$-excess, and increments $\sup_{p_0=2,3} (p_0-1)\nu_{p_0}(N!/\prod \tuple^{(3)})$ by  at most $\frac{2}{\log 12}(\log(t/K) + \kappa^*_{4.5})$, thanks to \Cref{val}.
 So if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
-$$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,\kappa_p}$$
+$$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,\kappa_{4.5}}$$
 and hence
 \begin{align*}
-  &\frac{1}{N} \excess_t(\tuple^{(4)}) + \kappa_K Y_1 + \kappa_K Y_2 \\
-\\
-&\frac{1}{N} \excess_t(\tuple^{(4)}) +
-\kappa_K Y^+_1 + \kappa_5 Y^-_1 + \kappa_K Y_2^\pm..
+  &\frac{1}{N} \excess_t(\tuple^{(4)}) + \kappa_{4.5} (Y_1 + Y_2) \\
+&\leq \frac{1}{N} \excess_t(\tuple^{(4)}) +
+\kappa_{4.5} (Y^+_1 + Y^-_1 + Y_2^\pm).
 \end{align*}
 Similarly we have
 $$\sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right)  \leq
-\sum_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) + \frac{2}{\log 3} \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log p+\kappa_{p}}$$
+\sum_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) + \frac{2}{\log 12} \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log(t/K)+\kappa^*_{4.5}}$$
 and hence
 \begin{align*}
-  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 3} (\log(K^2)+\kappa_K) Y_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 12} (\log(K^2)+\kappa^*_{4.5}) Y_1 + \frac{2}{\log 12} (\log(t/K)+\kappa^*_{4.5}) (Y_2+\frac{1}{N}) \\
   &\quad \leq 
-  \frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right)+ \frac{2}{\log 3}  (\log(K^2)+\kappa_K) Y^+_1 \\
-  &\quad \quad + \frac{2}{\log 3} (\log K + \kappa_K) Y^-_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y^\pm_2+\frac{1}{N}).
+  \frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right)+ \frac{2}{\log 12}  (\log(K^2)+\kappa^*_{4.5}) Y^+_1 \\
+  &\quad \quad + \frac{2}{\log 12} (\log K + \kappa^*_{4.5}) Y^-_1 + \frac{2}{\log 12} (\log(t/K)+\kappa^*_{4.5}) (Y^\pm_2+\frac{1}{N}).
 \end{align*}
 The hypotheses of \Cref{balance-23'} are now satisfied, and we are done.
 \end{proof}
@@ -987,9 +1024,9 @@ $$ \sigma = \frac{3N}{tA} \asymp \frac{1}{A} \asymp \frac{1}{\log^2 N}.$$
 The conditions \eqref{condition} and $t>9L$ are easily verified for $N$ large enough.
 
 By \Cref{step4-reduce}, it suffices to verify the criteria 
-\eqref{new-balance-5}, \eqref{nstarb}.  From \eqref{qnt1}, \eqref{qnt2} we have
-$$ Q_{N,t,L} , Q'_{N,t,L} \asymp 1$$
-so by \Cref{baker} it will suffice to establish the bounds
+\eqref{new-balance-5}, \eqref{nstarb}.  From \eqref{qntl} and \eqref{l-asym}, \eqref{main-lower} we have
+$$ \alpha \leq \frac{1}{2}$$
+if $N$ is large enough, so by \Cref{baker} it will suffice to establish the bounds
 \begin{align}
   \frac{1}{N} \excess_t(\tuple^{(3)}) &\leq
   \frac{ec_0}{\log N} + O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right) \label{est-1}\\
@@ -1086,20 +1123,22 @@ But this can be easily verified; see \Cref{key-app}.  The proof of \eqref{main-l
 \section{Guy--Selfridge conjecture}
 
 We now establish the Guy--Selfridge conjecture $t(N) \geq N/3$ in the range
-$$ N \geq ???.$$
+$$ N \geq 10^{12}.$$
 We will apply \Cref{step4-reduce} with the choice of parameters
 \begin{align*}
   t &\coloneqq N/3\\
-  A &\coloneqq ???\\
-  K &\coloneqq 342 \\
-  L &\coloneqq 342.
+  A &\coloneqq 175\\
+  K &\coloneqq 340 \\
+  L &\coloneqq 4.5.
 \end{align*}
 Clearly $\delta = \log \frac{3}{e} = 0.09861\dots$, and
 $$ \sigma = \frac{9}{A}.$$
 From \Cref{lemcount-0}, we have
 \begin{equation}\label{kappa-k}
-  \kappa_K  = \kappa_L \leq \log \frac{9}{8} = 0.11778\dots
+  \kappa_{4.5} \leq \log \frac{9}{8} = 0.11778\dots
 \end{equation}
+and from 
+
 Thus the right-hand side of \eqref{new-balance-6} is at least
 $$ N \log \frac{3}{e} - \frac{3}{2} \log N - (\log \frac{9}{8}) (\log \sqrt{12}) \frac{N}{\log(N/3)}.$$
 

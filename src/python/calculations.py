@@ -59,6 +59,9 @@ def kappa(L):
         return math.log(4/3)
     return math.log(3/2)
 
+def fancy_kappa(L):
+    return (2/math.log(3) - 2/math.log(12))*math.log(12*L) + (2/math.log(3))*kappa(L)
+
 def delta(t,N):
     return math.log(N/t) - 1
 
@@ -84,7 +87,7 @@ def excess_bound(t,N,A,K):
     sum += 2044 * E(N) / (N * math.log(t/K))
     return sum
 
-# equation (5.39)
+# equation (5.38)
 def Z_bound(t,N,A,K,p):
     sum = 0
     for m in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
@@ -92,7 +95,7 @@ def Z_bound(t,N,A,K,p):
             sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma(t,N,A))/m) / N
     return sum
 
-# The first term in (5.44)
+# The first term in (5.43)
 def Y1p_first(t,N,A,K):
     sum = 0
     for p in range(4, K+1):
@@ -101,7 +104,7 @@ def Y1p_first(t,N,A,K):
     sum *= (4*A + 3) / (3 * N * math.log(t/K**2))
     return sum
 
-# The first term in (5.45)
+# The first term in (5.44)
 def Y1m_first(t,N,A,K):
     sum = 0
     for p in range(4, K+1):
@@ -118,19 +121,21 @@ def Y2pm_first(t,N,A,K):
     sum *= (4*A + 3) / (3 * N)
     return sum
 
-# The expression in (5.47)
+# The expression in (5.46)
 # assumes t = N/3
 def tinyprimes_bound(t,N,K):
-    sum = 0
+    sum2 = 0
+    sum3 = 0
     for m in range(1, K+1):
         x = (3*m-1) * pixy_upper(t/(3*m), t/(3*m-1))
         x += (3*m-2) * pixy_upper(t/(3*m-1), t/(3*m-2))
         if 3*m-3 > 0:
             x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
-        sum += x * (nu(2,m)*math.log(2) + nu(3,m)*math.log(3)) / N
-    return sum 
+        sum2 += x * nu(2,m) / N
+        sum3 += x * 2*nu(3,m) / N
+    return max(sum2,sum3)
 
-# upper bound for (5.48)
+# upper bound for (5.47)
 # assumes t = N/3
 def Wp_upper(t,N,A,K,p):
     sum = 0
@@ -146,7 +151,7 @@ def Wp_upper(t,N,A,K,p):
         sum -= nu(p,m) * x / N
     return sum
 
-# lower bound for (5.48)
+# lower bound for (5.47)
 # assumes t = N/3
 def Wp_lower(t,N,A,K,p):
     sum = 0
@@ -162,18 +167,18 @@ def Wp_lower(t,N,A,K,p):
         sum -= nu(p,m) * x / N
     return sum
 
-# (5.44)        
+# (5.43)        
 def Y1p_bound(t,N,A,K):
     sum = Y1p_first(t,N,A,K)
     for p in range(4, K+1):
         if is_prime(p):
             sum += Z_bound(t,N,A,K,p) * math.log(p) / math.log(t/K**2)
             sum += max(0, Wp_upper(t,N,A,K,p)) * math.log(p) / math.log(t/K**2)
-            print(f"p * Wp contribution for p={p}: {Wp_upper(t,N,A,K,p) * p}")
-    print(f"Final sum={sum}")
+#            print(f"p * Wp contribution for p={p}: {Wp_upper(t,N,A,K,p) * p}")
+#    print(f"Final sum={sum}")
     return sum
 
-# (5.45)
+# (5.44)
 def Y1m_bound(t,N,A,K):
     sum = Y1m_first(t,N,A,K)
     for p in range(4, K+1):
@@ -181,19 +186,17 @@ def Y1m_bound(t,N,A,K):
             sum += max(0, -Wp_lower(t,N,A,K,p))
     return sum
 
-# (5.46)
+# (5.45)
 def Y2pm_bound(t,N,A,K):
     sum = Y2pm_first(t,N,A,K)
-#    print(f"Y2pm_bound: {sum}")
     for p in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
         if is_prime(p):
             sum += (A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)
-#            print(f"Adding {A/N} * pixy_upper({t/K}, {t*(1+sigma(t,N,A))/p}) for p={p}, wihich is {(A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)}")
-#    print(f"Final sum={sum}")
     return sum
 
 # Check if (5.30), (5.31) holds.
 def evaluate(N, A, K, L):
+    print("(N,A,K,L) = ", N, A, K, L)
     t = N/3
     Y1p = Y1p_bound(t, N, A, K)
     Y1m = Y1m_bound(t, N, A, K)
@@ -201,42 +204,61 @@ def evaluate(N, A, K, L):
 
     d = delta(t, N)
     delta1 = excess_bound(t, N, A, K)
-    delta2 = kappa(K) * Y1p
-    delta3 = kappa(5) * Y1m
-    delta4 = kappa(K) * Y2pm
+    delta2 = kappa(4.5) * Y1p
+    delta3 = kappa(4.5) * Y1m
+    delta4 = kappa(4.5) * Y2pm
     delta5 = minor_delta_terms(L, t, N)
     slack = d - (delta1 + delta2 + delta3 + delta4 + delta5)
 
     print(f"delta budget: {d}")
+
+# This term is like 1/A; to make it smaller, increase A
     print(f"Excess term: {delta1} ({delta1 / d * 100:.2f}% of delta)")
+
+# This term is like log K / log N; to make it smaller, decrease K or increase N
     print(f"Y1p term: {delta2} ({delta2 / d * 100:.2f}% of delta)")
+
+# This term is negligible
     print(f"Y1m term: {delta3} ({delta3 / d * 100:.2f}% of delta)")
+
+# This term is like A / K log N; to make it smaller, decrease A, increase K, or increase N
     print(f"Y2pm term: {delta4} ({delta4 / d * 100:.2f}% of delta)")
+
+# this term is like kappa(L) / log N; to make it smaller, increase N or increase L
     print(f"Minor delta terms: {delta5} ({delta5 / d * 100:.2f}% of delta)")
-    print(f"Slack: {slack} ({slack / d * 100:.2f}% of delta)")
-    if slack < 0:
-        print("WARNING: OVER BUDGET FOR DELTA!")
 
-    Q = Q_eval(N, t, L)
+    print(f"Slack in delta: {slack} ({slack / d * 100:.2f}% of delta)")
+
+# Q decreases if L increases
+    Q = 1 - alpha_eval(N, t, L)
+
+# This term is like log K (log log K) / log N; to make it smaller, decrease K or increase N
     Q1 = tinyprimes_bound(t, N, K)
-    Q2 = (math.log(K**2) + kappa(K)) * Y1p
-    Q3 = (math.log(K) + kappa(5)) * Y1m
-    Q4 = (math.log(t/K) + kappa(K)) * (Y2pm+1/N)
-    slack = Q - (Q1 + Q2 + Q3 + Q4)
 
-    print(f"Q budget: {Q}")
-    print(f"Tiny primes term: {Q1} ({Q1 / Q * 100:.2f}% of Q)")
+# This term is like log K (log log K) / log N; to make it smaller, decrease K or increase N
+    Q2 = (2/math.log(12)) * (math.log(K**2) + fancy_kappa(4.5)) * Y1p
+
+# This term is negligible
+    Q3 = (2/math.log(12)) * (math.log(K) + fancy_kappa(4.5)) * Y1m
+
+# This term is like A/K; to make it smaller, decrease A or increase K
+    Q4 = (2/math.log(12)) * (math.log(t/K) + fancy_kappa(K)) * (Y2pm+1/N)
+    slack2 = Q - (Q1 + Q2 + Q3 + Q4)
+
+    print(f"Tiny-prime budget: {Q}")
+    print(f"Direct term: {Q1} ({Q1 / Q * 100:.2f}% of Q)")
     print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of Q)")
     print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of Q)")
     print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of Q)")
-    print(f"Slack: {slack} ({slack / Q * 100:.2f}% of Q)")
-    if slack < 0:
-        print("WARNING: OVER BUDGET FOR Q!")
+    print(f"Slack at tiny primes: {slack2} ({slack2 / Q * 100:.2f}% of Q)")
+    assert slack > 0, "Over budget for delta"
+    assert slack2 > 0, "Over budget for tiny primes"
+    print(f"Guy-Selfridge conjecture t(N) >= N/3 successfully verified for N >= {N}")
 
 
-A = 110
-K = 342
-N = 10 ** 13
+A = 175
+K = 340
+N = 10 ** 12
 L = 4.5
 
 evaluate(N, A, K, L)

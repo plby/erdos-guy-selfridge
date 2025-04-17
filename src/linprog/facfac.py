@@ -172,7 +172,6 @@ def lpfac(prob: Problem, ilp: bool = False, rigorous: bool = False) -> Optional[
                 assert sum(sa[i]*fij for (i, fij) in f[j].items()) >= 1, f"f={j}: {sum(sa[i]*fij for (i, fij) in f[j].items())}"
             rigorous = all(ap <= aq for (ap, aq) in pairwise(sa.values()))
             print(f"strict upper bound: {sub} ({'not ' if not rigorous else ''}rigorous)")
-            meets_bound = sub >= N
 
     res = Factorization(
         {i: rc[i] for i in c.keys() if rc[i] > 0},
@@ -211,7 +210,7 @@ def lpfac(prob: Problem, ilp: bool = False, rigorous: bool = False) -> Optional[
     #             print(f"    ·", end='')
     #     print(f" {ci:4d}")
 
-    return res, meets_bound
+    return res, sub
 
 
 
@@ -319,9 +318,13 @@ def write_factorization(N: int, T: int, fact: Factorization, filename: str):
 def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = None):
     prob = sieve(N, T)
 
-    fact, meets_bound = lpfac(prob, ilp, rigorous)
+    fact, upper_bound = lpfac(prob, ilp, rigorous)
     if fact is None:
         return  # just computing a rigorous LP upper bound
+    if upper_bound >= N:
+        meets_bound = True
+    else:
+        meets_bound = False
 
     if not ilp:
         fact = greedy(prob, fact)
@@ -329,13 +332,18 @@ def main(N: int, T: int, rigorous: bool = False, ilp: bool = False, save: str = 
     if save:
         write_factorization(N, T, fact, save)
 
-    return meets_bound # return whether the upper bound is >= N
+    # If the greedy algorithm returns a valid factorization, use that. Otherwise, fall back to checking the linear programming upper bound.
+    if sum(fact[1].values()) >= N:
+        meets_bound = True
+
+    # return whether this seems to meet the requirements
+    return meets_bound
 
 
 
 def oeis(N: int, dirname: str = None):
 
-    Tlb = ceil(N/3)
+    Tlb = ceil(2*N//7)
     if N == 56:
         Tlb -= 1  # well, well...
     Tub = None
@@ -347,7 +355,7 @@ def oeis(N: int, dirname: str = None):
 
         prob = sieve(N, T)
 
-        fact = lpfac(prob, False)
+        fact, _ = lpfac(prob, False)
 
         fNT = greedy(prob, fact)
 

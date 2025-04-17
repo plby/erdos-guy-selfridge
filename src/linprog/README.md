@@ -29,6 +29,13 @@ license allows solving problems up to around N=1000. For larger problem sizes, y
 an academic license.
 
 
+## lp_solve
+
+If Gurobi is not available, then there is also a simple C++ program in
+generate_lp_format.cc that generates a linear program in lp_solve's
+format.
+
+
 ## OEIS A034258
 
 Compute the OEIS A034258 numbers for n=20,..,600:

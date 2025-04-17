@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-# The code here verifies the calculations in Section 7
+# The code here verifies the calculations in Section 7.  The bounds are monotone in N, so if the criterion is verified for one value of N, it automatically holds for larger N.
 
 
 

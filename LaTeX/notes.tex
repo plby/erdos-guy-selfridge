@@ -691,34 +691,37 @@ We now use this lemma to analyze Step 6 as follows.
   \end{equation}
   \item[(ii)] (Large surpluses at tiny primes) One has
 \begin{equation}\label{qn} 
-\frac{1}{N} \sum_{p=2,3} \nu_p\left(\prod \tuple^{(5)}\right) \log p < \min( Q_{N,t,L}, Q'_{N,t,L} )
+\frac{1}{N} \max_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(5)}\right) < 1-\alpha
 \end{equation}
-where
+where 
 \begin{equation}\label{qntl} 
-  Q_{N,T,L} \coloneqq \log 2 - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{\log 3}{2} - \frac{\log(2N)}{N} 
-\end{equation}
-and
-\begin{equation}\label{qnt2}
-   Q'_{N,T,L} \coloneqq \frac{\log 3}{2} - \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \log 2 - \frac{\log(3N)}{N}.
+  \begin{split}
+\alpha &\coloneqq \max(\alpha_1,\alpha_2) \\
+\alpha_1 &\coloneqq \frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \frac{\log 3}{2 \log 2} + \frac{\log N}{N \log 2} + \frac{1}{N} \\
+\alpha_2 &\coloneqq \frac{\log(2L)+\kappa_L}{\log t - \log(2L)} \frac{2\log 2}{\log 3} + \frac{2\log N}{N \log 3} + \frac{2}{N}.
+  \end{split}
 \end{equation}
 \end{itemize}
 Then $t(N) \geq t$.
 \end{proposition}
 
-Since $\log 2 = 0.6931\dots$ is larger than $\frac{\log 3}{2} = 0.5493\dots$, the $Q'_{N,T,L}$ term will dominate in practice.
-
 \begin{proof} Write $n \coloneqq \nu_2(N!/\prod \tuple^{(5)})$ and $m \coloneqq \nu_3(N!/\prod \tuple^{(5)})$.  From \eqref{legendre} we have $n \leq N$ and $m \leq N/2$, hence
 $$ n \log 2 + m \log 3 \leq N \log \sqrt{12}.$$
-  From \eqref{qn}, \eqref{legendre} we have
+  From \eqref{qn}, \eqref{qntl}, \eqref{legendre} we have
 \begin{align*}
   n &= \nu_2(N!) - \nu_2\left(\prod \tuple^{(5)}\right) \\
-  &> N - (1+\log N/\log 2) - \frac{NQ_{N,T,L}}{\log 2} \\
+  &> N - (1+\log N/\log 2) - (1-\alpha_1) N \\
   &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{N \log 3}{2\log 2} \\
-  &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{\nu_3(N!) \log 3}{\log 2} 
+  &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{m \log 3}{\log 2}  
 \end{align*}  
 and similarly
-$$ m > \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \frac{\nu_2(N!) \log 2}{\log 3}.$$
-In particular, $n,m$ are positive.  Since we also have $n \leq \nu_2(N!)$ and $m \leq \nu_3(N!)$, the condition \eqref{B-bound} holds.  Applying \Cref{bound23}, we can find a subfactorization $\tuple'$ of $2^n 3^m$ with an excess of at most $(\kappa_L \log \sqrt{12}) \frac{N}{\log t}$, and with
+\begin{align*}
+  m &= \nu_3(N!) - \nu_3\left(\prod \tuple^{(5)}\right) \\
+  &> \frac{N}{2} - (1+\log N/\log 3) - (1-\alpha_2) \frac{N}{2} \\
+  &\geq \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \frac{N \log 2}{\log 3} \\
+  &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{n \log 2}{\log 3}.  
+\end{align*}  
+In particular, $n,m$ are positive and the condition \eqref{B-bound} holds.  Applying \Cref{bound23}, we can find a subfactorization $\tuple'$ of $2^n 3^m$ with an excess of at most $(\kappa_L \log \sqrt{12}) \frac{N}{\log t}$, and with
   $$ \sum_{p_0=2,3} \left|\nu_{p_0}\left(\frac{2^n 3^m}{\prod \tuple'}\right)\right|_{\log p_0,\infty}
    \leq 2(\log t + \kappa_L) \leq 2 \log N$$
    where we have used \eqref{kl-triv} and the fact that $\log t\leq \log N-1$.    Then $\tuple^{(6)} = \tuple^{(5)} \cup \tuple'$ is another $t$-admissible multiset, and from \eqref{new-balance-3}, we obtain the previous sufficient condition  \eqref{step7-cond}.
@@ -743,9 +746,9 @@ We can use the surplus tiny primes to efficiently deal with larger surplus prime
  \end{equation}
 and
  \begin{align*}
-  &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y_1 + (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 3} (\log(K^2)+\kappa_K) Y_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
 &\quad
-  \leq \min( Q_{N,t,L}, Q'_{N,t,L} ).
+  \leq 1 - \alpha.
  \end{align*}
 Then $t(N) \geq t$.
 \end{proposition}
@@ -760,11 +763,20 @@ M \leq NY_1.
 $$
 Also, the number of borderline or medium primes $K < p \leq t/K$ appearing in $N!/\prod \tuple^{(4)}$, counting multiplicity, is $NY_2$.
 
-For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle} = 2^{n_i} 3^{m_i}$, which by \eqref{kappa-def} lies in the interval $[t/c_i,e^{\kappa_K} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_K} t/c_*]$.  Finally, for the $Y_2$ borderline or medium primes $K < p \leq t/K$ discussed above, we introduce the $3$-smooth number $\lceil t/p\rceil^{\langle 2,3\rangle} = 2^{n_p} 3^{m_p}$, which lies in the interval $[t/p,e^{\kappa_K} t/p]$.  We adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well $\lceil t/c_*\rceil^{\langle 2,3\rangle} c_* = 2^{n_*} 3^{m_*} c_*$ and $\lceil t/p \rceil^{\langle 2,3\rangle} p = 2^{n_p} 3^{m_p} c_p$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  The quantities $\log \lceil t/c_i\rceil^{\langle 2,3\rangle} = n_i \log 2 + m_i \log 3$ are bounded by $\log K^2 + \kappa_K$, and the quantities $\log \lceil t/c_*\rceil^{\langle 2,3\rangle}  = n_* \log 2 + m_* \log 3$ and $\log \lceil t/p\rceil^{\langle 2,3\rangle}  = n_p \log 2 + m_p \log 3$ are similarly bounded by $\log(t/K) + \kappa_K$, hence
+For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle} = 2^{n_i} 3^{m_i}$, which by \eqref{kappa-def} lies in the interval $[t/c_i,e^{\kappa_K} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_K} t/c_*]$.  Finally, for the $Y_2$ borderline or medium primes $K < p \leq t/K$ discussed above, we introduce the $3$-smooth number $\lceil t/p\rceil^{\langle 2,3\rangle} = 2^{n_p} 3^{m_p}$, which lies in the interval $[t/p,e^{\kappa_K} t/p]$.  We adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well $\lceil t/c_*\rceil^{\langle 2,3\rangle} c_* = 2^{n_*} 3^{m_*} c_*$ and $\lceil t/p \rceil^{\langle 2,3\rangle} p = 2^{n'_p} 3^{m'_p} c_p$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  
+
+For each $i=1,\dots,M$, the quantities $\log \lceil t/c_i\rceil^{\langle 2,3\rangle} = n_i \log 2 + m_i \log 3$ are bounded by $\log K^2 + \kappa_K$, and hence
+$$ \max( n_i, 2m_i ) \leq \frac{2}{\log 3} (\log K^2 + \kappa_K).$$
+Similarly we have
+$$ \max( n_*, 2m_* ) \leq \frac{2}{\log 3} (\log (t/K) + \kappa_K)$$
+and
+$$ \max( n'_p, 2m'_p ) \leq \frac{2}{\log 3} (\log (t/K) + \kappa_K)$$
+for the medium primes $m$.
+Hence
 \begin{align*} 
-  & \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(5)}\right) \log p_0  \\
-  &\quad \leq \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0 \\
-  &\quad + NY_1 (\log K^2 + \kappa_K) + (NY_2+1) (\log(t/K) + \kappa_K).
+  & \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(5)}\right) \\
+  &\quad \leq \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0 \\
+  &\quad + \frac{2}{\log 3} NY_1 (\log K^2 + \kappa_K) + \frac{2}{\log 3} (NY_2+1) (\log(t/K) + \kappa_K).
 \end{align*}
 Each of the new factors in $\tuple^{(5)}$ contributes an excess of at most $\kappa_K$, so that
 $$ \excess_t(\tuple^{(5)})  \leq \excess_t(\tuple^{(4)}) + \kappa_K (NY_1+NY_2+1).$$
@@ -791,17 +803,21 @@ The surplus tiny primes can also be used to deal with any larger primes that are
 and
   \begin{equation}\label{nstarb}
     \begin{split}
-&\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
-&\quad + (\log K^2 +\kappa_K) Y_1^+ + (\log K + \kappa_5) Y_1^- +  (\log(t/K) +\kappa_K) (Y_2^\pm+\frac{1}{N})  
+&\frac{1}{N} \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) \\
+&\quad + \frac{2}{\log 3} (\log K^2 +\kappa_K) Y_1^+ + \frac{2}{\log 3} (\log K + \kappa_5) Y_1^- + \frac{2}{\log 3} (\log(t/K) +\kappa_K) (Y_2^\pm+\frac{1}{N})  
 \\
-  &\quad  \leq \min( Q_{N,t,L}, Q'_{N,t,L} )
+  &\quad  \leq 1-\alpha
   \end{split}
 \end{equation}
      Then $t(N) \geq t$.
 \end{proposition}
 
 \begin{proof} Suppose there is a non-tiny prime $p>3$ with a positive $p$-deficit
-$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and increments $\sum_{p_0=2,3} \nu_{p_0}(N!/\prod \tuple^{(3)}) \log p_0$ by  $n_{p}\log 2 + m_{p} \log 3$.  Since $n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$, if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
+$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and increments $\sum_{p_0=2,3} \nu_{p_0}(N!/\prod \tuple^{(3)}) \log p_0$ by  $n_{p}\log 2 + m_{p} \log 3$.  We have
+$$n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$$
+and hence
+$$ \max(n_p, 2m_p) \leq \frac{2}{\log 3} (\log p + \kappa_{p}).$$
+So if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
 $$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,\kappa_p}$$
 and hence
 \begin{align*}
@@ -811,13 +827,14 @@ and hence
 \kappa_K Y^+_1 + \kappa_5 Y^-_1 + \kappa_K Y_2^\pm..
 \end{align*}
 Similarly we have
-$$\sum_{p'=2,3} \nu_p\left(\prod \tuple^{(4)}\right) \log p \leq
-\sum_{p'=2,3} \nu_p\left(\prod \tuple^{(3)}\right) \log p + \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log p+\kappa_{p}}$$
+$$\sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right)  \leq
+\sum_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) + \frac{2}{\log 3} \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log p+\kappa_{p}}$$
 and hence
 \begin{align*}
-  &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y_1 + (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+  &\frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(4)}\right) + \frac{2}{\log 3} (\log(K^2)+\kappa_K) Y_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
   &\quad \leq 
-  \frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y^+_1 + (\log K + \kappa_K) Y^+_2 + (\log(t/K)+\kappa_K) (Y^\pm_2+\frac{1}{N}).
+  \frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right)+ \frac{2}{\log 3}  (\log(K^2)+\kappa_K) Y^+_1 \\
+  &\quad \quad + \frac{2}{\log 3} (\log K + \kappa_K) Y^-_1 + \frac{2}{\log 3} (\log(t/K)+\kappa_K) (Y^\pm_2+\frac{1}{N}).
 \end{align*}
 The hypotheses of \Cref{balance-23'} are now satisfied, and we are done.
 \end{proof}
@@ -939,13 +956,13 @@ Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\l
 &\quad + \frac{A}{N} \sum_{K < p \leq K(1+\sigma)} 
 \left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) - \pi\left(\frac{t}{K}\right)\right)
 \label{y2pm-bound} \\
-\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 &\leq \sum_{p_0=2,3} \sum_{m \leq K} (\nu_{p_0}(m) \log p_0) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor
+\sup_{p_0=2,3} (p_0-1)\nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 &\leq \sup_{p_0=2,3} (p_0-1) \sum_{m \leq K} \nu_{p_0}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor
 \label{small-bound}
 \end{align}
 where for any small prime $3 < p_1 \leq K$, we define $W_{p_1}$ to be the quantity
 \begin{equation}\label{W-def}
 W_{p_1} \coloneqq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right)
-- \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor.
+- \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor.
 \end{equation}
 
 A key point will be that in practice, the $W_{p_1}$ will be positive (or only barely negative), so that their contribution to \eqref{y1m-bound} vanishes (or is small).

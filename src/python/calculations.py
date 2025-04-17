@@ -66,17 +66,17 @@ def delta(t,N):
 def sigma(t,N,A):
     return 3*N/(t*A)
 
-# Some minor terms appearing in (5.30)
+# Some minor terms appearing in (5.29)
 def minor_delta_terms(L,t,N):
     return kappa(L) * math.log(12) / (2 * math.log(t)) + 3 * math.log(N) / (2*N)
 
-# the right-hand side of (5.31)
-def Q_eval(N,t,L):
-    Q1 = math.log(2) - (math.log(3*L) + kappa(L))/(math.log(t) - math.log(3*L)) * math.log(3)/2 - math.log(2*N) / N
-    Q2 = math.log(3)/2 - (math.log(2*L) + kappa(L))/(math.log(t) - math.log(2*L)) * math.log(2) - math.log(3*N) / N
-    return min(Q1, Q2)
+# (5.22)
+def alpha_eval(N,t,L):
+    alpha1 = (math.log(3*L) + kappa(L))/(math.log(t) - math.log(3*L)) * math.log(3)/(2*math.log(2)) + math.log(N) / (N*math.log(2)) + 1/N
+    alpha2 = (math.log(2*L) + kappa(L))/(math.log(t) - math.log(2*L)) * 2 * math.log(2) / math.log(3) + 2 * math.log(N) / (N * math.log(3)) + 2/N
+    return max(alpha1, alpha2)
 
-# equation (5.43)    
+# equation (5.42)    
 def excess_bound(t,N,A,K):
     sum = 3*N/(2*t*A)
     sum += 4/N

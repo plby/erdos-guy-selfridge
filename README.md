@@ -41,7 +41,7 @@ Secondary goals are
 
 1. Conjecture 1 has been reduced to Conjecture 2; in particular, it has been verified up to $N \leq 10^{11}$ and for sufficiently large $N$, and for the remaining $N$ it would follow from the corresponding instance of Conjecture 2.
 2. Conjecture 2 is known in the range $43632 \leq N \leq 10^{11}$, and for sufficiently large $N$, and fails for $N = 43631$.  Thus, contingent on verifying the conjecture for $N > 10^{11}$, the optimal threshold is $43632$.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.
-3. The OEIS tables have been extended to $N \leq 600$.  For $N \neq 155$, the linear programming method systematically computes all values of $t(N)$ up to $t(600)$; for $N=155$, the bound is off by one, and integer programming methods are needed instead.
+3. The OEIS tables have been extended to $N \leq 7000$ by the linear programming method, except for the exceptional values $155,765,1528,1618,1619,2574,2935,3265,5122,5680$.  (But $N=155$ is already covered by the existing OEIS data.)
 4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.
 
 ## Timeline on controlling $t(N)$
@@ -70,7 +70,7 @@ Secondary goals are
 | [14 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/comment-page-1/#comment-687746) | Matthieu Rosenfeld | 2 | $[10^{10}, 10^{11}]$ | Improved greedy
 | [14 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/15) | Boris Alexeev | 2 | $\neg 43631$ | Linear programming | Rigorous certificate of Conjecture 2 failure at this point
 | [14 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/19) | Evan Conway | 2 | $\neg [10,41005]$ | Linear programming
-
+| [16 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/24#issuecomment-2811388882) | Boris Alexeev | 3 | $[1,7000] \backslash$ $\{155,765,1528,1618,1619,2574,2935,3265,5122,5680\}$ | Linear programming
 
 ## Computations of $c_0$
 

@@ -73,7 +73,7 @@ def plot1():
     plt.plot(base, third, linestyle="--", label='$1/3$' )
     plt.plot(base, conj, linestyle="--", label='$1/e - c_0/\\log N$' )
     plt.plot(base, alt, label='$\\lfloor 2N/7\\rfloor / N$' )
-    plt.plot(base, upper, linestyle=":", label='Lemma 2.1' )
+    plt.plot(base, upper, linestyle=":", label='Lemma 5.3' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.2,0.5)

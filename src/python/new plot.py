@@ -78,7 +78,7 @@ def plot2():
     plt.plot(base, exact, label='$t(N)/N$ (exact)' )
     plt.plot(base, conj, linestyle="--", label='$\\frac{1}{e} - c_0/\\log N$' )
     plt.plot(base, alt, label='$\\lfloor 2N/7\\rfloor/N$' )
-    plt.plot(base, upper, linestyle=":", label='Lemma 2.1 (upper)' )
+    plt.plot(base, upper, linestyle=":", label='Lemma 5.3 (upper)' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.27,0.32)

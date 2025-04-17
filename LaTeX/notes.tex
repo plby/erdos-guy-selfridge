@@ -153,12 +153,16 @@ $$ \prod \tuple \coloneqq \prod_{a \in \tuple} a$$
 
 \begin{example}\label{nine}  The multiset
   $$ \{ 3,3,3,3,4,4,5,7,8\}$$
-  is a $3$-admissible factorization of $9!$ of cardinality $9$, hence $t(9) \geq 3$.  One can check that no $4$-admissible factorization of $9!$ of this cardinality exists, hence $t(9) = 3$.
+  is a $3$-admissible factorization of 
+$$ \prod \{ 3,3,3,3,4,4,5,7,8\} = 3^4 \times 4^2 \times 5 \times 7 \times 8 = 9!$$
+of cardinality 
+$$|\{ 3,3,3,3,4,4,5,7,8\}| = 9,$$
+ hence $t(9) \geq 3$.  One can check that no $4$-admissible factorization of $9!$ of this cardinality exists, hence $t(9) = 3$.
 \end{example}
 
-The first few elements of this sequence are
+It is easy to see that $t(N)$ is non-decreasing in $N$, (any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The first few elements of the sequence $t(N)$ are
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
-and the values of $t(N)$ for $N \leq 79$ were computed in \cite{guy} and also found at \href{https://oeis.org/A034258}{OEIS A034258}.  It is easy to see that $t(N)$ is non-decreasing in $N$ (basically because any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The values for $N \leq 200$ can also be recovered from the entries of the inverse sequence of $t$ at \href{https://oeis.org/A034259}{OEIS A034259}.  
+(\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.
 
 When the factorial $N!$ is replaced with an arbitrary number, this problem is essentially the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable than the general case.
 
@@ -169,7 +173,7 @@ By combining the obvious lower bound
 \begin{equation}\label{obvious}
  \prod \tuple \geq t^{|\tuple|}
 \end{equation}
-for any $t$-admissible tuple with Stirling's formula \eqref{stirling}, we obtain the trivial upper bound
+for any $t$-admissible multiset $\tuple$ with Stirling's formula \eqref{stirling}, we obtain the trivial upper bound
 \begin{equation}\label{trivial} \frac{t(N)}{N} \leq \frac{(N!)^{1/N}}{N} = \frac{1}{e} + O\left( \frac{\log N}{N}\right)
 \end{equation}
 for $N \geq 2$; see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublished work of Erd\H{o}s, Selfridge, and Straus established the asymptotic
@@ -196,7 +200,7 @@ for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com};
   \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{newplot_600_all.png}
-    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$. {\bf TODO: relabel image to reflect new lemma numbering}}\label{fig1-alt}
+    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$. }\label{fig1-alt}
   \end{figure}
   
 In this paper we answer all of these questions.
@@ -213,13 +217,27 @@ In this paper we answer all of these questions.
 for some constant $c>0$, where $c_0$ is the explicit quantity
 \begin{equation}\label{c0-def}
   \begin{split}
-  c_0 &\coloneqq \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx \\
+  c_0 &\coloneqq \frac{1}{e} \int_0^1 f_e(x)\ dx \\
   &= 0.3044190\dots
 \end{split}
 \end{equation}
-(see \Cref{fig-mean}).  In particular, \eqref{t1} and \eqref{Tbound} hold.
+and for any $\alpha>0$, $f_\alpha \colon (0,\infty) \to \R$ denotes the piecewise smooth function
+\begin{equation}\label{falpha-def} 
+  f_\alpha(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil 1/\alpha x \rceil}{1/\alpha x}.
+\end{equation}
+In particular, \eqref{t1} and \eqref{Tbound} hold.
 \end{itemize}
 \end{theorem}
+
+For future reference, we observe the simple bounds
+\begin{equation}\label{falpha-bound}
+ \begin{split}
+   0 \leq f_\alpha(x) &\leq \frac{1}{x} \log \frac{1/\alpha x+1}{1/\alpha x}\\
+&= \frac{1}{x} \log\left( 1 + \alpha x \right) \\
+&\leq \alpha
+\end{split}
+\end{equation}
+for all $x>0$; in particular, $f_\alpha$ is a bounded function.  It however has an oscillating singularity at $x=0$; see \Cref{fig:mean}.
 
 In \Cref{c0-app} we give some details on the numerical computation of the constant $c_0$.
 
@@ -231,7 +249,7 @@ were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{integ.png}
-  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} \left \lfloor \frac{1}{x} \right\rfloor \log( ex \left \lceil \frac{1}{ex} \right\rceil)$, together with its mean value $c_0 = 0.3044190\dots$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). We also display the (crude) lower bound of $\frac{1}{e} \log(e/2)$ for $x \geq \frac{1}{\sqrt{2e}} = 0.4288\dots$. Informally, this function quantifies the difficulty that large primes in the factorization of $N!$ have in becoming slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
+  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.3044190\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
 \end{figure}
 
 As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows:
@@ -305,7 +323,7 @@ where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
 Given a putative factorization $\tuple$ of $N!$,  
 we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$; if it is negative, we refer to $-\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
 
-We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$.  We also write $X \asymp Y$ for $X \ll Y \ll X$. For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$.
+We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$.  We also write $X \asymp Y$ for $X \ll Y \ll X$. For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$. We also use $O_{\leq}(Y)^+$ to denote a quantity of size $O_{\leq}(Y)$ that is in addition non-negative, that is to say it lies in the interval $[0,Y]$.
 
 To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
 \begin{equation}\label{stirling}
@@ -407,8 +425,9 @@ One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend
 
 \begin{lemma}[Upper bound criterion]\label{upper-crit}  Suppose that $1 \leq t \leq N$ are such that
   \begin{equation}\label{contra}
-     \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) > \log N! - N \log t
+     \sum_{\frac{t}{\lfloor\sqrt{t}\rfloor} < p \leq N} f_{N/t}(p/N) > \log N! - N \log t,
   \end{equation}
+  where $f_{N/t}$ was defined in \eqref{falpha-def}.
   Then $t(N) < t$.
   \end{lemma}
 
@@ -416,22 +435,22 @@ One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend
   \begin{equation}\label{ai}
   \sum_{a \in \tuple} \log \frac{a}{t} = \excess_t(\tuple) = \log N! - N \log t.
   \end{equation}
-  Let $f_t(p) \coloneqq \log (\frac{p}{t} \lceil \frac{t}{p} \rceil)$.  We claim that 
+  We write $f_{N/t}(p/N) = \lfloor \frac{N}{p} \rfloor g_t(p)$, where $g_t(p) \coloneqq \log (\frac{p}{t} \lceil \frac{t}{p} \rceil)$.  We claim that 
     \begin{equation}\label{ai2}
-      \log \frac{a}{t} \geq f_t(p_{a,1}) + \dots + f_t(p_{a,k_a})
+      \log \frac{a}{t} \geq g_t(p_{a,1}) + \dots + g_t(p_{a,k_a})
     \end{equation}
 for all $a \in \tuple$, where $p_{a,1},\dots,p_{a,k_a}$ are the primes greater than $\frac{t}{\lfloor \sqrt{t}\rfloor}$ that divide $a$ (counting multiplicity).  For $k_a=0$ this is clear since $a \geq t$.  For $k_a=1$, we can write $a = d_a p_{a,1}$ where $p_{a,1} > \frac{t}{\sqrt{t}+1}$ and $d_a \geq \lceil \frac{t}{p_{a,1}} \rceil$, so that
-    $$ \log \frac{a}{t} = \log \left(\frac{p_{a,1}}{t}d_a \right) \geq f_t(p_{a,1}),$$
+    $$ \log \frac{a}{t} = \log \left(\frac{p_{a,1}}{t}d_a \right) \geq g_t(p_{a,1}),$$
     again giving \eqref{ai2}.  For $k_a \geq 2$, we have $a \geq p_{a,1} \dots p_{a,k}$, hence
     \begin{align*}
-      \log \frac{a}{t} - \sum_{j=1}^{k_a} f_t(p_{a,j}) &\geq \sum_{j=1}^{k_a} (\log p_{a,j} - f_t(p_{a,j})) - \log t \\
+      \log \frac{a}{t} - \sum_{j=1}^{k_a} g_t(p_{a,j}) &\geq \sum_{j=1}^{k_a} (\log p_{a,j} - g_t(p_{a,j})) - \log t \\
       &= \sum_{j=1}^{k_a} \left(\log t - \log \left \lceil \frac{t}{p_{a,j}} \right\rceil \right) - \log t \\
       &\geq \sum_{j=1}^{k_a} \left(\log t - \log \sqrt{t} \right) - \log t \\
       &\geq 0
     \end{align*}
     which again gives \eqref{ai2}.  Summing \eqref{ai2} over all $a \in \tuple$ and inserting into \eqref{ai}, we conclude that
-    $$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \nu_p(N!) f_t(p) \leq \log N! - N \log t.$$    
-    By \eqref{legendre}, this contradicts \eqref{contra}, giving the claim. 
+    $$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \nu_p(N!) g_t(p) \leq \log N! - N \log t.$$    
+    By \eqref{legendre}, we can bound $\nu_p(N!) g_t(p)$ by $\lfloor N/p \rfloor g_t(p) = f_{N/t}(p/N)$.  This contradicts \eqref{contra}, giving the claim. 
   \end{proof}
 
 In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}
@@ -439,7 +458,7 @@ In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_600.png}
-  \caption{An enlarged version of \Cref{fig1-alt}, displaying the lower bound from the greedy algorithm and the upper bound from \Cref{upper-crit}.  The linear programming upper and lower bounds are exact in this region, except for $N=155$ in which the upper bound is off by one. {\bf TODO: relabel image to reflect new lemma numbering}}\label{fig-zoom}
+  \caption{An enlarged version of \Cref{fig1-alt}, displaying the lower bound from the greedy algorithm and the upper bound from \Cref{upper-crit}.  The linear programming upper and lower bounds are exact in this region, except for $N=155$ in which the upper bound is off by one.}\label{fig-zoom}
 \end{figure}
 
 
@@ -451,31 +470,22 @@ We can now prove the upper bound portion of \Cref{main}(iv):
     
     \begin{proof}  We apply \Cref{upper-crit} with
       $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} + \frac{C_0}{\log^2 N}$$
-    with $C_0$ a large absolute constant to be chosen later.  From Taylore expansion and the Stirling approximation one sees that
+    with $C_0$ a large absolute constant to be chosen later.  From Taylor expansion and the Stirling approximation one sees that
     $$ \log N! - N \log t \geq ec_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
     so it will suffice to establish the upper bound
-    $$ \sum_{p > \frac{t}{\lfloor\sqrt{t}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+    $$ \sum_{\frac{t}{\lfloor\sqrt{t}\rfloor} < p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
     For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
-    $$ \sum_{\frac{N}{\log N} \leq p \leq N} \left\lfloor \frac{N}{p} \right\rfloor \log \left( \frac{p}{t} \left\lceil \frac{t}{p} \right\rceil \right) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-    The summand is a piecewise monotone function of $p$, with $O(\log N)$ pieces, and bounded in size by $O(N)$, so the total variation is $O(N\log N)$.  By \Cref{buthe}, the left-hand side is then
-    $$ \int_{N/\log N}^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
-    for some $c>0$. Thus it remains to show that
-    $$  \int_{N/\log N}^N \left\lfloor \frac{N}{x} \right\rfloor \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right) \frac{dx}{\log x} 
-    \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-    We use the approximation 
-    $$\frac{1}{\log x} = \frac{1}{\log N} + O\left( \frac{\log (N/x)}{\log^2 N} \right).$$ 
-    To control the error term, we observe from Taylor expansion that
-    \begin{equation}\label{tax} 
-    \log \left( \frac{x}{t} \left\lceil \frac{t}{x} \right\rceil \right)
-    \ll \frac{\lceil \frac{t}{x} \rceil - \frac{t}{x}}{t/x} \ll \frac{x}{t} \ll \frac{x}{N}
-    \end{equation}
-    and the contribution of the error term is
-    $$ \ll \int_{N/\log N}^N \frac{N}{x} \frac{x}{N} \frac{\log (N/x)}{\log^2 N}\ dx \ll \frac{N}{\log^2 N}$$
-    which is acceptable.  As for the main term, we can rescale it to
-    $$ \frac{et}{\log N} \int_{N/et\log N}^{N/et} \left\lfloor \frac{N/et}{x} \right\rfloor \log \left( ex \left\lceil \frac{1}{ex} \right\rceil \right) dx.$$
-    Since $N/et = 1 + O(1/\log N)$, we see that the integrand here is within $O(1/\log N)$ of $\lfloor \frac{1}{x} \rfloor \log \left( e x \lceil \frac{1}{e x} \rceil \right)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure $O(1/\log N)$.  A variant of \eqref{tax} shows that both integrands are bounded by $O(1)$ for all $x \in [0,N/et]$, so by the triangle inequality the above expression can be rewritten as
-    $$ \frac{N}{\log N} \int_0^1 \left\lfloor \frac{1}{x} \right\rfloor \log \left( e x \left\lceil \frac{1}{e x} \right\rceil \right) dx + O\left( \frac{N}{\log^2 N}\right),$$
-    and the claim follows from \eqref{c0-def}.
+    $$ \sum_{\frac{N}{\log N} \leq p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
+    On the interval $[1/\log N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log N,1]$.  By \Cref{buthe}, \eqref{ecx}, the left-hand side is then
+    $$ \int_{N/\log N}^N \left(1-\frac{2}{\sqrt{x}}\right) f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
+    for some $c>0$.  Discarding the $\frac{2}{\sqrt{x}}$ term, performing a change of variable, and using \eqref{c0-def}, we reduce to showing that
+    $$  \int_{1/\log N}^1 f_{N/t}(x) \frac{\log N}{\log(Nx)}\ dx 
+    \leq  \int_0^1 f_e(x)\ dx  + O\left( \frac{1}{\log N} \right).$$
+    We have the Taylor approximation 
+    $$\frac{\log N}{\log(Nx)} = 1 + O\left( \frac{\log(1/x)}{\log N} \right).$$ 
+    Applying \eqref{falpha-bound} and the integrability of $\log(1/x)$, we see that the contribution of the error term is acceptable.  Applying a further rescaling by $N/et = 1 + O(1/\log N)$, we reduce to showing that
+$$ \int_{N/et\log N}^{N/et} f_{N/t}(Nx/et)\ dx = \int_0^1 f_e(x)\ dx  + O\left( \frac{1}{\log N} \right).$$
+But observe that $f_{N/t}(Nx/et) = f_e(x)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure $O(1/\log N)$ for $x \in [0,N/et]$.  By \eqref{falpha-bound}, both integrands are bounded by $O(1)$ for all $x \in [0,N/et]$, and the claim follows from the triangle inequality.
 \end{proof}
     
 We can now establish \Cref{main}(i): 
@@ -483,33 +493,35 @@ We can now establish \Cref{main}(i):
 \begin{proposition}\label{tne} One has $t(N)/N < 1/e$ for $N \neq 1,2,4$.
 \end{proposition}
 
-\begin{proof}  From the linear programming method one can verify this claim for $N < 599$ (see \Cref{fig1-alt}), so we assume that $N\geq 599$, so that the prime number theorem bound \eqref{pi-lower} becomes available.  
+\begin{proof}  From existing data on $t(N)$ (or the linear programming method) one can verify this claim for $N < 80$ (see \Cref{fig1}), so we assume that $N\geq 80$.
   
 Applying \Cref{upper-crit}, \eqref{stirling}, it suffices to show that
+\begin{equation}\label{base-test-eq}
+   \sum_{p \geq \frac{N/e}{\lfloor\sqrt{N/e}\rfloor}} f_{e}(p/N) > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}.
+\end{equation}
+This may be easily verified numerically in the range $80 \leq N \leq 5000$ (see \Cref{fig2}).
+We will discard the $\lfloor\sqrt{N/e}\rfloor$ denominator, and reduce to showing
 \begin{equation}\label{test-ineq}
-   \sum_{p \geq \frac{N/e}{\lfloor\sqrt{N/e}\rfloor}} \left\lfloor \frac{N}{p} \right\rfloor f_{N/e}(p) > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}
+  \sum_{N/e < p \leq N} f_{e}(p/N) > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}
 \end{equation}
-where $f_{N/e}(p) = \log(\frac{ep}{N} \lceil \frac{N}{ep} \rceil)$ is as in the proof of the proposition. As the left-hand side is $\asymp N/\log N$, while the right-hand side is $\asymp \log N$, there is significant room to spare here, and we can use somewhat lossy arguments.
-
-For $N/\sqrt{2e} < p \leq N$ one can obtain the lower bound $\lfloor \frac{N}{p} \rfloor f_{N/e}(p) \geq \log (e/2)$ (see \Cref{fig-mean}), and (since $\frac{N/e}{\lfloor \sqrt{N/e}\rfloor} \leq N/2e$ in the regime $N \geq 599$), so we may crudely bound the left-hand side of \eqref{test-ineq} from below by
-$$ \left(\pi(N) - \pi(N/\sqrt{2e})\right) \log(e/2).$$
-Applying \eqref{pi-lower}, \eqref{pi-upper}, we reduce to showing that
-\begin{equation}\label{test-2}
-\begin{split}
-  &  \left(\frac{N}{\log N} \left(1 +\frac{1}{\log N}\right)
-- \frac{N/\sqrt{2e}}{\log(N/\sqrt{2e})} \left(1 +\frac{1.2762}{\log(N/\sqrt{2e})}\right)\right) \log (e/2) \\
-&\quad > \frac{1}{2} \log(2\pi N) + \frac{1}{12N}
-\end{split}
-\end{equation}
-for $N \geq 599$. This can be numerically verified for $N=599$ (see Figure \ref{fig2}), so by the fundamental theorem of calculus it suffices to show that the derivative of the left-hand side is at least that of the right hand side for (real) $N \geq 599$.  Computing this derivative, dividing by $\log(e/2)$, and discarding some terms with a favorable sign, we reduce to showing that
-$$ \frac{1}{\log N} - \frac{2}{\log^3 N} - \frac{1}{\sqrt{2e} \log(N/\sqrt{2e})} - \frac{0.2762}{\sqrt{2e} \log^2(N/\sqrt{2e})}  \geq \frac{1}{2\log(e/2) N}$$
-for $N \geq 599$.  But in this range we have the crude lower bounds $\log N \geq \log(N/\sqrt{2e})\geq 5$, $\sqrt{2e} \log(N/\sqrt{2e}) \geq 2 \log N$, and $2 \log(e/2) N \geq 50 \log N$, and the claim then follows (with room to spare) by estimating all terms here by constant multiples of $\frac{1}{\log N}$.
+for $N > 5000$.  On $[1/e,1]$, one can compute
+$$ \|f_e\|_{\mathrm{TV}^*(1/e,1]}
+= 4 - 2 \log 2$$
+so by \Cref{buthe}, \eqref{ecx-2} (noting that $5000 > 1423e$) we have
+$$ \sum_{N/e < p \leq N} f_{e}(p/N) \log p
+\geq N \int_{1/e}^1 \left(1-\frac{2}{\sqrt{Nx}}\right) f_e(x)\ dx - (4 - 2 \log 2) \tilde E(N).
+$$
+By upper bounding $\log p$ by $\log N$ and lower bounding $\left(1-\frac{2}{\sqrt{Nx}}\right)$ by $1 - \frac{2}{\sqrt{N/e}}$, it suffices to show that
+$$ \left(1 - \frac{2}{\sqrt{N/e}}\right) \int_{1/e}^1 f_e(x)\ dx \geq
+(4 - 2 \log 2) \frac{\tilde E(N)}{N}
++ \frac{\log N \log(2\pi N)}{2N} + \frac{\log N}{12N^2},$$
+which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \frac{2}{e}-\frac{\log 2}{2}=0.3891\dots$ and $4-2\log 2 = 2.613\dots$, while $\tilde E(N)/N \leq 0.015$, and the other two terms on the right-hand side are negligible).
 \end{proof}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{lhs_rhs.png}
-  \caption{A plot of the left and right-hand sides of \eqref{test-ineq}, \eqref{test-2} for $80 \leq N < 599$.  For $N \geq 599$, the effective prime number theorem from \eqref{pi-upper}, \eqref{pi-lower} rigorously establishes the left-hand side of \eqref{test-2} as a (crude) lower bound for the left-hand side of \eqref{test-ineq}.}\label{fig2}
+  \caption{A plot of the left and right-hand sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
 \end{figure}
 
 
@@ -519,9 +531,9 @@ In this section we present and then analyze an algorithm that, when given parame
 
 \subsection{Description of algorithm}\label{alg-desc}
 
-In addition to the given parameters $1 \leq t \leq N$, we require additional natural number parameters $A,K$
+In addition to the given parameters $1 \leq t \leq N$, we require additional natural number parameters $A,K$ obeying the hypotheses
 \begin{equation}\label{condition}
-  K^2 (1+\sigma) < t, 
+  K^2 (1+\sigma) < t; \quad K\sqrt{N} < t; \quad \sigma < 1; \quad K \geq 3; 
 \end{equation}
 where
 \begin{equation}\label{nu-def}
@@ -592,17 +604,24 @@ $$
 \excess_t(\tuple^{(6)}) + \sum_p \left| \nu_p\left(\frac{N!}{\prod \tuple^{(6)}}\right) \right|_{\log p,\infty}
 \leq \log N! - N \log t.$$
 If we assume that $t = N/e^{1+\delta}$ for some $\delta > 0$, we can use the Stirling approximation \eqref{stirling} to reduce to the sufficient condition
-\begin{equation}\label{step7-cond}
+$$
 \excess_t(\tuple^{(6)}) + \sum_p \left| \nu_p\left(\frac{N!}{\prod \tuple^{(6)}}\right) \right|_{\log p,\infty}
-\leq \delta N + \log \sqrt{2\pi N}.
+\leq \delta N + \log \sqrt{2\pi N}
+$$
+which we choose to normalize as
+\begin{equation}\label{step7-cond}
+\frac{1}{N}  \excess_t(\tuple^{(6)}) + \frac{1}{N} \sum_p \left| \nu_p\left(\frac{N!}{\prod \tuple^{(6)}}\right) \right|_{\log p,\infty}
+  \leq \delta + \frac{\log \sqrt{2\pi N}}{N}.
 \end{equation}
+
 
 \subsection{Analysis of Step 6}
 
-Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-def}. 
+Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-def}.  The main tool we need is the following efficient subfactorization of $3$-smooth numbers.
+
 {\bf TODO: draw picture of $n_0$, $m_0$, etc.}
 
-\begin{lemma}\label{bound23}  Let $L \geq 1$.  Let $t > 3L$ and let $2^n 3^m$ be a $3$-smooth number with $n,m$ positive and in the sector
+\begin{lemma}[Efficient subfactorization of $3$-smooth numbers]\label{bound23}  Let $L \geq 1$.  Let $t > 3L$ and let $2^n 3^m$ be a $3$-smooth number with $n,m$ positive and obeying the condition
   \begin{equation}\label{B-bound}
     \frac{\log(3L)+\kappa_L}{\log t - \log(3L)} \leq \frac{n \log 2}{m \log 3} \leq \frac{\log t - \log(2L)}{\log(2L)+\kappa_L}.
   \end{equation}
@@ -616,14 +635,14 @@ Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-
   \end{equation}
   \end{lemma}
   
-  In practice, $\log t$ will be significantly larger than $\log(2L)$ or $\log(3L)$, and so the hypothesis of containment in the sector $\Gamma_{t,L}$, as long as $n$ and $m$ are both reasonably large.
+  In practice, $\log t$ will be significantly larger than $\log(2L)$ or $\log(3L)$, and so the hypothesis \eqref{B-bound} will be relatively mild, as long as $n$ and $m$ are both reasonably large.
   
   \begin{proof}  Let $2^{n_0}, 3^{m_0}$ be the largest powers of $2$ and $3$ less than or equal to $t/L$ respectively, thus
   \begin{equation}\label{L1}
-   L \leq \frac{t}{2^{n_0}} \leq 2L
+   L \leq \frac{t}{2^{n_0}} < 2L
   \end{equation}
     and
-    \begin{equation}\label{L2}  L \leq \frac{t}{3^{m_0}} \leq 3L. \end{equation}
+    \begin{equation}\label{L2}  L \leq \frac{t}{3^{m_0}} < 3L. \end{equation}
   From \eqref{kappa-def}, the $3$-smooth numbers $2^{n_1} 3^{m_1} \coloneqq \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle}$, $2^{n_2} 3^{m_2} \coloneqq \lceil t/3^{m_0} \rceil^{\langle 2,3 \rangle}$ obey the estimates
   \begin{equation}\label{ab} 
     \frac{t}{2^{n_0}} \leq 2^{n_1} 3^{m_1} \leq e^{\kappa_L} \frac{t}{2^{n_0}}
@@ -665,41 +684,41 @@ We now use this lemma to analyze Step 6 as follows.
 \begin{itemize}
   \item[(i)] (Small excess and surplus at non-tiny primes)
   \begin{equation}\label{new-balance-3}
-    \excess_t(\tuple^{(5)}) + \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(5)}}\right)\right|_{\log p,\infty} \leq \delta N + \log \sqrt{2\pi} - \frac{3}{2} \log N - (\kappa_L \log \sqrt{12}) \frac{N}{\log t}.
+  \begin{split}
+    &\frac{1}{N} \excess_t(\tuple^{(5)}) + \frac{1}{N} \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(5)}}\right)\right|_{\log p,\infty}  \\
+    &\quad + \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N} \leq \delta + \frac{\log \sqrt{2\pi}}{N}.
+  \end{split}
   \end{equation}
   \item[(ii)] (Large surpluses at tiny primes) One has
 \begin{equation}\label{qn} 
-\sum_{p=2,3} \nu_p\left(\prod \tuple^{(5)}\right) \log p < \min( Q_{N,t,L}, Q'_{N,t,L} )
+\frac{1}{N} \sum_{p=2,3} \nu_p\left(\prod \tuple^{(5)}\right) \log p < \min( Q_{N,t,L}, Q'_{N,t,L} )
 \end{equation}
 where
 \begin{equation}\label{qntl} 
-  Q_{N,T,L} \coloneqq \nu_2(N!) \log 2 - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \nu_3(N!) \log 3 
+  Q_{N,T,L} \coloneqq \log 2 - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{\log 3}{2} - \frac{\log(2N)}{N} 
 \end{equation}
 and
 \begin{equation}\label{qnt2}
-   Q'_{N,T,L} \coloneqq \nu_3(N!) \log 3 - \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \nu_2(N!) \log 2.
+   Q'_{N,T,L} \coloneqq \frac{\log 3}{2} - \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \log 2 - \frac{\log(3N)}{N}.
 \end{equation}
 \end{itemize}
 Then $t(N) \geq t$.
 \end{proposition}
 
-From \eqref{legendre} we have
-$$ Q_{N,T,L} \geq N \log 2 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{N}{2} \log 3$$
-and
-$$ Q'_{N,T,L} \geq \frac{N}{2} \log 3 - \log N - \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} N \log 2;$$
-since $\frac{1}{2} \log 3 < \log 2$, we may replace $\min(Q_{N,T,L},Q'_{N,T,L})$ in the above expression by the simpler
-$$ \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2$$
+Since $\log 2 = 0.6931\dots$ is larger than $\frac{\log 3}{2} = 0.5493\dots$, the $Q'_{N,T,L}$ term will dominate in practice.
 
-
-  \begin{proof} Write $n \coloneqq \nu_2(N!/\prod \tuple^{(5)})$ and $m \coloneqq \nu_3(N!/\prod \tuple^{(5)})$.  From \eqref{legendre} we have $n \leq N$ and $m \leq N/2$, hence
-    $$ n \log 2 + m \log 3 \leq N \log \sqrt{12}.$$
-  From \eqref{qn} we have
-$$ (\nu_2(N!)-n) \log 2 \leq Q_{N,T,L}$$
-and hence
-$$ n > \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{\nu_3(N!) \log 3}{\log 2}$$
+\begin{proof} Write $n \coloneqq \nu_2(N!/\prod \tuple^{(5)})$ and $m \coloneqq \nu_3(N!/\prod \tuple^{(5)})$.  From \eqref{legendre} we have $n \leq N$ and $m \leq N/2$, hence
+$$ n \log 2 + m \log 3 \leq N \log \sqrt{12}.$$
+  From \eqref{qn}, \eqref{legendre} we have
+\begin{align*}
+  n &= \nu_2(N!) - \nu_2\left(\prod \tuple^{(5)}\right) \\
+  &> N - (1+\log N/\log 2) - \frac{NQ_{N,T,L}}{\log 2} \\
+  &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{N \log 3}{2\log 2} \\
+  &\geq \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} \frac{\nu_3(N!) \log 3}{\log 2} 
+\end{align*}  
 and similarly
 $$ m > \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \frac{\nu_2(N!) \log 2}{\log 3}.$$
-In particular, $n,m$ are positive.  Since we also have $n \leq \nu_2(N!)$ and $m \leq \nu_3(N!)$, the condition \eqref{bound23} holds.  Applying \Cref{bound23}, we can find a subfactorization $\tuple'$ of $2^n 3^m$ with an excess of at most $(\kappa_L \log \sqrt{12}) \frac{N}{\log t}$, and with
+In particular, $n,m$ are positive.  Since we also have $n \leq \nu_2(N!)$ and $m \leq \nu_3(N!)$, the condition \eqref{B-bound} holds.  Applying \Cref{bound23}, we can find a subfactorization $\tuple'$ of $2^n 3^m$ with an excess of at most $(\kappa_L \log \sqrt{12}) \frac{N}{\log t}$, and with
   $$ \sum_{p_0=2,3} \left|\nu_{p_0}\left(\frac{2^n 3^m}{\prod \tuple'}\right)\right|_{\log p_0,\infty}
    \leq 2(\log t + \kappa_L) \leq 2 \log N$$
    where we have used \eqref{kl-triv} and the fact that $\log t\leq \log N-1$.    Then $\tuple^{(6)} = \tuple^{(5)} \cup \tuple'$ is another $t$-admissible multiset, and from \eqref{new-balance-3}, we obtain the previous sufficient condition  \eqref{step7-cond}.
@@ -707,74 +726,77 @@ In particular, $n,m$ are positive.  Since we also have $n \leq \nu_2(N!)$ and $m
   
 \subsection{Analysis of Step 5}
 
-\begin{proposition}\label{balance-23'}  Let $1 \leq K \leq t \leq N$, $A \geq 1$, and $L \geq 1$ be parameters such that $9L < t = N/e^{1+\delta}$ for some $\delta>0$, and \eqref{condition} holds.  Suppose that the algorithm in \Cref{alg-desc} with the indicated parameters reaches the end of Step 4 to produce a multiset $\tuple^{(4)}$ obeying the following hypotheses.
-\begin{itemize}
-\item[(i)] (Small excess and surplus at small/medium primes)
+We can use the surplus tiny primes to efficiently deal with larger surplus primes, as follows.
+
+\begin{proposition}\label{balance-23'}  Let $1 \leq K \leq t \leq N$, $A \geq 1$, and $L \geq 1$ be parameters such that $9L < t = N/e^{1+\delta}$ for some $\delta>0$, and \eqref{condition} holds.  Suppose that the algorithm in \Cref{alg-desc} with the indicated parameters reaches the end of Step 4 to produce a multiset $\tuple^{(4)}$ such that the quantities
+  \begin{align}
+    Y_1 &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log p}{\log (t/K^2)},\infty}  \label{y1-def}\\
+    Y_2 &\coloneqq \frac{1}{N} \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{1,\infty}\label{y2-def}
+  \end{align}
+  obeying the bounds
 \begin{equation}\label{new-balance-4}
   \begin{split}
-&      \excess_t(\tuple^{(4)}) + \sum_{3 < p \leq t/K}
- \left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\kappa_K \min(\frac{\log p}{\log \sqrt{t/K}},1),\infty} \\
-&\quad    \leq \delta N - \frac{3}{2} \log N - \kappa_L (\log \sqrt{12}) \frac{N}{\log t}.
+&    \frac{1}{N}  \excess_t(\tuple^{(4)}) + \kappa_K Y_1 + \kappa_K Y_2 
+ \\
+&\quad  + \frac{\kappa_L \log \sqrt{12}}{\log t}  + \frac{3}{2} \frac{\log N}{N}   \leq \delta. 
   \end{split}
  \end{equation}
- \item[(ii)] (Large surpluses at tiny primes) We have
+and
  \begin{align*}
-  &\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0 \\
-&\quad + \sum_{3 < p \leq t/K}
- \left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\frac{\log \sqrt{tK} + \kappa_K}{\log\sqrt{t/K}} \log p,\infty}
- + \log t + \kappa_L\\
- &\quad \leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2.
+  &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y_1 + (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+&\quad
+  \leq \min( Q_{N,t,L}, Q'_{N,t,L} ).
  \end{align*}
- \end{itemize}
-  Then $t(N) \geq t$.
+Then $t(N) \geq t$.
 \end{proposition}
 
-\begin{proof} By \eqref{new-balance-4}, $\tuple^{(4)}$ is a subfactorization of $N!$, and by construction it is in balance at all large primes $p>t/K$. Consider all the $p$-surplus primes in the small, borderline small, and medium range $3 < p \leq t/K$, thus each such prime is considered with multiplicity $\nu_p(N!/\prod \tuple^{(4)})$.  
-Using the greedy algorithm, one can factor the product of all these primes into $M$ factors $c_1,\dots,c_M$ in the interval $(\sqrt{t/K}, t/K]$, times at most one exceptional factor $c_*$ in $(1,\sqrt{t/K}]$, for some $M$.  If we let $M'$ denote the number of factors in $c_1,\dots,c_M$ that are not divisible by a prime larger than $\sqrt{t/K}$, we have the bound
-$$ \left(\sqrt{t/K}\right)^{M'} \leq
-\prod_{3 < p \leq \sqrt{t/K}} \nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)$$
-and hence on taking logarithms
+\begin{proof} By \eqref{new-balance-4}, $\tuple^{(4)}$ is a subfactorization of $N!$, and by construction it is in balance at all large primes $p>t/K$. Consider all the $p$-surplus small primes $3 < p \leq K$, thus each such prime is considered with multiplicity $\nu_p(N!/\prod \tuple^{(4)})$.  
+Using the greedy algorithm, one can factor the product of all these primes into $M$ factors $c_1,\dots,c_M$ in the interval $(t/K^2, t/K]$ for some $M$, times at most one exceptional factor $c_*$ in $(1,t/K^2]$.  We have the bound
+$$ \left(\frac{t}{K^2}\right)^{M'} \leq
+\prod_{3 < p \leq K} \nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)$$
+and hence on taking logarithms and using \eqref{y1-def} we have
 $$
-M' \leq \sum_{3 < p \leq \sqrt{t/K}}
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\frac{\log p}{\log\sqrt{t/K}},\infty}. 
+M \leq NY_1. 
 $$
-Restoring the factors divisible by primes $p > \sqrt{t/K}$, we conclude that 
-\begin{equation}\label{M-bound}  M \leq \sum_{3 < p \leq t/K}
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\min(\frac{\log p}{\log\sqrt{t/K}},1),\infty}. \end{equation}
-For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle} = 2^{n_i} 3^{m_i}$, which by \eqref{kappa-def} lies in the interval $[t/c_i,e^{\kappa_K} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_K} t/c_*]$.  If we then adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well as $\lceil t/c_*\rceil^{\langle 2,3\rangle} c_* = 2^{n_*} 3^{m_*} c_*$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  The quantity $\log \lceil t/c_*\rceil^{\langle 2,3\rangle} = n_i \log 2 + m_i \log 3$ is bounded by $\log \sqrt{tK} + \kappa_K$, and the quantity $\log \lceil t/c_*\rceil^{\langle 2,3\rangle}  = n_* \log 2 + m_* \log 3$ is similarly bounded by $\log t + \kappa$, hence if we denote $n_{**} \coloneqq n_1 + \dots + n_M + n_*$ and $m_{**} \coloneqq m_1 + \dots + m_M + m_*$, we have
-$$ \sum_{p_0=2,3} \nu_{p_0}(\prod \tuple^{(5)}) \log p_0 \leq \sum_{p_0=2,3} \nu_{p_0}(\prod \tuple^{(4)}) \log p_0 + 
-(\log \sqrt{tK} + \kappa_K)
-\sum_{3 < p \leq t/K}
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\min(\frac{\log p}{\log\sqrt{t/K}},1),\infty}
-+ \log t + \kappa_K.$$
-Each of the new factors in $\tuple^{(5)}$ contributes an excess of at most $\kappa_K$, so the total excess of $\tuple^{(5)}$ is at most
-$$ \excess_t(\tuple^{(4)}) + \kappa_K M + \kappa_K$$
-which by \eqref{M-bound} is bounded by
-$$ \excess_t(\tuple^{(4)}) + \sum_{3 < p \leq t/K}
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(4)}}\right)\right|_{\kappa_K \min(\frac{\log p}{\log\sqrt{t/K}},1),\infty} + \kappa_K.$$
-We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (using \eqref{kl-triv} to bound $\kappa_K$ by $\log \sqrt{2\pi}$), and the claim follows.
+Also, the number of borderline or medium primes $K < p \leq t/K$ appearing in $N!/\prod \tuple^{(4)}$, counting multiplicity, is $NY_2$.
+
+For each of the $M$ factors $c_i$, we introduce the $3$-smooth number $\lceil t/c_i\rceil^{\langle 2,3\rangle} = 2^{n_i} 3^{m_i}$, which by \eqref{kappa-def} lies in the interval $[t/c_i,e^{\kappa_K} t/c_i]$; similarly, for the exceptional factor $c_*$ we introduce a $3$-smooth number $\lceil t/c_* \rceil^{\langle 2,3 \rangle} = 2^{n_*} 3^{m_*}$ in the interval $[t/c_*,e^{\kappa_K} t/c_*]$.  Finally, for the $Y_2$ borderline or medium primes $K < p \leq t/K$ discussed above, we introduce the $3$-smooth number $\lceil t/p\rceil^{\langle 2,3\rangle} = 2^{n_p} 3^{m_p}$, which lies in the interval $[t/p,e^{\kappa_K} t/p]$.  We adjoin the $3$-smooth numbers $\lceil t/c_i\rceil^{\langle 2,3\rangle} c_i = 2^{n_i} 3^{m_i} c_i$ for $i=1,\dots,M$ as well $\lceil t/c_*\rceil^{\langle 2,3\rangle} c_* = 2^{n_*} 3^{m_*} c_*$ and $\lceil t/p \rceil^{\langle 2,3\rangle} p = 2^{n_p} 3^{m_p} c_p$ to the $t$-admissible multiset $\tuple^{(4)}$ to create a new $t$-admissible multiset $\tuple^{(5)}$.  The quantities $\log \lceil t/c_i\rceil^{\langle 2,3\rangle} = n_i \log 2 + m_i \log 3$ are bounded by $\log K^2 + \kappa_K$, and the quantities $\log \lceil t/c_*\rceil^{\langle 2,3\rangle}  = n_* \log 2 + m_* \log 3$ and $\log \lceil t/p\rceil^{\langle 2,3\rangle}  = n_p \log 2 + m_p \log 3$ are similarly bounded by $\log(t/K) + \kappa_K$, hence
+\begin{align*} 
+  & \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(5)}\right) \log p_0  \\
+  &\quad \leq \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0 \\
+  &\quad + NY_1 (\log K^2 + \kappa_K) + (NY_2+1) (\log(t/K) + \kappa_K).
+\end{align*}
+Each of the new factors in $\tuple^{(5)}$ contributes an excess of at most $\kappa_K$, so that
+$$ \excess_t(\tuple^{(5)})  \leq \excess_t(\tuple^{(4)}) + \kappa_K (NY_1+NY_2+1).$$
+We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (using \eqref{kl-triv} to bound $\kappa_K$ by $\log\sqrt{2\pi}$ to clean up some lower order terms), and the claim follows.
 \end{proof}
 
 \subsection{Analysis of Step 4}
 
-\begin{proposition}\label{step4-reduce}  Let $L \geq 1$.  Let $9L < t = N/e^{1+\delta}$ for some $\delta>0$ be such that \eqref{condition} holds, and suppose that the algorithm reaches the end of Step 3 to produce a multiset $\tuple^{(3)}$ obeying the following hypotheses:
+The surplus tiny primes can also be used to deal with any larger primes that are in deficit, as follows.
+
+\begin{proposition}\label{step4-reduce}  Let $L \geq 1$.  Let $9L < t = N/e^{1+\delta}$ for some $\delta>0$ be such that \eqref{condition} holds, and suppose that the algorithm reaches the end of Step 3 to produce a multiset $\tuple^{(3)}$ such that the quantities
+  \begin{align}
+    Y_1^+ &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log p}{\log (t/K^2)},0}  \label{y1p-def}\\
+    Y_1^- &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,1}.\label{y1m-def} \\
+    Y^\pm_2 \coloneqq \frac{1}{N} \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|\label{y2pm-def}
+  \end{align}
+    obeying the following hypotheses involving:
   \begin{itemize}
   \item[(i)] (Small excess and surplus at small/medium primes) One has
 \begin{equation}\label{new-balance-5}
     \begin{split}
-&      \excess_t(\tuple^{(3)}) + \sum_{3 < p \leq t/K}
-   \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\kappa_K \min(\frac{\log p}{\log\sqrt{t/K}},1),\kappa_p}\\
-&\quad    \leq \delta N - \frac{3}{2} \log N - \kappa_L (\log \sqrt{12}) \frac{N}{\log t}.
+&     \frac{1}{N} \excess_t(\tuple^{(3)}) + \kappa_K Y_1^+ + \kappa_5 Y_1^- + \kappa_K Y_\pm\\
+&\quad + \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N}  \leq \delta.
     \end{split}
   \end{equation}
   \item[(ii)] One has
   \begin{equation}\label{nstarb}
     \begin{split}
-&\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
-&\quad + \sum_{3 < p \leq t/K}
-    \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{(\log \sqrt{tK} + \kappa_K) \min(\frac{\log p}{\log\sqrt{t/K}},1),\log p+\kappa_p}\\
-  &\quad  + \log t + \kappa_K \\
-&\leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2
+&\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
+&\quad + (\log K^2 +\kappa_K) Y_1^+ + (\log K + \kappa_5) Y_1^- +  (\log(t/K) +\kappa_K) (Y_2^\pm+1)  
+\\
+  &\quad  \leq \min( Q_{N,t,L}, Q'_{N,t,L} )
   \end{split}
 \end{equation}
  \end{itemize}
@@ -782,39 +804,91 @@ We conclude that $\tuple^{(5)}$ obeys the hypotheses of \Cref{step6-reduce} (usi
 \end{proposition}
 
 \begin{proof} Suppose there is a non-tiny prime $p>3$ with a positive $p$-deficit
-$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and increments $\sum_{p'=2,3} \nu_{p'}(N!/\prod \tuple^{(3)}) \log p'$ by  $n_{p}\log 2 + m_{p} \log 3$.  Since $n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$, if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
-$$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} |\nu_p(N!/\prod \tuple)|_{0,\kappa_p}$$
-and we have
-$$\sum_{p'=2,3} \nu_p(\prod \tuple^{(4)}) \log p \leq
-\sum_{p'=2,3} \nu_p(\prod \tuple^{(3)}) \log p + \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log p+\kappa_{p}}.$$  
+$|\nu_p(N!/\prod \tuple^{(3)})|_{0,1} > 0$.  Since $\tuple^{(3)}$ is in balance at all large primes, we have $3 < p \leq t/K$.  We locate an element of $\tuple^{(3)}$ that contains $p$ as a factor, and replaces it with $\lceil p \rceil^{\langle 2,3 \rangle} = 2^{n_p} 3^{m_p}$, which increases that factor by at most $\exp(\kappa_{p})$ thanks to \eqref{kappa-def}.  This procedure reduces the $p$-deficit by one, adds at most $\kappa_{p}$ to the $t$-excess, and increments $\sum_{p_0=2,3} \nu_{p_0}(N!/\prod \tuple^{(3)}) \log p_0$ by  $n_{p}\log 2 + m_{p} \log 3$.  Since $n_{p} \log 2 + m_{p} \log 3 \leq \log p + \kappa_{p}$, if we apply this procedure to clear all deficits at non-tiny primes, the resulting multiset $\tuple^{(4)}$ has a $t$-excess of
+$$ \excess_t(\tuple^{(4)}) \leq \excess_t(\tuple^{(3)})  + \sum_{p > 3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,\kappa_p}$$
+and hence
+\begin{align*}
+  &\frac{1}{N} \excess_t(\tuple^{(4)}) + \kappa_K Y_1 + \kappa_K Y_2 \\
+\\
+&\frac{1}{N} \excess_t(\tuple^{(4)}) +
+\kappa_K Y^+_1 + \kappa_5 Y^-_1 + \kappa_K Y_2^\pm..
+\end{align*}
+Similarly we have
+$$\sum_{p'=2,3} \nu_p\left(\prod \tuple^{(4)}\right) \log p \leq
+\sum_{p'=2,3} \nu_p\left(\prod \tuple^{(3)}\right) \log p + \sum_{p>3} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0, \log p+\kappa_{p}}$$
+and hence
+\begin{align*}
+  &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(4)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y_1 + (\log(t/K)+\kappa_K) (Y_2+\frac{1}{N}) \\
+  &\quad \leq 
+  \frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0  + (\log(K^2)+\kappa_K) Y^+_1 + (\log K + \kappa_K) Y^+_2 + (\log(t/K)+\kappa_K) (Y^\pm_2+\frac{1}{N}).
+\end{align*}
 The hypotheses of \Cref{balance-23'} are now satisfied, and we are done.
 \end{proof}
 
-To simplify the criteria here, we introduce the quantities
+\subsection{Analysis of Step 3}
 
-\begin{align}
-X_1 &\coloneqq \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log p}{\log\sqrt{t/K}},0} + \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|  \label{x1-def}\\
-X_2 &\coloneqq \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,1}.\label{x2-def}
-\end{align}
-Since $\kappa_K \min(\frac{\log p}{\log\sqrt{t/K}},1),\kappa_p$ are both bounded by $\kappa_K$ for $p \geq K$, and bounded by $\kappa_K \frac{\log p}{\log\sqrt{t/K}}$, $\kappa_5$ respectively for $3 < p \leq K$, we can replace \eqref{new-balance-5} with 
-\begin{equation}\label{new-balance-6}
-      \excess_t(\tuple^{(3)}) + \kappa_K X_1 + \kappa_5 X_2 \leq \delta N - \frac{3}{2} \log N - \kappa_L (\log \sqrt{12}) \frac{N}{\log t}.
+From direct inspection of Step 3, we see that  borderline or medium primes $K < p \leq t/K$ are unaffected by this step:
+\begin{equation}\label{step3-unaffected}
+  \nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right) = \nu_p\left(\frac{N!}{\prod \tuple^{(2)}}\right).
 \end{equation}
-Similarly, since $\log p + \kappa_p$ is bounded by $\log\sqrt{tK} + \kappa_K$ for $K < p \leq t/K$, and $\log p + \kappa_p$ is bounded by $\log K + \kappa_5$ for $3 < p \leq K$, we can replace \eqref{nstarb} with
-\begin{equation}\label{nstarb-2}
-  \begin{split}
-&  \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 +
- (\log\sqrt{tK} + \kappa_K) (X_1+2) + (\log K+\kappa_5) X_2 \\
- &\quad \leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2
-  \end{split}
+For tiny or small primes $p_1 \leq K$, we instead have
+$$
+\nu_{p_1}\left(\frac{N!}{\prod \tuple^{(3)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) - \sum_{p > t/K} \nu_p(N!) \nu_{p_1}( \lceil t/p \rceil ).$$
+From \eqref{condition} we see that all large primes $p>t/K$ are larger than $\sqrt{N}$, hence by \eqref{legendre} $\nu_p(N!) = \lfloor N/p\rfloor$.  Meanwhile, $\lceil t/p \rceil$ is at most $K$.  Thus, making the change of variables $m \coloneqq \lceil t/p \rceil$, we can also write
+\begin{equation}\label{step3-affected}
+\nu_{p_1}\left(\frac{N!}{\prod \tuple^{(3)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) - \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor.
+\end{equation}
+Finally, the $t$-excess after Step 3 can be computed as
+$$
+\excess_t(\tuple^{(3)}) = 
+\excess_t(\tuple^{(2)}) + \sum_{t/K < p \leq N} \nu_p(N!) \log \frac{p \lceil t/p \rceil}{t}$$
+and hence by \eqref{legendre} and \eqref{falpha-def}
+$$
+\excess_t(\tuple^{(3)}) = 
+\excess_t(\tuple^{(2)}) + \sum_{t/K < p \leq N} f_{N/t}(p/N).$$
+Hence by \Cref{buthe}
+\begin{equation}\label{step3-excess}
+\frac{1}{N} \excess_t(\tuple^{(3)}) \leq 
+ \frac{1}{N}\excess_t(\tuple^{(2)}) + \int_{t/NK}^1 f_{N/t}(x)\ dx + \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N}.  
 \end{equation}
 
 
-\subsection{Analysis of Steps 1,2,3}
+\subsection{Analysis of Step 2}
 
-To apply  \Cref{step4-reduce}, we now compute the various statistics of $\tuple^{(3)}$ produced by Steps 1-3.
+Step 2 removes $A$ copies of every factor of the form $mp$ when $p > t/K$ and $mp \in I$, which forces $m$ coprime to $6$ and $m \leq K(1+\sigma)$.  Thus this procedure does not affect medium primes $K(1+\sigma) < p \leq t/K$:
+\begin{equation}\label{step2-unaffected}
+  \nu_p\left(\frac{N!}{\prod \tuple^{(2)}}\right) = \nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right).
+\end{equation}
+It also does not generate any tiny primes $p_0=2,3$, thus:
+\begin{equation}\label{step2-tiny}
+\sum_{p_0=2,3}  \nu_{p_0}\left(\frac{N!}{\prod \tuple^{(2)}}\right) \log p_0 = 0.
+\end{equation}
+For borderline primes $K < p_1 \leq K(1+\sigma)$, this step removes $A$ copies of $p_1 p$ whenever $p_1 p \in I$ and $p \geq t/K$, adding to the $p_1$-surplus $p_1$, but otherwise does not affect this surplus; thus
+\begin{equation}\label{step2-borderline}
+  \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) +
+  A \left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) + \pi\left(\frac{t}{K}\right)\right).
+\end{equation}
+For small primes $3 < p_1 \leq K$, we instead have
+$$
+  \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) +
+  A \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{\min(K,m)}\right)\right),
+$$
+where the notation $\sum^*$ indicates that the summation variable $m$ is required to be coprime to $6$.  We can split this as
+\begin{equation}\label{step2-small}
+  \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) +
+  A \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) + A N Z_{p_1}
+\end{equation}
+where
+$$ Z_{p_1} \coloneqq 
+\frac{1}{N} \sum_{K < m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{K}\right)\right).$$
+As for the excess, we simply use the trivial bound
+\begin{equation}\label{step2-excess}
+\excess_t(\tuple^{(2)}) \leq \excess_t(\tuple^{(1)}).
+\end{equation}
 
-We begin with the analysis of $\tuple^{(1)}$, constructed in Step 1 of the algorithm.  To count elements coprime to $6$, we use the following lemma:
+\subsection{Analysis of Step 1}
+
+To count elements coprime to $6$, we use the following lemma:
 
 \begin{lemma}\label{lit}  For any interval $(a,b]$ with $0 \leq a \leq b$, the number of natural numbers in the interval that are coprime to $6$ is $\frac{b-a}{3} + O_{\leq}(4/3)$.
 \end{lemma}
@@ -826,197 +900,55 @@ We begin with the analysis of $\tuple^{(1)}$, constructed in Step 1 of the algor
 
 The excess of $\tuple^{(1)}$ can be computed as
 $$ \excess_t(\tuple^{(1)}) = A \sum_{n \in I} \log \frac{n}{t}.$$
-By the fundamental theorem of calculus, this is
-$$ A \int_0^{3t/A} |I \cap (t, t+h]|\ \frac{dh}{t+h}.$$
+By the fundamental theorem of calculus, and noting that $t\sigma = 3N/A$, this is
+$$ A \int_0^{3N/A} |I \cap (t, t+h]|\ \frac{dh}{t+h}.$$
 Bounding $\frac{1}{t+h}$ by $\frac{1}{t}$ and applying \Cref{lit}, we conclude that
 \begin{equation}\label{excess1-bound}
  \excess_t(\tuple^{(1)}) \leq A \int_0^{3N/A} \left(\frac{h}{3} + \frac{4}{3}\right) \frac{dh}{t} = \frac{3N^2}{2tA} + 4.
 \end{equation}
-Next, we compute $p$-valuations $\nu_p(\tuple^{(1)})$.  By construction, this quantity vanishes at tiny primes $p_0=2,3$, thus
-$$ \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(1)}\right) \log p_0 = 0.$$
-For $p>3$, we can use \Cref{lit} again to conclude
+Next, we compute $p$-valuations $\nu_p(\tuple^{(1)})$.  For small, borderline, or large primes $3 < p \leq t/K$, one has
 \begin{align*}
   \nu_p(\tuple^{(1)}) &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} |I \cap p^j \Z| \\
   &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{N}{p^j A} + O_{\leq}(4/3)\right) \\
-  &= \frac{N}{p-1} + O_{\leq}\left(\frac{1}{p-1}\right)
+  &= \frac{N}{p-1} - O_{\leq}^+\left(\frac{1}{p-1}\right)
   + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) \\
   &= \frac{N}{p-1} 
-  + O_{\leq}\left(\frac{4A+0.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) 
+  - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)
+  + O_{\leq}\left(\frac{4A+0.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{align*}
-since $\frac{1}{p-1} \leq \frac{0.75}{3}$.
 Meanwhile, from \eqref{legendre} one has
-$$ \nu_p(N!) = \frac{N}{p-1} + O_{\leq}\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
+$$ \nu_p(N!) = \frac{N}{p-1} - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
 and thus
 \begin{equation}\label{nup} 
   \nu_p(N!/\tuple^{(1)}) =  
-O_{\leq}\left(\frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
+O_{\leq}\left(\frac{4A+3}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{equation}
 
-Now we pass to $\tuple^{(2)}$ by performing Step 2 of the algorithm.  Removing elements from a $t$-admissible multiset cannot increase the $t$-excess, so from \eqref{excess1-bound} we have
-\begin{equation}\label{excess2-bound} 
-  \excess_t(\tuple^{(2)}) \leq \frac{3N^2}{2tA} + 4.
-\end{equation}
-The elements removed are of the form $pm$ with $m \leq K(1+\nu)$ coprime to $6$, and $p$ in the interval $(\frac{t}{\min(m,K)}, \frac{t(1+\sigma)}{m}]$.  We conclude that
-\begin{equation}\label{nup-21}
-   \nu_p( N!/\tuple^{(2)} ) = \nu_p( N!/\tuple^{(1)})
-\end{equation}
-for medium primes $K(1+\sigma) < p \leq t/K$.  For small and borderline small primes $3 < p \leq K(1+\sigma)$ one has
-\begin{equation}\label{nup-2}
- \nu_p( N!/\tuple^{(2)} ) = \nu_p(N!/\tuple^{(1)}) + A \sum_{\stackrel{m \leq K(1+\sigma)}{(m,6)=1}} \nu_p(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right)
-- \pi\left(\frac{t}{\min(m,K)}\right) \right).
-\end{equation}
-Finally, for tiny primes $p_0=2,3$ we again have the maximal surplus:
-$$ \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(2)}\right) \log p_0 = 0.$$
-
-We now pass to $\tuple^{(3)}$ by performing Step 3 of the algorithm.  In other words, we add $\nu_p(N!)$ copies of $p \lceil t/p\rceil$ for each large prime $p > t/K$.  The $t$-excess is now given by
-$$  \excess_t(\tuple^{(3)}) = \excess_t(\tuple^{(2)}) + \sum_{p > t/K} \nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}
-$$
-and hence by \eqref{excess2-bound} and \eqref{legendre}
-\begin{equation}\label{excess-eq-alt}
-\excess_t(\tuple^{(3)}) \leq \frac{3N^2}{2tA} + 4 + \sum_{p > t/K} \left \lceil \frac{N}{p} \right \rceil \log \frac{\lceil t/p \rceil}{t/p}.
-\end{equation}
-By construction one has balance \eqref{3-balance} at large primes $p>t/K$, 
-\begin{equation}\label{3-balance}  
-  \nu_p(N!/\tuple^{(3)}) = 0\end{equation}
-and no modification at borderline small or medium primes $K < p \leq t/K$,
-\begin{equation}\label{3-medium}  
-  \nu_p(N!/\tuple^{(3)}) = \nu_p(N!/\tuple^{(2)})
-\end{equation}
-but now the surplus or deficit at small
- primes $3 < p_1 \leq K$ is modified:
-\begin{equation}\label{mod}
-   \nu_{p_1}(N!/\tuple^{(3)}) = \nu_{p_1}(N!/\tuple^{(2)}) -
-\sum_{p > t/K} \left \lceil \frac{N}{p} \right \rceil \nu_{p_1}(\lceil t/p \rceil).\end{equation}
-Similarly, at tiny primes $p_0=2,3$ we have
-\begin{equation}\label{tinycon} \nu_{p_0}(\tuple^{(3)}) = 
-\sum_{p > t/K} \left \lfloor \frac{N}{p} \right\rfloor \nu_{p}(\lceil t/p \rceil).
+Combining these bounds with \eqref{step3-unaffected}, \eqref{step3-affected}, \eqref{step3-excess}, \eqref{step2-unaffected}, \eqref{step2-borderline}, \eqref{step2-small}, \eqref{step2-excess} and \eqref{y1p-def}, \eqref{y1m-def}, \eqref{y2pm-def}, we see that
+\begin{align}
+\frac{1}{N} \excess_t(\tuple^{(3)})
+&\leq 
+\frac{3N}{2tA} + \frac{4}{N} + \int_{t/NK}^1 f_{N/t}(x)\ dx + \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N} \label{excess-3-bound}\\
+Y_1^+ &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
+ \left\lceil \frac{\log N}{\log p_1} \right\rceil \frac{\log p_1}{\log (t/K^2)} + A \sum_{3 < p_1 \leq K} Z_{p_1} \frac{\log p}{\log(t/K^2)} \\
+ &\quad + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \label{y1p-bound}\\
+Y_1^- &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
+\left\lceil \frac{\log N}{\log p_1} \right\rceil 
++ \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \label{y2p-bound} \\
+Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p_1} \right\rceil \\
+&\quad + \frac{A}{N} \sum_{K < p \leq K(1+\sigma)} 
+\left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) - \pi\left(\frac{t}{K}\right)\right)
+\label{y2pm-bound} \\
+\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 &\leq \sum_{p_0=2,3} \sum_{m \leq K} (\nu_{p_0}(m) \log p_0) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor
+\label{small-bound}
+\end{align}
+where for any small prime $3 < p_1 \leq K$, we define $W_{p_1}$ to be the quantity
+\begin{equation}\label{W-def}
+W_{p_1} \coloneqq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right)
+- \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor.
 \end{equation}
 
-At medium primes, $K(1+\sigma) < p \leq t/K$, we see from \eqref{3-medium}, \eqref{nup} that
-$$
-   \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right| \leq \frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p} \right\rceil.$$
-For borderline primes $K \leq p < K(1+\sigma)$, we have from \eqref{3-medium}, \eqref{nup-2} that
-$$
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right| \leq \frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p} \right\rceil + A \sum_{\stackrel{m \leq K(1+\sigma)}{(m,6)=1}} \nu_p(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right)
-- \pi\left(\frac{t}{\min(m,K)}\right) \right).$$
-The only $m$ which contributes here is $m=p$, thus we may simplify to
-\begin{align*}
-\left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right| &\leq \frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p} \right\rceil + A \left(\pi\left(\frac{t(1+\sigma)}{p}\right)
-- \pi\left(\frac{t}{K}\right) \right) \\
-&\leq \frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p} \right\rceil + A \left(\pi\left(\frac{t(1+\sigma)}{K}\right)
-- \pi\left(\frac{t}{K}\right) \right).
-\end{align*}
-For the small primes $3 < p_1 \leq K$, we see from \eqref{nup}, \eqref{nup-2}, \eqref{mod} that we have the upper bound
-$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(3)}}\right) \leq
-\frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p_1} \right\rceil + Y_{p_1} + Z_{p_1} $$
-and the lower bound
-$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(3)}}\right) \leq
-- \frac{4A+3.75}{3} \left\lceil \frac{\log N}{\log p_1} \right\rceil + Y_{p_1}$$
-where $Y_{p_1}$ is the quantity
-\begin{equation}\label{yp-def}
-  \begin{split} Y_{p_1} &\coloneqq
-A \sum_{\stackrel{m \leq K}{(m,6)=1}} \nu_p(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right)
-- \pi\left(\frac{t}{m}\right) \right) \\
-&- \sum_{p > t/K} \left\lfloor \frac{N}{p} \right\rfloor\nu_{p_1}(\lceil t/p \rceil)
-\end{split}
-\end{equation}
-and $Z_{p_1}$ is the (non-negative) error term
-\begin{equation}\label{zp-def}  Z_{p_1} \coloneqq
-  A \sum_{\stackrel{K < m \leq K(1+\sigma)}{(m,6)=1}} \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right)
-  - \pi\left(\frac{t}{K}\right) \right).
- \end{equation}
-An important phenomenon for us will be that $Y_{p_1}$ is usually positive (so that $\tuple^{(3)}$ typically enjoys a (modest) surplus at small primes rather than a deficit); as such, $|Y_{p_1}|_{0,1}$ will enjoy better estimates than $|Y_{p_1}|_{1,0}$.  From the triangle inequality we now have $X_1 \leq X'_1$ and $X_2 \leq X'_2$, where
-\begin{equation}\label{x1-upper}
-\begin{split}
-  X'_1 &\coloneqq \frac{4A+3.75}{3} \sum_{3 < p \leq t/K}  \left\lceil \frac{\log N}{\log p} \right\rceil \\
-  &\quad + A \left( \pi(K(1+\sigma))-\pi(K)\right) \left(\pi\left(\frac{t(1+\sigma)}{K}\right)
-  - \pi\left(\frac{t}{K}\right) \right)\\
-  &\quad +
-\sum_{3 < p_1 \leq K} \frac{\log p_1}{\log \sqrt{t/K}} (|Y_{p_1}|_{1,0} + Z_{p_1})
-\end{split}
-\end{equation}
-and
-\begin{equation}\label{x2-upper}
-  X'_2 \coloneqq \frac{4A+3.75}{3} \sum_{3 < p \leq K}  \left\lceil \frac{\log N}{\log p} \right\rceil +
-  \sum_{3 <p_1 \leq K}  |Y_{p_1}|_{0,1}.
-\end{equation}
-
-To summarize the previous discussion, we have
-
-\begin{proposition}[Criterion for $t(N) \geq t$]\label{crit}  Let $L \geq 1$.  Let $9L < t = N/e^{1+\delta}$ for some $\delta>0$ be such that \eqref{condition} holds.  Let $X'_1, X'_2$ be defined by \eqref{x1-upper}, \eqref{x2-upper}.  If one has
-\begin{equation}\label{first-criterion}
-  \begin{split}
-&\frac{3N^2}{2tA} + 4 + \sum_{p > t/K} \left \lfloor \frac{N}{p} \right \rfloor \log \frac{\lceil t/p \rceil}{t/p} \\
-&\quad + \kappa_K X'_1 + \kappa_5 X'_2 \\
-&\quad \leq \delta N - \frac{3}{2} \log N - \kappa_L (\log \sqrt{12}) \frac{N}{\log t}
-  \end{split}
-\end{equation}
-and
-\begin{equation}\label{second-criterion}
-  \begin{split}
-  &\sum_{p_0=2,3} \sum_{p > t/K} \left \lfloor \frac{N}{p} \right \rfloor \nu_{p_0}(\lceil t/p \rceil) \log p_0 \\
-&\quad +
-(\log\sqrt{tK} + \kappa_K) (X'_1+2) + (\log K+\kappa_5) X'_2 \\
-& \quad \leq \frac{N}{2} \log 3 - \log N - \frac{\log(3L) + \kappa_L}{\log t - \log(3L)} N \log 2
-\end{split}
-\end{equation}
-then $t(N) \geq t$.
-\end{proposition}
-
-
-\subsection{Estimation of relevant quantities}
-
-Suppose $N,A,K,L$ are as in \Cref{crit}.  We now use effective prime number theorems to control the various quantities appearing in that proposition.
-
-The quantity 
-$$ \sum_{p > t/K} \left \lceil \frac{N}{p} \right \rceil \log \frac{\lceil t/p \rceil}{t/p}$$
-appearing in \eqref{first-criterion} can be bounded by
-$$ \frac{1}{\log(t/K)} \sum_{t/K < p \leq N} f_{N/t}(p/N) \log p$$
-where for $\alpha>0$, $f_\alpha \colon (t/NK,1] \to \R$ is the piecewise smooth function
-$$ f_\alpha(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil 1/\alpha x \rceil}{1/\alpha x}.$$
-Applying \Cref{buthe} and a change of variables, and discarding the negative term arising from $-\frac{2}{\sqrt{x}}$, we thus have
-\begin{align*}
-  \sum_{p > t/K} \left \lceil \frac{N}{p} \right \rceil \log \frac{\lceil t/p \rceil}{t/p} &\leq \frac{N}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx\\
-&\quad + \frac{E(N)}{\log(t/K)} \left(f_{N/t}\left(\frac{t}{NK}+\right) + f_{N/t}(1) + \|f_{N/t}\|_{\mathrm{TV}(t/NK,1]}\right).
-\end{align*}
-
-Now we consider the expression
-$$ \sum_{3 < p \leq t/K} \left\lceil \frac{\log N}{\log p} \right\rceil$$
-appearing in \eqref{x1-upper}. The quantity $\left\lceil \frac{\log N}{\log p} \right\rceil$ equals $1$ for $p > \sqrt{t}$ and is at most $\frac{\log N}{\log 5} + 1$ for $3 < p \leq \sqrt{t}$, so we have
-\begin{equation}\label{x11-est} \sum_{3 < p \leq t/K} \left\lceil \frac{\log N}{\log p} \right\rceil \leq \pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{t}).
-\end{equation}
-One can bound this using for instance the bound \eqref{pi-upper}.
-
-As for the quantity $\sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil$ appearing in \eqref{x2-upper}, we crudely bound it by
-\begin{equation}\label{crudo}
-  \sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil \leq \left(\frac{\log N}{\log 5}+1\right) (\pi(K)-\pi(3)).
-\end{equation}
-
-To estimate the second term in \eqref{x1-upper}, we can invoke \eqref{pixy-upper} to bound
-$$
-\pi\left(\frac{t(1+\sigma)}{K}\right) - \pi\left(\frac{t}{K}\right) \leq \frac{\sigma t}{K \log(t/K)} + \frac{2E\left(\frac{t(1+\sigma)}{K}\right)}{\log(t/K)}$$
-assuming that $t/K \geq 1423$.
-
-In a similar vein, we can bound the quantity $Z_{p_1}$ defined in \eqref{zp-def} by
-\begin{equation}\label{zp-bound} 
-  Z_{p_1} \leq A \sum_{\stackrel{K < m < K(1+\sigma)}{(m,6)=1}} \nu_{p_1}(m) \left( \frac{\sigma t}{K \log(t/K)} + \frac{2E\left(\frac{t(1+\sigma)}{K}\right)}{\log(t/K)} \right)
-\end{equation}
-again assuming that $t/K \geq 1423$.
-
-Now we consider the quantity 
-$$\sum_{p > t/K} \lfloor \frac{N}{p} \rfloor \nu_{p_*}(\lceil t/p\rceil)$$
- for a prime $p_*$; this appears in in \eqref{second-criterion} when $p_*$ is a tiny prime, and also in \eqref{yp-def} when $p_*$ is a small prime.  We can rearrange this expression as
-$$ \sum_{m \leq K} \nu_{p_*}(m) \sum_{t/m \leq p < t/(m-1)} \lfloor \frac{N}{p} \rfloor.$$
-Applying \Cref{buthe}, we can write this as
-$$ \sum_{m \leq K} \nu_{p_*}(m) \left( \int_{t/m}^{t/(m-1)}(1-\frac{2}{\sqrt{x}}) \lfloor \frac{N}{x} \rfloor \frac{dx}{\log x} + O_{\leq}\left(\frac{2E(t/(m-1)) (mN/t)}{\log(t/m)}\right)\right).$$
-Thus we have the upper bound
-\begin{equation}\label{nup-up}
-   \sum_{p > t/K} \lfloor \frac{N}{p} \rfloor \nu_{p_*}(\lceil t/p\rceil)
-\leq \sum_{m \leq K} \nu_{p_*}(m) \left( \int_{t/m}^{t/(m-1)} \lfloor \frac{N}{x} \rfloor \frac{dx}{\log (t/m)} + \frac{2t E(t/(m-1))}{mN \log(t/m)} \right)
-\end{equation}
-and the lower bound
-$$ \sum_{p > t/K} \lfloor \frac{N}{p} \rfloor \nu_{p_*}(\lceil t/p\rceil)
-\geq \sum_{m \leq K} \nu_{p_*}(m) \left( \left(1-\frac{2}{\sqrt{t/(m-1)}}\right) \int_{t/m}^{t/(m-1)} \lfloor \frac{N}{x} \rfloor \frac{dx}{\log (t/(m-1))} - \frac{2t E(t/(m-1))}{mN \log(t/m)} \right)$$
+A key point will be that in practice, the $W_{p_1}$ will be positive (or only barely negative), so that their contribution to \eqref{y2p-bound} vanishes (or is small).
 
 \section{The asymptotic regime}
 
@@ -1075,18 +1007,18 @@ Using the bound
     &\ll \frac{\log\log N}{p}
   \end{split}
 \end{equation}
-we thus see that the first term on the left-hand side of \eqref{criterion} is acceptable.  It will now suffice to show that
+we thus see that the first term on the left-hand side of \eqref{second-criterion'} is acceptable.  It will now suffice to show that
 \begin{equation}\label{xb} X'_1, X'_2 \ll \frac{N (\log\log N)^3}{\log^2 N}.
 \end{equation}
 From \eqref{x11-est} and the prime number theorem we have
-$$ \frac{4A+3.75}{3} \sum_{3 < p \leq t/K}  \left\lceil \frac{\log N}{\log p} \right\rceil \ll A \frac{t/K}{\log N} \ll \frac{N}{\log^2 N}$$
+$$ \frac{4A+3}{3} \sum_{3 < p \leq t/K}  \left\lceil \frac{\log N}{\log p} \right\rceil \ll A \frac{t/K}{\log N} \ll \frac{N}{\log^2 N}$$
 so the contribution of the first term in \eqref{x1-upper} is acceptable.  Next, from the Brun--Titchmarsh inequality (or \eqref{pixy-upper}) we have
 $$ A \left( \pi(K(1+\sigma))-\pi(K)\right) \left(\pi\left(\frac{t(1+\sigma)}{K}\right) - \pi \left(\frac{t}{K} \right) \right) \ll A \frac{K \sigma}{\log K} \frac{t\sigma/K}{\log N} \ll \frac{N}{\log^3 N}$$
 so the contribution of the second term in \eqref{x1-upper} is also acceptable.  From \eqref{zp-bound} one has
 $$ Z_p \ll  A \sum_{K < m < K(1+\sigma)} \nu_{p}(m) \frac{\sigma N}{K \log N} \ll A \frac{\sigma^2 N \log K}{p \log N}
 \ll \frac{N \log\log N}{p \log^3 N}$$
 so the contribution of these terms to \eqref{x1-upper} is also acceptable.  From \eqref{crudo} we have
-$$ \frac{4A+3.75}{3} \sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil \ll A (\log N) \frac{K}{\log N} \ll \log^6 N
+$$ \frac{4A+3}{3} \sum_{3 < p \leq K} \left\lceil \frac{\log N}{\log p} \right\rceil \ll A (\log N) \frac{K}{\log N} \ll \log^6 N
 $$
 which is certainly acceptable for \eqref{x2-upper}. By Mertens' theorem, it will now suffice to show that
 \begin{equation}\label{yp}  
@@ -1106,7 +1038,7 @@ For the first bound \eqref{yp}, we crudely discard the second term of \eqref{yp-
 \end{align*}
 which is acceptable.  For the second bound \eqref{yp-neg}, we argue more carefully.  From \Cref{buthe} we have
 \begin{align*}
-A \sum_{m \leq K: (m,6)=1} \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
+A \sum_{m \leq K: (m,6)=1}& \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
   &= A \sum_{m \leq K: (m,6)=1} \nu_{p_1}(m) (1+O(\frac{\log\log N}{\log N})) \frac{t\sigma m}{\log N} \\
   &= \frac{N}{\log N} \sum_{m \leq K: (m,6)=1} \frac{3\nu_{p_1}(m)}{m}
  + O\left(\frac{N (\log\log N)^2}{p_1 \log^2 N}\right)
@@ -1151,7 +1083,7 @@ $$ N \log \frac{3}{e} - \frac{3}{2} \log N - (\log \frac{9}{8}) (\log \sqrt{12})
 Direct numerical calculation (cf. \Cref{fig-f}) reveals that
 \begin{align*}
   \int_{1/3K}^1 f(x)\ dx &\leq 0.9201  \\
-  f(\frac{1}{3K}+) + f(1) + \|f\|_{\mathrm{TV}(1/3K,1]} &\leq 2044
+  \|f\|_{\mathrm{TV}^*(1/3K,1]} &\leq 2044
 \end{align*}
 and thus
 $$\excess_t(\tuple^{(3)}) \leq \frac{N}{20} + 4 + \frac{N}{\log(N/3K)} \left(0.9201 + 2044 \frac{E(N)}{N}\right).$$
@@ -1328,9 +1260,13 @@ for $x >1$.
   $$ \sum_{y < n \leq z} a_n = \int_z^y f(t)\ dt + C + O_{\leq}(A)$$
   for all $y \leq z \leq x$, and some $C \in \R$, $A>0$.  Then, for any function $b: (y,x] \to \R$ of bounded total variation, one has
 \begin{equation}\label{tve}
-   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ dt + O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]})),
+   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ dt + O_{\leq}(A\|b\|_{\mathrm{TV}^*(y,x]}),
 \end{equation}
-where $b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$, and the total variation $\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j=0}^{J-1} |b(x_{j+1})-b(x_j)|$ for $y < x_0 \leq \dots \leq x_J \leq x$.
+where the augmented total variation $\|b\|_{\mathrm{TV}^*(y,x]}$ is defined as
+$$
+\|b\|_{\mathrm{TV}^*(y,x]}
+\coloneqq |b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]},$$
+$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$, and the total variation $\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j=0}^{J-1} |b(x_{j+1})-b(x_j)|$ for $y < x_0 \leq \dots \leq x_J \leq x$.
 \end{lemma}
 
 \begin{proof}  If, for every natural number $y < n \leq x$, one modifies $b$ to be equal to the constant $b(n)$ in a small neighborhood of $n$, then one does not affect the left-hand side of \eqref{tve} or increase the total variation of $b$, while only modifying the integral in \eqref{tve} by an arbitrarily small amount.  Hence, by the usual limiting argument, we may assume without loss of generality that $b$ is locally constant at each such $n$.  If we define the function $g \colon (y,x] \to \R$ by
@@ -1339,7 +1275,7 @@ then $g$ has jump discontinuities at the natural numbers, but is otherwise conti
 $$ \int_{(y,x]} b\ dg = \sum_{y < n \leq x} b(n) a_n - \int_y^x f(t) b(t)\ dt.$$
 Since the discontinuities of $g$ and $b$ do not coincide, we may integrate by parts to obtain
 $$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g db.$$
-The left-hand side is $O_{\leq}(A (|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]}))$, and the claim follows.
+The left-hand side is $O_{\leq}(A \|b\|_{\mathrm{TV}^*(y,x]})$, and the claim follows.
 \end{proof}
 
 By combining this lemma with effective prime number estimates, we obtain
@@ -1347,7 +1283,7 @@ By combining this lemma with effective prime number estimates, we obtain
 \begin{lemma}[Effective prime number theorem]\label{buthe}  Under the above hypotheses 
 with $1423 \leq y \leq x$, one has
 $$  \sum_{y < p \leq x} b(p) \log p = \int_y^x b(t) (1 - \frac{2}{\sqrt{t}}) \ dt
-+ O_\leq\left((|b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}}) E(x) \right)$$
++ O_\leq\left(\|b\|_{\mathrm{TV}^*((y,x])} E(x) \right)$$
 where
 $$
 E(x) \coloneqq 0.95 \sqrt{x} + \frac{\sqrt{x}}{8\pi} \log x(\log x - 3) 1_{x \geq 10^{19}} + \min( \eps_0, \eps_1(x), \eps_2(x)) x 1_{x \geq e^{45}}$$
@@ -1360,24 +1296,15 @@ and
   for some absolute constant $c>0$.
 \end{lemma}
 
-Applying the above lemma to $b(t) = 1/\log t$, we conclude in particular that
-\begin{equation}\label{pi-est} \pi(x) - \pi(y) = \int_y^x(1 - \frac{2}{\sqrt{t}}) \ \frac{dt}{\log t}
-+ O_\leq(\frac{2 E(x)}{\log y})
-\end{equation}
-for $1423 \leq y \leq x$. In particular, we have the slightly crude upper bound
-\begin{equation}\label{pixy-upper} \pi(x) - \pi(y) \leq \frac{x-y}{\log y} + \frac{2 E(x)}{\log y}
-\end{equation}
-in this range.
-  
-
 \begin{proof} Observe that $E$ is monotone non-decreasing. Thus by \Cref{integ-lemma}, it will suffice to show that
 $$ \sum_{p \leq x} \log p = x - \sqrt{x} + O_{\leq}(E(x))
-  = \int_0^x (1-\frac{2}{\sqrt{t}})\ dt + O_{\leq}(E(x))$$
+  = \int_0^x \left(1-\frac{2}{\sqrt{t}}\right)\ dt + O_{\leq}(E(x))$$
 for all $x \geq 1423$.
 
 For $1423 \leq x \leq 10^{19}$, this follows from \cite[Theorem 2]{buthe-2}.  In the range
 For $10^{19} \leq x \leq 10^{21} \approx e^{48.35}$, we use the bound
-  $$ \psi(x) = x + O_{\leq}(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3))$$
+  $$ \psi(x) = x + O_{\leq}\left(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3)\right)
+$$
 which was established for $5000 \leq x \leq 10^{21}$ in \cite[(7.3)]{buthe}, where $\psi(x) \coloneqq \sum_{n \leq x} \Lambda(n)$ is the usual von Mangoldt summatory function.  To use this, we apply \cite[(6.10), (6.11)]{buthe} to conclude that
 $$
 \sum_{p \leq x} \log p = \psi(x) - \psi(\sqrt{x}) + O_{\leq}(1.03883 (x^{1/3} + x^{1/5} + 2 (\log x) x^{1/13})).$$
@@ -1399,6 +1326,38 @@ for all $x \geq 2$.  The claim then follows by repeating the previous arguments.
 \begin{remark} Assuming the Riemann hypothesis, the final term in the definition of $E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.  
 \end{remark}
 
+Applying the above lemma to $b(t) = 1/\log t$, we conclude in particular that
+\begin{equation}\label{pi-est} \pi(x) - \pi(y) = \int_y^x(1 - \frac{2}{\sqrt{t}}) \ \frac{dt}{\log t}
++ O_\leq(\frac{2 E(x)}{\log y})
+\end{equation}
+for $1423 \leq y \leq x$. In particular, we have the slightly crude upper bound
+\begin{equation}\label{pixy-upper} \pi(x) - \pi(y) \leq \frac{x-y}{\log y} + \frac{2 E(x)}{\log y}
+\end{equation}
+in this range, as well as the lower bound
+\begin{equation}\label{pixy-lower} \pi(x) - \pi(y) \geq \left(1-\frac{2}{\sqrt{y}}\right)\frac{x-y}{\log y} - \frac{2 E(x)}{\log y}
+\end{equation}
+
+The quantity $E(x)$ is somewhat complicated.  In our paper we will only need simpler upper bounds on this quantity.  Firstly, from the $\eps_1$ term we obtain the classical error term
+\begin{equation}\label{ecx}
+E(x) \ll x \exp(-c \sqrt{\log x})
+\end{equation}
+for some absolute constant $c>0$.  Secondly, because
+$$ \frac{\log x (\log x-3)}{8\pi\sqrt{x}}  \leq 2.244 \times 10^{-8}$$
+for $x \geq 10^{19}$, we also have the upper bound
+\begin{equation}\label{ecx-2}
+E(x) \leq \tilde E(x)
+\end{equation}
+where
+\begin{equation}\label{tilde-e}
+  \tilde E(x) \coloneqq 0.95 \sqrt{x} + 2.25 \times 10^{-8} x.
+\end{equation}
+One small advantage of working with $\tilde E$ instead of $E$ is that in addition to being monotone increasing, $\tilde E(x)/x$ is monotone decreasing.
+
+
+
+  
+
+
 \section{Computation of \texorpdfstring{$c_0$}{c\_0}}\label{c0-app}
 
 In this appendix we give some details regarding the rigorous numerical estimation of the constant $c_0$ defined in \eqref{c0-def}.  As one might imagine from an inspection of \Cref{fig-mean}, direct application of numerical quadrature converges quite slowly due to the oscillatory singularity.  To resolve the singularity, we can perform a change of variables $x=1/y$ to express $c_0$ as an improper integral:
@@ -1408,7 +1367,7 @@ In this appendix we give some details regarding the rigorous numerical estimatio
 The integrand is piecewise smooth and the integral can be computed explicitly on any interval $[a,b]$ of the form
 $$ [a,b] \subset [n, n+1] \cap [(m-1)e, me]$$
 for some non-negative integers $n,m$ as
-$$ \int_a^b \lfloor y \rfloor \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} = n (\frac{\log(b/m)}{b} - \frac{\log(a/m){a}}).$$
+$$ \int_a^b \lfloor y \rfloor \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} = n (\frac{\log(b/m)}{b} - \frac{\log(a/m)}{a}).$$
 This formula permits one to evaluate $\int_1^b \lfloor y \rfloor \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}$ exactly for any finite $b$.  To control the tail, we see from the crude bounds $0 \leq \lfloor y \rfloor \leq y$ and
 $$ 0 \leq \log \frac{\lceil y/e \rceil}{y/e} \leq \log 
 \left(1 + \frac{e}{y}\right) \leq \frac{e}{y}

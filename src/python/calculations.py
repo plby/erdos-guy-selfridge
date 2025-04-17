@@ -2,6 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+
+# The code here verifies the calculations in Section 7
+
+
+
 # An effective error term in the prime number theorem, see (C.9)
 def E(N):
     return 0.95 * math.sqrt(N) + 2.25 * 10**(-8) * N
@@ -65,21 +70,22 @@ def fancy_kappa(L):
 def delta(t,N):
     return math.log(N/t) - 1
 
-# see (5.9)
+# see (6.3)
 def sigma(t,N,A):
     return 3*N/(t*A)
 
-# Some minor terms appearing in (5.29)
+# Some minor terms appearing in (6.23)
 def minor_delta_terms(L,t,N):
     return kappa(L) * math.log(12) / (2 * math.log(t)) + 3 * math.log(N) / (2*N)
 
-# (5.22)
+# (6.16)
 def alpha_eval(N,t,L):
     alpha1 = (math.log(3*L) + kappa(L))/(math.log(t) - math.log(3*L)) * math.log(3)/(2*math.log(2)) + math.log(N) / (N*math.log(2)) + 1/N
     alpha2 = (math.log(2*L) + kappa(L))/(math.log(t) - math.log(2*L)) * 2 * math.log(2) / math.log(3) + 2 * math.log(N) / (N * math.log(3)) + 2/N
+    print(f"alpha1={alpha1}, alpha2={alpha2}")
     return max(alpha1, alpha2)
 
-# equation (5.42)    
+# equation (6.36)    
 def excess_bound(t,N,A,K):
     sum = 3*N/(2*t*A)
     sum += 4/N
@@ -87,7 +93,7 @@ def excess_bound(t,N,A,K):
     sum += 2044 * E(N) / (N * math.log(t/K))
     return sum
 
-# equation (5.38)
+# equation (6.32)
 def Z_bound(t,N,A,K,p):
     sum = 0
     for m in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
@@ -95,33 +101,36 @@ def Z_bound(t,N,A,K,p):
             sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma(t,N,A))/m) / N
     return sum
 
-# The first term in (5.43)
+# The first term in (6.37)
 def Y1p_first(t,N,A,K):
     sum = 0
     for p in range(4, K+1):
         if is_prime(p):
             sum += (math.log(N)/math.log(p) + 1) * math.log(p) 
     sum *= (4*A + 3) / (3 * N * math.log(t/K**2))
+    print(f"First term in bound on Y1+: {sum}")
     return sum
 
-# The first term in (5.44)
+# The first term in (6.38)
 def Y1m_first(t,N,A,K):
     sum = 0
     for p in range(4, K+1):
         if is_prime(p):
             sum += (math.log(N)/math.log(p) + 1)
     sum *= (4*A + 3) / (3 * N)
+    print(f"First term in bound on Y1-: {sum}")
     return sum
 
-# The first term in (5.45)
+# The first term in (6.39)
 def Y2pm_first(t,N,A,K):
     sum = 0
     sum += pi_upper(t/K)
     sum += pi_upper(math.sqrt(N)) * (math.log(N)/math.log(K) + 1)
     sum *= (4*A + 3) / (3 * N)
+    print(f"First term in bound on Y2+-: {sum}")
     return sum
 
-# The expression in (5.46)
+# The expression in (6.41)
 # assumes t = N/3
 def tinyprimes_bound(t,N,K):
     sum2 = 0
@@ -135,7 +144,7 @@ def tinyprimes_bound(t,N,K):
         sum3 += x * 2*nu(3,m) / N
     return max(sum2,sum3)
 
-# upper bound for (5.47)
+# upper bound for (6.41)
 # assumes t = N/3
 def Wp_upper(t,N,A,K,p):
     sum = 0
@@ -151,7 +160,7 @@ def Wp_upper(t,N,A,K,p):
         sum -= nu(p,m) * x / N
     return sum
 
-# lower bound for (5.47)
+# lower bound for (6.41)
 # assumes t = N/3
 def Wp_lower(t,N,A,K,p):
     sum = 0
@@ -165,20 +174,24 @@ def Wp_lower(t,N,A,K,p):
         if 3*m-3 > 0:
             x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
         sum -= nu(p,m) * x / N
+    if sum < 0:
+        print(f"Possible negative value of W_{p}")
     return sum
 
-# (5.43)        
+# (6.37)        
 def Y1p_bound(t,N,A,K):
     sum = Y1p_first(t,N,A,K)
+    zsum=0
+    wsum=0
     for p in range(4, K+1):
         if is_prime(p):
-            sum += Z_bound(t,N,A,K,p) * math.log(p) / math.log(t/K**2)
-            sum += max(0, Wp_upper(t,N,A,K,p)) * math.log(p) / math.log(t/K**2)
-#            print(f"p * Wp contribution for p={p}: {Wp_upper(t,N,A,K,p) * p}")
-#    print(f"Final sum={sum}")
-    return sum
+            zsum += Z_bound(t,N,A,K,p) * math.log(p) / math.log(t/K**2)
+            wsum += max(0, Wp_upper(t,N,A,K,p)) * math.log(p) / math.log(t/K**2)
+    print(f"Contribution of Z_p terms to Y1+: {zsum}")
+    print(f"Contribution of W_p terms to Y1+: {wsum}")
+    return sum+zsum+wsum
 
-# (5.44)
+# (6.38)
 def Y1m_bound(t,N,A,K):
     sum = Y1m_first(t,N,A,K)
     for p in range(4, K+1):
@@ -186,7 +199,7 @@ def Y1m_bound(t,N,A,K):
             sum += max(0, -Wp_lower(t,N,A,K,p))
     return sum
 
-# (5.45)
+# (6.39)
 def Y2pm_bound(t,N,A,K):
     sum = Y2pm_first(t,N,A,K)
     for p in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
@@ -194,40 +207,49 @@ def Y2pm_bound(t,N,A,K):
             sum += (A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)
     return sum
 
-# Check if (5.30), (5.31) holds.
+# Check if (6.24), (6.25) hold.
 def evaluate(N, A, K, L):
-    print("(N,A,K,L) = ", N, A, K, L)
     t = N/3
+    print("(N,A,K,L,t,sigma) = ", N, A, K, L, t, sigma(t,N,A))
+    assert t > 9*L, "Error: t must be greater than 9*L"
+    assert K**2*(1+sigma(t,N,A)) < t, "Error: K^2*(1+sigma) must be less than t"
+    assert K*math.sqrt(N) < t, "Error: K*sqrt(N) must be less than t"
+    assert sigma(t,N,A) < 1, "Error: sigma must be less than 1"
+    assert L >= 4.5, "Error: L must be at least 4.5"
+    assert K >= L, "Error: K must be at least L"
+
+
     Y1p = Y1p_bound(t, N, A, K)
     Y1m = Y1m_bound(t, N, A, K)
     Y2pm = Y2pm_bound(t, N, A, K)
 
     d = delta(t, N)
-    delta1 = excess_bound(t, N, A, K)
-    delta2 = kappa(4.5) * Y1p
-    delta3 = kappa(4.5) * Y1m
-    delta4 = kappa(4.5) * Y2pm
-    delta5 = minor_delta_terms(L, t, N)
-    slack = d - (delta1 + delta2 + delta3 + delta4 + delta5)
-
-    print(f"delta budget: {d}")
 
 # This term is like 1/A; to make it smaller, increase A
-    print(f"Excess term: {delta1} ({delta1 / d * 100:.2f}% of delta)")
+    delta1 = excess_bound(t, N, A, K)
 
 # This term is like log K / log N; to make it smaller, decrease K or increase N
-    print(f"Y1p term: {delta2} ({delta2 / d * 100:.2f}% of delta)")
+    delta2 = kappa(4.5) * Y1p
 
 # This term is negligible
-    print(f"Y1m term: {delta3} ({delta3 / d * 100:.2f}% of delta)")
+    delta3 = kappa(4.5) * Y1m
 
 # This term is like A / K log N; to make it smaller, decrease A, increase K, or increase N
-    print(f"Y2pm term: {delta4} ({delta4 / d * 100:.2f}% of delta)")
+    delta4 = kappa(4.5) * Y2pm
 
 # this term is like kappa(L) / log N; to make it smaller, increase N or increase L
-    print(f"Minor delta terms: {delta5} ({delta5 / d * 100:.2f}% of delta)")
+    delta5 = minor_delta_terms(L, t, N)
 
-    print(f"Slack in delta: {slack} ({slack / d * 100:.2f}% of delta)")
+    total = delta1 + delta2 + delta3 + delta4 + delta5
+    slack = d - total
+
+    print(f"delta budget: {d}")
+    print(f"Excess term: {delta1} ({delta1 / d * 100:.2f}% of delta)")
+    print(f"Y1p term: {delta2} ({delta2 / d * 100:.2f}% of delta)")
+    print(f"Y1m term: {delta3} ({delta3 / d * 100:.2f}% of delta)")
+    print(f"Y2pm term: {delta4} ({delta4 / d * 100:.2f}% of delta)")
+    print(f"Minor delta terms: {delta5} ({delta5 / d * 100:.2f}% of delta)")
+    print(f"Total left-hand side of delta equation: {total} ({total / d * 100:.2f}% of delta)")
 
 # Q decreases if L increases
     Q = 1 - alpha_eval(N, t, L)
@@ -243,14 +265,15 @@ def evaluate(N, A, K, L):
 
 # This term is like A/K; to make it smaller, decrease A or increase K
     Q4 = (2/math.log(12)) * (math.log(t/K) + fancy_kappa(K)) * (Y2pm+1/N)
-    slack2 = Q - (Q1 + Q2 + Q3 + Q4)
+    total2 = Q1 + Q2 + Q3 + Q4
+    slack2 = Q - total2
 
     print(f"Tiny-prime budget: {Q}")
-    print(f"Direct term: {Q1} ({Q1 / Q * 100:.2f}% of Q)")
-    print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of Q)")
-    print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of Q)")
-    print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of Q)")
-    print(f"Slack at tiny primes: {slack2} ({slack2 / Q * 100:.2f}% of Q)")
+    print(f"Direct term: {Q1} ({Q1 / Q * 100:.2f}% of 1-\\alpha)")
+    print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of 1-alpha)")
+    print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of 1-alpha)")
+    print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of 1-alpha)")
+    print(f"Total left-hand side of tiny prime equation: {total2} ({total2 / Q * 100:.2f}% of 1-\\alpha)")
     assert slack > 0, "Over budget for delta"
     assert slack2 > 0, "Over budget for tiny primes"
     print(f"Guy-Selfridge conjecture t(N) >= N/3 successfully verified for N >= {N}")

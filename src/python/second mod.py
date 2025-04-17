@@ -4,7 +4,7 @@ import math
 
 # code for generating a second modification of the c0 constant. 
 
-K = 342
+K = 340
 
 
 
@@ -51,11 +51,14 @@ def plot3():
 
     fullbase = [i/L for i in range(1,L+1)]
     compare = [c for _ in range(1,L+1)]
+    upper = [math.log(1+3*i/L)/(i/L) for i in range(1,L+1)]
+
 
     plt.figure(figsize=(8, 6))
-    plt.plot(base, fn, label='$\\lfloor \\frac{1}{x} \\rfloor \\log(3x \\lceil \\frac{1}{3x} \\rceil)$' )
+    plt.plot(base, fn, label='$f_3(x)$' )
+    plt.plot(fullbase, upper, label='$\\frac{1}{x}\\log(1+3x)$' )
     plt.plot(fullbase, compare, label='$c_1$' )
-    plt.title('$\\lfloor \\frac{1}{x} \\rfloor \\log(3x \\lceil \\frac{1}{3x} \\rceil)$')
+    plt.title('$f_3$')
     plt.xlabel('$x$')
     plt.legend()
     plt.xlim(0,1)

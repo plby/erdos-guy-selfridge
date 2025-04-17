@@ -2,44 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-
-
-A = 110
-K = 280
-N = 10 ** 13
-t = N / 3
-L = 4.5
-
-def kappa(L):
-    if L >= 341.34:
-        return math.log(9/8)
-    if L >= 40.5:
-        return math.log(32/27)
-    if L >= 4.5:
-        return math.log(4/3)
-    return math.log(3/2)
-
-kappa_K = kappa(K)
-kappa_L = kappa(L)
-kappa_5 = kappa(5)
-
-print(f"kappa({K}) = {kappa_K}")
-print(f"kappa({L}) = {kappa_L}")
-print(f"kappa(5) = {kappa_5}")
-
-sigma = 3*N/(t*A)
-delta = math.log(3)-1
-
-# An effective error term in the prime number theorem
-
+# An effective error term in the prime number theorem, see (C.9)
 def E(N):
-    E = 0.95 * math.sqrt(N)
-    if N > 10**19:
-        E += (math.sqrt(N) / (8*math.pi)) * math.log(N) * (math.log(N) - 3)
-    if N > math.exp(45):
-        E = 1.11742 * 10**(-8) * N
-    return E
-
+    return 0.95 * math.sqrt(N) + 2.25 * 10**(-8) * N
 
 def is_prime(n):
     """Return True if n is a prime number, else False."""
@@ -70,156 +35,208 @@ def nu(p,m):
 def coprime_6(n):
     return n%6 == 1 or n%6 == 5
 
-# An effective upper bound for pi(N)
-
 def pi_upper(N):
     assert N > 1, "Error: this bound is only valid for N > 1"
     return N/math.log(N) + 1.2762 * N / (math.log(N) ** 2)
 
-
+# Upper bound for pi(x)-pi(y), see (C.5)
 def pixy_upper(y,x):
     assert N > 1423, "Error: this bound is only valid for N > 1423"
     return (x-y)/math.log(y) + 2 * E(x) / math.log(y)
 
+# Lower bound for pi(x)-pi(y), see (C.6)
 def pixy_lower(y,x):
     assert N > 1423, "Error: this bound is only valid for N > 1423"
     return (1-2/math.sqrt(y))*(x-y)/math.log(y) - 2 * E(x) / math.log(y)
 
-# An upper bound for Z_p
+# See Table 2
+def kappa(L):
+    if L >= 341.34:
+        return math.log(9/8)
+    if L >= 40.5:
+        return math.log(32/27)
+    if L >= 4.5:
+        return math.log(4/3)
+    return math.log(3/2)
 
-def Z(p):
-    sum = 0
-    for m in range(K+1, math.floor(K*(1+sigma))+1):
-        if coprime_6(m):
-            sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma)/m)
-    return A*sum
+def delta(t,N):
+    return math.log(N/t) - 1
 
+# see (5.9)
+def sigma(t,N,A):
+    return 3*N/(t*A)
 
-# The integral of \lfloor N/x \rfloor from t/m to t(m-1), which can be computed explicitly when t=N/3
+# Some minor terms appearing in (5.30)
+def minor_delta_terms(L,t,N):
+    return kappa(L) * math.log(12) / (2 * math.log(t)) + 3 * math.log(N) / (2*N)
 
-def nt_integ(m):
-    sum = 0
-    for i in range(3):
-        if 3*m - i - 1 > 0:
-            sum += (3*m-i-1) * (N/(3*m-i-1) - N/(3*m-i))
+# the right-hand side of (5.31)
+def Q_eval(N,t,L):
+    Q1 = math.log(2) - (math.log(3*L) + kappa(L))/(math.log(t) - math.log(3*L)) * math.log(3)/2 - math.log(2*N) / N
+    Q2 = math.log(3)/2 - (math.log(2*L) + kappa(L))/(math.log(t) - math.log(2*L)) * math.log(2) - math.log(3*N) / N
+    return min(Q1, Q2)
+
+# equation (5.43)    
+def excess_bound(t,N,A,K):
+    sum = 3*N/(2*t*A)
+    sum += 4/N
+    sum += 0.9201 / math.log(t/K)
+    sum += 2044 * E(N) / (N * math.log(t/K))
     return sum
 
-def npsum_upper(p1):
+# equation (5.39)
+def Z_bound(t,N,A,K,p):
     sum = 0
-    for m in range(1,K+1):
-        sm = N
-        if m > 1:
-            sm = t/(m-1)
-        a = nt_integ(m) / math.log(t/m) + 2*t*E(sm)/(m*N/math.log(t/m))
-        sum += nu(p1,m) * a
+    for m in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
+        if coprime_6(m):
+            sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma(t,N,A))/m) / N
     return sum
 
-def npsum_lower(p1):
+# The first term in (5.44)
+def Y1p_first(t,N,A,K):
     sum = 0
-    for m in range(1,K+1):
-        sm = N
-        if m > 1:
-            sm = t/(m-1)
-        a = (1-2/math.sqrt(sm)) * nt_integ(m) / math.log(sm) - 2*t*E(sm)/(m*N/math.log(t/m))
-        sum += nu(p1,m) * a
+    for p in range(4, K+1):
+        if is_prime(p):
+            sum += (math.log(N)/math.log(p) + 1) * math.log(p) 
+    sum *= (4*A + 3) / (3 * N * math.log(t/K**2))
     return sum
 
-def yp_upper(p1):
+# The first term in (5.45)
+def Y1m_first(t,N,A,K):
     sum = 0
-    for m in range(1,K+1):
-        if coprime_6(m):
-            sum += A * nu(p1,m) * pixy_upper(t/m, t*(1+sigma)/m)
-    return sum - npsum_lower(p1)
+    for p in range(4, K+1):
+        if is_prime(p):
+            sum += (math.log(N)/math.log(p) + 1)
+    sum *= (4*A + 3) / (3 * N)
+    return sum
 
-def yp_lower(p1):
+# The first term in (5.45)
+def Y2pm_first(t,N,A,K):
     sum = 0
-    for m in range(1,K+1):
+    sum += pi_upper(t/K)
+    sum += pi_upper(math.sqrt(N)) * (math.log(N)/math.log(K) + 1)
+    sum *= (4*A + 3) / (3 * N)
+    return sum
+
+# The expression in (5.47)
+# assumes t = N/3
+def tinyprimes_bound(t,N,K):
+    sum = 0
+    for m in range(1, K+1):
+        x = (3*m-1) * pixy_upper(t/(3*m), t/(3*m-1))
+        x += (3*m-2) * pixy_upper(t/(3*m-1), t/(3*m-2))
+        if 3*m-3 > 0:
+            x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
+        sum += x * (nu(2,m)*math.log(2) + nu(3,m)*math.log(3)) / N
+    return sum 
+
+# upper bound for (5.48)
+# assumes t = N/3
+def Wp_upper(t,N,A,K,p):
+    sum = 0
+    for m in range(1, K+1):
         if coprime_6(m):
-            sum += A * nu(p1,m) * pixy_lower(t/m, t*(1+sigma)/m)
-    return sum - npsum_upper(p1)
-
-print(f"Raw budget: {N * delta}")
-
-budget = N * delta - 3 * math.log(N) / 2 - kappa_L * math.log(12) * N / (2 * math.log(t))
-
-print(f"Budget: {budget} ( {budget / (N * delta) * 100:.2f}% of raw budget)")
-
-def excess():
-    excess_1 = 9*N/(2*A) + 4
-    excess_2 = (N / math.log(N/(3*K))) * 0.9201
-    excess_3 = (N / math.log(N/(3*K))) * 2044 * E(N) / N
-    return excess_1 + excess_2 + excess_3
-
-excess = excess()
-print(f"Excess: {excess} ({excess / budget * 100:.2f}% of budget)")
-
-
-print(f"log(N/3K) = {math.log(N/(3*K))}; log(N) = {math.log(N)}")
-
-X1_1 = ((4*A+3)/3) * pi_upper(t/K)
-X1_2 = ((4*A+3)/3) * pi_upper(math.sqrt(N)) * math.log(N) / math.log(5)
-X1_3 = A * (pi(K*(1+sigma)) - pi(K)) * pixy_upper(t/K, (t*(1+sigma))/K)
-
-X1_4 = 0
-for p in range(4,K+1):
-    if is_prime(p):
-        X1_4 += Z(p) * math.log(p) / math.log(math.sqrt(t/K))
-
-X1_5 = 0
-for p in range(4,K+1):
-    if is_prime(p):
-#        norm = N / ((p-1)*math.log(N))
-#        print(f"Y_{p} in [{yp_lower(p)/norm}, {yp_upper(p)/norm}]; npsum({p}) in [{npsum_lower(p)/norm}, {npsum_upper(p)/norm}]")
-        X1_5 += max(yp_upper(p),0) * math.log(p) / math.log(math.sqrt(t/K))
-        
-X1 = X1_1 + X1_2 + X1_3 + X1_4 + X1_5
-
-print(f"First component of X1: {X1_1/N}; {X1_1 / X1 * 100:.2f}% of X1")
-print(f"Second component of X1: {X1_2/N}; {X1_2 / X1 * 100:.2f}% of X1")
-print(f"Third component of X1: {X1_3/N}; {X1_3 / X1 * 100:.2f}% of X1")
-print(f"Fourth component of X1: {X1_4/N}; {X1_4 / X1 * 100:.2f}% of X1")
-print(f"Fifth component of X1: {X1_5/N}; {X1_5 / X1 * 100:.2f}% of X1")
-
-
-X2_1 = (4*A+3)/3 * (pi(K)-2) * (math.log(N) / math.log(5))
-
-X2_2 = 0
-for p in range(4,K+1):
-    if is_prime(p):
-        X2_2 += max(-yp_lower(p),0)
-
-X2 = X2_1 + X2_2
-
-print(f"Excess: {excess/N}")
-
-print(f"X1: {X1/N}")
-
-print(f"X2: {X2/N}")
-
-print(f"budget: {budget/N}")
-
-print(f"Excess / budget: {excess / budget * 100:.2f}%")
-
-print(f"X1 / budget: {X1 * kappa_K / budget * 100:.2f}%")
-
-print(f"X2 / budget: {X2 * kappa_5 / budget * 100:.2f}%")
-
-print(f"Remaining: {(budget - excess - X1 * kappa_K - X2 * kappa_5) / budget * 100:.2f}%")
-
-def volume():
-    volume1 = N * math.log(3) / 2 - math.log(N) - ((math.log(2*L)+kappa_L) / (math.log(t) - math.log(2*L))) * N * math.log(2)
-    volume2 = N * math.log(2)  - math.log(N) - ((math.log(3*L)+kappa_L) / (math.log(t) - math.log(3*L))) * N * math.log(3)/2
-    return min(volume1, volume2)
+            sum += (A/N) * nu(p,m) * pixy_upper(t/m, t*(1+sigma(t,N,A))/m)
     
-volume = volume()
+    for m in range(1, K+1):
+        x = (3*m-1) * pixy_lower(t/(3*m), t/(3*m-1))
+        x += (3*m-2) * pixy_lower(t/(3*m-1), t/(3*m-2))
+        if 3*m-3 > 0:
+            x += (3*m-3) * pixy_lower(t/(3*m-2), t/(3*m-3))
+        sum -= nu(p,m) * x / N
+    return sum
 
-X1_volume = (math.log(math.sqrt(t*K))+kappa_K)*(X1+2)
-X2_volume = (math.log(5)+kappa_5)*X2
+# lower bound for (5.48)
+# assumes t = N/3
+def Wp_lower(t,N,A,K,p):
+    sum = 0
+    for m in range(1, K+1):
+        if coprime_6(m):
+            sum += (A/N) * nu(p,m) * pixy_lower(t/m, t*(1+sigma(t,N,A))/m)
+    
+    for m in range(1, K+1):
+        x = (3*m-1) * pixy_upper(t/(3*m), t/(3*m-1))
+        x += (3*m-2) * pixy_upper(t/(3*m-1), t/(3*m-2))
+        if 3*m-3 > 0:
+            x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
+        sum -= nu(p,m) * x / N
+    return sum
 
-print(f"Volume: {volume / N:.2f}")
-print(f"X1 / volume: { X1_volume / volume * 100:.2f}%")
+# (5.44)        
+def Y1p_bound(t,N,A,K):
+    sum = Y1p_first(t,N,A,K)
+    for p in range(4, K+1):
+        if is_prime(p):
+            sum += Z_bound(t,N,A,K,p) * math.log(p) / math.log(t/K**2)
+            sum += max(0, Wp_upper(t,N,A,K,p)) * math.log(p) / math.log(t/K**2)
+            print(f"p * Wp contribution for p={p}: {Wp_upper(t,N,A,K,p) * p}")
+    print(f"Final sum={sum}")
+    return sum
 
-print(f"X2 / volume: { X2_volume / volume * 100:.2f}%")
+# (5.45)
+def Y1m_bound(t,N,A,K):
+    sum = Y1m_first(t,N,A,K)
+    for p in range(4, K+1):
+        if is_prime(p):
+            sum += max(0, -Wp_lower(t,N,A,K,p))
+    return sum
 
-print(f"Remaining: {(volume - X1_volume - X2_volume) / volume * 100:.2f}%")
+# (5.46)
+def Y2pm_bound(t,N,A,K):
+    sum = Y2pm_first(t,N,A,K)
+#    print(f"Y2pm_bound: {sum}")
+    for p in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
+        if is_prime(p):
+            sum += (A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)
+#            print(f"Adding {A/N} * pixy_upper({t/K}, {t*(1+sigma(t,N,A))/p}) for p={p}, wihich is {(A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)}")
+#    print(f"Final sum={sum}")
+    return sum
 
+# Check if (5.30), (5.31) holds.
+def evaluate(N, A, K, L):
+    t = N/3
+    Y1p = Y1p_bound(t, N, A, K)
+    Y1m = Y1m_bound(t, N, A, K)
+    Y2pm = Y2pm_bound(t, N, A, K)
+
+    d = delta(t, N)
+    delta1 = excess_bound(t, N, A, K)
+    delta2 = kappa(K) * Y1p
+    delta3 = kappa(5) * Y1m
+    delta4 = kappa(K) * Y2pm
+    delta5 = minor_delta_terms(L, t, N)
+    slack = d - (delta1 + delta2 + delta3 + delta4 + delta5)
+
+    print(f"delta budget: {d}")
+    print(f"Excess term: {delta1} ({delta1 / d * 100:.2f}% of delta)")
+    print(f"Y1p term: {delta2} ({delta2 / d * 100:.2f}% of delta)")
+    print(f"Y1m term: {delta3} ({delta3 / d * 100:.2f}% of delta)")
+    print(f"Y2pm term: {delta4} ({delta4 / d * 100:.2f}% of delta)")
+    print(f"Minor delta terms: {delta5} ({delta5 / d * 100:.2f}% of delta)")
+    print(f"Slack: {slack} ({slack / d * 100:.2f}% of delta)")
+    if slack < 0:
+        print("WARNING: OVER BUDGET FOR DELTA!")
+
+    Q = Q_eval(N, t, L)
+    Q1 = tinyprimes_bound(t, N, K)
+    Q2 = (math.log(K**2) + kappa(K)) * Y1p
+    Q3 = (math.log(K) + kappa(5)) * Y1m
+    Q4 = (math.log(t/K) + kappa(K)) * (Y2pm+1/N)
+    slack = Q - (Q1 + Q2 + Q3 + Q4)
+
+    print(f"Q budget: {Q}")
+    print(f"Tiny primes term: {Q1} ({Q1 / Q * 100:.2f}% of Q)")
+    print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of Q)")
+    print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of Q)")
+    print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of Q)")
+    print(f"Slack: {slack} ({slack / Q * 100:.2f}% of Q)")
+    if slack < 0:
+        print("WARNING: OVER BUDGET FOR Q!")
+
+
+A = 110
+K = 342
+N = 10 ** 13
+L = 4.5
+
+evaluate(N, A, K, L)

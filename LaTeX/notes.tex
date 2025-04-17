@@ -779,7 +779,7 @@ The surplus tiny primes can also be used to deal with any larger primes that are
   \begin{align}
     Y_1^+ &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{\frac{\log p}{\log (t/K^2)},0}  \label{y1p-def}\\
     Y_1^- &\coloneqq \frac{1}{N} \sum_{3 < p \leq K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|_{0,1}.\label{y1m-def} \\
-    Y^\pm_2 \coloneqq \frac{1}{N} \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|\label{y2pm-def}
+    Y^\pm_2 &\coloneqq \frac{1}{N} \sum_{K < p \leq t/K} \left|\nu_p\left(\frac{N!}{\prod \tuple^{(3)}}\right)\right|\label{y2pm-def}
   \end{align}
     obey the hypotheses
 \begin{equation}\label{new-balance-5}
@@ -792,7 +792,7 @@ and
   \begin{equation}\label{nstarb}
     \begin{split}
 &\frac{1}{N} \sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0\\
-&\quad + (\log K^2 +\kappa_K) Y_1^+ + (\log K + \kappa_5) Y_1^- +  (\log(t/K) +\kappa_K) (Y_2^\pm+1)  
+&\quad + (\log K^2 +\kappa_K) Y_1^+ + (\log K + \kappa_5) Y_1^- +  (\log(t/K) +\kappa_K) (Y_2^\pm+\frac{1}{N})  
 \\
   &\quad  \leq \min( Q_{N,t,L}, Q'_{N,t,L} )
   \end{split}
@@ -873,12 +873,12 @@ $$
 where the notation $\sum^*$ indicates that the summation variable $m$ is required to be coprime to $6$.  We can split this as
 \begin{equation}\label{step2-small}
   \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(2)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) +
-  A \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) + A N Z_{p_1}
+  A \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) + N Z_{p_1}
 \end{equation}
 where
 \begin{equation}\label{zp-def}
    Z_{p_1} \coloneqq 
-\frac{1}{N} \sum_{K < m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{K}\right)\right).
+\frac{A}{N} \sum_{K < m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{K}\right)\right).
 \end{equation}
 As for the excess, we simply use the trivial bound
 \begin{equation}\label{step2-excess}
@@ -927,14 +927,15 @@ Combining these bounds with \eqref{step3-unaffected}, \eqref{step3-affected}, \e
 \begin{align}
 \frac{1}{N} \excess_t(\tuple^{(3)})
 &\leq 
-\frac{3N}{2tA} + \frac{4}{N} + \int_{t/NK}^1 f_{N/t}(x)\ dx + \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N} \label{excess-3-bound}\\
+\frac{3N}{2tA} + \frac{4}{N} + \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx\nonumber \\
+&\quad + \frac{1}{\log(t/K)} \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N \log(t/K)} \label{excess-3-bound}\\
 Y_1^+ &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
- \left\lceil \frac{\log N}{\log p_1} \right\rceil \frac{\log p_1}{\log (t/K^2)} + A \sum_{3 < p_1 \leq K} Z_{p_1} \frac{\log p}{\log(t/K^2)} \\
- &\quad + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \label{y1p-bound}\\
+ \left\lceil \frac{\log N}{\log p_1} \right\rceil \frac{\log p_1}{\log (t/K^2)} \nonumber \\
+ &\quad + \sum_{3 < p_1 \leq K} Z_{p_1} \frac{\log p}{\log(t/K^2)} + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \label{y1p-bound}\\
 Y_1^- &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
 \left\lceil \frac{\log N}{\log p_1} \right\rceil 
 + \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \label{y1m-bound} \\
-Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p_1} \right\rceil \\
+Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p} \right\rceil \nonumber \\
 &\quad + \frac{A}{N} \sum_{K < p \leq K(1+\sigma)} 
 \left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) - \pi\left(\frac{t}{K}\right)\right)
 \label{y2pm-bound} \\
@@ -947,7 +948,7 @@ W_{p_1} \coloneqq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\fra
 - \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor.
 \end{equation}
 
-A key point will be that in practice, the $W_{p_1}$ will be positive (or only barely negative), so that their contribution to \eqref{y2p-bound} vanishes (or is small).
+A key point will be that in practice, the $W_{p_1}$ will be positive (or only barely negative), so that their contribution to \eqref{y1m-bound} vanishes (or is small).
 
 \section{The asymptotic regime}
 
@@ -983,7 +984,7 @@ so by \Cref{baker} it will suffice to establish the bounds
 
 We begin with \eqref{est-1}.  The function $f_{N/t}$ is piecewise monotone on $(t/NK,1]$ with $O(K)$ pieces, and is bounded by $1$, so that 
 $$ \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \ll K.$$
-Applying \eqref{excess-3-bound}, \eqref{ecx}, \eqref{main-lower}, \eqref{A-asym}, \eqref{K-asym} we see that
+Applying \eqref{excess-3-bound}, \eqref{ecx}, \eqref{main-lower}, \eqref{a-asym}, \eqref{k-asym} we see that
 $$ \excess_t(\tuple^{(3)}) \leq \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx + O\left( \frac{1}{\log^2 N} \right).$$
 But by repeating the arguments used to prove \Cref{tne} we have
 \begin{align*}
@@ -1000,15 +1001,15 @@ and the claim \eqref{y2pm-est} follows from \eqref{a-asym}, \eqref{k-asym}, \eqr
 
 From \eqref{small-bound} and the Brun--Titchmarsh inequality as well as the trivial bound $\nu_{p_0}(m) \ll \log\log N$ for $m \ll K$, one has
 $$
-\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 \ll \sum_{p_0=2,3} \sum_{m \leq K} (\log\log N) \frac{t}{m \log N}$$
-and from \eqref{nupsum} we obtain \eqref{23-est}.  
+\sum_{p_0=2,3} \nu_{p_0}\left(\prod \tuple^{(3)}\right) \log p_0 \ll \sum_{m \leq K} (\log\log N) \frac{t}{m \log N}$$
+and from summing the harmonic series we obtain \eqref{23-est}.  
 
 Applying similar estimates to \eqref{zp-def} gives
 \begin{align*}
-  Z_{p_1} \ll
-\frac{1}{N} \sum_{K < m \leq K(1+\sigma): p_1|m} (\log\log N) \frac{\sigma t}{K \log N} \\
-&\ll \frac{\log\log N}{AK\log N} (\frac{K\sigma}{p_1}+1) \\
-&\ll \frac{\log\log N}{A p_1 \log^2 N} + \frac{\log\log N}{A K \log N}
+  Z_{p_1} &\ll
+\frac{A}{N} \sum_{K < m \leq K(1+\sigma): p_1|m} (\log\log N) \frac{\sigma t}{K \log N} \\
+&\ll \frac{\log\log N}{K\log N} (\frac{K\sigma}{p_1}+1) \\
+&\ll \frac{\log\log N}{p_1 \log^2 N} + \frac{\log\log N}{K \log N}
 \end{align*}
 and hence by \eqref{y1p-bound} and Mertens' theorem
 \begin{align*}

@@ -455,7 +455,7 @@ for all $a \in \tuple$, where $p_{a,1},\dots,p_{a,k_a}$ are the primes greater t
     By \eqref{legendre}, we can bound $\nu_p(N!) g_t(p)$ by $\lfloor N/p \rfloor g_t(p) = f_{N/t}(p/N)$.  This contradicts \eqref{contra}, giving the claim. 
   \end{proof}
 
-In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}
+In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}.
     
 \begin{figure}
   \centering
@@ -537,19 +537,21 @@ As part of the algorithm, one will often wish to replace a non-$3$-smooth number
 $$ \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}$$
 for any real $x \geq L \geq 1$, where $a \coloneqq \lfloor \frac{x/L}{\log 12} \rfloor$ is the largest integer such that $12^a \leq x/L$.  This quantity is $3$-smooth, and has the following bound:
 
-\begin{lemma}[Valuation bounds]\label{val} If $x \geq L \geq 1$ are real numbers, then
+\begin{lemma}[Good $3$-smooth approximation]\label{val} If $x \geq L \geq 1$ are real numbers, then
 $$ x \leq \lceil x \rceil^{\langle 2,3\rangle}_L \leq x e^{\kappa_L}$$
 and
-$$ \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}_L) \leq \frac{2}{\log 12} \log x + \kappa^*_L$$
+\begin{equation}\label{12}
+   \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}_L) \leq \frac{2}{\log 12} \log x + \kappa^*_L
+\end{equation}
 where
 \begin{equation}\label{kappastar-def}
-\kappa^*_L \coloneqq (\frac{2}{\log 3} - \frac{2}{\log 12}) \log(12L) + \frac{2}{\log 3} \kappa_L.
+\kappa^*_L \coloneqq \left(\frac{2}{\log 3} - \frac{2}{\log 12}\right) \log(12L) + \frac{2}{\log 3} \kappa_L.
 \end{equation}
 \end{lemma}
 
-This can be compared with the bound
+The bound \eqref{12} compared with the bound
 $$ \sup_{p_0=2,3} (p_0-1) \nu_{p_0}(\lceil x \rceil^{\langle 2,3\rangle}) \leq \frac{2}{\log 3} x + \frac{2}{\log 3} \kappa_x$$
-that can be obtained from \eqref{kappa-def} and the observation that $\log 2 \leq \frac{2}{\log 3}$.  
+that can be obtained from \eqref{kappa-def} and the observation that $\log 2 \leq \frac{2}{\log 3}$.  In our arguments we will end up applying this lemma with $L=4.5$.
 
 \begin{proof} The first claim is clear from \eqref{kappa-def}, so we focus on the second.  If we write $\lceil x/12^a \rceil^{\langle 2,3 \rangle} = 2^n 3^m$, then by \eqref{kappa-def} we have
 $$ n \log 2 + m \log 3 \leq \log \frac{x}{12^a} + \kappa_L;$$
@@ -598,7 +600,7 @@ With such parameters in hand, we can consider the following algorithm.
 \begin{enumerate}
 \item[(1)] Let $I$ denote the elements of the interval\footnote{Numerically, it would be slightly better to use the closed interval $[t,t(1+\sigma)]$ instead of the half-open interval $(t,t(1+\sigma)]$, but we will consistently aim to use half-open intervals here to be compatible with standard notation for the prime counting function $\pi(x)$.} $(t,t(1+\sigma)]$ that are coprime to $6$.  Let $\tuple^{(1)}$ be the elements of $I$, each occurring with multiplicity $A$.  This multiset is $t$-admissible, and $\prod \tuple^{(1)}$ is not divisible by tiny primes $2,3$.  (It will have approximately the right number of primes for small, borderline, and medium $3 < p \leq t/K$, though it may have quite different prime factorization at large primes $p>t/K$.)
 \item[(2)] Remove any element from $\tuple^{(1)}$ that contains a large prime factor $p > t/K$, and call this new multiset $\tuple^{(2)}$.  It remains $t$-admissible with no tiny prime factors, though it tends to acquire a $p$-surplus at small primes $3 < p \leq K$.
-\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.   Now $\tuple^{(3)}$ is $t$-admissible and in balance at all large primes $p>t/K$, but will expected to enjoy some surplus at small and borderline primes $3 < p \leq K(1+\sigma)$, and be in balance for medium priems $K(1+\sigma) < p \leq t/K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
+\item[(3)] For each $p > t/K$, add in $\nu_p(N!)$ copies of the number $p \lceil t/p \rceil$ to $\tuple^{(2)}$, and call this new multiset $\tuple^{(3)}$.   Now $\tuple^{(3)}$ is $t$-admissible and in balance at all large primes $p>t/K$, but will expected to enjoy some surplus at small and borderline primes $3 < p \leq K(1+\sigma)$, and be in balance for medium primes $K(1+\sigma) < p \leq t/K$.  (It will now also contain a few tiny prime factors, but will generally still have a large surplus at those primes.)
 \item [(4)] For small primes $3 < p \leq K$ at which there is a surplus $\nu_p(\N!/\prod \tuple) > 0$, multiply all these primes together, and use the greedy algorithm to group them into factors $x_1, \dots, x_M$ in the range
 $(t/K^2, t/K]$, together with possibly one exceptional factor $x_*$ in the range $(1, t/K]$.  For each of these factors $x_i$ or $x_*$, add the quantity $x_i \lceil t/x_i \rceil^{\langle 2,3 \rangle}_{4.5}$ or $x_* \lceil t/x_* \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(3)}$, and call this new multiset $\tuple^{(4)}$.  We apply the same procedure for borderline or medium primes $K < p \leq t/K$, but without the initial grouping procedure. Thus $\tuple^{(4)}$ has no surplus at small, borderline, or medium primes $3 < p \leq t/K$ (and is still $t$-admissible and in balance for $p>t/K$).
 \item[(5)] For each small, borderline, or medium prime $3 < p \leq t/K$ at which there is a deficit $\nu_p(\prod \tuple/N!) > 0$, replace $\nu_p(\prod \tuple/N!)$ copies of $p$ in the prime factorizations of elements of $\tuple^{(4)}$ with $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ instead, and call this new multiset $\tuple^{(5)}$.  

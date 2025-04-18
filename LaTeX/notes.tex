@@ -137,6 +137,12 @@
 \author{Terence Tao}
 \address{UCLA Department of Mathematics, Los Angeles, CA 90095-1555.}
 \email{tao@math.ucla.edu}
+
+\author{Kevin Ventullo}
+\address{???}
+\email{???}
+
+
 \subjclass[2020]{11A51}
 
 \begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
@@ -281,6 +287,7 @@ This project was initially concieved as a single-author manuscript by Terence Ta
 \item Boris Alexeev: ...
 \item ...
 \item Terence Tao: Conceptualization, Formal Analysis, Methodology, Project Administration, Visualization, Writing -- original draft, Writing -- review \& editing.
+\item Kevin Ventullo: ...
 \end{itemize}
 
 \subsection{Acknowledgments}
@@ -681,7 +688,6 @@ which we choose to normalize as
 
 Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-def}.  The main tool we need is the following efficient subfactorization of $3$-smooth numbers.
 
-{\bf TODO: draw picture of $n_0$, $m_0$, etc.}
 
 \begin{lemma}[Efficient subfactorization of $3$-smooth numbers]\label{bound23}  Let $L \geq 1$.  Let $t > 3L$ and let $2^n 3^m$ be a $3$-smooth number with $n,m$ positive and obeying the condition
   \begin{equation}\label{B-bound}
@@ -738,6 +744,13 @@ Now we analyze Step 6, using the quantity $\kappa_L$ introduced in \eqref{kappa-
   $$ \sum_{p_0=2,3} \nu_{p_0}\left(\frac{2^n 3^m}{\prod \tuple}\right) \leq \log 2^{n_0+n_1} 3^{m_1} + \log 2^{n_2} 3^{m_0+m_2},$$
   and the bound \eqref{surplus-bound} follows from \eqref{ab-equiv}.
   \end{proof}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{tinyfac.png}
+    \caption{A plot of (the exponents of) the $3$-smooth numbers appearing in the proof of \Cref{bound23}.  Once one knows that $(n,m)$ is a positive linear combination of $(n_0+n_1,m_1)$ and $(n_2,m_0+m_2)$, one can efficiently find a subfactorization of $2^n 3^m$ into $2^{n_0+n_1} 3^{m_1}$ and $2^{n_2} 3^{m_0+m_2}$.}
+    \label{fig-tinyfac}
+    \end{figure}
   
 We now use this lemma to analyze Step 6 as follows.
 
@@ -1160,7 +1173,7 @@ We will apply \Cref{step4-reduce} with the choice of parameters
   K &\coloneqq 340 \\
   L &\coloneqq 4.5;
 \end{align*}
-the choice of $A$ and $K$ was obtained after some numerical experimentation.  The proof will require several (small) numerical computations, code for which can be found at \url{}
+the choice of $A$ and $K$ was obtained after some numerical experimentation.  The proof will require several (small) numerical computations, code for which can be found at \url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/calculations.py}
 
 
 Clearly 
@@ -1189,12 +1202,14 @@ and thus
   &\leq 0.070253 \\
   &\leq 0.7125 \delta.
 \end{align*}
+
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{discrepancy.png}
   \caption{A plot of $f_3(x)$.  The integral $c_1 = \int_{1/K}^1 f_3(x)\ dx \approx 0.9201$ is slightly larger than $ec_0 \approx 0.8244$.}
   \label{fig-f}
   \end{figure}
+
 From the lower bound on $N$ one also has
 \begin{align*}
   \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N} &\leq 0.01347151 \\

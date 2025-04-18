@@ -148,7 +148,7 @@
 \begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
 The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
 $$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
-for an explicit constant $c_0 = 0.3044190\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible.\end{abstract}
+for an explicit constant $c_0 = 0.3044190\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. \textbf{This abstract optimistically assumes that the last remaining cases of this conjecture can be resolved.}\end{abstract}
 
 
 \maketitle
@@ -204,7 +204,7 @@ for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com};
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_200.png}
-  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which is a lower bound for $N \neq 56$ \cite{guy}.  \Cref{main} implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange).  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
+  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main} implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange).  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
   }\label{fig1}
   \end{figure}
   
@@ -269,11 +269,11 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
   \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
   \item In \Cref{accounting-sec}, we introduce an \emph{accounting identity} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
-  \item In \Cref{rearrangement-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.
+  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
 
-The final approach is significantly more complicated than the other three, but is the only one which gives efficient lower bounds in the asymptotic limit $N \to \infty$.  The key idea is to start with an approximate factorization
+The final approach is significantly more complicated than the other three, but gives the most efficient lower bounds in the asymptotic limit $N \to \infty$.  The key idea is to start with an approximate factorization
 $$ N! \approx \left(\prod_{j \in I} j\right)^A$$
 for some small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloor$) and a suitable set $I$ of natural numbers greater than or equal to $t$; there is some freedom to select parameters here, and we will take $I$ to be the natural numbers in $(t, t(1+\sigma)]$ that are coprime to $6$, where $t$ is the target lower bound for $t(N)$ we wish to establish, and $\sigma \coloneqq \frac{3N}{tA}$.  With a suitable choice of $I$, this product contains approximately the right number of copies of $p$ for medium-sized primes $p$; but it has the ``wrong'' number of copies of large primes, and is also constructed to avoid the ``tiny'' primes $p=2,3$.  One then performs a number of alterations to this approximate factorization to correct for the ``surpluses'' or ``deficits'' at various primes $p>3$, using the supply of available tiny primes $p=2,3$ as a sort of ``liquidity pool'' to efficiently reallocate primes in the factorization.  A key point will be that the incommensurability of $\log 2$ and $\log 3$ (i.e., the irrationality of $\log 3/\log 2$) means that the $3$-smooth numbers (numbers of the form $2^n 3^m$) are asymptotically dense (in logarithmic scale), allowing for other factors to be exchanged for $3$-smooth factors with little loss\footnote{The weaker results alluded to in \Cref{old} only used the prime $2$ as a supply of ``liquidity'', and thus encountered inefficiencies due to the inability to ``make change'' when approximating another factor by a power of two.}.
 
@@ -313,7 +313,7 @@ holds for all $x \geq L$. Just from considering the powers of two, we have the t
 \end{equation}
 In fact $\kappa_L$ decays to zero as $L$ goes to infinity, due to the incommensurability of $\log 2$ and $\log 3$; we quantify this decay in \Cref{power-sec}. 
 
-In practice, $\lceil x \rceil^{\langle 2,3 \rangle}$ will only be slightly larger than $x$; we quantify this in \Cref{power-sec}.
+In practice, $\lceil x \rceil^{\langle 2,3 \rangle}$ will only be slightly larger than $x$; we quantify this in \Cref{power-sec}.  Later in the paper we will also introduce a variant $\lceil x \rceil^{\langle 2,3 \rangle}_{4.5}$, which is also a $3$-smooth number slightly larger than $x$, but also close to a power of $12$.
 
 We use $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function. The effective and asymptotic estimates over primes that we will use are summarized in \Cref{primes-sec}.
 
@@ -335,13 +335,13 @@ Upon taking partial sums, we recover Legendre's formula
 where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
 
 Given a putative factorization $\tuple$ of $N!$,  
-we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$; if it is negative, we refer to $-\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
+we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$; if it is negative, we refer to $-\nu_p\left( \frac{N!}{\prod \tuple} \right) = \nu_p\left( \frac{\prod \tuple}{N!} \right)$ as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
 
 We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$.  We also write $X \asymp Y$ for $X \ll Y \ll X$. For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$. We also use $O_{\leq}(Y)^+$ to denote a quantity of size $O_{\leq}(Y)$ that is in addition non-negative, that is to say it lies in the interval $[0,Y]$.
 
 To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
 \begin{equation}\label{stirling}
-  N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N+1} \leq \log N! \leq N \log N - N + \log \sqrt{2\pi N} + \frac{1}{12N},
+\log N! = N \log N - N + \log \sqrt{2\pi N} + O_\leq^+\left(\frac{1}{12N}\right),
 \end{equation}
 valid for all natural numbers $N$. 
 
@@ -395,6 +395,13 @@ These methods also give quite precise upper and lower bounds for larger values o
 {\bf more discussion here}
 
 By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $8 \times 10^4 \leq N \leq ???$.  The linear programming method can also estabalish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$.  Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $N > ???$.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{longplot.png}
+  \caption{$t(N)/N$ for $80 \leq N \leq 10^4$, obtained via linear programming in most cases (and integer programming in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp; on the other hand, the asymptotic $1/e - c_0/\log N$ is a relatively poor approximation, suggesting the presence of a lower order term that empirically appears to be about $1/e - c_0/\log N - 0.7/\log^2 N$.}
+  \label{fig-long}
+  \end{figure}
 
 \section{Greedy algorithms}\label{greedy-sec}
 
@@ -544,7 +551,7 @@ which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \
   \caption{A plot of the left and right-hand sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
 \end{figure}
 
-\section{Rearranging the standard factorization}\label{rerrange-sec}
+\section{Rearranging the standard factorization}\label{rearrange-sec}
 
 In this section we describe an approach to establishing lower bounds on $t(N)$ by starting with the standard factorization $\{1,\dots,N\}$, dividing out some small prime factors from some of the terms, and then redistributing them to other terms.  This approach was introduced in \cite{guy} to give lower bounds of the shape $\frac{t(N)}{N} \geq \frac{3}{16} + o(1)$ (by redistributing powers of two only) and $\frac{t(N)}{N} \geq \frac{1}{4} + o(1)$.  With computer assistance, we are also able to show that $\frac{t(N)}{N} \geq \frac{1}{3}+o(1)$ for sufficiently large $N$, in a simpler fashion than the method used to prove \Cref{main}(iv) in the next section.
 
@@ -1225,9 +1232,9 @@ $$ 1-\alpha \geq 0.8711.$$
 
 To control the expression in \eqref{small-bound}, we observe that
 \begin{equation}\label{tm}
-   \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor \leq \sum_{j=1,2,3} (3m-j) \left(\pi\left(\frac{N}{3m-j}-\right) - \pi\left(\frac{N}{3m-j+1}-\right)\right)
+   \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor \leq \sum_{j=1,2,3} (3m-j) \left(\pi\left(\frac{N}{3m-j}^-\right) - \pi\left(\frac{N}{3m-j+1}^-\right)\right)
 \end{equation}
-where $\pi(x-)$ is the left limit of $\pi(x)$ (i.e., the number of primes strictly less than $x$) and one adopts the convention that the summand vanishes when $3m-j=0$.  Using \eqref{pixy-upper} to upper bound the right-hand side, a routine calculation then shows that
+where $\pi(x^-)$ is the left limit of $\pi(x)$ (i.e., the number of primes strictly less than $x$) and one adopts the convention that the summand vanishes when $3m-j=0$.  Using \eqref{pixy-upper} to upper bound the right-hand side, a routine calculation then shows that
 $$ (p_0-1) \sum_{m \leq K} \nu_{p_0}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor \leq 0.08002N$$
 for $p_0=2,3$,
 and hence by \eqref{small-bound}

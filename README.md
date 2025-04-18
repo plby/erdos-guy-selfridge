@@ -71,7 +71,7 @@ Secondary goals are
 | [14 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/15) | Boris Alexeev | 2 | $\neg 43631$ | Linear programming | Rigorous certificate of Conjecture 2 failure at this point
 | [14 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/19) | Evan Conway | 2 | $\neg [10,41005]$ | Linear programming
 | [16 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/24#issuecomment-2811388882) | Boris Alexeev | 3 | $[1,10^4] \backslash$ $\{155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633\}$ | Linear programming
-| [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4] | Linear and integer programming |  
+| [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4]$ | Linear and integer programming |  
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N \geq 10^{12}$ | Modified approximate factorization + explicit estimates |  
 
 ## Computations of $c_0$

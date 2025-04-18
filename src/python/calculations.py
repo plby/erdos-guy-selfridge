@@ -291,4 +291,6 @@ K = 340
 N = 10 ** 12
 L = 4.5
 
+print(kappa(4.5), fancy_kappa(4.5))
+
 evaluate(N, A, K, L)

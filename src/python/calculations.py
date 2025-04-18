@@ -9,7 +9,7 @@ import math
 
 # An effective error term in the prime number theorem, see (C.9)
 def E(N):
-    return 0.95 * math.sqrt(N) + 2.25 * 10**(-8) * N
+    return 0.95 * math.sqrt(N) + 2.39 * 10**(-8) * N
 
 def is_prime(n):
     """Return True if n is a prime number, else False."""

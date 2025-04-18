@@ -264,8 +264,12 @@ def evaluate(N, A, K, L):
     Q3 = (2/math.log(12)) * (math.log(K) + fancy_kappa(4.5)) * Y1m
 
 # This term is like A/K; to make it smaller, decrease A or increase K
-    Q4 = (2/math.log(12)) * (math.log(t/K) + fancy_kappa(K)) * (Y2pm+1/N)
-    total2 = Q1 + Q2 + Q3 + Q4
+    Q4 = (2/math.log(12)) * (math.log(t/K) + fancy_kappa(K)) * Y2pm
+
+# A negligible term
+    Q5 = (2/math.log(12)) * (math.log(t) + fancy_kappa(K)) / N
+
+    total2 = Q1 + Q2 + Q3 + Q4 + Q5
     slack2 = Q - total2
 
     print(f"Tiny-prime budget: {Q}")
@@ -273,6 +277,7 @@ def evaluate(N, A, K, L):
     print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of 1-alpha)")
     print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of 1-alpha)")
     print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of 1-alpha)")
+    print(f"Negligible term: {Q5} ({Q5 / Q * 100:.2f}% of 1-alpha)")
     print(f"Total left-hand side of tiny prime equation: {total2} ({total2 / Q * 100:.2f}% of 1-\\alpha)")
     assert slack > 0, "Over budget for delta"
     assert slack2 > 0, "Over budget for tiny primes"

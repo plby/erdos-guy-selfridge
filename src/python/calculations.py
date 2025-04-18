@@ -62,7 +62,9 @@ def kappa(L):
         return math.log(32/27)
     if L >= 4.5:
         return math.log(4/3)
-    return math.log(3/2)
+    if L >= 4/3:
+        return math.log(3/2)
+    return math.log(2)
 
 def fancy_kappa(L):
     return (2/math.log(3) - 2/math.log(12))*math.log(12*L) + (2/math.log(3))*kappa(L)

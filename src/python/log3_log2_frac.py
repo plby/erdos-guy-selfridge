@@ -16,18 +16,27 @@ def next_smooth(x):
         N += 1
     return N
 
+# See Table 2
+def kappa(L):
+    if L >= 341.34:
+        return math.log(9/8)
+    if L >= 40.5:
+        return math.log(32/27)
+    if L >= 4.5:
+        return math.log(4/3)
+    if L >= 4/3:
+        return math.log(3/2)
+    return math.log(2)
+
+
 base = [i/60 for i in range(60,6000)]
-base45 = [i/60 for i in range(270, 6000)]
-base405 = [i/60 for i in range(2430, 6000)]
-kappa = [math.log(next_smooth(x)/x) for x in base]
-kappa45 = [math.log(4/3) for _ in base45]
-kappa405 = [math.log(32/27) for _ in base405]
+kappa_plot = [math.log(next_smooth(x)/x) for x in base]
+kappa_upper = [kappa(x) for x in base]
 
 
 plt.figure(figsize=(8, 6))
-plt.plot(base, kappa, label='$\\log (\\lceil x \\rceil^{\\langle 2,3 \\rangle}/x)$' )
-plt.plot(base45, kappa45, label='$\\kappa_{4.5}$' )
-plt.plot(base405, kappa405, label='$\\kappa_{40.5}$' )
+plt.plot(base, kappa_plot, label='$\\log (\\lceil x \\rceil^{\\langle 2,3 \\rangle}/x)$' )
+plt.plot(base, kappa_upper, label='$\\kappa_x$' )
 plt.title('Distance to next 3-smooth number')
 plt.xlabel('$x$')
 plt.legend()

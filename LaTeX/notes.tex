@@ -125,6 +125,10 @@
 
 \title{Decomposing a factorial into large factors}
 
+\author{Boris Alexeev}
+\address{???}
+\email{???}
+
 
 \author{...}
 \address{???}
@@ -259,7 +263,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
   \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
   \item In \Cref{accounting-sec}, we introduce an \emph{accounting identity} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
-  \item {\bf Present the rearrangement approach of Boris Alexeev}
+  \item In \Cref{rearrangement-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
 
@@ -274,6 +278,7 @@ This project was initially concieved as a single-author manuscript by Terence Ta
 {\bf authors should be arranged in alphabetical order of surname.  }
 
 \begin{itemize}
+\item Boris Alexeev: ...
 \item ...
 \item Terence Tao: Conceptualization, Formal Analysis, Methodology, Project Administration, Visualization, Writing -- original draft, Writing -- review \& editing.
 \end{itemize}
@@ -333,6 +338,12 @@ To bound the factorial, we have the explicit Stirling approximation \cite{robbin
 \end{equation}
 valid for all natural numbers $N$. 
 
+Given a function $b \colon (y,x] \to \R$, its \emph{total variation}
+$\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j=0}^{J-1} |b(x_{j+1})-b(x_j)|$ for $y < x_0 \leq \dots \leq x_J \leq x$, and the \emph{augmented total variation} $\|b\|_{\mathrm{TV}^*(y,x]}$ is defined as
+$$
+\|b\|_{\mathrm{TV}^*(y,x]}
+\coloneqq |b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]},$$
+$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$ (if it exists).  Equivalently, $\|b\|_{\mathrm{TV}^*(y,x]}$ is the total variation of $b$ if extended by zero outside of $(y,x]$.  The total variation is a useful tool for bounding weighted sums of functions whose partial sums are known to be under control; see \Cref{integ-lemma}.
 
 \section{Linear programming}\label{linprog-sec}
 
@@ -398,7 +409,7 @@ This procedure is efficient for small $N$, for instance attaining the exact valu
 
 \section{The accounting identity}\label{accounting-sec}
 
-Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply \eqref{ftoa} to the  $r \coloneqq N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
+Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
 \begin{equation}\label{accounting} 
   \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p = \log N! - |\tuple| \log t
 \end{equation}
@@ -525,6 +536,12 @@ which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \
   \includegraphics[width=0.8\textwidth]{lhs_rhs.png}
   \caption{A plot of the left and right-hand sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
 \end{figure}
+
+\section{Rearranging the standard factorization}\label{rerrange-sec}
+
+In this section we describe an approach to establishing lower bounds on $t(N)$ by starting with the standard factorization $\{1,\dots,N\}$, dividing out some small prime factors from some of the terms, and then redistributing them to other terms.  This approach was introduced in \cite{guy} to give lower bounds of the shape $\frac{t(N)}{N} \geq \frac{3}{16} + o(1)$ (by redistributing powers of two only) and $\frac{t(N)}{N} \geq \frac{1}{4} + o(1)$.  With computer assistance, we are also able to show that $\frac{t(N)}{N} \geq \frac{1}{3}+o(1)$ for sufficiently large $N$, in a simpler fashion than the method used to prove \Cref{main}(iv) in the next section.
+
+\textbf{details needed here}
 
 
 \section{Modified approximate factorizations}\label{approx-sec}
@@ -1386,13 +1403,8 @@ for $x >1$.
   $$ \sum_{y < n \leq z} a_n = \int_z^y f(t)\ dt + C + O_{\leq}(A)$$
   for all $y \leq z \leq x$, and some $C \in \R$, $A>0$.  Then, for any function $b: (y,x] \to \R$ of bounded total variation, one has
 \begin{equation}\label{tve}
-   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ dt + O_{\leq}(A\|b\|_{\mathrm{TV}^*(y,x]}),
+   \sum_{y < n \leq x} b(n) a_n = \int_x^y b(t) f(t)\ dt + O_{\leq}(A\|b\|_{\mathrm{TV}^*(y,x]}).
 \end{equation}
-where the augmented total variation $\|b\|_{\mathrm{TV}^*(y,x]}$ is defined as
-$$
-\|b\|_{\mathrm{TV}^*(y,x]}
-\coloneqq |b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]},$$
-$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$, and the total variation $\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j=0}^{J-1} |b(x_{j+1})-b(x_j)|$ for $y < x_0 \leq \dots \leq x_J \leq x$.
 \end{lemma}
 
 \begin{proof}  If, for every natural number $y < n \leq x$, one modifies $b$ to be equal to the constant $b(n)$ in a small neighborhood of $n$, then one does not affect the left-hand side of \eqref{tve} or increase the total variation of $b$, while only modifying the integral in \eqref{tve} by an arbitrarily small amount.  Hence, by the usual limiting argument, we may assume without loss of generality that $b$ is locally constant at each such $n$.  If we define the function $g \colon (y,x] \to \R$ by

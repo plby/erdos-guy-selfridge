@@ -55,13 +55,13 @@ Secondary goals are
 | [27 Mar 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687574) | Andrew Sutherland | 1 | $[1,10^5]$ | Greedy | N = [182](https://math.mit.edu/~drew/ES182.txt), [200](https://math.mit.edu/~drew/ES200.txt), [207](https://math.mit.edu/~drew/ES207.txt) treated separately
 |  [27 Mar 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687574) | Andrew Sutherland | 2 | $[298344, 3 \times 10^5]$ | Greedy | Surplus of 372 at $N=3 \times 10^5$
 | [3 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687641) | Matthieu Rosenfeld | 2 | $3 \times 10^5$ | Improved greedy | Surplus of 393
-| [3 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687646) | Uhrmar | 2 | $3 \times 10^5$ | Linear program | Surplus of 455; likely optimal
+| [3 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687646) | Markus Uhr | 2 | $3 \times 10^5$ | Linear program | Surplus of 455; likely optimal
 | [4 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687655) | Matthieu Rosenfeld | 2 | $[138075, 5 \times 10^5]$ | Improved greedy
 | [5 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687676) | Kevin Ventullo | 2 | $[3 \times 10^5, 10^8$] | Improved greedy 
 | [6 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687676) | Kevin Ventullo | 2 | $[8 \times 10^4, 3 \times 10^8$] | Improved greedy | Conjecture 1 is now reduced to Conjecture 2
 | [6 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687695) | Matthieu Rosenfeld | 2 | $[8 \times 10^4, 10^9]$ | Improved greedy
 | [8 Apr 2025](https://gus-massa.blogspot.com/2025/04/decomposing-factorial-of-300k-as.html) | Gustavo | 2 | $3 \times 10^5$ | Modify an approximate factorization | 
-| [9 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/1) | Uhrmar | 3 | $[1,600]$ | Linear programming (or integer programming for $N=155$)| LP bound is off by one at $N=155$.
+| [9 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/1) | Markus Uhr | 3 | $[1,600]$ | Linear programming (or integer programming for $N=155$)| LP bound is off by one at $N=155$.
 | [11 Apr 2025](https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/comment-page-1/#comment-687728) | Matthieu Rosenfeld | 2 | $[8 \times 10^4, 2 \times 10^{10}]$ | Improved greedy
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/5) | Boris Alexeev | 2 | $[43632, 80973]$ | Linear programming | 
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/2#issuecomment-2796186186) | Uhrmar | 2 | $\neg 43631$; $[43632,8 \times 10^4]$ | Linear programming | Provisional limit of Conjecture 2 reached 

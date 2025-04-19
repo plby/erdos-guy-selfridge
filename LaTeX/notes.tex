@@ -408,7 +408,7 @@ We will use this augmented total variation to control sums over primes.  More pr
 \end{equation}
 where the error function $E(x)$ is defined as
 \begin{equation}\label{tilde-e}
-  E(x) \coloneqq 0.95 \sqrt{x} + 2.39 \times 10^{-8} x.
+  E(x) \coloneqq 0.95 \sqrt{x} + 3.83 \times 10^{-9} x.
 \end{equation}
 In particular one has
 \begin{equation}\label{pix}
@@ -433,7 +433,7 @@ and
 One can also replace all occurrences of $E(x)$ here by the classical error term $O(x \exp(-c \sqrt{\log x}))$ for some absolute constant $c>0$.
 \end{lemma}
 
-We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on par with what would be provided by the Riemann hypothesis, as long as $x$ is not too large (e.g., $x \leq 10^{16}$).  The other estimates are not quite as precise, but still adequate for our applications.  We also remark that the second term in \eqref{tilde-e} could be reduced by further numerical verification of the Riemann hypothesis, although this would not significantly simplify the analysis in this paper.
+We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on par with what would be provided by the Riemann hypothesis, as long as $x$ is not too large (e.g., $x \leq 10^{16}$).  The other estimates are not quite as precise, but still adequate for our applications.  The error term $E(x)$ can be improved somewhat for large $x$ (see \eqref{etil-def}), but this simplified version will suffice for our analysis (in particular, the contribution of the second term in \eqref{tilde-e} will be negligible for our applications).
 
 
 \section{Linear programming}\label{linprog-sec}
@@ -713,6 +713,8 @@ with the convention that the upper bound $p < \frac{t}{m-1}$ in \eqref{B-def} is
 
 Note that the quantities $\delta_2, \delta$ already made an appearance in \Cref{upper-crit}.  As we shall see, when $N$ is large we will be able to construct multisets $\tuple^{(0)}$ that make all the other quantities $\delta_i, i \neq 2$ and $\alpha_i$ quite small, which is how we shall establish such results as \Cref{main}(iii) and the lower bound in \Cref{main}(iv).
 
+In practice, the parameter $K$ will be quite small compared to $N$, and the quantities $\gamma_2, \gamma_3, \kappa_{*}$ will also be somewhat smaller than $1$.
+
 The rest of this section will be devoted to the proof of this proposition.  It will be convenient to divide the primes into four classes:
   \begin{itemize}
     \item \emph{Tiny primes} $p=2,3$.
@@ -829,7 +831,7 @@ and thus by \eqref{excess-3}, \eqref{delta-cond} we have
 $$ \excess_t(\tuple^{(3)}) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple^{(3)}}\right) \log p \leq \log N! - N \log t.$$
 Applying \Cref{t-descrip}, we conclude that $t(N) \geq t$ as claimed.
 
-\section{Estimating terms}
+\section{Estimating terms}\label{construction-sec}
 
 In order to use \Cref{repair} for a given choice of $N,t$, we need to find a $t$-admissible tuple $\tuple^{(0)}$ and parameters $K, \kappa_*, \gamma_2, \gamma_3$ obeying \eqref{conditions} as well as good upper bounds on the quantities $\delta_i$, $i=1,\dots,8$ and $\alpha_i$, $i=1,\dots,7$, that can either be evaluated asymptotically or numerically.  Many of the terms here will be straightforward to estimate; we discuss only the more difficult ones.
 
@@ -898,9 +900,10 @@ We conclude that \eqref{nm} holds with
 \begin{equation}\label{gammas-def}
 \begin{split}
 \gamma_2 &\coloneqq \frac{2 \log 2}{\log 3} \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \\
-\gamma_3 &\coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log t - \log(3L)}.
+\gamma_3 &\coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log t - \log(3L)};
 \end{split}
 \end{equation}
+one can of course also take larger values of $\gamma_2,\gamma_3$ if desired.
 This lets us compute the quantity $\kappa_{**}$ defined in \eqref{kappastar-def}.
 
 To estimate $\delta_3, \alpha_3$ we use
@@ -1050,7 +1053,9 @@ and similarly from \eqref{B-def}, \eqref{crude}, and \Cref{osc-lemma} (again wit
   &\leq \frac{1}{\log N} \sum_{m \leq K} \nu_{p_1}(m) \log \frac{m}{m-1} + O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right)
 \end{align*}
 so it will suffice to establish the inequality
-$$  \sum_{m \leq K} \nu_{p_1}(m) \log \frac{m}{m-1} \leq \sum_{m \leq K}^* \nu_{p_1}(m) \frac{3}{m}$$
+\begin{equation}\label{key-ineq} 
+   \sum_{m \leq K} \nu_{p_1}(m) \log \frac{m}{m-1} \leq \sum_{m \leq K}^* \nu_{p_1}(m) \frac{3}{m}
+\end{equation}
 for all $p_1 > 3$.
   
 Writing $\nu_{p_1}(m) = \sum_{j \geq 1} 1_{p_1^j|m}$, it suffices to show that
@@ -1094,107 +1099,112 @@ The inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data 
 \section{Guy--Selfridge conjecture}
 
 We now establish the Guy--Selfridge conjecture $t(N) \geq N/3$ in the range
-$$ N \geq 10^{12}.$$
-We will apply \Cref{step4-reduce} with the choice of parameters
+$$ N \geq N_0 \coloneqq 10^{11}.$$
+We will apply \Cref{repair} with the construction in \Cref{construction-sec} and the choice of parameters
 \begin{align*}
   t &\coloneqq N/3\\
-  A &\coloneqq 175\\
-  K &\coloneqq 340 \\
+  A &\coloneqq 190\\
+  K &\coloneqq 252 \\
   L &\coloneqq 4.5;
 \end{align*}
-the choice of $A$ and $K$ was obtained after some numerical experimentation.  The proof will require several (small) numerical computations, code for which can be found at \url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/calculations.py}
-
-
-Clearly 
-\begin{equation}\label{delta-exact}
-  \delta = \log \frac{3}{e} = 0.09861\dots, 
+the choice of $A$ and $K$ was obtained after some numerical experimentation.  In particular, by \eqref{sigma-def} we have
+$$ \sigma = \frac{3N}{At}=\frac{9}{190} =0.047368\dots$$
+and so
+$$ K(1+\sigma)=263.936\dots$$
+One can readily check the required conditions \eqref{conditions}, \eqref{t-lower} for $N \geq N_0$, so it remains to verify the hypotheses \eqref{delta-cond}, \eqref{alpha-cond} of \Cref{repair} in this range.  Some of the quantities in these hypotheses involve sums over large ranges, such as $(t/K,N]$; but one can use \Cref{osc-lemma} to obtain adequate upper or lower bounds on such quantities, leaving one with sums over short ranges such as $p \leq K$ or $p \leq K(1+\sigma)$.  Our bounds are designed to be monotone non-increasing in $N$, so the task reduces to evaluating these short sums for $N=N_0$, which can be accomplished with simple computer code, which  can be found at \url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/calculations.py}.   As it turns out, we will have a tiny bit of room to spare, in that we can show 
+\begin{equation}\label{delta-final}
+  \sum_{i=1}^8 \delta_i \leq 0.9729 \delta
 \end{equation}
+and 
+\begin{equation}\label{alpha-final}
+  \sum_{i=1}^7 \alpha_i \leq 0.9697.
+\end{equation}
+We now bound some of the terms appearing in the above expression. From \Cref{power-lemma} we have
+$$ \kappa_{4.5} = \log \frac{4}{3} =0.28768\dots.$$
+From \eqref{gammas-def} one can take
+$$ \gamma_2 \coloneqq \frac{2 \log 2}{\log 3} \frac{\log(2L) + \kappa_L}{\log(N_0/3) - \log(2L)} = 0.1423165\dots$$
 and
-$$ \sigma = \frac{9}{A}.$$
-From \Cref{lemcount-0}, we have
-\begin{equation}\label{kappa-k}
-  \kappa_{4.5} \leq \log \frac{9}{8} = 0.11778\dots
-\end{equation}
-and from \eqref{kappastar-def} one has
-\begin{equation}\label{kappa-star-def}
- \kappa^*_{4.5} \leq \left(\frac{2}{\log 3} - \frac{2}{\log 12}\right) \log(54) + \frac{2}{\log 3} \log \frac{9}{8} = 4.575\dots.
-\end{equation}
-
-Direct numerical calculation (cf. \Cref{fig-f}) reveals that
+$$\gamma_3 \coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log(N_0/3) - \log(3L)} =  0.1059116 \dots$$
+and so by \eqref{kappastar-def} and some calculation
+$$ \kappa_{**} \leq 6.830101\dots.$$
+From \eqref{stirling} one has
+$$ \delta \geq \log N - \log t = \log \frac{3}{e} = 0.0986122\dots.$$
+From \eqref{delta1-bound} on has
+$$ \delta_1 \leq \frac{9}{2A} + \frac{4}{N_0} \leq 0.240176 \delta.$$
+From \eqref{delta2-def} and \Cref{osc-lemma} one has
 \begin{align*}
-  \int_{1/3K}^1 f_3(x)\ dx &\leq 0.9201  \\
-  \|f\|_{\mathrm{TV}^*(1/3K,1]} &\leq 2032
+  \delta_2 &\leq \frac{1}{\log(t/K)} \int_{1/3K}^1 f_3(x)\ dx + \frac{1}{\log(t/K)} \|f_3\|_{\mathrm{TV}((1/3K,1])} \frac{E(N)}{N} \\
+  &\leq \frac{1}{\log(N_0/3K)} 0.919507 + \frac{1}{\log(N_0/3K)} 996.196 \frac{E(N_0)}{N_0} \\
+  &\leq 0.50025 \delta.
 \end{align*}
-and thus
+From \Cref{delta3-alpha3-bound} and \eqref{pi-upper} one has
 \begin{align*}
-  \frac{1}{N}\excess_t(\tuple^{(3)}) &\leq \frac{9}{2A} + \frac{4}{N} + \frac{1}{\log(N/3K)} \left(0.9201 + 2032 \frac{E(N)}{N}\right) \\
-  &\leq 0.070253 \\
-  &\leq 0.7125 \delta.
+\delta_3 &\leq \frac{(4A+3)\kappa_{4.5}}{3} \left(
+\frac{1}{3K \log(N/3K)} + \frac{1.2762}{3K \log^2(N/3K)}
++ \frac{\log N}{\log 5 \sqrt{N} \log \sqrt{N}} + \frac{1.2762 \log N}{\log 5 \sqrt{N} \log^2 \sqrt{N}} \right) \\
+&\leq \frac{(4A+3)\kappa_{4.5}}{3} \left(
+  \frac{1}{3K \log(N_0/3K)} + \frac{1.2762}{3K \log^2(N_0/3K)}
+  + \frac{\log N_0}{\log 5 \sqrt{N_0} \log \sqrt{N_0}} + \frac{1.2762 \log N_0}{\log 5 \sqrt{N_0} \log^2 \sqrt{N_0}} \right) \\
+&\leq 0.059274 \delta.
 \end{align*}
+We skip $\delta_4, \delta_5, \delta_7$ for now.  From \eqref{delta6-def} we have
+$$ \delta_6 \leq \frac{\kappa_{4.5}}{N_0} \leq 3 \times 10^{-11} \delta$$
+and from \eqref{delta8-def} we have
+$$ \delta_8 \leq \frac{2(\log(N_0/3) + \kappa_{4.5})}{N_0} \leq 6 \times 10^{-10} \delta$$
+so these two terms are negligible in the analysis.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{discrepancy.png}
-  \caption{A plot of $f_3(x)$.  The integral $c_1 = \int_{1/K}^1 f_3(x)\ dx \approx 0.9201$ is slightly larger than $ec_0 \approx 0.8244$.}
-  \label{fig-f}
-  \end{figure}
-
-From the lower bound on $N$ one also has
+From \eqref{alpha1-vanish} we have
+$$ \alpha_1 = 0.$$
+We skip $\alpha_2, \alpha_4, \alpha_5$ for now.  From \Cref{delta3-alpha3-bound} and \eqref{pi-upper} one has
 \begin{align*}
-  \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N} &\leq 0.01347151 \\
-  &\leq 0.1367 \delta.
+  \alpha_3 &\leq \frac{2(4A+3)}{3\log 12} \left(\log \frac{N}{3K} + \kappa_{**}\right)  \\
+&\quad \times \left(
+  \frac{1}{3K \log(N/3K)} + \frac{1.2762}{3K \log^2(N/3K)}
+  + \frac{\log N}{\log 5 \sqrt{N} \log \sqrt{N}} + \frac{1.2762 \log N}{\log 5 \sqrt{N} \log^2 \sqrt{N}} \right).
 \end{align*}
-From \eqref{qntl} one can calculate
+Expanding out the product, one can check that all terms are non-increasing in $N$; so we may substitute $N_0$ for $N$ in the right-hand side, which after some calculation gives
+$$ \alpha_3 \leq 0.417501.$$
+From \eqref{alpha6-def} we have
 \begin{align*}
-  \alpha_1 &\leq 0.09573 \\
-  \alpha_2 &\leq 0.12886
+   \alpha_6 &\leq \frac{2}{\log 12} \left( \frac{\log(N_0/3)}{N_0} + \frac{\kappa_{**}}{N_0} \right) \\
+   &\leq 3 \times 10^{-10}
 \end{align*}
-and hence
-$$ 1-\alpha \geq 0.8711.$$
-
-To control the expression in \eqref{small-bound}, we observe that
-\begin{equation}\label{tm}
-   \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor \leq \sum_{j=1,2,3} (3m-j) \left(\pi\left(\frac{N}{3m-j}^-\right) - \pi\left(\frac{N}{3m-j+1}^-\right)\right)
-\end{equation}
-where $\pi(x^-)$ is the left limit of $\pi(x)$ (i.e., the number of primes strictly less than $x$) and one adopts the convention that the summand vanishes when $3m-j=0$.  Using \eqref{pixy-upper} to upper bound the right-hand side, a routine calculation then shows that
-$$ (p_0-1) \sum_{m \leq K} \nu_{p_0}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor \leq 0.08002N$$
-for $p_0=2,3$,
-and hence by \eqref{small-bound}
-$$ \frac{1}{N} \sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left( \prod \tuple^{(3)}\right) \leq 0.08002.$$
-
-Using the bound
-$$ \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p} \right\rceil \leq \pi(t/K) + \frac{\log N}{\log K} \pi(\sqrt{N})$$
-followed by \eqref{pi-upper}, one can calculate that
-$$ \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p}\right\rceil \leq 0.011888.$$
-By a further application of \eqref{pixy-upper} and \eqref{y2pm-bound}, one can then show that
-$$ Y^\pm_2 \leq 0.012446.$$
-Direct calculation shows that
-$$ \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} \left\lceil \frac{\log N}{\log p_1} \right\rceil \frac{\log p_1}{\log(t/K^2)} \leq 4 \times 10^{-8}$$
-and
-$$ \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} \left\lceil \frac{\log N}{\log p_1} \right\rceil \leq 2 \times 10^{-7}$$
-so these terms are negligible in the analysis. 
-
-The quantity $Z_{p_1}$ in \eqref{zp-def} can be upper bounded by \eqref{pixy-upper}, \eqref{ecx-2} which after some calculation leads to the bound
-$$ \sum_{3 < p_1 \leq K} Z_{p_1} \frac{\log p_1}{\log(t/K^2)} \leq 2 \times 10^{-6},$$
-so these contributions are also negligible in the analysis.
-
-Finally, the $W_{p_1}$ terms \eqref{W-def} can be expanded using \eqref{tm} and then upper and lower bounded using \eqref{pixy-upper}, \eqref{pixy-upper}, \eqref{ecx-2}.  One can then verify that $W_{p_1} \geq 0$ for all $3 < p_1 \leq K$, so that no contribution to \eqref{y1m-bound} occurs, while
-$$ \sum_{3 < p_1 \leq K} |W_{p_1}|_{\frac{\log p_1}{\log (t/K^2)}, 0} \leq 0.037689$$
-From the above bounds, one can calculate that
+and similarly from \eqref{alpha7-def} we have
 \begin{align*}
-&  \frac{1}{N} \excess_t(\tuple^{(3)}) + \kappa_{4.5}(Y_1^+ + Y_1^- + Y_2^\pm) \\
-&\quad + \frac{\kappa_L \log \sqrt{12}}{\log t} + \frac{3}{2} \frac{\log N}{N} \leq 0.996 \delta
+\alpha_7 &\leq \max\left( \frac{\log(2N_0)}{(1-\gamma_2)N_0\log 2},  \frac{2\log(3N_0)}{(1-\gamma_3)N_0\log 3}\right) \\
+&\leq 6 \times 10^{-10}
 \end{align*}
-and
-\begin{align*}
-  &\frac{1}{N} \sup_{p_0=2,3} (p-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) \\
-  &\quad + \frac{2}{\log 12} \left( (\log K^2 +\kappa^*_{4.5}) Y_1^+ + (\log K + \kappa^*_{4.5}) Y_1^- \right) \\
-  &\quad + \frac{2}{\log 12} \left(  + (\log(t/K) +\kappa^*_{4.5}) Y_2^\pm + \frac{\log(t) + \kappa^*_{4.5}}{N}  \right)
-  \\
-    &\quad  \leq 0.996 (1-\alpha) 
-\end{align*}
-and the claim $t(N) \geq t$ now follows from \Cref{step4-reduce}.
+so the contribution of these two terms are negligible.
 
+The remaining terms $\delta_4, \delta_5, \delta_7, \alpha_2, \alpha_4, \alpha_5$ to estimate involve the quantities $A_{p_1}, B_{p_1}$ defined in \eqref{A-def}, \eqref{B-def}.  For $B_{p_1}$, we can split it as
+$$ B_{p_1} = \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{N} (\pi( N b_{k,m} ) - \pi(N a_{k,m}))$$
+where 
+$$ a_{k,m} \coloneqq \max\left( \frac{1}{3m}-, \frac{1}{k} \right); \quad b_{k,m} \coloneqq \max\left( \frac{1}{3(m-1)}-, \frac{1}{k-1} \right)$$
+where the $-$ denotes the subtraction of an infinitesimal quantity to reflect the restriction to the range $\frac{t}{m} \leq p < \frac{t}{m-1}$ rather than
+$\frac{t}{m} < p \leq \frac{t}{m-1}$.  Using \Cref{osc-lemma}, we can upper bound this quantity by
+$$ B_{p_1} \leq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N a_{k,m})} \left( a_{k,m}-b_{k,m} + 2\frac{E(N_0 b_{k,m})}{N_0} \right)$$
+and lower bound it by
+$$ B_{p_1} \geq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N b_{k,m})} \left( \left(1-\frac{2}{\sqrt{a_{k,m}}}\right) (a_{k,m}-b_{k,m}) + 2\frac{E(N_0 b_{k,m})}{N_0 b_{k,m}} \right).$$
+After some calculation, these bounds inserted into \eqref{alpha2-def} give
+$$ \alpha_2 \leq 0.260087$$
+and in \eqref{delta7-def} they give
+$$ \delta_7 \leq 0.112941 \delta.$$
+As for the $A_{p_1}$, we know from \eqref{ap1-vanish} that this vanishes unless $3 < p_1 \leq K(1+\sigma)$.  From \eqref{ap1-small} and \Cref{osc-lemma} one has the upper bound
+$$
+A_{p_1} \leq A \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \frac{1}{\log(N/3\min(m,K))} \left( \frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)} + \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right) $$
+and the lower bound
+$$
+A_{p_1} \geq A \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \frac{1}{\log(N(1+\sigma)/3m)} \left( \left(1-\frac{2}{\sqrt{N_0(1+3\sigma)/3m}}\right) (\frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)}) - \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right).$$
+Using these bounds, one can verify by direct computation that $A_{p_1} \geq B_{p_1}$ for all $3 < p_1 \leq K(1+\sigma)$ (cf. \eqref{key-ineq}), and from \eqref{delta4-def}, \eqref{delta5-def}, \eqref{alpha4-def}, \eqref{alpha5-def} one can then verify that
+\begin{align*}
+\delta_4 &\leq 0.001212 \delta \\
+\delta_5 &\leq 0.057447 \delta \\
+\alpha_4 &\leq 0.008523 \\
+\alpha_5 &\leq 0.283524
+\end{align*}
+and the claims \eqref{delta-final}, \eqref{alpha-final} follow by summing all the bounds.
+
+  
 \appendix
 
 \section{Distance to the next \texorpdfstring{$3$}{3}-smooth number}\label{power-sec}
@@ -1333,47 +1343,43 @@ We now prove \eqref{bv-exact}. In fact we prove the sharper estimate
 + O_\leq\left(\|b\|_{\mathrm{TV}^*((y,x])} \tilde E(x) \right)
 \end{equation}
 where
-$$
-\tilde E(x) \coloneqq 0.95 \sqrt{x} + \frac{\sqrt{x}}{8\pi} \log x(\log x - 3) 1_{x \geq 10^{19}} + \min( \eps_0, \eps_1(x), \eps_2(x)) x 1_{x \geq e^{45}}$$
+\begin{equation}\label{etil-def}
+\tilde E(x) \coloneqq 0.95 \sqrt{x} + \min( \max(\eps_0,\eps_1(x)), \eps_2(x), \eps_3(x)) 1_{x \geq 10^{19}}
+\end{equation}
 and
 \begin{align*}
-  \eps_0 &\coloneqq 1.11742 \times 10^{-8}\\
-  \eps_1(x) &\coloneqq 9.39 (\log^{1.515} x) \exp(-0.8274\sqrt{\log x})\\
-  \eps_2(x) &\coloneqq 0.026 (\log^{1.801} x) \exp(-0.1853 (\log^{3/5} x) (\log\log x)^{-1/5})
+  \eps_0(x) &\coloneqq \frac{\sqrt{x}}{8\pi} \log x(\log x - 3)\\
+  \eps_1(x) &\coloneqq 1.12494 \times 10^{-10}\\
+  \eps_2(x) &\coloneqq 9.39 (\log^{1.515} x) \exp(-0.8274\sqrt{\log x})\\
+  \eps_3(x) &\coloneqq 0.026 (\log^{1.801} x) \exp(-0.1853 (\log^{3/5} x) (\log\log x)^{-1/5})
 \end{align*}
-From using the $\eps_1$ term, it is clear that
+From using the $\eps_2$ term, it is clear that
 $$ \tilde E(x) \ll x \exp(-c \sqrt{\log x})$$
-for some absolute constant $c>0$; and by using the $\eps_0$ term and routine calculations one can show that 
+for some absolute constant $c>0$; and by using the $\eps_0, \eps_1$ term and routine calculations one can show that 
 $$ \tilde E(x) \leq E(x)$$
 for all $x \geq 1423$.
 
-Observe that $E$ is monotone non-decreasing. Thus by \Cref{integ-lemma}, to show \eqref{bsharp} will suffice to show that
-$$ \sum_{p \leq x} \log p = x - \sqrt{x} + O_{\leq}(E(x))
-  = \int_0^x \left(1-\frac{2}{\sqrt{t}}\right)\ dt + O_{\leq}(E(x))$$
+Observe that $\tilde E$ is monotone non-decreasing. Thus by \Cref{integ-lemma}, to show \eqref{bsharp} will suffice to show that
+$$ \sum_{p \leq x} \log p = x - \sqrt{x} + O_{\leq}(\tilde E(x))
+  = \int_0^x \left(1-\frac{2}{\sqrt{t}}\right)\ dt + O_{\leq}(\tilde E(x))$$
 for all $x \geq 1423$.
 
-For $1423 \leq x \leq 10^{19}$, this claim follows from \cite[Theorem 2]{buthe-2}.  In the range
- $10^{19} \leq x \leq 10^{21} \approx e^{48.35}$, we use the bound
-  $$ \psi(x) = x + O_{\leq}\left(\frac{\sqrt{x}}{8\pi} \log x(\log x - 3)\right)
+For $1423 \leq x \leq 10^{19}$, this claim follows from \cite[Theorem 2]{buthe-2}.  For $x > 10^{19}$, we apply \cite[(6.10), (6.11)]{buthe} to conclude that
 $$
-which was established for $5000 \leq x \leq 10^{21}$ in \cite[(7.3)]{buthe}, where $\psi(x) \coloneqq \sum_{n \leq x} \Lambda(n)$ is the usual von Mangoldt summatory function.  To use this, we apply \cite[(6.10), (6.11)]{buthe} to conclude that
-$$
-\sum_{p \leq x} \log p = \psi(x) - \psi(\sqrt{x}) + O_{\leq}(1.03883 (x^{1/3} + x^{1/5} + 2 (\log x) x^{1/13})).$$
+\sum_{p \leq x} \log p = \psi(x) - \psi(\sqrt{x}) + O_{\leq}(1.03883 (x^{1/3} + x^{1/5} + 2 (\log x) x^{1/13})),$$
+where $\psi(x) \coloneqq \sum_{n \leq x} 
+\Lambda(n)$ is the usual von Mangoldt summatory function.  
 From \cite[Theorems 10,12]{rs} we have
 $$ \psi(\sqrt{x}) = \sqrt{x} + O_{\leq}(0.18 \sqrt{x}).$$
 Since
 $$ 0.18 \sqrt{x} + 1.03883 (x^{1/3} + x^{1/5} + 2 (\log x) x^{1/13}) \leq 0.95 \sqrt{x}$$
-for $x \geq 10^{19}$, the claim follows.
+in this range of $x$, it suffices to show that
+$$ \psi(x) = x + O_{\leq}(\min( \max(\eps_0(x),\eps_1(x)), \eps_2(x), \eps_3(x)) )$$
+for $x > 10^{19}$.  The claims for $i=2,3$ follow from \cite[Theorems 1.1, 1.4]{johnston-yang}.  In \cite[Theorem 2, (7.3)]{buthe}, the bound
+$$ \psi(x) = x + O_{\leq}(\eps_0(x))$$
+is established whenever $x \geq 5000$ and $4.92 \frac{x}{\sqrt{\log x}} \leq T$, where $T$ is a height up to which the Riemann hypothesis has been established.  Using the value $T = 3 \times 10^{12}$ from \cite{platt-rh}, we can therefore cover the range $10^{19} < x < e^{55}$ (in fact we could go up to $e^{58.33} \approx 2.1 \times 10^{25}$).  For $x \geq e^{55}$, we can use \cite[Table 2]{buthe} (the value $T = 2.445 \times 10^{12}$ used there following from \cite{platt-rh}).
 
-Finally, in the range $x \geq 10^{21}$, we see from \cite[Theorem 1, Table 1]{buthe} that one has the bound
-$$ \psi(x) = x + O_{\leq}(\eps_0)$$
-for $x \geq e^{45} \approx 10^{19.54}$, while from \cite[Theorems 1.1, 1.4]{johnston-yang} one has
-$$ \psi(x) = x + O_{\leq}(\eps_1(x))$$
-and
-$$ \psi(x) = x + O_{\leq}(\eps_2(x))$$
-for all $x \geq 2$.  The claim then follows by repeating the previous arguments.
-    
-\begin{remark} Assuming the Riemann hypothesis, the final term in the definition of $\tilde E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.  
+\begin{remark} Assuming the Riemann hypothesis, the $\eps_1, \eps_2, \eps_3$ terms in the definition of $\tilde E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.  
 \end{remark}
 
 The claim \eqref{pix} now follows from \eqref{bv-exact} by setting $b(t) \coloneqq \frac{1}{\log t}$.  For non-negative $b$, the claims \eqref{bv-upper}, \eqref{bv-lower} follow from \eqref{bv-exact} and the pointwise bounds
@@ -1449,6 +1455,9 @@ R. K. Guy, J. L. Selfridge, \emph{Factoring factorial $n$}, Amer. Math. Monthly 
 
 \bibitem{johnston-yang}
 D. Johnston, A. Yang, \emph{Some explicit estimates for the error term in the prime number theorem}, J. Math. Anal. Appl., \textbf{527} (2) (2023), Paper No. 127460.
+
+\bibitem{platt-rh}
+D. Platt, T. Trudgian, \emph{The Riemann hypothesis is true up to $3\cdot10^{12}$}, Bull. Lond. Math. Soc. \textbf{53} (2021), no. 3, 792--797.
 
 \bibitem{robbins}
 H. Robbins, \emph{A Remark on Stirling's Formula}, Amer. Math. Monthly \textbf{62} (1955) 26--29.

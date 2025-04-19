@@ -9,7 +9,7 @@ import math
 
 # An effective error term in the prime number theorem, see (2.15)
 def E(N):
-    return 0.95 * math.sqrt(N) + 2.39 * 10**(-8) * N
+    return 0.95 * math.sqrt(N) + 3.83 * 10**(-9) * N
 
 def is_prime(n):
     """Return True if n is a prime number, else False."""
@@ -359,7 +359,7 @@ def evaluate(t, N, A, K, L):
     alpha7 = alpha7_upper(N, gamma2, gamma3)
     alpha_sum = alpha1 + alpha2 + alpha3 + alpha4 + alpha5 + alpha6 + alpha7
 
-    print(f"Delta sum: {delta_sum} ({delta_sum / delta * 100:.2f}% of delta)")
+    print(f"Delta sum: {delta_sum} ({delta_sum / delta * 100:.4f}% of delta)")
     print(f"Alpha sum: {alpha_sum}")
 
     assert delta_sum < delta, "Delta sum exceeds delta"
@@ -367,7 +367,7 @@ def evaluate(t, N, A, K, L):
     print("Delta and alpha sums are within bounds!")
 
 
-A = 206
+A = 190
 K = 252
 N = 1 * 10 ** 11
 L = 4.5

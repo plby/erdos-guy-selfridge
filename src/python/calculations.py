@@ -328,6 +328,9 @@ def alpha7_upper(N,gamma2, gamma3):
 
 # Check if Proposition 7.1 applies
 def evaluate(t, N, A, K, L):
+    assert isinstance(N,int), "Error: N must be an integer"
+    assert isinstance(A,int), "Error: A must be an integer"
+    assert isinstance(K,int), "Error: K must be an integer"
     assert t/K >= math.sqrt(N), "Error: t/K must be at least sqrt(N)"
     assert t/K**2 >= K, "Error: t/K^2 must be at least K"
     assert K >= 5, "Error: K must be at least 5"

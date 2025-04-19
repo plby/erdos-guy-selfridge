@@ -39,8 +39,8 @@ Secondary goals are
 
 ## Current status
 
-1. Conjecture 1 has been reduced to Conjecture 2; in particular, it has been verified up to $N \leq 10^{11}$ and for $N \geq 10^{12}$, and for the remaining $N$ it would follow from the corresponding instance of Conjecture 2.
-2. Conjecture 2 is known in the range $43632 \leq N \leq 10^{11}$, for $N \geq 10^{12}$, and fails for $N = 43631$.  Thus, contingent on verifying the conjecture for $N > 10^{11}$, the optimal threshold is $43632$.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.
+1. Conjecture 1 **has been established** as a consequence of  Conjecture 2, together with using the linear programming or greedy algorithm methods to verify it in the remaining range range $N < 43632$.
+2. Conjecture 2 **has been established** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$, by a modified greedy method; and for $N > 10^{11}$, by a modified approximate factorization method.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
 4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.
 
@@ -73,6 +73,7 @@ Secondary goals are
 | [16 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/24#issuecomment-2811388882) | Boris Alexeev | 3 | $[1,10^4] \backslash$ $\{155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633\}$ | Linear programming
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4]$ | Linear and integer programming |  
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N \geq 10^{12}$ | Modified approximate factorization + explicit estimates |  
+| [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/27) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates |
 
 ## Computations of $c_0$
 

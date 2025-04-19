@@ -7,9 +7,9 @@ import math
 
 
 
-# An effective error term in the prime number theorem, see (C.9)
+# An effective error term in the prime number theorem, see (2.15)
 def E(N):
-    return 0.95 * math.sqrt(N) + 2.39 * 10**(-8) * N
+    return 0.95 * math.sqrt(N) + 3.83 * 10**(-9) * N
 
 def is_prime(n):
     """Return True if n is a prime number, else False."""
@@ -44,17 +44,21 @@ def pi_upper(N):
     assert N > 1, "Error: this bound is only valid for N > 1"
     return N/math.log(N) + 1.2762 * N / (math.log(N) ** 2)
 
-# Upper bound for pi(x)-pi(y), see (C.5)
+# Upper bound for pi(x)-pi(y), see (2.19)
 def pixy_upper(y,x):
     assert N > 1423, "Error: this bound is only valid for N > 1423"
+    if y > x:
+        return 0
     return (x-y)/math.log(y) + 2 * E(x) / math.log(y)
 
-# Lower bound for pi(x)-pi(y), see (C.6)
+# Lower bound for pi(x)-pi(y), see (2.20)
 def pixy_lower(y,x):
     assert N > 1423, "Error: this bound is only valid for N > 1423"
-    return (1-2/math.sqrt(y))*(x-y)/math.log(y) - 2 * E(x) / math.log(y)
+    if y > x:
+        return 0
+    return (1-2/math.sqrt(y))*(x-y)/math.log(y) - 2 * E(x) / math.log(x)
 
-# See Table 2
+# See Table 1
 def kappa(L):
     if L >= 341.34:
         return math.log(9/8)
@@ -62,231 +66,310 @@ def kappa(L):
         return math.log(32/27)
     if L >= 4.5:
         return math.log(4/3)
-    return math.log(3/2)
+    if L >= 4/3:
+        return math.log(3/2)
+    assert L >= 1, "Error: L must be at least 1"
+    return math.log(2)
 
-def fancy_kappa(L):
-    return (2/math.log(3) - 2/math.log(12))*math.log(12*L) + (2/math.log(3))*kappa(L)
+def fancy_kappa_2(L,gamma):
+    assert gamma >= 0, "Error: gamma must be non-negative"
+    assert gamma < 1, "Error: gamma must be less than 1"
+    return (math.log(12)/(2*(1-gamma)*math.log(2)) - 1) * math.log(12*L) + kappa(L) * math.log(12) / (2*(1-gamma)*math.log(2))
 
-def delta(t,N):
-    return math.log(N/t) - 1
+def fancy_kappa_3(L,gamma):
+    assert gamma >= 0, "Error: gamma must be non-negative"
+    assert gamma < 1, "Error: gamma must be less than 1"
+    return (math.log(12)/((1-gamma)*math.log(3)) - 1) * math.log(12*L) + kappa(L) * math.log(12) / ((1-gamma)*math.log(3))
 
-# see (6.3)
-def sigma(t,N,A):
-    return 3*N/(t*A)
+def gamma_2(t,L):
+    assert t > 2*L, "Error: t must be greater than 2*L"
+    gamma = (2*math.log(2) / math.log(3)) * (math.log(2*L) + kappa(L)) / (math.log(t) - math.log(2*L))
+    print(f"gamma_2: {gamma}")
+    return gamma
 
-# Some minor terms appearing in (6.23)
-def minor_delta_terms(L,t,N):
-    return kappa(L) * math.log(12) / (2 * math.log(t)) + 3 * math.log(N) / (2*N)
+def gamma_3(t,L):
+    assert t > 3*L, "Error: t must be greater than 3*L"
+    gamma = (math.log(3) / (2*math.log(2))) * (math.log(3*L) + kappa(L)) / (math.log(t) - math.log(3*L))
+    print(f"gamma_3: {gamma}")
+    return gamma
 
-# (6.16)
-def alpha_eval(N,t,L):
-    alpha1 = (math.log(3*L) + kappa(L))/(math.log(t) - math.log(3*L)) * math.log(3)/(2*math.log(2)) + math.log(N) / (N*math.log(2)) + 1/N
-    alpha2 = (math.log(2*L) + kappa(L))/(math.log(t) - math.log(2*L)) * 2 * math.log(2) / math.log(3) + 2 * math.log(N) / (N * math.log(3)) + 2/N
-    print(f"alpha1={alpha1}, alpha2={alpha2}")
-    return max(alpha1, alpha2)
+def kappa_starstar(L,gamma2,gamma3):
+    kappa = max(fancy_kappa_2(L, gamma2), fancy_kappa_3(L, gamma3))
+    print(f"kappa_**: {kappa}")
+    return kappa
 
-# equation (6.36)    
-def excess_bound(t,N,A,K):
-    sum = 3*N/(2*t*A)
-    sum += 4/N
-    sum += 0.9201 / math.log(t/K)
-    sum += 2044 * E(N) / (N * math.log(t/K))
-    return sum
+def delta_lower(t,N):
+    delta = math.log(N/t) - 1
+    print(f"Lower bound on delta: {delta}")
+    return delta
 
-# equation (6.32)
-def Z_bound(t,N,A,K,p):
+# see (8.1)
+def sigma_fn(t,N,A):
+    sigma = 3*N/(t*A)
+    print(f"sigma: {sigma}")
+    return sigma
+
+# see (8.8)
+def A_upper(t,N,A,K,sigma,p):
     sum = 0
-    for m in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
+    for m in range(1, math.floor(K*(1+sigma))+1):
         if coprime_6(m):
-            sum += nu(p,m) * pixy_upper(t/K, t*(1+sigma(t,N,A))/m) / N
+            sum += A * nu(p,m) * pixy_upper(t/min(m,K), t*(1+sigma)/m) / N
     return sum
 
-# The first term in (6.37)
-def Y1p_first(t,N,A,K):
+def A_lower(t,N,A,K,sigma,p):
     sum = 0
+    for m in range(1, math.floor(K*(1+sigma))+1):
+        if coprime_6(m):
+            sum += A * nu(p,m) * pixy_lower(t/min(m,K), t*(1+sigma)/m) / N
+    return sum
+
+def B_upper(t,N,K,sigma,p):
+    sum = 0
+    for m in range(1, math.floor(K*(1+sigma))+1):
+        if m % p == 0: # this eliminates m=1
+            x = t / (m-1)
+            k = math.floor(N/x)
+            while True:
+                next_x = max( N/k, t/m )
+                sum += nu(p,m) * pixy_upper(next_x, x) * k / N
+                if next_x <= t/m:
+                    break
+                x = next_x
+                k += 1
+    return sum
+
+def B_lower(t,N,K,sigma,p):
+    sum = 0
+    for m in range(1, math.floor(K*(1+sigma))+1):
+        if m % p == 0: # this eliminates m=1
+            x = t / (m-1)
+            k = math.floor(N/x)
+            while True:
+                next_x = max( N/k, t/m )
+                sum += nu(p,m) * pixy_lower(next_x, x) * k / N
+                if next_x <= t/m:
+                    break
+                x = next_x
+                k += 1
+    return sum
+
+
+# Total variation of f_alpha on (eps,1]
+def total_variation(alpha, eps):
+    assert alpha > 1, "Error: alpha must be greater than 1"
+    assert eps < 1, "Error: eps must be less than 1"
+    assert eps > 0, "Error: eps must be greater than 0"
+    var = 0
+    x = 1    # current value of x
+    val = 0  # current value of f(x)
+    n = 1    # current value of \lfloor 1/x \rfloor 
+    m = 1    # current value of \lceil 1/ alpha x \rceil
+    while True:
+        f = n * math.log( m * alpha * x )
+        var += abs(f - val)
+        val = f
+        if 1/(n+1) > 1 / (alpha * m):
+            x = 1 / (n+1)
+            n += 1
+        else:
+            x = 1 / (alpha * m)
+            m += 1
+        if x < eps:
+            break
+    f = n * math.log( m * alpha * eps )
+    var += abs(f - val)
+    var += abs(f)
+    print(f"Total variation of f_{alpha} on ({eps},1]: {var}")
+    return var
+
+# Integral of f_alpha on (eps,1]
+def f_integ(alpha, eps):
+    assert alpha > 1, "Error: alpha must be greater than 1"
+    assert eps < 1, "Error: eps must be less than 1"
+    assert eps > 0, "Error: eps must be greater than 0"
+    integral = 0
+    x = 1    # current value of x
+    n = 1    # current value of \lfloor 1/x \rfloor 
+    m = 1    # current value of \lceil 1/ alpha x \rceil
+    while True:
+        next_n = n
+        next_m = m
+        if 1/(n+1) > 1 / (alpha * m):
+            next_x = max(1 / (n+1), eps)
+            next_n += 1
+        else:
+            next_x = max(1 / (alpha * m), eps)
+            next_m += 1
+        integral += n * (math.log( m * alpha ) - 1) * ( x - next_x )
+        integral += n * (x * math.log(x) - next_x * math.log(next_x))
+
+        if next_x <= eps:
+            break
+        x = next_x
+        n = next_n
+        m = next_m
+
+    print(f"Integral of f_{alpha} from {eps} to 1: {integral}")
+    return integral
+
+# Lemma 8.2
+def delta1_upper(t,N,A,delta):
+    delta1 = 3*N/(2*t*A) + 4/N 
+    print(f"Upper bound on delta_1: {delta1} ({delta1 / delta * 100:.4f}% of delta)")
+    return delta1
+
+# (7.7), Lemma 2.2
+def delta2_upper(t,N,delta):
+    delta2 = f_integ(N/t, t/(N*K)) / math.log(t/K)
+    delta2 += total_variation(N/t, t/(N*K)) * E(N) / (N * math.log(t/K))
+    print(f"Upper bound on delta_2: {delta2} ({delta2 / delta * 100:.4f}% of delta)")
+    return delta2
+
+# Corollary 8.4
+def delta3_upper(t,N,A,K,delta):
+    delta3 = pi_upper(t/K) + (math.log(N)/math.log(5)) * pi_upper(math.sqrt(N))
+    delta3 *= (4*A + 3) * kappa(4.5) / (3 * N)
+    print(f"Upper bound on delta_3: {delta3} ({delta3 / delta * 100:.4f}% of delta)")
+    return delta3
+
+# (7.9)
+def delta4_upper(t,N,A,K,sigma,delta):
+    delta4 = 0
+    for p in range(K+1, math.floor(K*(1+sigma))+1):
+        if is_prime(p):
+            delta4 += kappa(4.5) * A_upper(t,N,A,K,sigma,p)
+    print(f"Upper bound on delta_4: {delta4} ({delta4 / delta * 100:.4f}% of delta)")
+    return delta4
+
+# (7.10)
+def delta5_upper(t,N,A,K,sigma, delta):
+    delta5 = 0
     for p in range(4, K+1):
         if is_prime(p):
-            sum += (math.log(N)/math.log(p) + 1) * math.log(p) 
-    sum *= (4*A + 3) / (3 * N * math.log(t/K**2))
-    print(f"First term in bound on Y1+: {sum}")
-    return sum
+            delta5 += kappa(4.5) * max(A_upper(t,N,A,K,sigma,p) - B_lower(t,N,K,sigma,p),0) * math.log(p) / math.log(t/K**2)
+            delta5 += kappa(4.5) * max(B_upper(t,N,K,sigma,p) - A_lower(t,N,A,K,sigma,p),0) 
+    print(f"Upper bound on delta_5: {delta5} ({delta5 / delta * 100:.4f}% of delta)")
+    return delta5 
 
-# The first term in (6.38)
-def Y1m_first(t,N,A,K):
-    sum = 0
+# (7.11)
+def delta6_upper(N, delta):
+    delta6 = kappa(4.5) / N
+    print(f"Upper bound on delta_6: {delta6} ({delta6 / delta * 100:.4f}% of delta)")
+    return delta6
+
+# (7.12), (8.4)
+def delta7_upper(t,N,K,L, sigma, delta):
+    delta7 = kappa(L) / math.log(t) * (math.log(12) / 2 - B_lower(t,N,K,sigma,2) * math.log(2) - B_lower(t,N,K,sigma,3) * math.log(3))
+    print(f"Upper bound on delta_7: {delta7} ({delta7 / delta * 100:.4f}% of delta)")
+    return delta7
+
+# (7.13)
+def delta8_upper(t,N,L, delta):
+    delta8 = 2 * (math.log(t) + kappa(L)) / N
+    print(f"Upper bound on delta_8: {delta8} ({delta8 / delta * 100:.4f}% of delta)")
+    return delta8
+
+# (7.15)
+def alpha1_upper():
+    alpha1 = 0
+    print(f"Upper bound on alpha_1: {alpha1}")
+    return alpha1
+
+# (7.16)
+def alpha2_upper(t,N,K,sigma, gamma2, gamma3):
+    alpha2_2 = (B_upper(t,N,K,sigma,2)-2*gamma2*B_lower(t,N,K,sigma,3)) / (1-gamma2)
+    alpha2_3 = (2*B_upper(t,N,K,sigma,3)-gamma3*B_lower(t,N,K,sigma,2)) / (1-gamma3)
+    alpha2 = max(alpha2_2, alpha2_3)
+    print(f"Upper bound on alpha_2: {alpha2}")
+    return alpha2
+
+# Corollary 8.4
+def alpha3_upper(t,N,A,K, kappass):
+    alpha3 = 2*(4*A+3)/(3*N*math.log(12))
+    alpha3 *= math.log(t/K) + kappass
+    alpha3 *= pi_upper(t/K) + (math.log(N)/math.log(5)) * pi_upper(math.sqrt(N))
+    print(f"Upper bound on alpha_3: {alpha3}")
+    return alpha3
+
+# (7.18)
+def alpha4_upper(t,N,K,sigma, kappass):
+    alpha4 = 0
+    for p in range(K+1, math.floor(K*(1+sigma))+1):
+        if is_prime(p):
+            alpha4 += (2/math.log(12)) * (math.log(t/p) + kappass) * A_upper(t,N,A,K,sigma,p)
+    print(f"Upper bound on alpha_4: {alpha4}")
+    return alpha4
+
+# (7.19)
+def alpha5_upper(t,N,A,K,sigma, kappass):
+    alpha5 = 0
     for p in range(4, K+1):
         if is_prime(p):
-            sum += (math.log(N)/math.log(p) + 1)
-    sum *= (4*A + 3) / (3 * N)
-    print(f"First term in bound on Y1-: {sum}")
-    return sum
+            alpha5 += (2/math.log(12)) * max(A_upper(t,N,A,K,sigma,p) - B_lower(t,N,K,sigma,p), 0) * (math.log(p)/math.log(t/K**2)) * (math.log(K**2) + kappass)
+            alpha5 += (2/math.log(12)) * max(B_upper(t,N,K,sigma,p) - A_lower(t,N,A,K,sigma,p), 0) * (math.log(p) + kappass)
+    print(f"Upper bound on alpha_5: {alpha5}")
+    return alpha5
 
-# The first term in (6.39)
-def Y2pm_first(t,N,A,K):
-    sum = 0
-    sum += pi_upper(t/K)
-    sum += pi_upper(math.sqrt(N)) * (math.log(N)/math.log(K) + 1)
-    sum *= (4*A + 3) / (3 * N)
-    print(f"First term in bound on Y2+-: {sum}")
-    return sum
+# (7.20)
+def alpha6_upper(t,N,kappass):
+    alpha6 = (2/math.log(12)) * (kappass + math.log(t)) / N
+    print(f"Upper bound on alpha_6: {alpha6}")
+    return alpha6    
 
-# The expression in (6.41)
-# assumes t = N/3
-def tinyprimes_bound(t,N,K):
-    sum2 = 0
-    sum3 = 0
-    for m in range(1, K+1):
-        x = (3*m-1) * pixy_upper(t/(3*m), t/(3*m-1))
-        x += (3*m-2) * pixy_upper(t/(3*m-1), t/(3*m-2))
-        if 3*m-3 > 0:
-            x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
-        sum2 += x * nu(2,m) / N
-        sum3 += x * 2*nu(3,m) / N
-    return max(sum2,sum3)
+# (7.21)
+def alpha7_upper(N,gamma2, gamma3):
+    alpha7_2 = math.log(2*N) / ((1-gamma2) * N * math.log(2))
+    alpha7_3 = 2*math.log(3*N) / ((1-gamma3) * N * math.log(3))
+    alpha7 = max(alpha7_2, alpha7_3)
+    print(f"Upper bound on alpha_7: {alpha7}")
+    return alpha7
 
-# upper bound for (6.41)
-# assumes t = N/3
-def Wp_upper(t,N,A,K,p):
-    sum = 0
-    for m in range(1, K+1):
-        if coprime_6(m):
-            sum += (A/N) * nu(p,m) * pixy_upper(t/m, t*(1+sigma(t,N,A))/m)
+
+# Check if Proposition 7.1 applies
+def evaluate(t, N, A, K, L):
+    assert t/K >= math.sqrt(N), "Error: t/K must be at least sqrt(N)"
+    assert t/K**2 >= K, "Error: t/K^2 must be at least K"
+    assert K >= 5, "Error: K must be at least 5"
+    assert t <= N, "Error: t must be less than or equal to N"
+
+    print(f"Testing Proposition 7.1 for t={t}, N={N}, A={A}, K={K}, L={L}")
+    gamma2 = gamma_2(t, L)
+    gamma3 = gamma_3(t, L)
+    kappass = kappa_starstar(L, gamma2, gamma3)
+    sigma = sigma_fn(t, N, A)
+
+    delta = delta_lower(t, N)
+    delta1 = delta1_upper(t, N, A, delta)
+    delta2 = delta2_upper(t, N, delta)
+    delta3 = delta3_upper(t, N, A, K, delta)
+    delta4 = delta4_upper(t, N, A, K, sigma, delta)
+    delta5 = delta5_upper(t, N, A, K, sigma, delta)
+    delta6 = delta6_upper(N, delta)
+    delta7 = delta7_upper(t, N, K, L, sigma, delta)
+    delta8 = delta8_upper(t, N, L, delta)
+    delta_sum = delta1 + delta2 + delta3 + delta4 + delta5 + delta6 + delta7 + delta8
     
-    for m in range(1, K+1):
-        x = (3*m-1) * pixy_lower(t/(3*m), t/(3*m-1))
-        x += (3*m-2) * pixy_lower(t/(3*m-1), t/(3*m-2))
-        if 3*m-3 > 0:
-            x += (3*m-3) * pixy_lower(t/(3*m-2), t/(3*m-3))
-        sum -= nu(p,m) * x / N
-    return sum
+    alpha1 = alpha1_upper()
+    alpha2 = alpha2_upper(t, N, K, sigma, gamma2, gamma3)
+    alpha3 = alpha3_upper(t, N, A, K, kappass)
+    alpha4 = alpha4_upper(t, N, K, sigma, kappass)
+    alpha5 = alpha5_upper(t, N, A, K, sigma, kappass)
+    alpha6 = alpha6_upper(t, N, kappass)
+    alpha7 = alpha7_upper(N, gamma2, gamma3)
+    alpha_sum = alpha1 + alpha2 + alpha3 + alpha4 + alpha5 + alpha6 + alpha7
 
-# lower bound for (6.41)
-# assumes t = N/3
-def Wp_lower(t,N,A,K,p):
-    sum = 0
-    for m in range(1, K+1):
-        if coprime_6(m):
-            sum += (A/N) * nu(p,m) * pixy_lower(t/m, t*(1+sigma(t,N,A))/m)
-    
-    for m in range(1, K+1):
-        x = (3*m-1) * pixy_upper(t/(3*m), t/(3*m-1))
-        x += (3*m-2) * pixy_upper(t/(3*m-1), t/(3*m-2))
-        if 3*m-3 > 0:
-            x += (3*m-3) * pixy_upper(t/(3*m-2), t/(3*m-3))
-        sum -= nu(p,m) * x / N
-    if sum < 0:
-        print(f"Possible negative value of W_{p}")
-    return sum
+    print(f"Delta sum: {delta_sum} ({delta_sum / delta * 100:.4f}% of delta)")
+    print(f"Alpha sum: {alpha_sum}")
 
-# (6.37)        
-def Y1p_bound(t,N,A,K):
-    sum = Y1p_first(t,N,A,K)
-    zsum=0
-    wsum=0
-    for p in range(4, K+1):
-        if is_prime(p):
-            zsum += Z_bound(t,N,A,K,p) * math.log(p) / math.log(t/K**2)
-            wsum += max(0, Wp_upper(t,N,A,K,p)) * math.log(p) / math.log(t/K**2)
-    print(f"Contribution of Z_p terms to Y1+: {zsum}")
-    print(f"Contribution of W_p terms to Y1+: {wsum}")
-    return sum+zsum+wsum
-
-# (6.38)
-def Y1m_bound(t,N,A,K):
-    sum = Y1m_first(t,N,A,K)
-    for p in range(4, K+1):
-        if is_prime(p):
-            sum += max(0, -Wp_lower(t,N,A,K,p))
-    return sum
-
-# (6.39)
-def Y2pm_bound(t,N,A,K):
-    sum = Y2pm_first(t,N,A,K)
-    for p in range(K+1, math.floor(K*(1+sigma(t,N,A)))+1):
-        if is_prime(p):
-            sum += (A/N) * pixy_upper(t/K, t*(1+sigma(t,N,A))/p)
-    return sum
-
-# Check if (6.24), (6.25) hold.
-def evaluate(N, A, K, L):
-    t = N/3
-    print("(N,A,K,L,t,sigma) = ", N, A, K, L, t, sigma(t,N,A))
-    assert t > 9*L, "Error: t must be greater than 9*L"
-    assert K**2*(1+sigma(t,N,A)) < t, "Error: K^2*(1+sigma) must be less than t"
-    assert K*math.sqrt(N) < t, "Error: K*sqrt(N) must be less than t"
-    assert sigma(t,N,A) < 1, "Error: sigma must be less than 1"
-    assert L >= 4.5, "Error: L must be at least 4.5"
-    assert K >= L, "Error: K must be at least L"
+    assert delta_sum < delta, "Delta sum exceeds delta"
+    assert alpha_sum < 1, "Alpha sum exceeds 1"
+    print("Delta and alpha sums are within bounds!")
 
 
-    Y1p = Y1p_bound(t, N, A, K)
-    Y1m = Y1m_bound(t, N, A, K)
-    Y2pm = Y2pm_bound(t, N, A, K)
-
-    d = delta(t, N)
-
-# This term is like 1/A; to make it smaller, increase A
-    delta1 = excess_bound(t, N, A, K)
-
-# This term is like log K / log N; to make it smaller, decrease K or increase N
-    delta2 = kappa(4.5) * Y1p
-
-# This term is negligible
-    delta3 = kappa(4.5) * Y1m
-
-# This term is like A / K log N; to make it smaller, decrease A, increase K, or increase N
-    delta4 = kappa(4.5) * Y2pm
-
-# this term is like kappa(L) / log N; to make it smaller, increase N or increase L
-    delta5 = minor_delta_terms(L, t, N)
-
-    total = delta1 + delta2 + delta3 + delta4 + delta5
-    slack = d - total
-
-    print(f"delta budget: {d}")
-    print(f"Excess term: {delta1} ({delta1 / d * 100:.2f}% of delta)")
-    print(f"Y1p term: {delta2} ({delta2 / d * 100:.2f}% of delta)")
-    print(f"Y1m term: {delta3} ({delta3 / d * 100:.2f}% of delta)")
-    print(f"Y2pm term: {delta4} ({delta4 / d * 100:.2f}% of delta)")
-    print(f"Minor delta terms: {delta5} ({delta5 / d * 100:.2f}% of delta)")
-    print(f"Total left-hand side of delta equation: {total} ({total / d * 100:.2f}% of delta)")
-
-# Q decreases if L increases
-    Q = 1 - alpha_eval(N, t, L)
-
-# This term is like log K (log log K) / log N; to make it smaller, decrease K or increase N
-    Q1 = tinyprimes_bound(t, N, K)
-
-# This term is like log K (log log K) / log N; to make it smaller, decrease K or increase N
-    Q2 = (2/math.log(12)) * (math.log(K**2) + fancy_kappa(4.5)) * Y1p
-
-# This term is negligible
-    Q3 = (2/math.log(12)) * (math.log(K) + fancy_kappa(4.5)) * Y1m
-
-# This term is like A/K; to make it smaller, decrease A or increase K
-    Q4 = (2/math.log(12)) * (math.log(t/K) + fancy_kappa(K)) * Y2pm
-
-# A negligible term
-    Q5 = (2/math.log(12)) * (math.log(t) + fancy_kappa(K)) / N
-
-    total2 = Q1 + Q2 + Q3 + Q4 + Q5
-    slack2 = Q - total2
-
-    print(f"Tiny-prime budget: {Q}")
-    print(f"Direct term: {Q1} ({Q1 / Q * 100:.2f}% of 1-\\alpha)")
-    print(f"Y1p term: {Q2} ({Q2 / Q * 100:.2f}% of 1-alpha)")
-    print(f"Y1m term: {Q3} ({Q3 / Q * 100:.2f}% of 1-alpha)")
-    print(f"Y2pm term: {Q4} ({Q4 / Q * 100:.2f}% of 1-alpha)")
-    print(f"Negligible term: {Q5} ({Q5 / Q * 100:.2f}% of 1-alpha)")
-    print(f"Total left-hand side of tiny prime equation: {total2} ({total2 / Q * 100:.2f}% of 1-\\alpha)")
-    assert slack > 0, "Over budget for delta"
-    assert slack2 > 0, "Over budget for tiny primes"
-    print(f"Guy-Selfridge conjecture t(N) >= N/3 successfully verified for N >= {N}")
-
-
-A = 175
-K = 340
-N = 10 ** 12
+A = 190
+K = 252
+N = 1 * 10 ** 11
 L = 4.5
-
-evaluate(N, A, K, L)
+t = N/3
+evaluate(t, N, A, K, L)

@@ -59,7 +59,7 @@ def plot2():
     read_file()
 
     base2 = range(80, 10001)
-    sparse_base = [10*n for n in range(8, 1001)]
+    sparse_base = [10*n for n in range(8, 01)]
     sparse_upper = [best_t(N, values[N-1])/N for N in sparse_base]
 
     exact = [values[N-1]/N for N in base2]

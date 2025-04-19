@@ -430,7 +430,7 @@ and
 \begin{equation}\label{pixy-lower}
   \pi(x) - \pi(y) \geq \left(1-\frac{2}{\sqrt{y}}\right) \frac{x-y}{\log x} - 2 \frac{E(x)}{\log x}.
 \end{equation}
-One can also replace all occurrences of $E(x)$ here by $O(x \exp(-c \sqrt{\log x}))$ for some absolute constant $c>0$.
+One can also replace all occurrences of $E(x)$ here by the classical error term $O(x \exp(-c \sqrt{\log x}))$ for some absolute constant $c>0$.
 \end{lemma}
 
 We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on par with what would be provided by the Riemann hypothesis, as long as $x$ is not too large (e.g., $x \leq 10^{16}$).  The other estimates are not quite as precise, but still adequate for our applications.  We also remark that the second term in \eqref{tilde-e} could be reduced by further numerical verification of the Riemann hypothesis, although this would not significantly simplify the analysis in this paper.
@@ -662,7 +662,7 @@ The analysis of the algorithm is now captured by the following proposition.
 
 \begin{proposition}[Repairing an approximate factorization]\label{repair}  Let $N, K$ be natural numbers, and let $1 \leq t \leq N$ be an additional parameter obeying the conditions
 \begin{equation}\label{conditions}
-    t \geq K^3, K \sqrt{N}; \quad K \geq 5.
+    \frac{t}{K} \geq \sqrt{N}; \quad \frac{t}{K^2} \geq K \geq 5.
 \end{equation}
 We also assume that there are additional parameters $\kappa_* > 0$ and $0 \leq \gamma_2, \gamma_3 < 1$, such that there exist $3$-smooth numbers
 \begin{equation}\label{tlip} 
@@ -676,7 +676,7 @@ We define the ``norm''
 $$ \| (n,m) \|_\gamma \coloneqq \max\left( \frac{n-2\gamma_2 m}{1-\gamma_2}, \frac{2m-\gamma_3 n}{1-\gamma_3} \right).$$
 Let $\tuple^{(0)}$ be a $t$-admissible multiset of natural numbers, with all elements of $\tuple^{(0)}$ at most $(t/K)^2$, and suppose that one has the inequalities
 \begin{equation}\label{delta-cond}
-\sum_{i=1}^7 \delta_i \leq \delta
+\sum_{i=1}^8 \delta_i \leq \delta
 \end{equation}
 and
 \begin{equation}\label{alpha-cond}
@@ -687,22 +687,22 @@ where
 \delta_1 &\coloneqq \frac{1}{N} \excess_t(\tuple^{(1)}) \label{delta1-def}  \\
 \delta_2 &\coloneqq \frac{1}{N} \sum_{t/K < p \leq N} f_{N/t}(p/N) \label{delta2-def}  \\
 \delta_3 &\coloneqq \frac{1}{N} \kappa_{4.5} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{delta3-def}  \\
-\delta_4 &\coloneqq \frac{1}{N} \kappa_{4.5} \sum_{K < p_1 \leq t/K} A_{p_1} \label{delta4-def}  \\
-\delta_5 &\coloneqq \frac{1}{N} \kappa_{4.5} \sum_{3 < p_1 \leq K} |A_{p_1} - B_{p_1}|_{\frac{\log p_1}{\log(t/K^2)},1} \label{delta5-def}  \\
+\delta_4 &\coloneqq \kappa_{4.5} \sum_{K < p_1 \leq t/K} A_{p_1} \label{delta4-def}  \\
+\delta_5 &\coloneqq \kappa_{4.5} \sum_{3 < p_1 \leq K} |A_{p_1} - B_{p_1}|_{\frac{\log p_1}{\log(t/K^2)},1} \label{delta5-def}  \\
 \delta_6 &\coloneqq \frac{1}{N} \kappa_{4.5} \label{delta6-def}  \\
 \delta_7 &\coloneqq \frac{\log 12}{2\log t} \kappa_* \label{delta7-def}  \\
-\delta_8 &\coloneqq \frac{(n_2+n_3)\log 2 + (m_2+m_3)\log 3}{N} \label{delta8-def}\\
+\delta_8 &\coloneqq \frac{2(\log t + \kappa_*)}{N} \label{delta8-def}\\
 \delta &\coloneqq \frac{1}{N} \log N! - \log t\label{delta-def}  \\
 \alpha_1 &\coloneqq \frac{1}{N} \left\| \left( \nu_{2}\left(\prod \tuple^{(0)}\right), \nu_{3}\left(\prod \tuple^{(0)}\right)\right) \right\|_\gamma \label{alpha1-def}  \\
-\alpha_2 &\coloneqq \frac{1}{N} \left\| (B_2, B_3) \right\|_\gamma \label{alpha2-def}  \\
+\alpha_2 &\coloneqq \left\| (B_2, B_3) \right\|_\gamma \label{alpha2-def}  \\
 \alpha_3 &\coloneqq \frac{2}{N\log 12} \left(\log \frac{t}{K} + \kappa_{**}\right) \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{alpha3-def}  \\
-\alpha_4 &\coloneqq \frac{2}{N\log 12} \sum_{3 < p_1 \leq K} \left(\log \frac{t}{p_1} + \kappa_{**}\right) A_{p_1} \label{alpha4-def}  \\
-\alpha_5 &\coloneqq \frac{2}{N\log 12} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa^*_{4.5}} \label{alpha5-def}  \\
+\alpha_4 &\coloneqq \frac{2}{\log 12} \sum_{K < p_1 \leq t/K} \left(\log \frac{t}{p_1} + \kappa_{**}\right) A_{p_1} \label{alpha4-def}  \\
+\alpha_5 &\coloneqq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa^*_{4.5}} \label{alpha5-def}  \\
 \alpha_6 &\coloneqq \frac{2}{N\log 12} (\log t + \kappa_{**}) \label{alpha6-def}  \\
 \alpha_7 &\coloneqq \max\left(\frac{1}{N} \lceil \frac{\log N}{\log 3}\rceil, \frac{2}{N} \lceil \frac{\log N}{\log 3}\rceil\right)\label{alpha7-def}  \\
 \kappa_{**} &\coloneqq \max(\kappa^{(2)}_{4.5, \gamma_2}, \kappa^{(3)}_{4.5, \gamma_3}) \label{kappastar-def}  \\
-A_{p_1} &\coloneqq \sum_m \nu_{p_1}(m) | \{ a \in \tuple^{(0)}: a = mp \hbox{ for a prime } p > t/K \}| \label{A-def} \\
-B_{p_1} &\coloneqq \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left \lfloor \frac{N}{p} \right\rfloor,\label{B-def} 
+A_{p_1} &\coloneqq \frac{1}{N} \sum_m \nu_{p_1}(m) | \{ a \in \tuple^{(0)}: a = mp \hbox{ for a prime } p > t/K \}| \label{A-def} \\
+B_{p_1} &\coloneqq \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left \lfloor \frac{N}{p} \right\rfloor,\label{B-def} 
 \end{align}
 with the convention that the upper bound $p < \frac{t}{m-1}$ is vacuous when $m=1$.  Then $t(N) \geq t$.
 \end{proposition}
@@ -819,22 +819,26 @@ By \eqref{excess-2}, \eqref{delta7-def}, we thus have
 \end{equation}
 Meanwhile by construction we see that $\tuple^{(3)}$ is a subfactorization of $N!$ that is in balance at all non-tiny primes, with tiny prime surpluses bounded by
 $$ \nu_2\left( \frac{N!}{\prod \tuple^{(3)}}\right) \leq n_2+n_3; \quad \nu_3\left( \frac{N!}{\prod \tuple^{(3)}}\right) \leq m_2+m_3.$$
-By \eqref{delta8-def}, we thus have
-$$ \frac{1}{N} \sum_p \nu_p\left( \frac{N!}{\prod \tuple^{(3)}}\right) \log p \leq \delta_8$$
+and thus by \eqref{tlip}, \eqref{delta8-def}, we thus have
+$$ \frac{1}{N} \sum_p \nu_p\left( \frac{N!}{\prod \tuple^{(3)}}\right) \log p \leq \frac{\log 2^{n_2} 3^{m_2} + \log 2^{n_3} 3^{m_3}}{N} \leq \delta_8$$
 and thus by \eqref{excess-3}, \eqref{delta-cond} we have
 $$ \excess_t(\tuple^{(3)}) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple^{(3)}}\right) \log p \leq \log N! - N \log t.$$
 Applying \Cref{t-descrip}, we conclude that $t(N) \geq t$ as claimed.
 
+\section{Estimating terms}
 
+In order to use \Cref{repair} for a given choice of $N,t$, we need to find a $t$-admissible tuple $\tuple^{(0)}$ and parameters $K, \kappa_*, \gamma_2, \gamma_3$ obeying \eqref{conditions} as well as good upper bounds on the quantities $\delta_i$, $i=1,\dots,8$ and $\alpha_i$, $i=1,\dots,7$, that can either be evaluated asymptotically or numerically.  Many of the terms here will be straightforward to estimate; we discuss only the more difficult ones.
 
+We introduce a further natural number parameter $A$ and define 
+\begin{equation}\label{sigma-def}
+  \sigma \coloneqq \frac{3N}{At}.
+\end{equation}
+We let $\tuple^{(0)}$ be the multiset of $3$-rough elements of the interval $(t, t(1+\sigma)]$, with each element repeated precisely $A$ times.  This is clearly $t$-admissible.  It has no presence at tiny primes, so
+\begin{equation}\label{alpha1-vanish}
+  \alpha_1 = 0.
+\end{equation}
 
-
-
-
-
-\section{Analysis of Step 1}
-
-With the $\sum^*$ notation just introduced, $\sum_{a < k \leq b}^* 1$ denotes the number of integers on $(a,b]$ that are coprime to $6$.  We have a simple estimate for such counts:
+We use the notation $\sum^*$ to denote summation restricted to $3$-rough numbers, thus for instance $\sum_{a < k \leq b}^* 1$ denotes the number of $3$-rough numbers in $(a,b]$.  We have a simple estimate for such counts:
 
 \begin{lemma}\label{lit}  For any interval $(a,b]$ with $0 \leq a \leq b$ one has $\sum_{a < k \leq b}^* 1 = \frac{b-a}{3} + O_{\leq}(4/3)$.
 \end{lemma}
@@ -848,58 +852,105 @@ With the $\sum^*$ notation just introduced, $\sum_{a < k \leq b}^* 1$ denotes th
 \begin{proof}  By the triangle inequality, it suffices to show that $\sum_{0 < k \leq x}^* 1 - \frac{x}{3} = O_{\leq}(2/3)$ for all $x \geq 0$.  The claim is easily verified for $0 \leq x \leq 6$, and the left-hand side is $6$-periodic in $x$, giving the claim; see \Cref{fig-saw}.
 \end{proof}
 
-The excess of $\tuple^{(1)}$ can be computed as
-$$ \excess_t(\tuple^{(1)}) = A \sum_{n \in I} \log \frac{n}{t}.$$
-By the fundamental theorem of calculus, and noting that $t\sigma = 3N/A$, this is
-$$ A \int_0^{3N/A} |I \cap (t, t+h]|\ \frac{dh}{t+h}.$$
-Bounding $\frac{1}{t+h}$ by $\frac{1}{t}$ and applying \Cref{lit}, we conclude that
-\begin{equation}\label{excess1-bound}
+This lets us estimate $\delta_1$:
+
+\begin{lemma}\label{delta1-bound} We have
+$$ \delta_1 \leq \frac{3N}{2tA} + \frac{4}{N}.$$
+\end{lemma}
+
+\begin{proof}  By definition, we have
+$$ \excess_t(\tuple^{(1)}) = A \sum^*_{t < n \leq t(1+\sigma)} \log \frac{n}{t}.$$
+By the fundamental theorem of calculus, this is
+$$ A \int_0^{t\sigma} \sum^*_{t < n \leq t+h} 1\ \frac{dh}{t+h}.$$
+Bounding $\frac{1}{t+h}$ by $\frac{1}{t}$ and applying \Cref{lit}, \eqref{sigma-def}, we conclude that
+$$
  \excess_t(\tuple^{(1)}) \leq A \int_0^{3N/A} \left(\frac{h}{3} + \frac{4}{3}\right) \frac{dh}{t} = \frac{3N^2}{2tA} + 4.
+$$
+and the claim follows.
+\end{proof}
+
+To construct $\gamma_2, \gamma_3, \kappa_*, n_2, m_2, n_3, m_3$, we introduce another parameter $L \geq 1$ and assume that
+\begin{equation}\label{t-lower}
+  t > 3L.
 \end{equation}
-Next, we compute $p$-valuations $\nu_p(\tuple^{(1)})$.  For small, borderline, or large primes $3 < p \leq t/K$, one has
+We define $n_2,n_3,m_2,n_3$ by setting
+$$
+2^{n_2} 3^{m_2} \coloneqq 2^{n_0} \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle}; \quad 
+2^{n_3} 3^{m_3} \coloneqq 3^{m_0} \lceil t/3^{m_0} \rceil^{\langle 2,3 \rangle}$$
+where $2^{n_0}, 3^{m_0}$ are the largest powers of $2,3$ respectively that are at most $t/L$.  By construction and \eqref{kappa-def}, \eqref{tlip} holds with
+\begin{equation}\label{kappas-eq}
+  \kappa_* = \kappa_L.
+\end{equation}
+We have
 \begin{align*}
-  \nu_p(\tuple^{(1)}) &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} |I \cap p^j \Z| \\
-  &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{N}{p^j A} + O_{\leq}(4/3)\right) \\
-  &= \frac{N}{p-1} - O_{\leq}^+\left(\frac{1}{p-1}\right)
-  + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) \\
-  &= \frac{N}{p-1} 
-  - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)
-  + O_{\leq}\left(\frac{4A+0.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
+  2m_2 &\leq \frac{2}{\log 3} \log \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle} \\
+  &\leq \frac{2}{\log 3} (\log(2L) + \kappa_L) 
 \end{align*}
-Meanwhile, from \eqref{legendre} one has
-$$ \nu_p(N!) = \frac{N}{p-1} - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
-and thus
+and
+\begin{align*}
+  n_2 &\geq n_0 \\
+  &\geq \frac{\log t - \log(2L)}{\log 2};
+\end{align*}
+similarly
+$$ n_3 \leq \frac{1}{\log 2} (\log(3L)+\kappa_L)$$
+and
+$$ 2m_3 \geq \frac{2(\log t - \log(3L))}{\log 3}.$$
+We conclude that \eqref{nm} holds with
+\begin{equation}\label{gammas-def}
+\begin{split}
+\gamma_2 &\coloneqq \frac{2 \log 2}{\log 3} \frac{\log(2L) + \kappa_L}{\log t - \log(2L)} \\
+\gamma_3 &\coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log t - \log(3L)}.
+\end{split}
+\end{equation}
+This lets us compute the quantity $\kappa_{**}$.
+
+To estimate $\delta_3, \alpha_3$ we use
+
+\begin{lemma}\label{val-bound} For every $3 < p \leq t/K$, one has
 \begin{equation}\label{nup} 
   \nu_p(N!/\tuple^{(1)}) =  
 O_{\leq}\left(\frac{4A+3}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{equation}
+\end{lemma}
 
-Combining these bounds with \eqref{step3-unaffected}, \eqref{step3-affected}, \eqref{step3-excess}, \eqref{step2-unaffected}, \eqref{step2-borderline}, \eqref{step2-small}, \eqref{step2-excess} and \eqref{y1p-def}, \eqref{y1m-def}, \eqref{y2pm-def}, we see that
-\begin{align}
-\frac{1}{N} \excess_t(\tuple^{(3)})
-&\leq 
-\frac{3N}{2tA} + \frac{4}{N} + \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx\nonumber \\
-&\quad + \frac{1}{\log(t/K)} \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \frac{E(N)}{N \log(t/K)} \label{excess-3-bound}\\
-Y_1^+ &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
- \left\lceil \frac{\log N}{\log p_1} \right\rceil \frac{\log p_1}{\log (t/K^2)} \nonumber \\
- &\quad + \sum_{3 < p_1 \leq K} Z_{p_1} \frac{\log p_1}{\log(t/K^2)} + \sum_{3 < p_1 \leq K}  |W_{p_1}|_{\frac{\log p_1}{\log (t/K^2)}, 0} \label{y1p-bound}\\
-Y_1^- &\leq \frac{4A+3}{3N} \sum_{3 < p_1 \leq K} 
-\left\lceil \frac{\log N}{\log p_1} \right\rceil 
-+ \sum_{3 < p_1 \leq K}  |W_{p_1}|_{0, 1} \label{y1m-bound} \\
-Y^\pm_2 &\leq \frac{4A+3}{3N} \sum_{K < p \leq t/K} \left\lceil \frac{\log N}{\log p} \right\rceil \nonumber \\
-&\quad + \frac{A}{N} \sum_{K < p \leq K(1+\sigma)} 
-\left(\pi\left(\frac{t(1+\sigma)}{p_1}\right) - \pi\left(\frac{t}{K}\right)\right)
-\label{y2pm-bound} \\
-\sup_{p_0=2,3} (p_0-1)\nu_{p_0}\left(\prod \tuple^{(3)}\right)  &\leq \sup_{p_0=2,3} (p_0-1) \sum_{m \leq K} \nu_{p_0}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor
-\label{small-bound}
-\end{align}
-where for any small prime $3 < p_1 \leq K$, we define $W_{p_1}$ to be the quantity
-\begin{equation}\label{W-def}
-W_{p_1} \coloneqq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right)
-- \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left\lfloor \frac{N}{p} \right\rfloor.
+\begin{proof}
+One has
+  \begin{align*}
+    \nu_p(\tuple^{(1)}) &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} |I \cap p^j \Z| \\
+    &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{N}{p^j A} + O_{\leq}(4/3)\right) \\
+    &= \frac{N}{p-1} - O_{\leq}^+\left(\frac{1}{p-1}\right)
+    + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) \\
+    &= \frac{N}{p-1} 
+    - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)
+    + O_{\leq}\left(\frac{4A+0.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
+  \end{align*}
+  Meanwhile, from \eqref{legendre} one has
+  $$ \nu_p(N!) = \frac{N}{p-1} - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
+and the claim follows.  
+\end{proof}
+
+\begin{corollary}\label{delta3-alpha3-bound} One has
+$$ \delta_3 \leq \frac{(4A+3)\kappa_{4.5}}{3N} \left(\pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{N})\right)$$
+and
+$$ \alpha_3 \leq \frac{2(4A+3)}{3N\log 12} \left(\log \frac{t}{K} + \kappa_{**}\right) \left(\pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{N})\right).$$
+\end{corollary}
+
+\begin{proof} This is immediate from \Cref{val-bound} and \eqref{alpha3-def}, \eqref{delta3-def} after noting that $\lfloor \frac{\log N}{\log p} \rfloor \leq 1 + \frac{\log N}{\log 5} 1_{p \leq \sqrt{N}}$ for $3 < p \leq t/K$.
+\end{proof}
+
+The main quantities left to estimate are the quantities $\delta_4, \delta_5, \alpha_4, \alpha_5$ that involve $A_{p_1}$.  By construction of $\tuple^{(0)}$, we have
+$$
+A_{p_1} = \frac{1}{N} \sum_m^* \nu_{p_1}(m) \sum_{\frac{t}{K}, \frac{t}{m} < p \leq \frac{t(1+\sigma)}{m}} A.
+$$
+In particular, for $p > K(1+\sigma)$ the quantity $A_{p_1}$ vanishes entirely:
+\begin{equation}\label{ap1-vanish}
+  A_{p_1} = 0.
 \end{equation}
-
-A key point will be that in practice, the $W_{p_1}$ will be positive (or only barely negative), so that their contribution to \eqref{y1m-bound} vanishes (or is small).
+For the remaining primes $3 < p \leq K(1+\sigma)$ one has
+\begin{equation}\label{ap1-small}
+A_{p_1} = \frac{A}{N} \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left( \pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{\min(m,K)} \right) \right).
+\end{equation}
+In practice, these expressions can be adequately controlled by \Cref{osc-lemma}.
 
 \section{The asymptotic regime}
 
@@ -907,116 +958,138 @@ With the above estimates, we can now establish the lower bound in \Cref{main}(iv
 \begin{equation}\label{main-lower}
    t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c_1} N} \asymp N
 \end{equation}
-and $0 < c_1 < 1$ is a small absolute constant.  With this choice of parameters, one has
-$$ \delta = \frac{ec_0}{\log N} + \frac{1}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
+and $0 < c_1 < 1$ is a small absolute constant.  With this choice of parameters, we see from \eqref{delta-def}, \eqref{stirling} that
+$$ \delta = \frac{ec_0}{\log N} + \frac{e}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
 
-Let $N$ be sufficiently large.  We introduce parameters
+Let $N$ be sufficiently large.  We use the construction of the previous section with the parameters
 \begin{align}
   A &\coloneqq \lfloor \log^2 N \rfloor\label{a-asym}\\
 K &\coloneqq \lfloor \log^3 N \rfloor \label{k-asym} \\
 L &\coloneqq N^{0.1},\label{l-asym}
 \end{align}
 so from \eqref{sigma-def} one has
-$$ \sigma = \frac{3N}{tA} \asymp \frac{1}{A} \asymp \frac{1}{\log^2 N}.$$
-The conditions \eqref{condition} are easily verified for $N$ large enough.
+\begin{equation}\label{sigma-alt}
+   \sigma = \frac{3N}{tA} \asymp \frac{1}{A} \asymp \frac{1}{\log^2 N}.
+\end{equation}
+The conditions \eqref{condition}, \eqref{t-lower} are easily verified for $N$ large enough.
 
-By \Cref{step4-reduce}, it suffices to verify the criteria 
-\eqref{new-balance-5}, \eqref{nstarb}.  From \eqref{qntl} and \eqref{l-asym}, \eqref{main-lower} we have
-$$ \alpha \leq \frac{1}{2}$$
-if $N$ is large enough, so by \Cref{baker} it will suffice to establish the bounds
-\begin{align}
-  \frac{1}{N} \excess_t(\tuple^{(3)}) &\leq
-  \frac{ec_0}{\log N} + O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right) \label{est-1}\\
-  Y_1^+ &\ll \frac{(\log\log N)^{O(1)}}{\log N} \label{y1p-est}\\
-  Y_1^- &\ll \frac{(\log\log N)^{O(1)}}{\log^2 N}\label{y1m-est}\\
-  Y_2^\pm &\ll \frac{(\log\log N)^{O(1)}}{\log^2 N}\label{y2pm-est} \\
-\frac{1}{N} \sum_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) &\ll \frac{(\log\log N)^{O(1)}}{\log N}.\label{23-est}
-\end{align}
-
-We begin with \eqref{est-1}.  The function $f_{N/t}$ is piecewise monotone on $(t/NK,1]$ with $O(K)$ pieces, and is bounded by $1$, so that 
-$$ \|f_{N/t}\|_{\mathrm{TV}^*((t/NK,1])} \ll K.$$
-Applying \eqref{excess-3-bound}, \eqref{ecx}, \eqref{main-lower}, \eqref{a-asym}, \eqref{k-asym} we see that
-$$ \excess_t(\tuple^{(3)}) \leq \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx + O\left( \frac{1}{\log^2 N} \right).$$
-But by repeating the arguments used to prove \Cref{tne} we have
-\begin{align*}
-\frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx &= \left(1 + O\left( \frac{\log\log N}{\log^2 N} \right)\right) \int_{1/eK}^{N/et} f_{N/t}(etx/N)\ dx \\
-&= \left(1 + O\left( \frac{\log\log N}{\log^2 N} \right)\right) \left(ec_0 + O\left( \frac{\log\log N}{\log^2 N} \right)\right),
-\end{align*}
-giving the claim.
-
-
-From \eqref{y2pm-bound} and the Brun--Titchmarsh inequality one has 
+By \eqref{kappas-eq}, \eqref{l-asym}, and \Cref{power-lemma}(ii) we have
+$$ \kappa_* \ll \log^{-c} N$$
+for some absolute constant $c>0$.  From \eqref{gammas-def}, \eqref{main-lower}, \eqref{l-asym} we have
+$$ \gamma_2 = \frac{1}{10} \frac{2\log 2}{\log 3} + O\left(\frac{1}{\log N}\right), \quad
+ \gamma_3 = \frac{1}{10} \frac{\log 3}{2\log 2} + O\left(\frac{1}{\log N}\right)
 $$
-Y^\pm_2 \ll \frac{A}{N} \frac{t/K}{\log N} + \frac{A}{N} \frac{K\sigma}{\log K} \frac{t\sigma/K}{\log K}$$
-and the claim \eqref{y2pm-est} follows from \eqref{a-asym}, \eqref{k-asym}, \eqref{main-lower}.
-
-From \eqref{small-bound} and the Brun--Titchmarsh inequality as well as the trivial bound $\nu_{p_0}(m) \ll \log\log N$ for $m \ll K$, one has
-$$
-\sup_{p_0=2,3} (p_0-1) \nu_{p_0}\left(\prod \tuple^{(3)}\right) \ll \sum_{m \leq K} (\log\log N) \frac{t}{m \log N}$$
-and from summing the harmonic series we obtain \eqref{23-est}.  
-
-Applying similar estimates to \eqref{zp-def} gives
+and hence by \eqref{kappastar-def},  \eqref{kappastar-2-def}, \eqref{kappastar-3-def}
+$$ \kappa_{**} \ll 1.$$
+By \Cref{repair}, it thus suffices to establish the inequalities \eqref{delta-cond}, \eqref{alpha-cond}.
+Several of the quantities $\delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, and the prime number theorem:
 \begin{align*}
-  Z_{p_1} &\ll
-\frac{A}{N} \sum_{K < m \leq K(1+\sigma): p_1|m} (\log\log N) \frac{\sigma t}{K \log N} \\
-&\ll \frac{\log\log N}{K\log N} (\frac{K\sigma}{p_1}+1) \\
-&\ll \frac{\log\log N}{p_1 \log^2 N} + \frac{\log\log N}{K \log N}
+  \delta_1 &\ll \frac{1}{\log^2 N} \\
+  \delta_3 &\ll \frac{1}{\log^2 N} \\
+  \delta_6 &\ll \frac{1}{N} \\
+  \delta_7 &\ll \frac{1}{\log^{1+c} N} \\
+  \delta_8 &\ll \frac{\log N}{N} \\
+  \alpha_1 &= 0 \\
+  \alpha_3 &\ll \frac{1}{\log N} \\
+  \alpha_6 &\ll \frac{\log N}{N} \\
+  \alpha_7 &\ll \frac{\log N}{N}.
 \end{align*}
-and hence by \eqref{y1p-bound} and Mertens' theorem
+On the interval $(t/NK,1]$, the function $f_{N/t}$ is piecewise monotone with $O(K)$ pieces, and bounded by $1$, so its augmented total variation norm is $O(K)$.  Applying \eqref{delta2-def} and \Cref{osc-lemma} (with classical error term), we have
 \begin{align*}
-  Y_1^+ &\ll \frac{A}{N} \sum_{p_1 \leq K} \log N \frac{\log\log N}{\log N} + \sum_{p_1 \leq K} \frac{\log\log N}{p_1 \log^2 N} + \frac{\log\log N}{K \log N} \\
-  &\quad + \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} \\
-  &\ll \sum_{3 < p \leq K}  |W_{p_1}|_{\frac{\log p}{\log (t/K^2)}, 0} + \frac{(\log\log N)^{O(1)}}{\log N}
+\delta_2 &\leq \frac{1}{\log(t/K)} \int_{t/NK}^1 f_{N/t}(x)\ dx + O\left( \frac{1}{\log^2 N} \right) \\
+&\leq \frac{1}{\log N} \int_{1/eK}^{N/et} f_{N/t}(etx/N)\ dx + O\left( \frac{1}{\log^2 N} \right)
 \end{align*}
-while from \eqref{y1m-bound} we similarly have
-\begin{align*} 
-Y_1^- &\ll \frac{A}{N} \sum_{p_1 \leq K} \log N 
-+ \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1} \\
-&\ll \sum_{3 < p \leq K}  |W_{p_1}|_{0, 1}  + \frac{\log^{O(1)} N}{N}
-\end{align*}
-and so to verify the remaining claims \eqref{y1p-est}, \eqref{y1m-est} it will suffice from Mertens' theorem to show the bounds
-\begin{align}
-  |W_{p_1}|_{1,0} &\ll \frac{(\log\log N)^{O(1)}}{p_1 \log N}\label{wp-plus}\\
-  |W_{p_1}|_{0,1} &\ll \frac{(\log\log N)^{O(1)}}{p_1 \log^2 N}\label{wp-minus}
-\end{align}
-for all small primes $3 < p_1 \leq K$.
+where we have used \eqref{falpha-bound} to manage error terms.
+As in the proof of \Cref{upper-bound}, the function $f_{N/t}(etx/N)$ differs from $f_e(x)$ outside of an exceptional set of measure $O(1/\log N)$, and hence by \eqref{c0-def} (and \eqref{falpha-bound}) we have
+$$ \delta_2 \leq \frac{ec_0}{\log N} + O\left( \frac{1}{\log^2 N} \right).$$
+To finish the verification of the conditions \eqref{delta-cond}, \eqref{alpha-cond}, it will suffice to show that
+\begin{equation}\label{delta-remaining}
+\delta_4, \delta_5 \ll \frac{(\log\log N)^{O(1)}}{\log^2 N}
+\end{equation}
+and
+\begin{equation}\label{alpha-remaining}
+\alpha_2, \alpha_4, \alpha_5 \ll \frac{(\log\log N)^{O(1)}}{\log N}.
+\end{equation}
+By Mertens' theorem (or \Cref{osc-lemma}) and \eqref{delta4-def}, \eqref{delta5-def}, \eqref{alpha2-def}, \eqref{alpha4-def}, \eqref{alpha5-def}, \eqref{sigma-alt}, it suffices to show that
+\begin{equation}\label{ap1-bound}
+A_{p_1}, B_{p_1} \ll \frac{(\log\log N)^{O(1)}}{p_1 \log N} 
+\end{equation}
+for all $p_1 \leq K(1+\sigma)$ (recalling from \eqref{ap1-vanish} that $A_{p_1}$ vanishes for any larger $p_1$), as well as the variant
+\begin{equation}\label{ap1-diff}
+  |A_{p_1}-B_{p_1}|_{0,1} \ll \frac{(\log\log N)^{O(1)}}{p_1 \log^2 N}
+\end{equation}
+for $3 < p_1 \leq K$.
 
-For the first bound \eqref{wp-plus}, we crudely discard the negative term in \eqref{W-def} and use the Brun--Titchmarsh inequality and the crude bound
-\begin{equation}\label{nupim-crude} 
+For \eqref{ap1-bound} we use \eqref{ap1-small}, \eqref{B-def}, and the crude bound 
+\begin{equation}\label{crude}
   \nu_{p_1}(m) \ll 1_{p_1|m} \log\log N
 \end{equation}
-for $m \ll K$ to obtain
-\begin{align*}
-|W_{p_1}|_{1,0} &\leq \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
-&\ll \frac{A}{N} \sum_{m \leq K:p_1|m} (\log\log N) \frac{t\sigma/m}{\log N} \\
-&\ll \frac{(\log\log N)^2}{p_1 \log N}
-\end{align*}
-as required.  For the second bound \eqref{wp-minus}, we need to be more careful.  From \Cref{buthe}, \eqref{ecx} we have
-\begin{align*}
-\frac{A}{N} \sum_{m \leq K}^*& \nu_{p_1}(m) \left(\pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{m}\right)\right) \\
-  &= \frac{A}{N} \sum_{m \leq K}^* \nu_{p_1}(m) (1+O(\frac{\log\log N}{\log N})) \frac{t\sigma m}{\log N} \\
-  &= \frac{1}{\log N} \sum_{m \leq K}^* \frac{3\nu_{p_1}(m)}{m}
- + O\left(\frac{N (\log\log N)^{O(1)}}{p_1 \log^2 N}\right)
-\end{align*}
-where we used \eqref{nupim-crude} to control the error.  We can also use \Cref{buthe}, \eqref{ecx} to bound
-\begin{align*}
-  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \lfloor \frac{N}{p} \rfloor
-&\leq  \left(1 + O\left(\frac{\log\log N}{\log N}\right)\right)  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m)
-\sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \frac{N}{p} \log p \\
-&\leq  \left(1 + O\left(\frac{\log\log N}{\log N}\right)\right)  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m)
-\int_{\frac{t}{m}}^{\frac{t}{m-1}} \frac{N}{x}\ dx\\
-&\quad  +
-O\left( \frac{1}{p_1 \log^2 N} \right) \\
-&\leq \sum_{m \leq K} \nu_{p_1}(m) \log\frac{m}{m-1} +
-O\left( \frac{(\log\log N)^{O(1)}}{p_1 \log^2 N} \right) 
-\end{align*}
-where we again used \eqref{nupim-crude} to control the error.  Inserting these bounds into \eqref{W-def}, it will now suffice to establish the following bound.
+ for $m \leq K(1+\sigma)$, and reduce to showing that
+$$ \frac{A}{N} \sum_{m \leq K(1+\sigma)} 1_{p_1|m} \left( \pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{\min(m,K)} \right) \right).
+\ll \frac{(\log\log N)^{O(1)}}{p_1 \log N}$$
+and
+$$ \frac{1}{N} \sum_{m \leq K} 1_{p_1|m} \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left \lfloor \frac{N}{p} \right\rfloor \ll
+\frac{(\log\log N)^{O(1)}}{p_1 \log N}.$$ 
+But from the Brun--Titchmarsh inequality (or \Cref{osc-lemma}) and \eqref{sigma-alt} one has
+$$ \pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{\min(m,K)}\right) \ll \frac{t\sigma}{m \log N} \ll \frac{N}{Am \log N}$$
+and
+$$ \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left \lfloor \frac{N}{p} \right\rfloor \ll \frac{tm}{m^2 \log N} \ll \frac{N}{m \log N}$$
+and the claim then follows from summing the harmonic series.
 
-\begin{lemma}[Key inequality]\label{key-ineq} For any prime $p\geq 5$ and any real $K > 0$, we have
-$$ 0 \leq \sum_{m \leq K}^* \nu_p(m) \frac{3}{m} - \sum_{m \leq K} \nu_p(m) \log \frac{m}{m-1} \leq \frac{2}{p-1}.$$
-\end{lemma}
+It remains to show \eqref{ap1-diff}.  For $3 < p_1 \leq K$, we see from \eqref{ap1-small}, \eqref{sigma-alt}, \eqref{crude} and \Cref{osc-lemma} (with classical error term) that
+\begin{align*}
+A_{p_1} &\geq \frac{1}{N} \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left( \frac{A t \sigma}{m \log N} + O\left( \frac{(\log\log N)^{O(1)}A t \sigma}{m \log^2 N} \right) \right) \\
+&= \frac{1}{\log N} \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \frac{3}{m}+ O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right) \\
+&= \frac{1}{\log N} \sum_{m \leq K}^* \nu_{p_1}(m) \frac{3}{m}+ O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right) 
+\end{align*}
+and similarly from \eqref{B-def}, \eqref{crude}, and \Cref{osc-lemma} (again with classical error term) 
+\begin{align*}
+  B_{p_1} &\leq
+  \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \frac{N}{p}  \\
+  &\leq \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \left( \frac{N}{\log(t/m)} \int_{t/m}^{t/(m-1)} \frac{dx}{x} + O\left( \frac{N}{\log^{10} N} \right) \right) \\
+  &\leq \frac{1}{\log N} \sum_{m \leq K} \nu_{p_1}(m) \log \frac{m}{m-1} + O\left( \frac{(\log\log N)^{O(1)}}{\log^2 N} \right)
+\end{align*}
+so it will suffice to establish the inequality
+$$  \sum_{m \leq K} \nu_{p_1}(m) \log \frac{m}{m-1} \leq \sum_{m \leq K}^* \nu_{p_1}(m) \frac{3}{m}$$
+for all $p_1 > 3$.
+  
+Writing $\nu_{p_1}(m) = \sum_{j \geq 1} 1_{p_1^j|m}$, it suffices to show that
+  $$ \sum_{m \leq K; p^j|m} \frac{3}{m} 1_{(m,6)=1} - \log \frac{m}{m-1} \geq 0.$$
+Making the change of variables $m = p_1^j n$, it suffices to show that
+  $$ \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p^j \log \frac{p^j n}{p^j n - 1} \geq 0$$
+  for any $K' > 0$.   Using the bound
+  $$ \log \frac{p^jn}{p^jn - 1} = \int_{p^jn-1}^{p^jn} \frac{dx}{x} \in \left[\frac{1}{p^j n}, \frac{1}{p^jn-1}\right]$$
+  and $p^j \geq 5$, we have
+  $$ \frac{1}{n} \leq p^j \log \frac{p^j n}{p^j n - 1} \leq \frac{1}{n-0.2}$$
+  and so it suffices to show that
+  \begin{equation}\label{kb}
+  \sum_{n \leq K'}^* \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n-0.2} \geq 0.
+  \end{equation}
+  Since 
+  $$ \sum_{n=1}^\infty \frac{1}{n-0.2}-\frac{1}{n} = \psi(0.8)-\psi(1) = 0.353473\dots,$$
+  where $\psi$ here denotes the digamma function rather than the von Mangoldt summatory function, it will suffice to show that
+  \begin{equation}\label{kb-2}
+  \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n} \geq 0.4.\end{equation}
+  This can be numerically verified for $K' \leq 100$, with substantial room to spare for $K'$ large; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, the sum is positive:
+  \begin{align*}
+  \sum_{6a-1 \leq n \leq 6a+4}^* \frac{3}{n}  - \frac{1}{n } &= \left(\frac{1}{6a-1} - \frac{1}{6a}\right) + \left(\frac{1}{6a-1} - \frac{1}{6a+2}\right)\\
+  &\quad + \left(\frac{1}{6a+1} - \frac{1}{6a+3}\right) + \left(\frac{1}{6a+1} - \frac{1}{6a+4}\right) \\
+  &\quad > 0.
+  \end{align*}
+The inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data and the triangle inequality.
+  
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{key_ineq.png}
+  \caption{A plot of \eqref{kb}.}
+  \label{fig:kb}
+  \end{figure}
 
-But this can be easily verified; see \Cref{key-app}.  The proof of \eqref{main-lower} is now complete.
+
+
+
+
+
 
 \section{Guy--Selfridge conjecture}
 
@@ -1231,52 +1304,7 @@ The claim then follows from \eqref{bj1}, \eqref{bj2} (and the obvious fact that 
 It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that irrationality measure of $\log 3 / \log 2$ is equal to $2$.
 \end{remark}
 
-\section{Key inequality}\label{key-app}
 
-We now prove \Cref{key-ineq}. Writing $\nu_p(m) = \sum_{j \geq 1} 1_{p^j|m}$, it suffices to show that
-  $$ 0 \leq \sum_{m \leq K; (m,6)=1, p^j|m} \frac{3}{m}
-  - \sum_{m \leq K, p^j|m} \log \frac{m}{m-1} \leq \frac{2}{p^j}$$
-  for all $j$.  Making the change of variables $m = p^j n$, it suffices to show that
-  $$ 0 \leq \sum_{n \leq K'}^* \frac{3}{n}  - p^j \log \frac{p^j n}{p^j n - 1} \leq 2$$
-  for any $K' > 0$.   Using the bound
-  $$ \log \frac{p^jn}{p^jn - 1} = \int_{p^jn-1}^{p^jn} \frac{dx}{x} \in \left[\frac{1}{p^j n}, \frac{1}{p^jn-1}\right]$$
-  and $p^j \geq 5$, we have
-  $$ \frac{1}{n} \leq p^j \log \frac{p^j n}{p^j n - 1} \leq \frac{1}{n-0.2}$$
-  and so it suffices to show that
-  \begin{equation}\label{kb}
-  0 \leq \sum_{n \leq K'}^* \frac{3}{n}  - \frac{1}{n-0.2} 
-  \leq
-  \sum_{n \leq K'}^* \frac{3}{n} - \frac{1}{n} \geq 2.
-  \end{equation}
-  Since 
-  $$ \sum_{n=1}^\infty \frac{1}{n-0.2}-\frac{1}{n} = \psi(0.8)-\psi(1) = 0.353473,$$
-  where $\psi$ here denotes the digamma function rather than the von Mangoldt summatory function, it will suffice to show that
-  \begin{equation}\label{kb-2} 0.4 \leq
-  \sum_{n \leq K'}^* \frac{3}{n} - \frac{1}{n} \geq 2.\end{equation}
-  This can be numerically verified for $K' \leq 100$, with substantial room to spare for $K'$ large; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, the sum is positive:
-  \begin{align*}
-  \sum_{6a-1 \leq n \leq 6a+4}^* \frac{3}{n}  - \frac{1}{n } &= \left(\frac{1}{6a-1} - \frac{1}{6a}\right) + \left(\frac{1}{6a-1} - \frac{1}{6a+2}\right)\\
-  &\quad + \left(\frac{1}{6a+1} - \frac{1}{6a+3}\right) + \left(\frac{1}{6a+1} - \frac{1}{6a+4}\right) \\
-  &\quad > 0.
-  \end{align*}
-  Similarly, on a block $6a-4 \leq n \leq 6a+1$, the sum is negative:
-  \begin{align*}
-    \sum_{6a-4 \leq n \leq 6a+1}^* \frac{3}{n}  - \frac{1}{n } &= \left(\frac{1}{6a+1} - \frac{1}{6a}\right)
-    + \left(\frac{1}{6a+1} - \frac{1}{6a-2}\right)\\
-    &\quad  + \left(\frac{1}{6a-1} - \frac{1}{6a-3}\right)
-    + \left(\frac{1}{6a-1} - \frac{1}{6a-4}\right)\\
-    &\quad  < 0.
-  \end{align*}
-  Thus the sum in \eqref{kb-2} is increasing for $K' = 4\ (6)$ and decreasing for $K' = 1\ (6)$, and the inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data and the triangle inequality
-  
-    From this and the triangle inequality one can easily establish \eqref{kb} in the remaining ranges $K' \geq 98$.
-  
-  \begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{key_ineq.png}
-  \caption{A plot of \eqref{kb}.}
-  \label{fig:kb}
-  \end{figure}
 
 \section{Estimating sums over primes}\label{primes-sec}
 

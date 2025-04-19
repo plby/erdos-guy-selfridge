@@ -354,7 +354,7 @@ where
 
 We remark that when $x$ is a power of $12$, the left-hand sides of \eqref{12-2}, \eqref{12-3} are both equal to $\frac{2}{\log 12} \log x$; thus the estimates \eqref{12-2}, \eqref{12-3} are quite efficient asymptotically.
 
-We use $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function. The effective and asymptotic estimates over primes that we will use are summarized in \Cref{primes-sec}.
+We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
 
 We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
 If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
@@ -587,7 +587,7 @@ We can now prove the upper bound portion of \Cref{main}(iv):
     $$ \sum_{\frac{t}{\lfloor\sqrt{t}\rfloor} < p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
     For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
     $$ \sum_{\frac{N}{\log N} \leq p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-    On the interval $[1/\log N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log N,1]$.  By \Cref{buthe}, \eqref{ecx}, the left-hand side is then
+    On the interval $[1/\log N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log N,1]$.  By \Cref{osc-lemma} (with classical error term), the left-hand side is then
     $$ \int_{N/\log N}^N \left(1-\frac{2}{\sqrt{x}}\right) f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
     for some $c>0$.  Discarding the $\frac{2}{\sqrt{x}}$ term, performing a change of variable, and using \eqref{c0-def}, we reduce to showing that
     $$  \int_{1/\log N}^1 f_{N/t}(x) \frac{\log N}{\log(Nx)}\ dx 
@@ -618,15 +618,15 @@ We will discard the $\lfloor\sqrt{N/e}\rfloor$ denominator, and reduce to showin
 for $N > 5000$.  On $[1/e,1]$, one can compute
 $$ \|f_e\|_{\mathrm{TV}^*(1/e,1]}
 = 4 - 2 \log 2$$
-so by \Cref{buthe}, \eqref{ecx-2} (noting that $5000 > 1423e$) we have
+so by \Cref{osc-lemma} (noting that $5000 > 1423e$) we have
 $$ \sum_{N/e < p \leq N} f_{e}(p/N) \log p
-\geq N \int_{1/e}^1 \left(1-\frac{2}{\sqrt{Nx}}\right) f_e(x)\ dx - (4 - 2 \log 2) \tilde E(N).
+\geq N \int_{1/e}^1 \left(1-\frac{2}{\sqrt{Nx}}\right) f_e(x)\ dx - (4 - 2 \log 2) E(N).
 $$
 By upper bounding $\log p$ by $\log N$ and lower bounding $\left(1-\frac{2}{\sqrt{Nx}}\right)$ by $1 - \frac{2}{\sqrt{N/e}}$, it suffices to show that
 $$ \left(1 - \frac{2}{\sqrt{N/e}}\right) \int_{1/e}^1 f_e(x)\ dx \geq
-(4 - 2 \log 2) \frac{\tilde E(N)}{N}
+(4 - 2 \log 2) \frac{E(N)}{N}
 + \frac{\log N \log(2\pi N)}{2N} + \frac{\log N}{12N^2},$$
-which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \frac{2}{e}-\frac{\log 2}{2}=0.3891\dots$ and $4-2\log 2 = 2.613\dots$, while $\tilde E(N)/N \leq 0.015$, and the other two terms on the right-hand side are negligible).
+which is easily verified for $N \geq 5000$ (one has $\int_{1/e}^1 f_e(x)\ dx = \frac{2}{e}-\frac{\log 2}{2}=0.3891\dots$ and $4-2\log 2 = 2.613\dots$, while $E(N)/N \leq 0.015$, and the other two terms on the right-hand side are negligible).
 \end{proof}
 
 \begin{figure}
@@ -686,25 +686,29 @@ where
 \begin{align}
 \delta_1 &\coloneqq \frac{1}{N} \excess_t(\tuple^{(1)}) \label{delta1-def}  \\
 \delta_2 &\coloneqq \frac{1}{N} \sum_{t/K < p \leq N} f_{N/t}(p/N) \label{delta2-def}  \\
-\delta_3 &\coloneqq \frac{1}{N} \kappa_{4.5} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{delta3-def}  \\
+\delta_3 &\coloneqq \frac{\kappa_{4.5}}{N}  \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{delta3-def}  \\
 \delta_4 &\coloneqq \kappa_{4.5} \sum_{K < p_1 \leq t/K} A_{p_1} \label{delta4-def}  \\
 \delta_5 &\coloneqq \kappa_{4.5} \sum_{3 < p_1 \leq K} |A_{p_1} - B_{p_1}|_{\frac{\log p_1}{\log(t/K^2)},1} \label{delta5-def}  \\
-\delta_6 &\coloneqq \frac{1}{N} \kappa_{4.5} \label{delta6-def}  \\
-\delta_7 &\coloneqq \frac{\log 12}{2\log t} \kappa_* \label{delta7-def}  \\
+\delta_6 &\coloneqq \frac{\kappa_{4.5}}{N} \label{delta6-def}  \\
+\delta_7 &\coloneqq \frac{\kappa_* \log 12}{2\log t} \label{delta7-def}  \\
 \delta_8 &\coloneqq \frac{2(\log t + \kappa_*)}{N} \label{delta8-def}\\
-\delta &\coloneqq \frac{1}{N} \log N! - \log t\label{delta-def}  \\
+\delta &\coloneqq \frac{1}{N} \log N! - \log t\label{delta-def}  
+\end{align}
+\begin{align}
 \alpha_1 &\coloneqq \frac{1}{N} \left\| \left( \nu_{2}\left(\prod \tuple^{(0)}\right), \nu_{3}\left(\prod \tuple^{(0)}\right)\right) \right\|_\gamma \label{alpha1-def}  \\
 \alpha_2 &\coloneqq \left\| (B_2, B_3) \right\|_\gamma \label{alpha2-def}  \\
 \alpha_3 &\coloneqq \frac{2}{N\log 12} \left(\log \frac{t}{K} + \kappa_{**}\right) \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{alpha3-def}  \\
 \alpha_4 &\coloneqq \frac{2}{\log 12} \sum_{K < p_1 \leq t/K} \left(\log \frac{t}{p_1} + \kappa_{**}\right) A_{p_1} \label{alpha4-def}  \\
-\alpha_5 &\coloneqq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa^*_{4.5}} \label{alpha5-def}  \\
+\alpha_5 &\coloneqq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa_{**}} \label{alpha5-def}  \\
 \alpha_6 &\coloneqq \frac{2}{N\log 12} (\log t + \kappa_{**}) \label{alpha6-def}  \\
-\alpha_7 &\coloneqq \max\left(\frac{1}{N} \lceil \frac{\log N}{\log 3}\rceil, \frac{2}{N} \lceil \frac{\log N}{\log 3}\rceil\right)\label{alpha7-def}  \\
+\alpha_7 &\coloneqq \max\left( \frac{\log(2N)}{(1-\gamma_2)N\log 2},  \frac{2\log(3N)}{(1-\gamma_3)N\log 3}\right)\label{alpha7-def}  
+\end{align}
+\begin{align}
 \kappa_{**} &\coloneqq \max(\kappa^{(2)}_{4.5, \gamma_2}, \kappa^{(3)}_{4.5, \gamma_3}) \label{kappastar-def}  \\
 A_{p_1} &\coloneqq \frac{1}{N} \sum_m \nu_{p_1}(m) | \{ a \in \tuple^{(0)}: a = mp \hbox{ for a prime } p > t/K \}| \label{A-def} \\
 B_{p_1} &\coloneqq \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \leq p < \frac{t}{m-1}} \left \lfloor \frac{N}{p} \right\rfloor,\label{B-def} 
 \end{align}
-with the convention that the upper bound $p < \frac{t}{m-1}$ is vacuous when $m=1$.  Then $t(N) \geq t$.
+with the convention that the upper bound $p < \frac{t}{m-1}$ in \eqref{B-def} is vacuous when $m=1$.  Then $t(N) \geq t$.
 \end{proposition}
 
 Note that the quantities $\delta_2, \delta$ already made an appearance in \Cref{upper-crit}.  As we shall see, when $N$ is large we will be able to construct multisets $\tuple^{(0)}$ that make all the other quantities $\delta_i, i \neq 2$ and $\alpha_i$ quite small, which is how we shall establish such results as \Cref{main}(iii) and the lower bound in \Cref{main}(iv).
@@ -729,54 +733,54 @@ We let $\tuple^{(1)}$ be the multiset formed after completing both Step (a) and 
 From this, we see that $\tuple^{(1)}$ is automatically $t$-admissible, and in balance at any large prime $p > t/K$:
 $$ \nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right) = 0.$$
 For medium primes $K < p_1 \leq t/K$, one can have some increase in the $p_1$-surplus coming from Step (a), which is described by \eqref{A-def}:
-$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(0)}}\right) + A_{p_1}.$$
+$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(0)}}\right) + NA_{p_1}.$$
 For small or tiny primes $p \leq K$, one also has some possible decrease in the $p_1$-surplus coming from Step (b), which is described by \eqref{B-def}:
-$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(0)}}\right) + A_{p_1} - B_{p_1}.$$
+$$ \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(1)}}\right) = \nu_{p_1}\left(\frac{N!}{\prod \tuple^{(0)}}\right) + N(A_{p_1} - B_{p_1}).$$
 In particular, we have from \eqref{alpha1-def}, \eqref{alpha2-def} and the triangle inequality that
 \begin{equation}\label{alpha-1}
-\frac{1}{N} \| \nu_2\left(\prod \tuple^{(1)}\right), \nu_3\left(\prod \tuple^{(1)}\right)\|_\gamma \leq \alpha_1 + \alpha_2.
+\frac{1}{N} \left\| \nu_2\left(\prod \tuple^{(1)}\right), \nu_3\left(\prod \tuple^{(1)}\right)\right\|_\gamma \leq \alpha_1 + \alpha_2.
 \end{equation}
 
-Each element removed in Step (a) reduces the $t$-excess, while each element $p \lceil t/p \rceil$ added in Step (b) increases the $t$-excess by $\log \frac{\lceil t/p \rceil}{t/p}$, so each large prime $t/K < p \leq N$ contributes a net of $\lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p} = f_{N/t}(p/N)$ to the $t$-excess.  Thus by \eqref{delta-1}, \eqref{delta-2} we have
+Each element removed in Step (a) reduces the $t$-excess, while each element $p \lceil t/p \rceil$ added in Step (b) increases the $t$-excess by $\log \frac{\lceil t/p \rceil}{t/p}$, so each large prime $t/K < p \leq N$ contributes a net of $\lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p} = f_{N/t}(p/N)$ to the $t$-excess.  Thus by \eqref{delta1-def}, \eqref{delta2-def} we have
 \begin{equation}\label{excess-1} 
   \frac{1}{N} \excess_t(\tuple^{(1)}) \leq \delta_1 + \delta_2.
 \end{equation}
 
 Now we bring the multiset $\tuple^{(1)}$ into balance at small and medium primes $3 < p \leq t/K$.  We make the following observations:
 \begin{itemize}
-\item[(C)]  If an element in $\tuple^{(1)}$ is divisible by some small or medium prime $3 < p \leq t/K$, and one replaces $p$ by $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ in the factorization of that element, then the $p$-surplus decreases by one, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ increases by at most $\frac{2}{\log 12}(\log p + \kappa_{**})$.  All other $p_1$-surpluses or $p_1$-deficits for $p_1 \neq 2,3,p$ remain unaffected.
-\item[(D)]  If one adds an element of the form $m \lceil t/m \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ for some $m \leq t/K$ that is the product of small primes $3 < p \leq K$, then the $p$-surpluses at small primes $p$ increase by $\nu_p(m)$, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\sup_{p_0=2,3} \frac{p_0-1}{N} \nu_{p_0}\left(\frac{N!}{\prod \tuple^{(1)}}\right)$ increases by at most $\frac{2}{\log 12}(\log(t/m) + \kappa^*_{4.5})$.  The $p$-surpluses or $p$-deficits at medium or large primes remain unaffected.
+\item[(C)]  If an element in $\tuple^{(1)}$ is divisible by some small or medium prime $3 < p \leq t/K$, and one replaces $p$ by $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ in the factorization of that element, then the $p$-deficit decreases by one, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ increases by at most $\frac{2}{\log 12}(\log p + \kappa_{**})$.  All other $p_1$-surpluses or $p_1$-deficits for $p_1 \neq 2,3,p$ remain unaffected.
+\item[(D)]  If one adds an element of the form $m \lceil t/m \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ for some $m \leq t/K$ that is the product of small or medium primes $3 < p \leq t/K$, then the $p$-surpluses at small or medium primes $p$ decrease by $\nu_p(m)$, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\sup_{p_0=2,3} \frac{p_0-1}{N} \nu_{p_0}\left(\frac{N!}{\prod \tuple^{(1)}}\right)$ increases by at most $\frac{2}{\log 12}(\log(t/m) + \kappa_{**})$.  The $p$-surpluses or $p$-deficits at medium or large primes remain unaffected.
 \end{itemize}
 
 With these observations in mind, we perform the following modifications to the multiset $\tuple^{(1)}$.
 \begin{itemize}
-\item[(c)] If there is a $p_1$-deficit $\nu_{p_1}(\prod \tuple^{(1)}/N!) > 0$ at some small or medium prime $3 < p_1 \leq t/K$, then we perform the replacement of $p_1$ in one of the elements of $\tuple^{(1)}$ with $\lceil p_1 \rceil^{\langle 2,3\rangle}_{4.5}$ as per observation (C), $\nu_{p_1}(\prod \tuple^{(1)}/N!)$ times, in order to eliminate all such deficits.
+\item[(c)] If there is a $p_1$-deficit $\nu_{p_1}(\prod \tuple^{(1)}/N!) > 0$ at some small or medium prime $3 < p_1 \leq t/K$, then we perform the replacement of $p_1$ in one of the elements of $\tuple^{(1)}$ with $\lceil p_1 \rceil^{\langle 2,3\rangle}_{4.5}$ as per observation (C), repeated $\nu_{p_1}(\prod \tuple^{(1)}/N!)$ times, in order to eliminate all such deficits.
 \item[(d)] If there is a $p$-surplus $\nu_p(\prod N!/\tuple^{(1)}) > 0$ at some medium prime $K < p \leq t/K$, we add the element 
 $p \lceil t/p \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ as per observation (D), $\nu_p(\prod N!/\tuple^{(1)})$ times, in order to eliminate all such surpluses at medium primes.
 \item[(d')] If there are $p$-surpluses $\nu_p(\prod N!/\tuple^{(1)}) > 0$ at some small primes $3 < p \leq K$, we multiply all these primes together, then apply the greedy algorithm to factor them into products $m$ in the range $t/K^2 < m \leq t/K$, plus at most one exceptional product in the range $1 < m \leq t/K$.  For each of these $m$, add $m \lceil t/m \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ as per observation (D), to eliminate all such surpluses at small primes.
 \end{itemize}
-Call the multiset formed from $\tuple^{(1)}$ formed as the outcome of applying Steps (c), (d), (d') as $\tuple^{(2)}$.  The product of all the primes arising in (d') has logarithm equal to
+Call the multiset formed from $\tuple^{(1)}$ formed as the outcome of applying Steps (c), (d), (d') as $\tuple^{(2)}$.  The product of all the primes arising in Step (d') has logarithm equal to
 $$ \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(1)}} \right) \right|_{\log p_1,0} = \sum_{3 < p_1 \leq K} \left|\nu_p\left( \frac{N!}{\prod \tuple^{(0)}} \right) \right|_{\log p_1,0}$$
 and hence the number of non-exceptional $m$ arising in (d') is at most
 $$ \sum_{3 < p_1 \leq K} \left|\nu_p\left( \frac{N!}{\prod \tuple^{(0)}} \right) \right|_{\frac{\log p_1}{\log(t/K^2)},0}.$$
 The total excess of $\tuple^{(2)}$ is increased in Step (c) by at most
 $$ \kappa_{4.5} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(1)}} \right) \right|_{0,1}
-=  \kappa_{4.5} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + A_{p_1} - B_{p_1} \right|_{0,1},$$
+=  \kappa_{4.5} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1} - B_{p_1}) \right|_{0,1},$$
 in Step (d) by at most
 $$ \kappa_{4.5} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(1)}} \right) \right|_{1,0}
-=  \kappa_{4.5} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + A_{p_1} \right|_{1,0},$$
+=  \kappa_{4.5} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + NA_{p_1} \right|_{1,0},$$
 and in Step (c) by at most
-$$ \kappa_{4.5} (1 + \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) \right|_{\frac{\log p_1}{\log(t/K^2)},0}).$$
+$$ \kappa_{4.5} \left(1 + \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) \right|_{\frac{\log p_1}{\log(t/K^2)},0}\right).$$
 From the triangle inequality and \eqref{excess-1}, \eqref{delta3-def}, \eqref{delta4-def}, \eqref{delta5-def}, \eqref{delta6-def}, we then have
 \begin{equation}\label{excess-2}
    \frac{1}{N} \excess_t(\tuple^{(2)}) \leq \sum_{i=1}^6 \delta_i.
 \end{equation}
 Similarly, the quantity $\frac{1}{N} \| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ is increased in Step (c) by at most
-$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + A_{p_1} - B_{p_1} \right|_{0,\log p_1 + \kappa_{**}},$$
+$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1} - B_{p_1}) \right|_{0,\log p_1 + \kappa_{**}},$$
 in Step (d) by at most
-$$\frac{2}{N\log 12} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + A_{p_1} \right|_{\log(t/p_1) + \kappa_{**},0},$$
+$$\frac{2}{N\log 12} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + NA_{p_1} \right|_{\log(t/p_1) + \kappa_{**},0},$$
 and in Step (d') by at most the sum of
-$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + A_{p_1}-B_{p_1} \right|_{\log(K^2) + \kappa_{**},0}$$
+$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1}-B_{p_1}) \right|_{\log(K^2) + \kappa_{**},0}$$
 and
 $$\frac{2}{N\log 12} \left( \log t + \kappa_{**} \right)$$
 so by \eqref{alpha-1}, \eqref{alpha3-def}, \eqref{alpha4-def}, \eqref{alpha5-def}, \eqref{alpha6-def}, and the triangle inequality we have
@@ -786,19 +790,19 @@ so by \eqref{alpha-1}, \eqref{alpha3-def}, \eqref{alpha4-def}, \eqref{alpha5-def
 
 By construction, the tuple $\tuple^{(2)}$ is $t$-admissible, and in balance at all small, medium, and large primes $p > 3$; thus $N!/\prod \tuple^{(2)} = 2^n 3^m$ for some integers $n,m$.  From \eqref{alpha-2}, \eqref{alpha-cond}, \eqref{legendre}, \eqref{alpha7-def} we have
 \begin{align*}
-n - 2\gamma_2 m &= \nu_2(N!) - 2\gamma_2 \nu_3(N!) - (\nu_2(\prod \tuple^{(2)}) - 2\gamma_2 \nu_3(\prod \tuple^{(2)})) \\
+n - 2\gamma_2 m &= \nu_2(N!) - 2\gamma_2 \nu_3(N!) - \left(\nu_2\left(\prod \tuple^{(2)}\right) - 2\gamma_2 \nu_3\left(\prod \tuple^{(2)}\right)\right) \\
 &\geq \nu_2(N!) - 2\gamma_2 \nu_3(N!) - N (1-\gamma_2) \sum_{i=1}^6 \alpha_i \\
-&> N - \lceil
- \frac{\log N}{\log 2}\rceil - \gamma_2 N - N (1-\gamma_2) (1 - \alpha_7) \\
-&= N (1-\gamma_2) \alpha_7 - \lceil \frac{\log N}{\log 2}\rceil \\
+&> N - 
+ \frac{\log N}{\log 2} - 1 - \gamma_2 N - N (1-\gamma_2) (1 - \alpha_7) \\
+&= N (1-\gamma_2) \alpha_7 - \frac{\log(2N)}{\log 2} \\
 &\geq 0
 \end{align*}
 and similarly
 \begin{align*}
-  2m - \gamma_3 n &= 2\nu_3(N!) - \gamma_3 \nu_2(N!) - (2\nu_3(\prod \tuple^{(2)}) - \gamma_3 \nu_2(\prod \tuple^{(2)})) \\
+  2m - \gamma_3 n &= 2\nu_3(N!) - \gamma_3 \nu_2(N!) - \left(2\nu_3\left(\prod \tuple^{(2)}\right) - \gamma_3 \nu_2\left(\prod \tuple^{(2)}\right)\right) \\
 &\geq 2\nu_3(N!) - \gamma_3 \nu_2(N!) - N (1-\gamma_3) \sum_{i=1}^6 \alpha_i \\
-&> N - 2\lceil \frac{\log N}{\log 3}\rceil - \gamma_3 N - N (1-\gamma_3) (1 - \alpha_7) \\ 
-&= N (1-\gamma_3) \alpha_7 - 2\lceil \frac{\log N}{\log 3}\rceil \\
+&> N - 2 \frac{\log N}{\log 3} - 2 - \gamma_3 N - N (1-\gamma_3) (1 - \alpha_7) \\ 
+&= N (1-\gamma_3) \alpha_7 - 2\frac{\log(3N)}{\log 3} \\
 &\geq 0.
 \end{align*}
 From \eqref{nm} and Cramer's rule we conclude that that $(n,2m)$ lies in the non-negative linear span of $(n_2, 2m_2)$, $(n_3, 2m_3)$, thus
@@ -882,15 +886,10 @@ where $2^{n_0}, 3^{m_0}$ are the largest powers of $2,3$ respectively that are a
   \kappa_* = \kappa_L.
 \end{equation}
 We have
-\begin{align*}
-  2m_2 &\leq \frac{2}{\log 3} \log \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle} \\
-  &\leq \frac{2}{\log 3} (\log(2L) + \kappa_L) 
-\end{align*}
+$$  2m_2 \leq \frac{2}{\log 3} \log \lceil t/2^{n_0} \rceil^{\langle 2,3 \rangle} \leq \frac{2}{\log 3} (\log(2L) + \kappa_L) 
+$$
 and
-\begin{align*}
-  n_2 &\geq n_0 \\
-  &\geq \frac{\log t - \log(2L)}{\log 2};
-\end{align*}
+$$n_2 \geq n_0 \geq \frac{\log t - \log(2L)}{\log 2};$$
 similarly
 $$ n_3 \leq \frac{1}{\log 2} (\log(3L)+\kappa_L)$$
 and
@@ -902,13 +901,13 @@ We conclude that \eqref{nm} holds with
 \gamma_3 &\coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log t - \log(3L)}.
 \end{split}
 \end{equation}
-This lets us compute the quantity $\kappa_{**}$.
+This lets us compute the quantity $\kappa_{**}$ defined in \eqref{kappastar-def}.
 
 To estimate $\delta_3, \alpha_3$ we use
 
 \begin{lemma}\label{val-bound} For every $3 < p \leq t/K$, one has
 \begin{equation}\label{nup} 
-  \nu_p(N!/\tuple^{(1)}) =  
+  \nu_p\left(\frac{N!}{\prod \tuple^{(1)}}\right) =  
 O_{\leq}\left(\frac{4A+3}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
 \end{equation}
 \end{lemma}
@@ -916,13 +915,14 @@ O_{\leq}\left(\frac{4A+3}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\rig
 \begin{proof}
 One has
   \begin{align*}
-    \nu_p(\tuple^{(1)}) &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} |I \cap p^j \Z| \\
+    \nu_p(\prod \tuple^{(1)}) &= A \sum_{t < n \leq t(1+\sigma)}^* \nu_p(n) \\
+    &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \sum_{t/p^j < n \leq t(1+\sigma)/p^j}^* 1 \\
     &= A \sum_{1 \leq j \leq \frac{\log N}{\log p}} \left(\frac{N}{p^j A} + O_{\leq}(4/3)\right) \\
     &= \frac{N}{p-1} - O_{\leq}^+\left(\frac{1}{p-1}\right)
     + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right) \\
     &= \frac{N}{p-1} 
     - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)
-    + O_{\leq}\left(\frac{4A+0.75}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
+    + O_{\leq}\left(\frac{4A}{3} \left\lceil \frac{\log N}{\log p}  \right\rceil\right).
   \end{align*}
   Meanwhile, from \eqref{legendre} one has
   $$ \nu_p(N!) = \frac{N}{p-1} - O_{\leq}^+\left(\left\lceil \frac{\log N}{\log p}  \right\rceil\right)$$
@@ -950,7 +950,7 @@ For the remaining primes $3 < p \leq K(1+\sigma)$ one has
 \begin{equation}\label{ap1-small}
 A_{p_1} = \frac{A}{N} \sum_{m \leq K(1+\sigma)}^* \nu_{p_1}(m) \left( \pi\left(\frac{t(1+\sigma)}{m}\right) - \pi\left(\frac{t}{\min(m,K)} \right) \right).
 \end{equation}
-In practice, these expressions can be adequately controlled by \Cref{osc-lemma}.
+In practice, these expressions can be adequately controlled by \Cref{osc-lemma}, as can the quantities $B_{p_1}$.
 
 \section{The asymptotic regime}
 
@@ -958,10 +958,7 @@ With the above estimates, we can now establish the lower bound in \Cref{main}(iv
 \begin{equation}\label{main-lower}
    t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c_1} N} \asymp N
 \end{equation}
-and $0 < c_1 < 1$ is a small absolute constant.  With this choice of parameters, we see from \eqref{delta-def}, \eqref{stirling} that
-$$ \delta = \frac{ec_0}{\log N} + \frac{e}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right).$$
-
-Let $N$ be sufficiently large.  We use the construction of the previous section with the parameters
+and $0 < c_1 < 1$ is a small absolute constant. We use the construction of the previous section with the parameters
 \begin{align}
   A &\coloneqq \lfloor \log^2 N \rfloor\label{a-asym}\\
 K &\coloneqq \lfloor \log^3 N \rfloor \label{k-asym} \\
@@ -971,7 +968,7 @@ so from \eqref{sigma-def} one has
 \begin{equation}\label{sigma-alt}
    \sigma = \frac{3N}{tA} \asymp \frac{1}{A} \asymp \frac{1}{\log^2 N}.
 \end{equation}
-The conditions \eqref{condition}, \eqref{t-lower} are easily verified for $N$ large enough.
+The conditions \eqref{conditions}, \eqref{t-lower} are easily verified for $N$ large enough.
 
 By \eqref{kappas-eq}, \eqref{l-asym}, and \Cref{power-lemma}(ii) we have
 $$ \kappa_* \ll \log^{-c} N$$
@@ -982,13 +979,16 @@ $$
 and hence by \eqref{kappastar-def},  \eqref{kappastar-2-def}, \eqref{kappastar-3-def}
 $$ \kappa_{**} \ll 1.$$
 By \Cref{repair}, it thus suffices to establish the inequalities \eqref{delta-cond}, \eqref{alpha-cond}.
-Several of the quantities $\delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, and the prime number theorem:
+Several of the quantities $\delta, \delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, \eqref{stirling}, and the prime number theorem:
 \begin{align*}
   \delta_1 &\ll \frac{1}{\log^2 N} \\
   \delta_3 &\ll \frac{1}{\log^2 N} \\
   \delta_6 &\ll \frac{1}{N} \\
   \delta_7 &\ll \frac{1}{\log^{1+c} N} \\
   \delta_8 &\ll \frac{\log N}{N} \\
+  \delta &= \frac{ec_0}{\log N} + \frac{e}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right)\\  
+\end{align*}
+\begin{align*}
   \alpha_1 &= 0 \\
   \alpha_3 &\ll \frac{1}{\log N} \\
   \alpha_6 &\ll \frac{\log N}{N} \\
@@ -1056,11 +1056,11 @@ for all $p_1 > 3$.
 Writing $\nu_{p_1}(m) = \sum_{j \geq 1} 1_{p_1^j|m}$, it suffices to show that
   $$ \sum_{m \leq K; p^j|m} \frac{3}{m} 1_{(m,6)=1} - \log \frac{m}{m-1} \geq 0.$$
 Making the change of variables $m = p_1^j n$, it suffices to show that
-  $$ \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p^j \log \frac{p^j n}{p^j n - 1} \geq 0$$
+  $$ \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - p_1^j \log \frac{p_1^j n}{p_1^j n - 1} \geq 0$$
   for any $K' > 0$.   Using the bound
-  $$ \log \frac{p^jn}{p^jn - 1} = \int_{p^jn-1}^{p^jn} \frac{dx}{x} \in \left[\frac{1}{p^j n}, \frac{1}{p^jn-1}\right]$$
+  $$ \log \frac{p_1^jn}{p_1^jn - 1} = \int_{p_1^jn-1}^{p_1^jn} \frac{dx}{x} \leq \frac{1}{p_1^jn-1}$$
   and $p^j \geq 5$, we have
-  $$ \frac{1}{n} \leq p^j \log \frac{p^j n}{p^j n - 1} \leq \frac{1}{n-0.2}$$
+  $$ p_1^j \log \frac{p_1^j n}{p_1^j n - 1} \leq \frac{1}{n-0.2}$$
   and so it suffices to show that
   \begin{equation}\label{kb}
   \sum_{n \leq K'}^* \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n-0.2} \geq 0.
@@ -1070,7 +1070,7 @@ Making the change of variables $m = p_1^j n$, it suffices to show that
   where $\psi$ here denotes the digamma function rather than the von Mangoldt summatory function, it will suffice to show that
   \begin{equation}\label{kb-2}
   \sum_{n \leq K'} \frac{3}{n} 1_{(n,6)=1} - \frac{1}{n} \geq 0.4.\end{equation}
-  This can be numerically verified for $K' \leq 100$, with substantial room to spare for $K'$ large; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$, the sum is positive:
+  This can be numerically verified for $K' \leq 100$, with substantial room to spare for $K'$ large; see \Cref{fig:kb}. On a block $6a-1 \leq n \leq 6a+4$ with $a>1$, the sum is positive:
   \begin{align*}
   \sum_{6a-1 \leq n \leq 6a+4}^* \frac{3}{n}  - \frac{1}{n } &= \left(\frac{1}{6a-1} - \frac{1}{6a}\right) + \left(\frac{1}{6a-1} - \frac{1}{6a+2}\right)\\
   &\quad + \left(\frac{1}{6a+1} - \frac{1}{6a+3}\right) + \left(\frac{1}{6a+1} - \frac{1}{6a+4}\right) \\
@@ -1081,7 +1081,7 @@ The inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data 
   \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{key_ineq.png}
-  \caption{A plot of \eqref{kb}.}
+  \caption{A plot of \eqref{kb}, \eqref{kb-2}.}
   \label{fig:kb}
   \end{figure}
 

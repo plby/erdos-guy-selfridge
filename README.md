@@ -1,8 +1,8 @@
 # Verifying the Guy-Selfridge conjecture
 
-For a natural number $N$, let $t(N)$ be the largest number such that $N!$ can be factored into $N$ integer factors, each of which is at least $t(N)$.  [It is known](https://arxiv.org/abs/2503.20170) that $\frac{1}{e} - \frac{O(1)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0+o(1)}{\log N}$,
+For a natural number $N$, let $t(N)$ be the largest number such that $N!$ can be factored into $N$ integer factors, each of which is at least $t(N)$.  It is known that $\frac{1}{e} - \frac{c_0+O(\log^{-c} N)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} -\frac{c_1+o(1)}{\log^2 N}$,
 where $c_0 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx = 0.3044\dots,$
-answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  
+answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  Here $c_1$ is the explicit constant $c_1 := c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.7552$, where $c'_1 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right) \log \frac{1}{x}\ dx \approx 0.370$ and $c''_1 :=  \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) \approx 1.680$. 
 
 Here is a graph of the integral defining $c_0$:
 
@@ -34,7 +34,7 @@ This repository records the efforts to verify the [Guy-Selfridge conjectures](ht
 Secondary goals are
 
 3.  Extend the values of $t(N)$ reported in the OEIS (which [are listed up to](https://oeis.org/A034258/b034258.txt))  $N \leq 79$, and which can be extended to $N \leq 200$ by inverting [OEIS A034259](https://oeis.org/A034259).
-4.  Obtain more accurate values for $c_0$.
+4.  Obtain more accurate values for $c_0$ and $c_1$.
 
 
 ## Current status
@@ -42,7 +42,7 @@ Secondary goals are
 1. Conjecture 1 **has been established** as a consequence of  Conjecture 2 holding for $N \geq 43632$, together with using the linear programming or greedy algorithm methods to verify it in the remaining range range $N < 43632$.
 2. Conjecture 2 **has been established** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$, by a modified greedy method; and for $N > 10^{11}$, by a modified approximate factorization method.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
-4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.
+4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.  Only a very rough estimate for $c_1$ has been given so far.
 
 ## Timeline on controlling $t(N)$
 
@@ -75,13 +75,14 @@ Secondary goals are
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N \geq 10^{12}$ | Modified approximate factorization + explicit estimates |  
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/27) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates |
 
-## Computations of $c_0$
+## Computations of $c_0$, $c_1$
 
 | Date | Contributor | Result | Method | Comments |
 | --- | --- | --- | --- | --- | 
 | [26 Mar 2025](https://arxiv.org/abs/2503.20170v1) | Terence Tao | $c_0 \approx 0.3044$ | Naive Riemann sum | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6) | Terence Tao | $c_0 \approx 0.30441901087$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Evan Conway | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
+| 19 Apr 2025 | Terence Tao | $c_1 \approx 0.755$ | Naive Riemann sum | Non-rigorous
 
 ## Data
 

@@ -241,7 +241,11 @@ and for any $\alpha>0$, $f_\alpha \colon (0,\infty) \to \R$ denotes the piecewis
 \begin{equation}\label{falpha-def} 
   f_\alpha(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil 1/\alpha x \rceil}{1/\alpha x}.
 \end{equation}
-In particular, \eqref{t1} and \eqref{Tbound} hold.
+In particular, \eqref{t1} and \eqref{Tbound} hold.  In fact the upper bound can be sharpened to
+\begin{equation}\label{tna} 
+  \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} - \frac{c_1+o(1)}{\log^2 N} 
+\end{equation}
+for an explicit constant $c_1=0.755\dots$; see 
 \end{itemize}
 \end{theorem}
 
@@ -508,7 +512,7 @@ By the previous remarks, it will suffice to show that the bound \eqref{pj} in fa
   a contradiction.
 \end{proof}
   
-We have found empirically that usign linear programming to maximize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  With this technique, the linear programming method can now be run to cover all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by integer programming; see \cite{github} and \Cref{fig-long}.
+We have found empirically that using linear programming to maximize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  With this technique, the linear programming method can now be run to cover all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by integer programming; see \cite{github} and \Cref{fig-long}.
 
 One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, \Cref{lp-upper} can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the lower bound linear program produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The linear programming method can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$.  When combined with the greedy algorithm computations, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
 
@@ -518,7 +522,7 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{longplot.png}
-  \caption{$t(N)/N$ for $80 \leq N \leq 10^4$, obtained via linear programming in most cases (and integer programming in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp; on the other hand, the asymptotic $1/e - c_0/\log N$ is a relatively poor approximation, suggesting the presence of a lower order term that empirically appears to be about $1/e - c_0/\log N - 0.7/\log^2 N$.}
+  \caption{$t(N)/N$ for $80 \leq N \leq 10^4$, obtained via linear programming in most cases (and integer programming in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
   \label{fig-long}
   \end{figure}
 
@@ -581,7 +585,7 @@ for all $a \in \tuple$, where $p_{a,1},\dots,p_{a,k_a}$ are the primes greater t
     By \eqref{legendre}, we can bound $\nu_p(N!) g_t(p)$ by $\lfloor N/p \rfloor g_t(p) = f_{N/t}(p/N)$.  This contradicts \eqref{contra}, giving the claim. 
   \end{proof}
 
-In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}.
+In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}.
     
 \begin{figure}
   \centering
@@ -593,27 +597,57 @@ In practice, \Cref{upper-crit} gives reasonable upper bounds on $N$, especially 
 We can now prove the upper bound portion of \Cref{main}(iv):
 
   \begin{proposition}\label{upper-bound}  For large $N$, one has
-    $$ \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^2 N} \right).$$
-    \end{proposition}
+    $$ \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} - \frac{c_1 + o(1)}{\log^2 N}$$
+    where
+    \begin{align*}
+      c'_1 &\coloneqq \frac{1}{e} \int_0^1 f_e(x) \log \frac{1}{x}\ dx \approx 0.370\\
+      c''_1 &\coloneqq \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) \approx 1.680\\
+      c_1 &\coloneqq c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.7552.
+    \end{align*}
+  \end{proposition}
     
     \begin{proof}  We apply \Cref{upper-crit} with
-      $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} + \frac{C_0}{\log^2 N}$$
-    with $C_0$ a large absolute constant to be chosen later.  From Taylor expansion and the Stirling approximation one sees that
-    $$ \log N! - N \log t \geq ec_0 \frac{N}{\log N} + (C_0-O(1)) \frac{N}{\log^2 N}$$
-    so it will suffice to establish the upper bound
-    $$ \sum_{\frac{t}{\lfloor\sqrt{t}\rfloor} < p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-    For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log N}$, so it suffices to show that
-    $$ \sum_{\frac{N}{\log N} \leq p \leq N} f_{N/t}(p/N) \leq ec_0 \frac{N}{\log N} + O\left( \frac{N}{\log^2 N} \right).$$
-    On the interval $[1/\log N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log N,1]$.  By \Cref{osc-lemma} (with classical error term), the left-hand side is then
-    $$ \int_{N/\log N}^N \left(1-\frac{2}{\sqrt{x}}\right) f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
-    for some $c>0$.  Discarding the $\frac{2}{\sqrt{x}}$ term, performing a change of variable, and using \eqref{c0-def}, we reduce to showing that
-    $$  \int_{1/\log N}^1 f_{N/t}(x) \frac{\log N}{\log(Nx)}\ dx 
-    \leq  \int_0^1 f_e(x)\ dx  + O\left( \frac{1}{\log N} \right).$$
-    We have the Taylor approximation 
-    $$\frac{\log N}{\log(Nx)} = 1 + O\left( \frac{\log(1/x)}{\log N} \right).$$ 
-    Applying \eqref{falpha-bound} and the integrability of $\log(1/x)$, we see that the contribution of the error term is acceptable.  Applying a further rescaling by $N/et = 1 + O(1/\log N)$, we reduce to showing that
-$$ \int_{N/et\log N}^{N/et} f_{N/t}(Nx/et)\ dx = \int_0^1 f_e(x)\ dx  + O\left( \frac{1}{\log N} \right).$$
-But observe that $f_{N/t}(Nx/et) = f_e(x)$ unless $\frac{1}{x}$ is within $O(1/\log N)$ of an integer, which one can calculate to occur on a set of measure $O(1/\log N)$ for $x \in [0,N/et]$.  By \eqref{falpha-bound}, both integrands are bounded by $O(1)$ for all $x \in [0,N/et]$, and the claim follows from the triangle inequality.
+      $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} - \frac{c_1-\eps}{\log^2 N}$$
+    for a small absolute constant $\eps>0$.  From Taylor expansion and the Stirling approximation one sees that
+    $$ \log N! - N \log t = ec_0 \frac{N}{\log N} + (ec_1 - \frac{1}{2} e^2 c_0^2 - e\eps+o(1)) \frac{N}{\log^2 N}$$
+    so it will suffice to establish the lower bound
+    \begin{equation}\label{targ-sum}
+      \sum_{\frac{t}{\lfloor\sqrt{t}\rfloor} < p \leq N} f_{N/t}(p/N) \geq ec_0 \frac{N}{\log N} + (ec_1 - \frac{1}{2} e^2 c_0^2 - e \eps + o(1)) \frac{N}{\log^2 N}
+    \end{equation}
+    for $N$ sufficiently large depending on $\eps$.
+
+    For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log^3 N}$.
+    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,1]$.  By \Cref{osc-lemma} (with classical error term), the left-hand side of \eqref{targ-sum} is at least
+    $$ \int_{N/\log^3 N}^N f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
+    for some $c>0$.  Performing a change of variable, we reduce to showing that
+    $$  \int_{1/\log^3 N}^1 f_{N/t}(x) \frac{\log N}{\log(Nx)}\ dx 
+    \geq  ec_0 + \frac{ec_1 - \frac{1}{2} e^2 c_0^2 - e \eps + o(1)}{\log N}.$$
+    By Taylor expansion, we have
+    $$ \frac{\log N}{\log(Nx)} = 1 + \frac{1}{\log N} \log \frac{1}{x} + o(\frac{1}{\log N})$$
+    and from dominated convergence we have
+  $$
+  \int_{1/\log^3 N}^1 f_{N/t}(x) \log \frac{1}{x}\ dx = ec'_1 + o(1)$$
+and hence by definition of $c_1$, we reduce to showing that
+$$  \int_{1/\log^3 N}^1 f_{N/t}(x)\ dx 
+\geq  ec_0 + \frac{ec_0 c''_1 - e^2 c_0^2 - e\eps + o(1)}{\log N}.$$
+By performing a rescaling by $N/et = 1 + \frac{ec_0+o(1)}{\log N}$, the left-hand side may be written as
+$$ \left(1 - \frac{ec_0+o(1)}{\log N}\right) \int_{N/et\log^3 N}^{N/et}
+\left\lfloor \frac{N/et}{x} \right\rfloor \log\left(ex \left\lceil \frac{1}{ex} \right\rceil \right) $$
+so it will suffice to show that
+$$
+\int_{N/et\log^3 N}^{N/et}
+\left\lfloor \frac{N/et}{x} \right\rfloor \log\left(ex \left\lceil \frac{1}{ex} \right\rceil \right)\ dx \geq ec_0 + \frac{ec_0 c''_1 - e\eps + o(1)}{\log N}.$$
+Since
+$$ \int_{1/\log^2 N} \lfloor \frac{N/et}{x} \rfloor \log\left(ex \left\lceil \frac{1}{ex} \right\rceil \right) = ec_0 - \frac{o(1)}{\log N}$$
+it suffices to show that
+$$
+\int_{1/log^2 N}^{N/et}
+(\left\lfloor \frac{N/et}{x} \right\rfloor - \left\lfloor \frac{1}{x} \right\rfloor) \log\left(ex \left\lceil \frac{1}{ex} \right\rceil \right)\ dx \geq \frac{ec_0 c'' - e\eps + o(1)}{\log N}.$$
+Let $K$ be sufficiently large depending on $\eps$, then for $N$ sufficiently large depending on $K$ we can lower bound the left-hand side by
+$$ \sum_{k=1}^K \int_{1/k}^{N/etk} \log\left(ex \left\lceil \frac{1}{ex} \right\rceil \right)\ dx;$$
+since $\frac{N}{etk} = \frac{1}{k} + \frac{ec_0}{k \log N}$, we can lower bound this (using the irrationality of $e$) by
+$$ \frac{ec_0+o(1)}{\log N} \sum_{k=1}^K \frac{1}{k} \log\left(\frac{e}{k} \lceil \frac{k}{e} \rceil\right)$$
+for sufficiently large $N$.  Since the sum here can be made arbitrarily close to $c''_0$ by increasing $K$, we obtain the claim.
 \end{proof}
     
 We can now establish \Cref{main}(i): 

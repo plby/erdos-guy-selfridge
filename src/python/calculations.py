@@ -259,8 +259,8 @@ def delta6_upper(N, delta):
     return delta6
 
 # (7.12), (8.4)
-def delta7_upper(t,L, delta):
-    delta7 = kappa(L) * math.log(12) / (2 * math.log(t))
+def delta7_upper(t,N,K,L, sigma, delta):
+    delta7 = kappa(L) / math.log(t) * (math.log(12) / 2 - B_lower(t,N,K,sigma,2) * math.log(2) - B_lower(t,N,K,sigma,3) * math.log(3))
     print(f"Upper bound on delta_7: {delta7} ({delta7 / delta * 100:.4f}% of delta)")
     return delta7
 
@@ -346,7 +346,7 @@ def evaluate(t, N, A, K, L):
     delta4 = delta4_upper(t, N, A, K, sigma, delta)
     delta5 = delta5_upper(t, N, A, K, sigma, delta)
     delta6 = delta6_upper(N, delta)
-    delta7 = delta7_upper(t, L, delta)
+    delta7 = delta7_upper(t, N, K, L, sigma, delta)
     delta8 = delta8_upper(t, N, L, delta)
     delta_sum = delta1 + delta2 + delta3 + delta4 + delta5 + delta6 + delta7 + delta8
     
@@ -367,9 +367,9 @@ def evaluate(t, N, A, K, L):
     print("Delta and alpha sums are within bounds!")
 
 
-A = 213
-K = 251
-N = 1.2 * 10 ** 11
+A = 206
+K = 252
+N = 1 * 10 ** 11
 L = 4.5
 t = N/3
 evaluate(t, N, A, K, L)

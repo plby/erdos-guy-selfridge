@@ -690,7 +690,7 @@ where
 \delta_4 &\coloneqq \kappa_{4.5} \sum_{K < p_1 \leq t/K} A_{p_1} \label{delta4-def}  \\
 \delta_5 &\coloneqq \kappa_{4.5} \sum_{3 < p_1 \leq K} |A_{p_1} - B_{p_1}|_{\frac{\log p_1}{\log(t/K^2)},1} \label{delta5-def}  \\
 \delta_6 &\coloneqq \frac{\kappa_{4.5}}{N} \label{delta6-def}  \\
-\delta_7 &\coloneqq \frac{\kappa_* \log 12}{2\log t} \label{delta7-def}  \\
+\delta_7 &\coloneqq \frac{\kappa_*}{\log t} \left( \frac{\log 12}{2} - B_2 \log 2 - B_3 \log 3\right)\label{delta7-def}  \\
 \delta_8 &\coloneqq \frac{2(\log t + \kappa_*)}{N} \label{delta8-def}\\
 \delta &\coloneqq \frac{1}{N} \log N! - \log t\label{delta-def}  
 \end{align}
@@ -813,9 +813,9 @@ We now create the multiset $\tuple^{(3)}$ by adding $\lfloor \beta_2 \rfloor$ co
   \lfloor \beta_2 \rfloor + \lfloor \beta_3 \rfloor &\leq \beta_2 + \beta_3 \\
   &\leq \frac{1}{\log t} \left( \beta_2 (n_2 \log 2 + m_2 \log 3) + \beta_3 (n_3 \log 2 + m_3 \log 3) \right) \\
   &= \frac{1}{\log t} (n \log 2 + m \log 3) \\
-  &\leq \frac{1}{\log t} (\nu_2(N!) \log 2 + \nu_3(N!) \log 3) \\
-  &\leq \frac{1}{\log t} \left(N \log 2 + \frac{N}{2} \log 3\right) \\
-  &= \frac{N \log 12}{2\log t}.
+  &\leq \frac{1}{\log t} ((\nu_2(N!)-NB_2) \log 2 + (\nu_3(N!)-NB_3) \log 3) \\
+  &\leq \frac{1}{\log t} \left(N \log 2 + \frac{N}{2} \log 3 - NB_2 \log 2 - NB_3 \log 3\right) \\
+  &= \frac{N \log 12}{2\log t} - \frac{N(B_2 \log 2 + B_3 \log 3)}{\log t}.
 \end{align*}
 By \eqref{excess-2}, \eqref{delta7-def}, we thus have
 \begin{equation}\label{excess-3}

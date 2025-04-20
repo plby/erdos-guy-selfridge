@@ -1,15 +1,14 @@
 from calculations import evaluate
 import numpy as np
 
-MIN_A = 180
-MAX_A = 190
-JUMP_A = 0.2
+MIN_A = 160
+MAX_A = 200
+JUMP_A = 1
 
 MIN_K = 290
-MAX_K = 300
+MAX_K = 320
 JUMP_K = 1
 
-# L seemed to always go towards 4.5
 L = 4.5
 
 MIN_N_EXP = 10.0

@@ -367,15 +367,9 @@ def evaluate(t, N, A, K, L):
     # print("Delta and alpha sums are within bounds!")
 
 
-# A = 190
-# K = 252
-# N = 1 * 10 ** 11
-# L = 4.5
-# t = N/3
-
-A = 186.5
+A = 189
 K = 293
-N = 10 ** (10.7555)
+N = 10 ** (10.773)
 L = 4.5
 t = N/3
 evaluate(t, N, A, K, L)

@@ -59,19 +59,19 @@ def plot2():
     read_file()
 
     base2 = range(80, 10001)
-    sparse_base = [10*n for n in range(8, 01)]
+    sparse_base = [10*n for n in range(8, 1001)]
     sparse_upper = [best_t(N, values[N-1])/N for N in sparse_base]
 
     exact = [values[N-1]/N for N in base2]
     asym = [1/math.e - 0.304401/math.log(N) for N in base2]
-    asym2 = [1/math.e - 0.304401/math.log(N) - 0.7/math.log(N)**2 for N in base2]
+    asym2 = [1/math.e - 0.304401/math.log(N) - 0.755/math.log(N)**2 for N in base2]
     e_inv = [1/math.e for N in base2]
     third = [1/3 for N in base2]
 
     plt.figure(figsize=(8, 6))
     plt.plot(base2, exact, label='$t(N)/N$ (exact)' )
     plt.plot(base2, asym, label='$1/e-c_0/\\log N$' )
-    plt.plot(base2, asym2, label='$1/e-c_0/\\log N$-0.7/\\log^2 N' )
+    plt.plot(base2, asym2, label='$1/e-c_0/\\log N$-c_1/\\log^2 N' )
     plt.plot(base2, e_inv, linestyle="--", label='$1/e$' )
     plt.plot(base2, third, linestyle="--", label='$1/3$' )
     plt.plot(sparse_base, sparse_upper, label='Lemma 5.3' )

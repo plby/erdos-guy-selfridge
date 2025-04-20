@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-# The code here verifies the calculations in Section 7.  The bounds are monotone in N, so if the criterion is verified for one value of N, it automatically holds for larger N.
+# The code here verifies the calculations in Section 7.  However, it only does so for a single N; I had previously thought that the bounds were monotone in N, but this turns out not to be the case.  As such, this code, while still technically correct, is not usable for clearing out large ranges of N.  I will need to perform a rewrite of the code in interval arithmetic to handle this issue.
 
 
 

@@ -1227,6 +1227,8 @@ and similarly from \eqref{alpha7-def} we have
 \end{align*}
 so the contribution of these two terms are negligible.
 
+{\bf WARNING: the arguments below assert some claims about monotonicity in $N$ that are not, in fact, the case.  This is currently a gap in the argument.  It may be possible to fix this with an interval arithmetic calculation, but then one needs multiple choices of parameters $A,K,L$ rather than just one, unless there is a lot of slack in the estimates.}
+
 The remaining terms $\delta_4, \delta_5, \delta_7, \alpha_2, \alpha_4, \alpha_5$ to estimate involve the quantities $A_{p_1}, B_{p_1}$ defined in \eqref{A-def}, \eqref{B-def}.  For $B_{p_1}$, we can split it as
 $$ B_{p_1} = \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{N} (\pi( N b_{k,m} ) - \pi(N a_{k,m}))$$
 where 

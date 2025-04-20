@@ -90,33 +90,33 @@ def fancy_kappa_3(L,gamma):
 def gamma_2(t,L):
     assert t > 2*L, "Error: t must be greater than 2*L"
     gamma = (2*math.log(2) / math.log(3)) * (math.log(2*L) + kappa(L)) / (math.log(t) - math.log(2*L))
-    print(f"gamma_2: {gamma}")
+    # print(f"gamma_2: {gamma}")
     return gamma
 
 # see (8.5)
 def gamma_3(t,L):
     assert t > 3*L, "Error: t must be greater than 3*L"
     gamma = (math.log(3) / (2*math.log(2))) * (math.log(3*L) + kappa(L)) / (math.log(t) - math.log(3*L))
-    print(f"gamma_3: {gamma}")
+    # print(f"gamma_3: {gamma}")
     return gamma
 
 # see (7.22)
 def kappa_starstar(L,gamma2,gamma3):
     kappa = max(fancy_kappa_2(L, gamma2), fancy_kappa_3(L, gamma3))
-    print(f"kappa_**: {kappa}")
+    # print(f"kappa_**: {kappa}")
     return kappa
 
 # One could also obtain an upper bound on delta, but it is not needed.
 def delta_lower(t_norm):
     delta = math.log(1/t_norm) - 1
-    print(f"Lower bound on delta: {delta}")
+    # print(f"Lower bound on delta: {delta}")
     return delta
 
 
 # see (8.1)
 def sigma_fn(t_norm,A):
     sigma = 3/(t_norm*A)
-    print(f"sigma: {sigma}")
+    # print(f"sigma: {sigma}")
     return sigma
 
 # see (8.8).  Output is an mpi
@@ -167,7 +167,7 @@ def total_variation(alpha, eps):
     f = n * math.log( m * alpha * eps )
     var += abs(f - val)
     var += abs(f)
-    print(f"Total variation of f_{alpha} on ({eps},1]: {var}")
+    # print(f"Total variation of f_{alpha} on ({eps},1]: {var}")
     return var
 
 # Integral of f_alpha on (eps,1]
@@ -197,27 +197,27 @@ def f_integ(alpha, eps):
         n = next_n
         m = next_m
 
-    print(f"Integral of f_{alpha} from {eps} to 1: {integral}")
+    # print(f"Integral of f_{alpha} from {eps} to 1: {integral}")
     return integral
 
 # Lemma 8.2
 def delta1_upper(t_norm,N_mpi,A,delta):
     delta1 = 3/(2*t_norm*A) + 4/low(N_mpi) 
-    print(f"Upper bound on delta_1: {delta1} ({delta1 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_1: {delta1} ({delta1 / delta * 100:.4f}% of delta)")
     return delta1
 
 # (7.7), Lemma 2.2
 def delta2_upper(t_norm,N_mpi,delta):
     delta2 = f_integ(1/t_norm, t_norm/K) / math.log(t_norm*low(N_mpi)/K)
     delta2 += total_variation(1/t_norm, t_norm/K) * E_norm(1, N_mpi) / math.log(t_norm*low(N_mpi)/K)
-    print(f"Upper bound on delta_2: {delta2} ({delta2 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_2: {delta2} ({delta2 / delta * 100:.4f}% of delta)")
     return delta2
 
 # Corollary 8.4.  The bound here is monotone in N, so we can use the lower endpoint of N_mpi.
 def delta3_upper(t_norm,N_mpi,A,K,delta):
     delta3 = pi_upper(t_norm*low(N_mpi)/K) + (math.log(low(N_mpi))/math.log(5)) * pi_upper(math.sqrt(low(N_mpi)))
     delta3 *= (4*A + 3) * kappa(4.5) / (3 * low(N_mpi))
-    print(f"Upper bound on delta_3: {delta3} ({delta3 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_3: {delta3} ({delta3 / delta * 100:.4f}% of delta)")
     return delta3
 
 # (7.9)
@@ -226,7 +226,7 @@ def delta4_upper(t_norm,N_mpi,A,K,sigma,delta):
     for p in range(K+1, math.floor(K*(1+sigma))+1):
         if is_prime(p):
             delta4 += kappa(4.5) * Ap(t_norm,N_mpi,A,K,sigma,p)
-    print(f"Upper bound on delta_4: {high(delta4)} ({high(delta4) / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_4: {high(delta4)} ({high(delta4) / delta * 100:.4f}% of delta)")
     return high(delta4)
 
 # (7.10)
@@ -236,31 +236,31 @@ def delta5_upper(t_norm,N_mpi,A,K,sigma, delta):
         if is_prime(p):
             delta5 += kappa(4.5) * pos_part(Ap(t_norm,N_mpi,A,K,sigma,p) - Bp(t_norm,N_mpi,K,sigma,p)) * math.log(p) / math.log(t_norm*low(N_mpi)/K**2)
             delta5 += kappa(4.5) * pos_part(Bp(t_norm,N_mpi,K,sigma,p) - Ap(t_norm,N_mpi,A,K,sigma,p)) 
-    print(f"Upper bound on delta_5: {high(delta5)} ({high(delta5) / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_5: {high(delta5)} ({high(delta5) / delta * 100:.4f}% of delta)")
     return high(delta5) 
 
 # (7.11)
 def delta6_upper(N_mpi, delta):
     delta6 = kappa(4.5) / low(N_mpi)
-    print(f"Upper bound on delta_6: {delta6} ({delta6 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_6: {delta6} ({delta6 / delta * 100:.4f}% of delta)")
     return delta6
 
 # (7.12), (8.4)
 def delta7_upper(t_norm,N_mpi,K,L, sigma, delta):
     delta7 = kappa(L) / math.log(t_norm*low(N_mpi)) * (math.log(12) / 2 - low(Bp(t_norm,N_mpi,K,sigma,2)) * math.log(2) - low(Bp(t_norm,N_mpi,K,sigma,3)) * math.log(3))
-    print(f"Upper bound on delta_7: {delta7} ({delta7 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_7: {delta7} ({delta7 / delta * 100:.4f}% of delta)")
     return delta7
 
 # (7.13)
 def delta8_upper(t_norm,N_mpi,L, delta):
     delta8 = 2 * (math.log(t_norm*low(N_mpi)) + kappa(L)) / low(N_mpi)
-    print(f"Upper bound on delta_8: {delta8} ({delta8 / delta * 100:.4f}% of delta)")
+    # print(f"Upper bound on delta_8: {delta8} ({delta8 / delta * 100:.4f}% of delta)")
     return delta8
 
 # (7.15)
 def alpha1_upper():
     alpha1 = 0
-    print(f"Upper bound on alpha_1: {alpha1}")
+    # print(f"Upper bound on alpha_1: {alpha1}")
     return alpha1
 
 # (7.16)
@@ -268,7 +268,7 @@ def alpha2_upper(t_norm,N_mpi,K,sigma, gamma2, gamma3):
     alpha2_2 = (Bp(t_norm,N_mpi,K,sigma,2)-2*gamma2*Bp(t_norm,N_mpi,K,sigma,3)) / (1-gamma2)
     alpha2_3 = (2*Bp(t_norm,N_mpi,K,sigma,3)-gamma3*Bp(t_norm,N_mpi,K,sigma,2)) / (1-gamma3)
     alpha2 = max(high(alpha2_2), high(alpha2_3))
-    print(f"Upper bound on alpha_2: {alpha2}")
+    # print(f"Upper bound on alpha_2: {alpha2}")
     return alpha2
 
 # Corollary 8.4.  The bound is monotone in N
@@ -276,7 +276,7 @@ def alpha3_upper(t_norm,N_mpi,A,K, kappass):
     alpha3 = 2*(4*A+3)/(3*low(N_mpi)*math.log(12))
     alpha3 *= math.log(t_norm*low(N_mpi)/K) + kappass
     alpha3 *= pi_upper(t_norm*low(N_mpi)/K) + (math.log(low(N_mpi))/math.log(5)) * pi_upper(math.sqrt(low(N_mpi)))
-    print(f"Upper bound on alpha_3: {alpha3}")
+    # print(f"Upper bound on alpha_3: {alpha3}")
     return alpha3
 
 # (7.18)
@@ -285,7 +285,7 @@ def alpha4_upper(t_norm,N_mpi,K,sigma, kappass):
     for p in range(K+1, math.floor(K*(1+sigma))+1):
         if is_prime(p):
             alpha4 += (2/math.log(12)) * (math.log(t_norm*high(N_mpi)/p) + kappass) * high(Ap(t_norm,N_mpi,A,K,sigma,p))
-    print(f"Upper bound on alpha_4: {alpha4}")
+    # print(f"Upper bound on alpha_4: {alpha4}")
     return alpha4
 
 # (7.19)
@@ -295,13 +295,13 @@ def alpha5_upper(t_norm,N_mpi,A,K,sigma, kappass):
         if is_prime(p):
             alpha5 += (2/math.log(12)) * pos_part(Ap(t_norm,N_mpi,A,K,sigma,p) - Bp(t_norm,N_mpi,K,sigma,p)) * (math.log(p)/math.log(t_norm*low(N_mpi)/K**2)) * (math.log(K**2) + kappass)
             alpha5 += (2/math.log(12)) * pos_part(Bp(t_norm,N_mpi,K,sigma,p) - Ap(t_norm,N_mpi,A,K,sigma,p)) * (math.log(p) + kappass)
-    print(f"Upper bound on alpha_5: {high(alpha5)}")
+    # print(f"Upper bound on alpha_5: {high(alpha5)}")
     return high(alpha5)
 
 # (7.20)
 def alpha6_upper(t_norm,N_mpi,kappass):
     alpha6 = (2/math.log(12)) * (kappass + math.log(t_norm*low(N_mpi))) / low(N_mpi)
-    print(f"Upper bound on alpha_6: {alpha6}")
+    # print(f"Upper bound on alpha_6: {alpha6}")
     return alpha6    
 
 # (7.21)
@@ -309,7 +309,7 @@ def alpha7_upper(N_mpi,gamma2, gamma3):
     alpha7_2 = math.log(2*low(N_mpi)) / ((1-gamma2) * low(N_mpi) * math.log(2))
     alpha7_3 = 2*math.log(3*low(N_mpi)) / ((1-gamma3) * low(N_mpi) * math.log(3))
     alpha7 = max(alpha7_2, alpha7_3)
-    print(f"Upper bound on alpha_7: {alpha7}")
+    # print(f"Upper bound on alpha_7: {alpha7}")
     return alpha7
 
 
@@ -322,7 +322,7 @@ def evaluate(t_norm, N_mpi, A, K, L):
     assert K >= 5, "Error: K must be at least 5"
     assert t_norm <= 1, "Error: t must be less than or equal to N"
 
-    print(f"Testing Proposition 7.1 for t/N={t_norm}, N in {N_mpi}, A={A}, K={K}, L={L}")
+    # print(f"Testing Proposition 7.1 for t/N={t_norm}, N in {N_mpi}, A={A}, K={K}, L={L}")
     gamma2 = gamma_2(t_norm*low(N_mpi), L)
     gamma3 = gamma_3(t_norm*low(N_mpi), L)
     kappass = kappa_starstar(L, gamma2, gamma3)
@@ -357,12 +357,26 @@ def evaluate(t_norm, N_mpi, A, K, L):
     print(f"Delta and alpha sums are within bounds!  This verifies t(N) >= {t_norm} N for N in {N_mpi}.")
 
 
-A = 190 
-K = 252
+A = 189 
+K = 293
 L = 4.5
 t_norm = 1/3
 
 
+N_mpi = mpi(6 * 10 ** 10, 6.05 * 10 ** 10)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.05 * 10 ** 10, 6.1 * 10 ** 10)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.1 * 10 ** 10, 6.5 * 10 ** 10)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.5 * 10 ** 10, 7 * 10 ** 10)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(7 * 10 ** 10, 1 * 10 ** 11)
+evaluate(t_norm, N_mpi, A, K, L)
 
 N_mpi = mpi(1 * 10 ** 11, 3 * 10 ** 11)
 evaluate(t_norm, N_mpi, A, K, L)

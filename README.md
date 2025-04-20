@@ -82,7 +82,7 @@ Secondary goals are
 | [26 Mar 2025](https://arxiv.org/abs/2503.20170v1) | Terence Tao | $c_0 \approx 0.3044$ | Naive Riemann sum | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6) | Terence Tao | $c_0 \approx 0.30441901087$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Evan Conway | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
-| 19 Apr 2025 | Terence Tao | $c_1 \approx 0.755$ | Naive Riemann sum | Non-rigorous
+| 19 Apr 2025 | Terence Tao | $c_1 \approx 0.7555$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
 
 ## Data
 

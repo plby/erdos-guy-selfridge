@@ -6,15 +6,17 @@ import math
 
 
 def compute_c0():
-    sum = math.pi**2 / 6
+    sum = math.pi**2 / 6  # subtract 1/k^2 from sum to accelerate convergence
 
     for k in range(1,200000):
         sum += (math.log(1 + 1/k))**2 - 1/k**2
         if k % 1000 == 0:
             print(f"After {k} iterations, initial sum is known to be in: [{(sum-1/(2*k*k))/(2*math.e)},{sum/(2*math.e)}]")
 
+# This is the main portion of the integral; one then has to subtract off a fairly rapidly convergent integral
     integral = sum/(2*math.e) + 2 * math.exp(-2) - math.log(2) / (2 * math.e)
 
+    
     a = math.e
     N = 2
     M = 2
@@ -55,17 +57,47 @@ def compute_c1p():
     print(f"c0 is approximately {altsum/math.e}")
     return sum / math.e
 
+def antideriv(N,M, a):
+    val = (math.log(a)**2 + math.log(a) + 1) / a
+    val -= math.log(M) * (math.log(a) + 1) / a
+    val *= N
+    return val
+
+def compute_c1p_alt():
+    N = 1
+    M = 1
+    integral = 0
+    a=1
+    for i in range(50000):
+        if N+1 < math.e * M:
+            b = N+1
+            N_new = N+1
+            M_new = M
+        else:
+            b = math.e * M
+            N_new = N
+            M_new = M+1
+        integral += antideriv(N,M,b) - antideriv(N,M,a)
+                              
+        if (i%1000) == 0:
+            print(f"Integral is: {integral/math.e}, projected to be {integral/math.e + math.log(math.e*b)/(2*b)}")
+        N = N_new
+        M = M_new
+        a = b
+    return integral/math.e  + math.log(math.e*b)/(2*b)
+
+
 # \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) 
 def compute_c1pp():
     sum = 0
     for k in range(1, 100000):
         sum += math.log( (math.e/k) * math.ceil(k/math.e) ) / k
         if k % 1000 == 0:
-            print(f"After {k} iterations, c1'' has summed to {sum}")
-    return sum 
+            print(f"After {k} iterations, c1'' has summed to {sum}; projected value {sum + math.e/(2*k)}")
+    return sum + math.e/(2*k)
 
 c0 = compute_c0()
-c1p = compute_c1p()
+c1p = compute_c1p_alt()
 c1pp = compute_c1pp()
 
 # c'_1 + c_0 c''_1 - ec_0^2/2

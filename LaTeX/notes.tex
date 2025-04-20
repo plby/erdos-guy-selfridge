@@ -317,7 +317,7 @@ If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $
 Throughout this paper, the symbol $p$ (or $p_0$, $p_1$, etc.) is always understood to be restricted to be prime.  The primes $2,3$ will play a special role in this paper and will be referred to as \emph{tiny primes}. 
 Call a natural number \emph{$3$-smooth} if it is the product of tiny primes, i.e., it is of the form $2^n 3^m$ for some natural numbers $n,m$, and \emph{$3$-rough} if it is not divisible by any tiny prime, that is to say it is coprime to $6$.  Given a positive real number $x$, we use $\lceil x \rceil^{\langle 2,3 \rangle}$ to denote the smallest $3$-smooth number greater than or equal to $x$.  For instance, $\lceil 5 \rceil^{\langle 2,3 \rangle} = 6$ and $\lceil 10 \rceil^{\langle 2,3 \rangle} = 12$.  
 
-It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = 12^{N/2}$; see \eqref{legendre} below.  This makes $\log 12$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log 12$} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
+It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = \sqrt{12}^{N}$; see \eqref{legendre} below.  This makes $\log \sqrt{12}$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log \sqrt{12}$} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
 \begin{equation}\label{fancy-kappa-def}
   \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}
 \end{equation}
@@ -347,23 +347,23 @@ holds for all $x \geq L$; see \Cref{fig:nextsmooth}.  In \Cref{power-sec} we est
 \end{equation}
 and for any $0 \leq \gamma < 1$ we have
 \begin{equation}\label{12-2}
-\frac{\nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L) - 2 \gamma \nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} \leq \frac{2}{\log 12} \left( \log x  + \kappa^{(2)}_{L,\gamma} \right)
+\frac{\nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L) - 2 \gamma \nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} \leq \frac{1}{\log \sqrt{12}} \left( \log x  + \kappa^{(2)}_{L,\gamma} \right)
 \end{equation}
 and
 \begin{equation}\label{12-3}
-\frac{2\nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L) - \gamma \nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} \leq \frac{2}{\log 12} \left( \log x + \kappa^{(3)}_{L,\gamma} \right)
+\frac{2\nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L) - \gamma \nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} \leq \frac{1}{\log \sqrt{12}} \left( \log x + \kappa^{(3)}_{L,\gamma} \right)
 \end{equation}
 where
 \begin{equation}\label{kappastar-2-def}
-\kappa^{(2)}_{L,\gamma} \coloneqq \left(\frac{\log 12}{2(1-\gamma)\log 2} - 1\right) \log(12L) + \frac{\kappa_L\log 12}{2 (1-\gamma) \log 2}
+\kappa^{(2)}_{L,\gamma} \coloneqq \left(\frac{\log \sqrt{12}}{(1-\gamma)\log 2} - 1\right) \log(12L) + \frac{\kappa_L\log \sqrt{12}}{(1-\gamma) \log 2}
 \end{equation}
 \begin{equation}\label{kappastar-3-def}
-  \kappa^{(3)}_{L,\gamma} \coloneqq \left(\frac{\log 12}{(1-\gamma)\log 3} - 1\right) \log(12L) + \frac{\kappa_L\log 12}{(1-\gamma)\log 3}.
+  \kappa^{(3)}_{L,\gamma} \coloneqq \left(\frac{2\log \sqrt{12}}{(1-\gamma)\log 3} - 1\right) \log(12L) + \frac{2\kappa_L\log \sqrt{12}}{(1-\gamma)\log 3}.
 \end{equation}
 \end{itemize}
 \end{lemma}
 
-We remark that when $x$ is a power of $12$, the left-hand sides of \eqref{12-2}, \eqref{12-3} are both equal to $\frac{2}{\log 12} \log x$; thus the estimates \eqref{12-2}, \eqref{12-3} are quite efficient asymptotically.
+We remark that when $x$ is a power of $12$, the left-hand sides of \eqref{12-2}, \eqref{12-3} are both equal to $\frac{1}{\log \sqrt{12}} \log x$; thus the estimates \eqref{12-2}, \eqref{12-3} are quite efficient asymptotically.
 
 We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
 
@@ -747,17 +747,17 @@ where
 \delta_4 &\coloneqq \kappa_{4.5} \sum_{K < p_1 \leq t/K} A_{p_1} \label{delta4-def}  \\
 \delta_5 &\coloneqq \kappa_{4.5} \sum_{3 < p_1 \leq K} |A_{p_1} - B_{p_1}|_{\frac{\log p_1}{\log(t/K^2)},1} \label{delta5-def}  \\
 \delta_6 &\coloneqq \frac{\kappa_{4.5}}{N} \label{delta6-def}  \\
-\delta_7 &\coloneqq \frac{\kappa_*}{\log t} \left( \frac{\log 12}{2} - B_2 \log 2 - B_3 \log 3\right)\label{delta7-def}  \\
+\delta_7 &\coloneqq \frac{\kappa_*}{\log t} \left( \log \sqrt{12} - B_2 \log 2 - B_3 \log 3\right)\label{delta7-def}  \\
 \delta_8 &\coloneqq \frac{2(\log t + \kappa_*)}{N} \label{delta8-def}\\
 \delta &\coloneqq \frac{1}{N} \log N! - \log t\label{delta-def}  
 \end{align}
 \begin{align}
 \alpha_1 &\coloneqq \frac{1}{N} \left\| \left( \nu_{2}\left(\prod \tuple^{(0)}\right), \nu_{3}\left(\prod \tuple^{(0)}\right)\right) \right\|_\gamma \label{alpha1-def}  \\
 \alpha_2 &\coloneqq \left\| (B_2, B_3) \right\|_\gamma \label{alpha2-def}  \\
-\alpha_3 &\coloneqq \frac{2}{N\log 12} \left(\log \frac{t}{K} + \kappa_{**}\right) \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{alpha3-def}  \\
-\alpha_4 &\coloneqq \frac{2}{\log 12} \sum_{K < p_1 \leq t/K} \left(\log \frac{t}{p_1} + \kappa_{**}\right) A_{p_1} \label{alpha4-def}  \\
-\alpha_5 &\coloneqq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa_{**}} \label{alpha5-def}  \\
-\alpha_6 &\coloneqq \frac{2}{N\log 12} (\log t + \kappa_{**}) \label{alpha6-def}  \\
+\alpha_3 &\coloneqq \frac{1}{N\log \sqrt{12}} \left(\log \frac{t}{K} + \kappa_{**}\right) \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right| \label{alpha3-def}  \\
+\alpha_4 &\coloneqq \frac{1}{\log \sqrt{12}} \sum_{K < p_1 \leq t/K} \left(\log \frac{t}{p_1} + \kappa_{**}\right) A_{p_1} \label{alpha4-def}  \\
+\alpha_5 &\coloneqq \frac{1}{\log \sqrt{12}} \sum_{3 < p_1 \leq K} \left|A_{p_1} - B_{p_1}\right|_{\frac{\log p_1}{\log(t/K^2)} (\log K^2 + \kappa_{**}), \log p_1 + \kappa_{**}} \label{alpha5-def}  \\
+\alpha_6 &\coloneqq \frac{\log t + \kappa_{**}}{N\log \sqrt{12}}  \label{alpha6-def}  \\
 \alpha_7 &\coloneqq \max\left( \frac{\log(2N)}{(1-\gamma_2)N\log 2},  \frac{2\log(3N)}{(1-\gamma_3)N\log 3}\right)\label{alpha7-def}  
 \end{align}
 \begin{align}
@@ -768,9 +768,7 @@ B_{p_1} &\coloneqq \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \l
 with the convention that the upper bound $p < \frac{t}{m-1}$ in \eqref{B-def} is vacuous when $m=1$.  Then $t(N) \geq t$.
 \end{proposition}
 
-Note that the quantities $\delta_2, \delta$ essentially appeared previously \Cref{upper-crit}.  As we shall see, when $N$ is large we will be able to construct multisets $\tuple^{(0)}$ that make all the other quantities $\delta_i, i \neq 2$ and $\alpha_i$ quite small, which is how we shall establish such results as \Cref{main}(iii) and the lower bound in \Cref{main}(iv).
-
-The first condition \eqref{delta-cond} is closely tied to the criterion in \Cref{t-descrip}, and roughly speaking ensures that one has saved enough in one's ``budget'' to ``afford'' $N$ or more factors in a $t$-admissible subfactorization.  The second condition \eqref{alpha-cond} states, roughly speaking, that one does not exhaust the supply of available tiny primes in $N!$ (which roughly correspond to the factors of $12^{N/2}$) when repairing $\tuple^{(0)}$ into an efficient subfactorisation of $N!$.
+Note that the quantities $\delta_2, \delta$ essentially appeared previously \Cref{upper-crit}.  Informally, $\delta$ and the condition \eqref{delta-cond} represent the ``budget'' of what one can ``spend'' on various imperfections of the approximate factorization $\tuple^{(0)}$ until we become unable to ``afford'' to ``buy'' a $t$-admissible subfactorization of cardinality at least $N$.  The quantity $\delta_2$ represents the ``fixed expense'' coming from large primes that is unavoidable; but the other expenditures $\delta_i, i \neq 2$ can be made small by suitable exploitation of the pool of tiny primes present in the factorization of $N!$ (which multiply out to roughly $\sqrt{12}^N$).  The secondary constraint \eqref{alpha-cond} can roughly speaking be viewed as a requirement that one does not completely exhaust this pool.
 
 In practice, the parameter $K$ will be quite small compared to $N$, and the quantities $\gamma_2, \gamma_3, \kappa_{*}$ will also be somewhat smaller than $1$.
 
@@ -809,8 +807,8 @@ Each element removed in Step (a) reduces the $t$-excess, while each element $p \
 
 Now we bring the multiset $\tuple^{(1)}$ into balance at small and medium primes $3 < p \leq t/K$.  We make the following observations:
 \begin{itemize}
-\item[(C)]  If an element in $\tuple^{(1)}$ is divisible by some small or medium prime $3 < p \leq t/K$, and one replaces $p$ by $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ in the factorization of that element, then the $p$-deficit decreases by one, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ increases by at most $\frac{2}{\log 12}(\log p + \kappa_{**})$.  All other $p_1$-surpluses or $p_1$-deficits for $p_1 \neq 2,3,p$ remain unaffected.
-\item[(D)]  If one adds an element of the form $m \lceil t/m \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ for some $m \leq t/K$ that is the product of small or medium primes $3 < p \leq t/K$, then the $p$-surpluses at small or medium primes $p$ decrease by $\nu_p(m)$, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\sup_{p_0=2,3} \frac{p_0-1}{N} \nu_{p_0}\left(\frac{N!}{\prod \tuple^{(1)}}\right)$ increases by at most $\frac{2}{\log 12}(\log(t/m) + \kappa_{**})$.  The $p$-surpluses or $p$-deficits at medium or large primes remain unaffected.
+\item[(C)]  If an element in $\tuple^{(1)}$ is divisible by some small or medium prime $3 < p \leq t/K$, and one replaces $p$ by $\lceil p \rceil^{\langle 2,3 \rangle}_{4.5}$ in the factorization of that element, then the $p$-deficit decreases by one, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ increases by at most $\frac{1}{\log \sqrt{12}}(\log p + \kappa_{**})$.  All other $p_1$-surpluses or $p_1$-deficits for $p_1 \neq 2,3,p$ remain unaffected.
+\item[(D)]  If one adds an element of the form $m \lceil t/m \rceil^{\langle 2,3 \rangle}_{4.5}$ to $\tuple^{(1)}$ for some $m \leq t/K$ that is the product of small or medium primes $3 < p \leq t/K$, then the $p$-surpluses at small or medium primes $p$ decrease by $\nu_p(m)$, while (by \Cref{power-lemma}) the $t$-excess increases by at most $\kappa_{4.5}$, and the quantity $\sup_{p_0=2,3} \frac{p_0-1}{N} \nu_{p_0}\left(\frac{N!}{\prod \tuple^{(1)}}\right)$ increases by at most $\frac{1}{\log \sqrt{12}}(\log(t/m) + \kappa_{**})$.  The $p$-surpluses or $p$-deficits at medium or large primes remain unaffected.
 \end{itemize}
 
 With these observations in mind, we perform the following modifications to the multiset $\tuple^{(1)}$.
@@ -837,13 +835,13 @@ From the triangle inequality and \eqref{excess-1}, \eqref{delta3-def}, \eqref{de
    \frac{1}{N} \excess_t(\tuple^{(2)}) \leq \sum_{i=1}^6 \delta_i.
 \end{equation}
 Similarly, the quantity $\frac{1}{N} \| (\nu_2(\prod \tuple^{(1)}),\nu_3(\prod \tuple^{(1)}))\|_\gamma$ is increased in Step (c) by at most
-$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1} - B_{p_1}) \right|_{0,\log p_1 + \kappa_{**}},$$
+$$\frac{1}{N\log \sqrt{12}} \sum_{3 < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1} - B_{p_1}) \right|_{0,\log p_1 + \kappa_{**}},$$
 in Step (d) by at most
-$$\frac{2}{N\log 12} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + NA_{p_1} \right|_{\log(t/p_1) + \kappa_{**},0},$$
+$$\frac{1}{N\log \sqrt{12}} \sum_{K < p_1 \leq t/K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + NA_{p_1} \right|_{\log(t/p_1) + \kappa_{**},0},$$
 and in Step (d') by at most the sum of
-$$\frac{2}{N\log 12} \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1}-B_{p_1}) \right|_{\log(K^2) + \kappa_{**},0}$$
+$$\frac{1}{N\log \sqrt{12}} \sum_{3 < p_1 \leq K} \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right) + N(A_{p_1}-B_{p_1}) \right|_{\log(K^2) + \kappa_{**},0}$$
 and
-$$\frac{2}{N\log 12} \left( \log t + \kappa_{**} \right)$$
+$$\frac{1}{N\log \sqrt{12}} \left( \log t + \kappa_{**} \right)$$
 so by \eqref{alpha-1}, \eqref{alpha3-def}, \eqref{alpha4-def}, \eqref{alpha5-def}, \eqref{alpha6-def}, and the triangle inequality we have
 \begin{equation}\label{alpha-2} 
 \frac{1}{N} \| (\nu_2(\prod \tuple^{(2)}), \nu_3(\prod \tuple^{(3)})) \|_\gamma \leq \sum_{i=1}^6 \alpha_i.
@@ -876,7 +874,7 @@ We now create the multiset $\tuple^{(3)}$ by adding $\lfloor \beta_2 \rfloor$ co
   &= \frac{1}{\log t} (n \log 2 + m \log 3) \\
   &\leq \frac{1}{\log t} ((\nu_2(N!)-NB_2) \log 2 + (\nu_3(N!)-NB_3) \log 3) \\
   &\leq \frac{1}{\log t} \left(N \log 2 + \frac{N}{2} \log 3 - NB_2 \log 2 - NB_3 \log 3\right) \\
-  &= \frac{N \log 12}{2\log t} - \frac{N(B_2 \log 2 + B_3 \log 3)}{\log t}.
+  &= \frac{N \log \sqrt{12}}{\log t} - \frac{N(B_2 \log 2 + B_3 \log 3)}{\log t}.
 \end{align*}
 By \eqref{excess-2}, \eqref{delta7-def}, we thus have
 \begin{equation}\label{excess-3}
@@ -910,10 +908,10 @@ The influence of the parameters $A,K,L$ on the other parameters $\delta_i, \alph
 \item $\delta_3 \asymp A/K\log N$ and $\alpha_3 \asymp A/K$.
 \item $\delta_5 \asymp \log^{O(1)} K/\log^2 N$ and $\alpha_2, \alpha_5 \asymp \log^{O(1)} K / \log N$.
 \item $\delta_7$ will be comparable to $\kappa_L/\log N$.
-\item $\delta_4, \delta_6, \delta_8, \alpha_6, \alpha_7$ will be lower order terms.
+\item $\delta_4, \delta_6, \delta_8, \alpha_4, \alpha_6, \alpha_7$ will be lower order terms.
+\item $\gamma_2, \gamma_3 \asymp \log L / \log N$; if this quantity is small enough, then $\kappa_{**} \asymp 1$.
 \end{itemize}
-We will quantify these relationships more precisely below, but they already suggest that one should take $A$ to only be moderately large (e.g., of logarithmic size), that $K$ should only be slightly larger than $A$, and that $L$ is a relatively minor parameterm, which can also grow slowly with $N$.
-
+We will quantify these relationships more precisely below, but they already suggest that one should take $A$ to only be moderately large (e.g., of logarithmic size), that $K$ should only be slightly larger than $A$, and that $L$ should be significantly smaller than $N$.
 
 We use the notation $\sum^*$ to denote summation restricted to $3$-rough numbers, thus for instance $\sum_{a < k \leq b}^* 1$ denotes the number of $3$-rough numbers in $(a,b]$.  We have a simple estimate for such counts:
 
@@ -1006,7 +1004,7 @@ and the claim follows.
 \begin{corollary}\label{delta3-alpha3-bound} One has
 $$ \delta_3 \leq \frac{(4A+3)\kappa_{4.5}}{3N} \left(\pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{N})\right)$$
 and
-$$ \alpha_3 \leq \frac{2(4A+3)}{3N\log 12} \left(\log \frac{t}{K} + \kappa_{**}\right) \left(\pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{N})\right).$$
+$$ \alpha_3 \leq \frac{4A+3}{3N\log \sqrt{12}} \left(\log \frac{t}{K} + \kappa_{**}\right) \left(\pi(t/K) + \frac{\log N}{\log 5} \pi(\sqrt{N})\right).$$
 \end{corollary}
 
 \begin{proof} This is immediate from \Cref{val-bound} and \eqref{alpha3-def}, \eqref{delta3-def} after noting that $\lfloor \frac{\log N}{\log p} \rfloor \leq 1 + \frac{\log N}{\log 5} 1_{p \leq \sqrt{N}}$ for $3 < p \leq t/K$.
@@ -1233,7 +1231,7 @@ From \eqref{alpha1-vanish} we have
 $$ \alpha_1 = 0.$$
 We skip $\alpha_2, \alpha_4, \alpha_5$ for now.  From \Cref{delta3-alpha3-bound} and \eqref{pi-upper} one has
 \begin{align*}
-  \alpha_3 &\leq \frac{2(4A+3)}{3\log 12} \left(\log \frac{N}{3K} + \kappa_{**}\right)  \\
+  \alpha_3 &\leq \frac{4A+3}{3\log \sqrt{12}} \left(\log \frac{N}{3K} + \kappa_{**}\right)  \\
 &\quad \times \left(
   \frac{1}{3K \log(N/3K)} + \frac{1.2762}{3K \log^2(N/3K)}
   + \frac{\log N}{\log 5 \sqrt{N} \log \sqrt{N}} + \frac{1.2762 \log N}{\log 5 \sqrt{N} \log^2 \sqrt{N}} \right).
@@ -1243,7 +1241,7 @@ $$ \alpha_3 \leq 0.361121$$
 for all $N \geq N_0$.
 From \eqref{alpha6-def} we have
 \begin{align*}
-   \alpha_6 &\leq \frac{2}{\log 12} \left( \frac{\log(N_0/3)}{N_0} + \frac{\kappa_{**}}{N_0} \right) \\
+   \alpha_6 &\leq \frac{1}{\log \sqrt{12}} \left( \frac{\log(N_0/3)}{N_0} + \frac{\kappa_{**}}{N_0} \right) \\
    &\leq 3 \times 10^{-10}
 \end{align*}
 for all $N \geq N_0$, and similarly from \eqref{alpha7-def} we have
@@ -1276,7 +1274,7 @@ $$ \alpha_2 \leq 0.270233$$
 for all $N \geq N_0$.  For \eqref{delta7-def}, subtraction is involved, and one must proceed with more caution.  For $N=N_0$, one has
 $$ \delta_7 \leq 0.11363 \delta.$$
 For $N \geq 10^{70}$, we simply discard the negative terms here and obtain the bound
-$$ \delta_7 \leq \frac{\kappa_{4.5}}{\log(10^{70}/3)} \frac{\log 12}{2} \leq 0.02265 \delta$$
+$$ \delta_7 \leq \frac{\kappa_{4.5}}{\log(10^{70}/3)} \log \sqrt{12} \leq 0.02265 \delta$$
 
 As for the $A_{p_1}$, we know from \eqref{ap1-vanish} that this vanishes unless $3 < p_1 \leq K(1+\sigma)$.  From \eqref{ap1-small} and \Cref{osc-lemma} one has the upper bound
 $$
@@ -1300,7 +1298,7 @@ at $N=N_0$, thus verifying \eqref{delta-cond}, \eqref{alpha-cond} in those cases
 For $N \geq 10^{70}$, we use the triangle inequality to crudely upper bound
 $$ \delta_5 \leq \kappa_{4.5} \sum_{3 < p_1 \leq K} \frac{\log p_1}{\log(t/K^2)} A_{p_1} + B_{p_1}$$
 and
-$$ \alpha_5 \leq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} (\log K^2+\kappa_{**}) \frac{\log p_1}{\log(t/K^2)} A_{p_1} + (\log p_1 + \kappa_{**}) B_{p_1}.$$
+$$ \alpha_5 \leq \frac{1}{\log \sqrt{12}} \sum_{3 < p_1 \leq K} (\log K^2+\kappa_{**}) \frac{\log p_1}{\log(t/K^2)} A_{p_1} + (\log p_1 + \kappa_{**}) B_{p_1}.$$
 The bounds available for the right-hand side are now monotone in $N$, and one can calculate that
 \begin{align*}
   \delta_5 &\leq 0.077304 \delta \\
@@ -1329,7 +1327,7 @@ We now compute
   \frac{\nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L) - 2 \gamma \nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} 
   &= \frac{2a+b - 2\gamma(a+c)}{1-\gamma} \\
   &\leq 2a + \frac{\log x - a \log 12 + \kappa_L}{(1-\gamma) \log 2}  \\
-  &= \frac{2\log x}{\log 12} + \left( \frac{1}{(1-\gamma)\log 2} - \frac{2}{\log 12}\right) \left(\log x - a \log 12\right)
+  &= \frac{2\log x}{\log 12} + \left( \frac{1}{(1-\gamma)\log 2} - \frac{1}{\log \sqrt{12}}\right) \left(\log x - a \log 12\right)
   + \frac{\kappa_L}{(1-\gamma)\log 2} 
 \end{align*}
 giving \eqref{12-2} from \eqref{xa12}; similarly, we have
@@ -1337,7 +1335,7 @@ giving \eqref{12-2} from \eqref{xa12}; similarly, we have
   \frac{2\nu_3(\lceil x \rceil^{\langle 2,3\rangle}_L) - \gamma \nu_2(\lceil x \rceil^{\langle 2,3\rangle}_L)}{1-\gamma} 
   &= \frac{2(a+c) - \gamma(2a+b)}{1-\gamma} \\
   &\leq 2a + \frac{2(\log x - a \log 12 + \kappa_L)}{(1-\gamma) \log 3}  \\
-  &= \frac{2\log x}{\log 12} + \left( \frac{2}{(1-\gamma)\log 3} - \frac{2}{\log 12}\right) \left(\log x - a \log 12\right)
+  &= \frac{2\log x}{\log 12} + \left( \frac{2}{(1-\gamma)\log 3} - \frac{1}{\log \sqrt{12}}\right) \left(\log x - a \log 12\right)
   + \frac{2\kappa_L}{(1-\gamma)\log 3} 
 \end{align*}
 giving \eqref{12-3} from \eqref{xa12}.

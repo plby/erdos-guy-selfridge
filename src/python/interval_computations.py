@@ -239,6 +239,16 @@ def delta5_upper(t_norm,N_mpi,A,K,sigma, delta):
     print(f"Upper bound on delta_5: {high(delta5)} ({high(delta5) / delta * 100:.4f}% of delta)")
     return high(delta5) 
 
+# (7.10).  Alternate bound using the triangle inequality which is worse, but monotone decreasing in N
+def delta5_upper_crude(t_norm,N_mpi,A,K,sigma, delta):
+    delta5 = mpi(0,0)
+    for p in range(4, K+1):
+        if is_prime(p):
+            delta5 += kappa(4.5) * Ap(t_norm,N_mpi,A,K,sigma,p) * math.log(p) / math.log(t_norm*low(N_mpi)/K**2)
+            delta5 += kappa(4.5) * Bp(t_norm,N_mpi,K,sigma,p) 
+    print(f"Crude upper bound on delta_5: {high(delta5)} ({high(delta5) / delta * 100:.4f}% of delta)")
+    return high(delta5) 
+
 # (7.11)
 def delta6_upper(N_mpi, delta):
     delta6 = kappa(4.5) / low(N_mpi)
@@ -271,6 +281,14 @@ def alpha2_upper(t_norm,N_mpi,K,sigma, gamma2, gamma3):
     print(f"Upper bound on alpha_2: {alpha2}")
     return alpha2
 
+# (7.16).  Crude version of estimate which is monotone in N
+def alpha2_upper_crude(t_norm,N_mpi,K,sigma, gamma2, gamma3):
+    alpha2_2 = (Bp(t_norm,N_mpi,K,sigma,2)) / (1-gamma2)
+    alpha2_3 = (2*Bp(t_norm,N_mpi,K,sigma,3)) / (1-gamma3)
+    alpha2 = max(high(alpha2_2), high(alpha2_3))
+    print(f"Crude upper bound on alpha_2: {alpha2}")
+    return alpha2
+
 # Corollary 8.4.  The bound is monotone in N
 def alpha3_upper(t_norm,N_mpi,A,K, kappass):
     alpha3 = 2*(4*A+3)/(3*low(N_mpi)*math.log(12))
@@ -296,6 +314,16 @@ def alpha5_upper(t_norm,N_mpi,A,K,sigma, kappass):
             alpha5 += (2/math.log(12)) * pos_part(Ap(t_norm,N_mpi,A,K,sigma,p) - Bp(t_norm,N_mpi,K,sigma,p)) * (math.log(p)/math.log(t_norm*low(N_mpi)/K**2)) * (math.log(K**2) + kappass)
             alpha5 += (2/math.log(12)) * pos_part(Bp(t_norm,N_mpi,K,sigma,p) - Ap(t_norm,N_mpi,A,K,sigma,p)) * (math.log(p) + kappass)
     print(f"Upper bound on alpha_5: {high(alpha5)}")
+    return high(alpha5)
+
+# (7.19).  Crude version of upper bound which is monotone in N
+def alpha5_upper_crude(t_norm,N_mpi,A,K,sigma, kappass):
+    alpha5 = mpi(0,0)
+    for p in range(4, K+1):
+        if is_prime(p):
+            alpha5 += (2/math.log(12)) * Ap(t_norm,N_mpi,A,K,sigma,p) * (math.log(p)/math.log(t_norm*low(N_mpi)/K**2)) * (math.log(K**2) + kappass)
+            alpha5 += (2/math.log(12)) * Bp(t_norm,N_mpi,K,sigma,p) * (math.log(p) + kappass)
+    print(f"Crude upper bound on alpha_5: {high(alpha5)}")
     return high(alpha5)
 
 # (7.20)
@@ -328,53 +356,62 @@ def evaluate(t_norm, N_mpi, A, K, L):
     kappass = kappa_starstar(L, gamma2, gamma3)
     sigma = sigma_fn(t_norm, A)
 
+    print(f"Borderline interval: ({K}, {K*(1+sigma)}]")
+
     delta = delta_lower(t_norm)
     delta1 = delta1_upper(t_norm, N_mpi, A, delta)
     delta2 = delta2_upper(t_norm, N_mpi, delta)
     delta3 = delta3_upper(t_norm, N_mpi, A, K, delta)
     delta4 = delta4_upper(t_norm, N_mpi, A, K, sigma, delta)
     delta5 = delta5_upper(t_norm, N_mpi, A, K, sigma, delta)
+    delta5_crude = delta5_upper_crude(t_norm, N_mpi, A, K, sigma, delta)
     delta6 = delta6_upper(N_mpi, delta)
     delta7 = delta7_upper(t_norm, N_mpi, K, L, sigma, delta)
     delta8 = delta8_upper(t_norm, N_mpi, L, delta)
     delta_sum = delta1 + delta2 + delta3 + delta4 + delta5 + delta6 + delta7 + delta8
+    delta_sum_crude = delta1 + delta2 + delta3 + delta4 + delta5_crude + delta6 + delta7 + delta8
     
     
     alpha1 = alpha1_upper()
     alpha2 = alpha2_upper(t_norm, N_mpi, K, sigma, gamma2, gamma3)
+    alpha2_crude = alpha2_upper_crude(t_norm, N_mpi, K, sigma, gamma2, gamma3)
     alpha3 = alpha3_upper(t_norm, N_mpi, A, K, kappass)
     alpha4 = alpha4_upper(t_norm, N_mpi, K, sigma, kappass)
     alpha5 = alpha5_upper(t_norm, N_mpi, A, K, sigma, kappass)
+    alpha5_crude = alpha5_upper_crude(t_norm, N_mpi, A, K, sigma, kappass)
     alpha6 = alpha6_upper(t_norm, N_mpi, kappass)
     alpha7 = alpha7_upper(N_mpi, gamma2, gamma3)
     alpha_sum = alpha1 + alpha2 + alpha3 + alpha4 + alpha5 + alpha6 + alpha7
+    alpha_sum_crude = alpha1 + alpha2_crude + alpha3 + alpha4 + alpha5_crude + alpha6 + alpha7
 
     print(f"Delta sum: {delta_sum} ({delta_sum / delta * 100:.4f}% of delta)")
+    print(f"Crude delta sum: {delta_sum} ({delta_sum / delta * 100:.4f}% of delta)")
     print(f"Alpha sum: {alpha_sum}")
+    print(f"Crude alpha sum: {alpha_sum_crude}")
 
     assert delta_sum < delta, "Delta sum exceeds delta"
     assert alpha_sum < 1, "Alpha sum exceeds 1"
     print(f"Delta and alpha sums are within bounds!  This verifies t(N) >= {t_norm} N for N in {N_mpi}.")
+    if delta_sum_crude < delta and alpha_sum_crude < 1:
+        print(f"In fact, even the crude bounds work!  This verifies t(N) >= {t_norm} N for N >= {low(N_mpi)}.")
 
-
-A = 190 
-K = 252
+A = 189
+K = 293
 L = 4.5
 t_norm = 1/3
 
+N_mpi = mpi(1 * 10 ** 11, 5 * 10 ** 11)
+#evaluate(t_norm, N_mpi, A, K, L)
 
+N_mpi = mpi(5 * 10 ** 11, 10 ** 14)
+#evaluate(t_norm, N_mpi, A, K, L)
 
-N_mpi = mpi(1 * 10 ** 11, 3 * 10 ** 11)
-evaluate(t_norm, N_mpi, A, K, L)
+N_mpi = mpi(10 ** 14, 10 ** 20)
+#evaluate(t_norm, N_mpi, A, K, L)
 
-N_mpi = mpi(3 * 10 ** 11, 10 ** 12)
-evaluate(t_norm, N_mpi, A, K, L)
+N_mpi = mpi(10 ** 20, 10 ** 70)
+#evaluate(t_norm, N_mpi, A, K, L)
 
-N_mpi = mpi(10 ** 12, 10 ** 15)
-evaluate(t_norm, N_mpi, A, K, L)
-
-N_mpi = mpi(10 ** 15, 10 ** 25)
-evaluate(t_norm, N_mpi, A, K, L)
-
-N_mpi = mpi(10 ** 25, 10 ** 100)
+# upper bound is irrelevant here, as crude bounds work
+N_mpi = mpi(10 ** 70, 10**100)
 evaluate(t_norm, N_mpi, A, K, L)

@@ -395,10 +395,27 @@ def evaluate(t_norm, N_mpi, A, K, L):
     if delta_sum_crude < delta and alpha_sum_crude < 1:
         print(f"In fact, even the crude bounds work!  This verifies t(N) >= {t_norm} N for N >= {low(N_mpi)}.")
 
+
 A = 189
 K = 293
 L = 4.5
 t_norm = 1/3
+
+
+N_mpi = mpi(6 * 10 ** 10, 6.05 * 10 ** 10)
+#evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.05 * 10 ** 10, 6.1 * 10 ** 10)
+#evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.1 * 10 ** 10, 6.5 * 10 ** 10)
+#evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(6.5 * 10 ** 10, 7 * 10 ** 10)
+#evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(7 * 10 ** 10, 1 * 10 ** 11)
+#evaluate(t_norm, N_mpi, A, K, L)
 
 N_mpi = mpi(1 * 10 ** 11, 5 * 10 ** 11)
 #evaluate(t_norm, N_mpi, A, K, L)

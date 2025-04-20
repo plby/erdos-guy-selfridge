@@ -770,6 +770,8 @@ with the convention that the upper bound $p < \frac{t}{m-1}$ in \eqref{B-def} is
 
 Note that the quantities $\delta_2, \delta$ essentially appeared previously \Cref{upper-crit}.  As we shall see, when $N$ is large we will be able to construct multisets $\tuple^{(0)}$ that make all the other quantities $\delta_i, i \neq 2$ and $\alpha_i$ quite small, which is how we shall establish such results as \Cref{main}(iii) and the lower bound in \Cref{main}(iv).
 
+The first condition \eqref{delta-cond} is closely tied to the criterion in \Cref{t-descrip}, and roughly speaking ensures that one has saved enough in one's ``budget'' to ``afford'' $N$ or more factors in a $t$-admissible subfactorization.  The second condition \eqref{alpha-cond} states, roughly speaking, that one does not exhaust the supply of available tiny primes in $N!$ (which roughly correspond to the factors of $12^{N/2}$) when repairing $\tuple^{(0)}$ into an efficient subfactorisation of $N!$.
+
 In practice, the parameter $K$ will be quite small compared to $N$, and the quantities $\gamma_2, \gamma_3, \kappa_{*}$ will also be somewhat smaller than $1$.
 
 The rest of this section will be devoted to the proof of this proposition.  It will be convenient to divide the primes into four classes:
@@ -900,6 +902,18 @@ We let $\tuple^{(0)}$ be the multiset of $3$-rough elements of the interval $(t,
 \begin{equation}\label{alpha1-vanish}
   \alpha_1 = 0.
 \end{equation}
+
+The influence of the parameters $A,K,L$ on the other parameters $\delta_i, \alpha_i$ can be roughly summarized as follows (assuming that $L$ is significantly smaller than $N$):
+\begin{itemize}
+\item $\delta_1 \asymp 1/A$.
+\item $\delta_2 \asymp 1/\log N$.
+\item $\delta_3 \asymp A/K\log N$ and $\alpha_3 \asymp A/K$.
+\item $\delta_5 \asymp \log^{O(1)} K/\log^2 N$ and $\alpha_2, \alpha_5 \asymp \log^{O(1)} K / \log N$.
+\item $\delta_7$ will be comparable to $\kappa_L/\log N$.
+\item $\delta_4, \delta_6, \delta_8, \alpha_6, \alpha_7$ will be lower order terms.
+\end{itemize}
+We will quantify these relationships more precisely below, but they already suggest that one should take $A$ to only be moderately large (e.g., of logarithmic size), that $K$ should only be slightly larger than $A$, and that $L$ is a relatively minor parameterm, which can also grow slowly with $N$.
+
 
 We use the notation $\sum^*$ to denote summation restricted to $3$-rough numbers, thus for instance $\sum_{a < k \leq b}^* 1$ denotes the number of $3$-rough numbers in $(a,b]$.  We have a simple estimate for such counts:
 
@@ -1160,40 +1174,43 @@ $$ N \geq N_0 \coloneqq 10^{11}.$$
 We will apply \Cref{repair} with the construction in \Cref{construction-sec} and the choice of parameters
 \begin{align*}
   t &\coloneqq N/3\\
-  A &\coloneqq 190\\
-  K &\coloneqq 252 \\
+  A &\coloneqq 189\\
+  K &\coloneqq 293 \\
   L &\coloneqq 4.5;
 \end{align*}
 the choice of $A$ and $K$ was obtained after some numerical experimentation.  In particular, by \eqref{sigma-def} we have
-$$ \sigma = \frac{3N}{At}=\frac{9}{190} =0.047368\dots$$
-and so
-$$ K(1+\sigma)=263.936\dots$$
-One can readily check the required conditions \eqref{conditions}, \eqref{t-lower} for $N \geq N_0$, so it remains to verify the hypotheses \eqref{delta-cond}, \eqref{alpha-cond} of \Cref{repair} in this range.  Some of the quantities in these hypotheses involve sums over large ranges, such as $(t/K,N]$; but one can use \Cref{osc-lemma} to obtain adequate upper or lower bounds on such quantities, leaving one with sums over short ranges such as $p \leq K$ or $p \leq K(1+\sigma)$.  Our bounds are designed to be monotone non-increasing in $N$, so the task reduces to evaluating these short sums for $N=N_0$, which can be accomplished with simple computer code\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/calculations.py}}.   As it turns out, we will have a tiny bit of room to spare, in that we can show 
-\begin{equation}\label{delta-final}
-  \sum_{i=1}^8 \delta_i \leq 0.9729 \delta
-\end{equation}
-and 
-\begin{equation}\label{alpha-final}
-  \sum_{i=1}^7 \alpha_i \leq 0.9697.
-\end{equation}
-We now bound some of the terms appearing in the above expression. From \Cref{power-lemma} we have
+$$ \sigma = \frac{3N}{At}=\frac{9}{189} =0.047619\dots$$
+One can readily check the required conditions \eqref{conditions}, \eqref{t-lower} for $N \geq N_0$, so it remains to verify the hypotheses \eqref{delta-cond}, \eqref{alpha-cond} of \Cref{repair} in this range.  Some of the quantities in these hypotheses involve sums over large ranges, such as $(t/K,N]$; but one can use \Cref{osc-lemma} to obtain adequate upper or lower bounds on such quantities, leaving one with sums over short ranges such as $p \leq K$ or $p \leq K(1+\sigma)$.  As such, all of the bounds needed cna be quickly computed even for very large $N$ with simple computer code\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/interval_computations.py}}.
+
+Many of the bounds we will use will be monotone decreasing in $N$, so that they only need to be tested at the left endpoint $N=N_0$.  However, this is not the case for all of the bounds, as some involve subtracting one monotone quantity from another.  For those estimates, we will initially only establish bounds in two extreme cases, $N=N_0$ and $N \geq 10^{70}$, and discuss how to cover the intervening ranges $N_0 < N < 10^{70}$ at the end of the section.
+  
+We now bound some of the terms appearing in \Cref{repair}. From \Cref{power-lemma} we have
 $$ \kappa_{4.5} = \log \frac{4}{3} =0.28768\dots.$$
+
 From \eqref{gammas-def} one can take
 $$ \gamma_2 \coloneqq \frac{2 \log 2}{\log 3} \frac{\log(2L) + \kappa_L}{\log(N_0/3) - \log(2L)} = 0.1423165\dots$$
 and
 $$\gamma_3 \coloneqq \frac{\log 3}{2\log 2} \frac{\log(3L) + \kappa_L}{\log(N_0/3) - \log(3L)} =  0.1059116 \dots$$
-and so by \eqref{kappastar-def} and some calculation
+for all $N \geq N_0$; by \eqref{kappastar-def} and some calculation we then have
 $$ \kappa_{**} \leq 6.830101\dots.$$
+
 From \eqref{stirling} one has
-$$ \delta \geq \log N - \log t = \log \frac{3}{e} = 0.0986122\dots.$$
-From \eqref{delta1-bound} on has
-$$ \delta_1 \leq \frac{9}{2A} + \frac{4}{N_0} \leq 0.240176 \delta.$$
-From \eqref{delta2-def} and \Cref{osc-lemma} one has
+$$ \delta \geq \log N - \log t = \log \frac{3}{e} = 0.0986122\dots$$
+for all $N \geq N_0$.  
+
+We will use this lower bound as our unit of reference for all other $\delta_i$ quantities, bounding them by suitable multiples of $\delta$.  For instance, from \eqref{delta1-bound} one has
+$$ \delta_1 \leq \frac{9}{2A} + \frac{4}{N_0} \leq 0.023810 \delta$$
+for all $N \geq N_0$.
+
+From \eqref{delta2-def} and \Cref{osc-lemma}, and the monotonicity of $E(N)/N$, one has
 \begin{align*}
   \delta_2 &\leq \frac{1}{\log(t/K)} \int_{1/3K}^1 f_3(x)\ dx + \frac{1}{\log(t/K)} \|f_3\|_{\mathrm{TV}((1/3K,1])} \frac{E(N)}{N} \\
-  &\leq \frac{1}{\log(N_0/3K)} 0.919507 + \frac{1}{\log(N_0/3K)} 996.196 \frac{E(N_0)}{N_0} \\
-  &\leq 0.50025 \delta.
+  &\leq \frac{1}{\log(N_0/3K)} 0.919785 + \frac{1}{\log(N_0/3K)} 1159.795 \frac{E(N_0)}{N_0} \\
+  &\leq 0.504735 \delta
 \end{align*}
+for all $N \geq N_0$.  For $N \geq 10^{70}$ we may replace $N_0$ by $10^{70}$ and obtain the significantly better bound
+$$ \delta_2 \leq 0.060410 \delta.$$
+
 From \Cref{delta3-alpha3-bound} and \eqref{pi-upper} one has
 \begin{align*}
 \delta_3 &\leq \frac{(4A+3)\kappa_{4.5}}{3} \left(
@@ -1202,13 +1219,15 @@ From \Cref{delta3-alpha3-bound} and \eqref{pi-upper} one has
 &\leq \frac{(4A+3)\kappa_{4.5}}{3} \left(
   \frac{1}{3K \log(N_0/3K)} + \frac{1.2762}{3K \log^2(N_0/3K)}
   + \frac{\log N_0}{\log 5 \sqrt{N_0} \log \sqrt{N_0}} + \frac{1.2762 \log N_0}{\log 5 \sqrt{N_0} \log^2 \sqrt{N_0}} \right) \\
-&\leq 0.059274 \delta.
+&\leq 0.051574 \delta
 \end{align*}
+for all $N \geq N_0$.
+
 We skip $\delta_4, \delta_5, \delta_7$ for now.  From \eqref{delta6-def} we have
 $$ \delta_6 \leq \frac{\kappa_{4.5}}{N_0} \leq 3 \times 10^{-11} \delta$$
-and from \eqref{delta8-def} we have
+for all $N \geq N_0$, and from \eqref{delta8-def} we have
 $$ \delta_8 \leq \frac{2(\log(N_0/3) + \kappa_{4.5})}{N_0} \leq 6 \times 10^{-10} \delta$$
-so these two terms are negligible in the analysis.
+for all $N \geq N_0$, so these two terms are negligible in the analysis.
 
 From \eqref{alpha1-vanish} we have
 $$ \alpha_1 = 0.$$
@@ -1220,34 +1239,45 @@ We skip $\alpha_2, \alpha_4, \alpha_5$ for now.  From \Cref{delta3-alpha3-bound}
   + \frac{\log N}{\log 5 \sqrt{N} \log \sqrt{N}} + \frac{1.2762 \log N}{\log 5 \sqrt{N} \log^2 \sqrt{N}} \right).
 \end{align*}
 Expanding out the product, one can check that all terms are non-increasing in $N$; so we may substitute $N_0$ for $N$ in the right-hand side, which after some calculation gives
-$$ \alpha_3 \leq 0.417501.$$
+$$ \alpha_3 \leq 0.361121$$
+for all $N \geq N_0$.
 From \eqref{alpha6-def} we have
 \begin{align*}
    \alpha_6 &\leq \frac{2}{\log 12} \left( \frac{\log(N_0/3)}{N_0} + \frac{\kappa_{**}}{N_0} \right) \\
    &\leq 3 \times 10^{-10}
 \end{align*}
-and similarly from \eqref{alpha7-def} we have
+for all $N \geq N_0$, and similarly from \eqref{alpha7-def} we have
 \begin{align*}
 \alpha_7 &\leq \max\left( \frac{\log(2N_0)}{(1-\gamma_2)N_0\log 2},  \frac{2\log(3N_0)}{(1-\gamma_3)N_0\log 3}\right) \\
 &\leq 6 \times 10^{-10}
 \end{align*}
+for all $N \geq N_0$.
 so the contribution of these two terms are negligible.
 
-{\bf WARNING: the arguments below assert some claims about monotonicity in $N$ that are not, in fact, the case.  This is currently a gap in the argument.  It may be possible to fix this with an interval arithmetic calculation, but then one needs multiple choices of parameters $A,K,L$ rather than just one, unless there is a lot of slack in the estimates.}
+Conveniently\footnote{Even if this were not the case, the quantities $\delta_4,\alpha_4$ should be viewed as lower order terms, and are far smaller than several of the other $\delta_i$ or $\alpha_i$ for typical choices of parameters.}, the choice of parameters $A,K$ ensure that there are no primes in the range
+$$ 293 = K < p \leq K(1+\sigma) = K(1+\sigma)=306.952\dots$$
+and thus
+$$ \delta_4=\alpha_4 = 0$$
+for all $N \geq N_0$.
 
-The remaining terms $\delta_4, \delta_5, \delta_7, \alpha_2, \alpha_4, \alpha_5$ to estimate involve the quantities $A_{p_1}, B_{p_1}$ defined in \eqref{A-def}, \eqref{B-def}.  For $B_{p_1}$, we can split it as
+The remaining terms $\delta_5, \delta_7, \alpha_2, \alpha_5$ to estimate involve the quantities $A_{p_1}, B_{p_1}$ defined in \eqref{A-def}, \eqref{B-def}, and require a bit more care.  For $B_{p_1}$, we can split the expression as
 $$ B_{p_1} = \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{N} (\pi( N b_{k,m} ) - \pi(N a_{k,m}))$$
 where 
 $$ a_{k,m} \coloneqq \max\left( \frac{1}{3m}-, \frac{1}{k} \right); \quad b_{k,m} \coloneqq \max\left( \frac{1}{3(m-1)}-, \frac{1}{k-1} \right)$$
 where the $-$ denotes the subtraction of an infinitesimal quantity to reflect the restriction to the range $\frac{t}{m} \leq p < \frac{t}{m-1}$ rather than
-$\frac{t}{m} < p \leq \frac{t}{m-1}$.  Using \Cref{osc-lemma}, we can upper bound this quantity by
-$$ B_{p_1} \leq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N a_{k,m})} \left( a_{k,m}-b_{k,m} + 2\frac{E(N_0 b_{k,m})}{N_0} \right)$$
+$\frac{t}{m} < p \leq \frac{t}{m-1}$.  Using \Cref{osc-lemma} (and a limiting argument), we can upper bound this quantity by
+$$ B_{p_1} \leq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N a_{k,m})} \left( a_{k,m}-b_{k,m} + 2\frac{E(N_0 b_{k,m})}{N_0 \log(N a_{k,m})} \right)$$
 and lower bound it by
-$$ B_{p_1} \geq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N b_{k,m})} \left( \left(1-\frac{2}{\sqrt{a_{k,m}}}\right) (a_{k,m}-b_{k,m}) + 2\frac{E(N_0 b_{k,m})}{N_0 b_{k,m}} \right).$$
-After some calculation, these bounds inserted into \eqref{alpha2-def} give
-$$ \alpha_2 \leq 0.260087$$
-and in \eqref{delta7-def} they give
-$$ \delta_7 \leq 0.112941 \delta.$$
+$$ B_{p_1} \geq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} k \frac{1}{\log(N b_{k,m})} \left( \left(1-\frac{2}{\sqrt{a_{k,m} N}}\right) (a_{k,m}-b_{k,m}) - 2\frac{E(N_0 b_{k,m})}{N_0 b_{k,m} \log(N b_{k,m})} \right).$$
+We caution here that while the upper bound for $B_{p_1}$ is monotone decreasing in $N$, the lower bound does not have a favorable monotonicity property, particularly as it will be used when \emph{subtracting} copies of $B_{p_1}$ rather than \emph{adding} then.
+
+From the monotonicity of the upper bound, one can use \eqref{alpha2-def} to calculate that that
+$$ \alpha_2 \leq 0.270233$$
+for all $N \geq N_0$.  For \eqref{delta7-def}, subtraction is involved, and one must proceed with more caution.  For $N=N_0$, one has
+$$ \delta_7 \leq 0.11363 \delta.$$
+For $N \geq 10^{70}$, we simply discard the negative terms here and obtain the bound
+$$ \delta_7 \leq \frac{\kappa_{4.5}}{\log(10^{70}/3)} \frac{\log 12}{2} \leq 0.02265 \delta$$
+
 As for the $A_{p_1}$, we know from \eqref{ap1-vanish} that this vanishes unless $3 < p_1 \leq K(1+\sigma)$.  From \eqref{ap1-small} and \Cref{osc-lemma} one has the upper bound
 $$
 A_{p_1} \leq \sum_{m \leq K(1+\sigma)}^* \frac{A \nu_{p_1}(m)}{\log(N/3\min(m,K))} \left( \frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)} + \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right) $$
@@ -1256,14 +1286,32 @@ and the lower bound
 A_{p_1} &\geq \sum_{m \leq K(1+\sigma)}^* \frac{A \nu_{p_1}(m)}{\log(N(1+\sigma)/3m)} \times \\
 & \quad \left( \left(1-\frac{2}{\sqrt{N_0(1+3\sigma)/3m}}\right) \left(\frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)}\right) - \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right).
 \end{align*}
-Using these bounds, one can verify by direct computation that $A_{p_1} \geq B_{p_1}$ for all $3 < p_1 \leq K(1+\sigma)$ (cf. \eqref{key-ineq}), and from \eqref{delta4-def}, \eqref{delta5-def}, \eqref{alpha4-def}, \eqref{alpha5-def} one can then verify that
+Again, the upper bound is monotone decreasing in $N$, but the lower bound does not have a favorable monotonicity. At $N=N_0$, one can calculate using these bounds and \eqref{delta5-def}, \eqref{alpha5-def} to obtain
 \begin{align*}
-\delta_4 &\leq 0.001212 \delta \\
-\delta_5 &\leq 0.057447 \delta \\
-\alpha_4 &\leq 0.008523 \\
-\alpha_5 &\leq 0.283524
+\delta_5 &\leq 0.062824 \delta \\
+\alpha_5 &\leq 0.315286
 \end{align*}
-and the claims \eqref{delta-final}, \eqref{alpha-final} follow by summing all the bounds.
+which, when combined with the previous bounds, gives
+$$ \sum_{i=1}^8 \delta_i  \leq 0.9742 \delta$$
+and 
+$$ \sum_{i=1}^7 \alpha_i \leq 0.9467$$
+at $N=N_0$, thus verifying \eqref{delta-cond}, \eqref{alpha-cond} in those cases.
+
+For $N \geq 10^{70}$, we use the triangle inequality to crudely upper bound
+$$ \delta_5 \leq \kappa_{4.5} \sum_{3 < p_1 \leq K} \frac{\log p_1}{\log(t/K^2)} A_{p_1} + B_{p_1}$$
+and
+$$ \alpha_5 \leq \frac{2}{\log 12} \sum_{3 < p_1 \leq K} (\log K^2+\kappa_{**}) \frac{\log p_1}{\log(t/K^2)} A_{p_1} + (\log p_1 + \kappa_{**}) B_{p_1}.$$
+The bounds available for the right-hand side are now monotone in $N$, and one can calculate that
+\begin{align*}
+  \delta_5 &\leq 0.077304 \delta \\
+  \alpha_5 &\leq 0.184984
+  \end{align*}
+for $N \geq 10^{70}$. This is better than the previous bound for $\alpha_5$.  For $\delta_5$, the bound is slightly worse, but this is more than compensated for by the improved bounds on $\delta_2$, $\delta_7$, and \eqref{delta-cond}, \eqref{alpha-cond} can be verified here with significant room to spare.
+
+This completes the proof of \Cref{main}(iii) (and hence \Cref{main}(ii)) in the cases $N=N_0$ and $N \geq 10^{70}$.  It remains to cover the intermediate range $N_0 < N \leq 10^{70}$.  Here we adopt the perspective of interval arithmetic.  If $N$ is constrained to a given interval, such as $[10^{11}, 5 \times 10^{11}]$, we can use the worst-case upper and lower bounds for $A_{p_1}, B_{p_1}$ to obtain conservative upper bounds on the most delicate quantities
+$\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in theese estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
+$$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^14, 10^{20}]; \quad [10^{20}, 10^{70}]$$
+one can check that such bounds are sufficient to verify \eqref{delta-cond}, \eqref{alpha-cond} in these cases.  This now verifies \Cref{main}(ii), (iii) for all $N \geq 10^{11}$.
 
   
 \appendix

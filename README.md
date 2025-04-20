@@ -39,10 +39,10 @@ Secondary goals are
 
 ## Current status
 
-1. Conjecture 1 is known for $N \leq 10^{11}$ and for sufficiently large $N$, as a consequence of Conjecture 2 being verified in this range.
-2. Conjecture 2 for all $43632 \leq N \leq 10^{11}$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$, by a modified greedy method. The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  For $N \geq 10^{11}$, the modified approximate factorization method is known to work for sufficiently large $N$, and also works at $N = 10^{11}$; unfortunately, the estimates are not fully monotone, so the conjecture is not quite resolved at present.
+1. Conjecture 1 **has been fully verified**, as a consequence of Conjecture 2 for $N \geq 43632$, and either the greedy or linear programming method for $N < 43632$.
+2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
-4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.  Only a very rough estimate for $c_1$ has been given so far.
+4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.  Only a very rough estimate for $c_1 \approx 0.7555$ has been given so far.
 
 ## Timeline on controlling $t(N)$
 
@@ -74,6 +74,7 @@ Secondary goals are
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4]$ | Linear and integer programming |  
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N = 10^{12}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$  
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/27) | Terence Tao | 2 | $N = 10^{11}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$
+| 20 Apr 2025 | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates | Interval arithmetic permits verification of all cases
 
 ## Computations of $c_0$, $c_1$
 

@@ -369,7 +369,7 @@ def evaluate(t, N, A, K, L):
 
 A = 189
 K = 293
-N = 10 ** (10.773)
+N = int(10**(10.69))
 L = 4.5
 t = N/3
 evaluate(t, N, A, K, L)

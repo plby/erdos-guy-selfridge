@@ -5,7 +5,7 @@ MIN_A = 160
 MAX_A = 200
 JUMP_A = 1
 
-MIN_K = 290
+MIN_K = 270
 MAX_K = 320
 JUMP_K = 1
 
@@ -23,7 +23,8 @@ best_N_exp = MAX_N_EXP
 for A in np.arange(MIN_A, MAX_A, JUMP_A):
     for K in np.arange(MIN_K, MAX_K, JUMP_K):
         for N_EXP in np.arange(MIN_N_EXP, best_N_exp, JUMP_N_EXP)[::-1]:
-            N = 10**N_EXP
+            N_EXP = np.round(N_EXP, decimals=10)
+            N = int(10**N_EXP)
             t = N/3
             try:
                 evaluate(t, N, A, K, L)

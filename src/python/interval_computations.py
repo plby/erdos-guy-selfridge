@@ -354,13 +354,27 @@ def evaluate(t_norm, N_mpi, A, K, L):
 
     assert delta_sum < delta, "Delta sum exceeds delta"
     assert alpha_sum < 1, "Alpha sum exceeds 1"
-    print("Delta and alpha sums are within bounds!")
+    print(f"Delta and alpha sums are within bounds!  This verifies t(N) >= {t_norm} N for N in {N_mpi}.")
 
 
 A = 190 
 K = 252
-N_mpi = mpi(1 * 10 ** 11, 3 * 10 ** 11)
 L = 4.5
 t_norm = 1/3
+
+
+
+N_mpi = mpi(1 * 10 ** 11, 3 * 10 ** 11)
 evaluate(t_norm, N_mpi, A, K, L)
 
+N_mpi = mpi(3 * 10 ** 11, 10 ** 12)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(10 ** 12, 10 ** 15)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(10 ** 15, 10 ** 25)
+evaluate(t_norm, N_mpi, A, K, L)
+
+N_mpi = mpi(10 ** 25, 10 ** 100)
+evaluate(t_norm, N_mpi, A, K, L)

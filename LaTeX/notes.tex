@@ -530,6 +530,13 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
   \label{fig-long}
   \end{figure}
 
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{longerplot.png}
+    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for some randomly sampled $10^3 \leq N \leq 10^5$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion.}
+    \label{fig-longer}
+    \end{figure}
+
 \section{The accounting identity}\label{accounting-sec}
 
 Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
@@ -609,6 +616,10 @@ We can now prove the upper bound portion of \Cref{main}(iv):
       c_1 &\coloneqq c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.7555.
     \end{align*}
   \end{proposition}
+
+  Numerically, this bound is a reasonably good approximation for medium-sized $N$, see \Cref{fig-long}, \Cref{fig-longer}, although it may be possible to improve the approximation further with additional terms.  Based on these numerics it seems natural to conjecture that one in fact has
+  $$\frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} - \frac{c_1 + o(1)}{\log^2 N}$$
+as $N \to \infty$.
     
     \begin{proof}  We apply \Cref{upper-crit} with
       $$ t \coloneqq \frac{1}{e} - \frac{c_0}{\log N} - \frac{c_1-\eps}{\log^2 N}$$
@@ -1443,7 +1454,7 @@ The left-hand side is $O_{\leq}(A \|b\|_{\mathrm{TV}^*(y,x]})$, and the claim fo
 
 We now prove \eqref{bv-exact}. In fact we prove the sharper estimate
 \begin{equation}\label{bsharp}  
-  \sum_{y < p \leq x} b(p) \log p = \int_y^x b(t) (1 - \frac{2}{\sqrt{t}}) \ dt
+  \sum_{y < p \leq x} b(p) \log p = \int_y^x b(t) \left(1 - \frac{2}{\sqrt{t}}\right) \ dt
 + O_\leq\left(\|b\|_{\mathrm{TV}^*((y,x])} \tilde E(x) \right)
 \end{equation}
 where
@@ -1487,14 +1498,14 @@ is established whenever $x \geq 5000$ and $4.92 \frac{x}{\sqrt{\log x}} \leq T$,
 \end{remark}
 
 The claim \eqref{pix} now follows from \eqref{bv-exact} by setting $b(t) \coloneqq \frac{1}{\log t}$.  For non-negative $b$, the claims \eqref{bv-upper}, \eqref{bv-lower} follow from \eqref{bv-exact} and the pointwise bounds
-$$ \frac{1}{\log x} b(p) \log p \leq b(p) \leq \frac{1}{\log y} b(p) \log p$$
+$$ \frac{b(p) \log p}{\log x}  \leq b(p) \leq \frac{b(p) \log p}{\log y} $$
 and
 $$ 1-\frac{2}{\sqrt{y}} \leq 1-\frac{2}{\sqrt{t}} \leq 1.$$
 Finally, \eqref{pixy-upper}, \eqref{pixy-lower} come from specializing \eqref{bv-upper}, \eqref{bv-lower} to the case of an indicator function $b = 1_{(y,x]}$.
 
 
 
-\section{Computation of \texorpdfstring{$c_0$}{c\_0}}\label{c0-app}
+\section{Computation of \texorpdfstring{$c_0$}{c\_0} and related quantities}\label{c0-app}
 
 In this appendix we give some details regarding the numerical estimation of the constant $c_0$ defined in \eqref{c0-def}.  As one might imagine from an inspection of \Cref{fig-mean}, direct application of numerical quadrature converges quite slowly due to the oscillatory singularity.  To resolve the singularity, we can perform a change of variables $x=1/y$ to express $c_0$ as an improper integral:
 \begin{equation}\label{c0-alt}
@@ -1504,20 +1515,26 @@ Next, observe\footnote{We thank an anonymous commentor on the blog of one of the
 \begin{align*}
   \frac{1}{e} \int_e^\infty y \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}
   &= \sum_{k=1}^\infty \int_{ke}^{(k+1)e} y \log \frac{k+1}{y/e}\ \frac{dy}{y^2} \\
-  &= \frac{1}{e} \sum_{k=1}^\infty \int_k^{k+1} \frac{\log(k+1)-\log y}{y}\ dy\\
-  &= \frac{1}{2e} \sum_{k=1}^\infty \log^2 \frac{k+1}{k}\\
+  &= \frac{1}{e} \sum_{k=1}^\infty \int_k^{k+1} \left(\log(k+1)-\log y\right)\ \frac{dy}{y}\\
+  &= \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)\\
   &= 0.1797439053\dots;
 \end{align*}
-the convergence of this series can be accelerated by any number of methods, for instance by subtracting the asymptotically similar sum $\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}$.  One also has
+the convergence of this series can be accelerated by any number of methods, for instance by subtracting the asymptotically similar sum $\frac{1}{2e} \sum_{k=1}^\infty \frac{1}{k^2} = \frac{1}{2e} \frac{\pi^2}{6}$.  One also has
 $$ \frac{1}{e} \int_1^e \lfloor y \rfloor \log \frac{e}{y}\ \frac{dy}{y^2} = \frac{2}{e^2} - \frac{\log 2}{2e} = 0.143173268\dots$$
 and hence
-$$ c_0 = \frac{1}{2e} \sum_{k=1}^\infty \log^2 \frac{k+1}{k}
+$$ c_0 = \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)
 + \frac{2}{e^2} - \frac{\log 2}{2e} - \frac{1}{e} \int_e^\infty \{y\} \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}$$
 where $\{x\} \coloneqq x - \lfloor x \rfloor$.  The integrand here decays like $O(1/y^3)$, and so one can numerically evaluate the integral with high confidence as
 $$ \frac{1}{e} \int_e^\infty \{y\} \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} = 0.01849816\dots$$
 so that
 $$ c_0 = 0.30441894\dots.$$
-Similar methods could be used to compute more digits of $c_1$, although the formulae are more complicated.
+A similar calculation (which we omit) reveals that
+\begin{align*}
+  c'_1 &= \sum_{k=1}^\infty \frac{1+\log(k+1)}{2e}  \log^2\left(1+\frac{1}{k}\right) - \frac{1}{3e} \log^3\left(1+\frac{1}{k}\right)  \\
+  &\quad + \frac{6}{e^2} - \frac{\log^2 2 + \log 2 + 3}{2e}\\
+ &\quad - \frac{1}{e} \int_e^\infty \{y\} (\log y) \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} \\
+ &\approx 0.3702.
+\end{align*}
 
 \begin{thebibliography}{10}
 

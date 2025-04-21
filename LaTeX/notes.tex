@@ -277,7 +277,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 \begin{itemize}
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
   \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
-  \item In \Cref{accounting-sec}, we introduce an \emph{accounting identity} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
+  \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
   \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
@@ -541,9 +541,9 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
     \label{fig-longer}
     \end{figure}
 
-\section{The accounting identity}\label{accounting-sec}
+\section{The accounting equation}\label{accounting-sec}
 
-Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting identity}
+Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting equation}
 \begin{equation}\label{accounting} 
   \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p = \log N! - |\tuple| \log t
 \end{equation}
@@ -554,11 +554,11 @@ where we define the \emph{$t$-excess} $\excess_t(\tuple)$ of the multiset $\tupl
 
 \begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_2(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
   $$ \excess_3(\tuple) = \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3} + \log \frac{5}{3} = 1.3093\dots$$
-  and the accounting identity \eqref{accounting} becomes
+  and the accounting equation \eqref{accounting} becomes
   $$ 1.3093\dots + \log 2 - \log 5 = 0.3930\dots = \log 5! - 4 \log 3.$$
   If one replaces one of the copies of $5$ in ${\mathcal B}$ with a $2$, this erases both the $2$-surplus and the $5$-deficit, and creates a factorization $\tuple' = \{2,3,4,5\}$ of $5!$; the $3$-excess now drops to
   $$ \excess_3(\tuple) = \log \frac{2}{3} + \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3}  = 0.3930\dots,$$
-  bringing the accounting identity back into balance.
+  bringing the accounting equation back into balance.
 \end{example}
   
 In view of \Cref{subfac}, one can now equivalently describe 
@@ -578,7 +578,7 @@ One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend
   Then $t(N) < t$.
   \end{lemma}
 
-  \begin{proof} Suppose for contradiction that $t(N) \geq t$, then we can find a $t$-admissible factorization $\tuple$ of $N!$.  The accounting identity then gives
+  \begin{proof} Suppose for contradiction that $t(N) \geq t$, then we can find a $t$-admissible factorization $\tuple$ of $N!$.  The accounting equation then gives
   \begin{equation}\label{ai}
   \sum_{a \in \tuple} \log \frac{a}{t} = \excess_t(\tuple) = \log N! - N \log t.
   \end{equation}

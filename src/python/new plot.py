@@ -68,6 +68,7 @@ def plot2():
     base = range(80,599)
     alt = [float(math.floor(2*N/7))/N for N in base]
     conj = [(math.exp(-1) - 0.3044 / math.log(max(N,2))) for N in base]
+    conj2 = [math.exp(-1) - 0.3044 / math.log(max(N,2)) - 0.7555 / math.log(max(N,2))**2 for N in base]
     lower = [greedy_values[N]/N for N in base]
     exact = [new_values[N]/N for N in base]
     upper = [best_t(N, new_values[N])/N for N in base]
@@ -79,6 +80,7 @@ def plot2():
     plt.plot(base, conj, linestyle="--", label='$\\frac{1}{e} - c_0/\\log N$' )
     plt.plot(base, alt, label='$\\lfloor 2N/7\\rfloor/N$' )
     plt.plot(base, upper, linestyle=":", label='Lemma 5.3 (upper)' )
+    plt.plot(base, conj2, linestyle="--", label='$1/e - c_0/\\log N - c_1/\\log^2 N$' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.27,0.32)

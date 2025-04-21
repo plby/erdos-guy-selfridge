@@ -2,7 +2,7 @@
 
 For a natural number $N$, let $t(N)$ be the largest number such that $N!$ can be factored into $N$ integer factors, each of which is at least $t(N)$.  It is known that $\frac{1}{e} - \frac{c_0+O(\log^{-c} N)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} -\frac{c_1+o(1)}{\log^2 N}$,
 where $c_0 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx = 0.3044\dots,$
-answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  Here $c_1$ is the explicit constant $c_1 := c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.7552$, where $c'_1 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right) \log \frac{1}{x}\ dx \approx 0.370$ and $c''_1 :=  \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) \approx 1.680$. 
+answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  Here $c_1$ is the explicit constant $c_1 := c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.7552$, where $c'_1 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right) \log \frac{1}{x}\ dx \approx 0.370$ and $c_1^{\prime\prime} :=  \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) \approx 1.680$. 
 
 Here is a graph of the integral defining $c_0$:
 

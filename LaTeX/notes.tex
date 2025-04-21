@@ -152,7 +152,7 @@
 \begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
 The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
 $$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
-for an explicit constant $c_0 = 0.3044190\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
+for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
 \end{abstract}
 
 
@@ -234,7 +234,7 @@ for some constant $c>0$, where $c_0$ is the explicit constant
 \begin{equation}\label{c0-def}
   \begin{split}
   c_0 &\coloneqq \frac{1}{e} \int_0^1 f_e(x)\ dx \\
-  &= 0.3044190\dots
+  &= 0.30441901\dots
 \end{split}
 \end{equation}
 and for any $\alpha>0$, $f_\alpha \colon (0,\infty) \to \R$ denotes the piecewise smooth function
@@ -269,7 +269,7 @@ were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{integ.png}
-  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.3044190\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
+  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.30441901\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
 \end{figure}
 
 As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows:
@@ -1544,15 +1544,15 @@ Next, observe\footnote{We thank an anonymous commentor on the blog of one of the
   &= \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)\\
   &= 0.1797439053\dots;
 \end{align*}
-the convergence of this series can be accelerated by any number of methods, for instance by subtracting the asymptotically similar sum $\frac{1}{2e} \sum_{k=1}^\infty \frac{1}{k^2} = \frac{1}{2e} \frac{\pi^2}{6}$.  One also has
+The value here was computed in interval arithmetic by subtracting off the asymptotically similar sum $\frac{1}{2e} \sum_{k=1}^\infty \frac{1}{k^2} = \frac{1}{2e} \frac{\pi^2}{6}$, summing the resulting partial sum up to $k=10^5$, bounding the tail of the sum rigorously.
 $$ \frac{1}{e} \int_1^e \lfloor y \rfloor \log \frac{e}{y}\ \frac{dy}{y^2} = \frac{2}{e^2} - \frac{\log 2}{2e} = 0.143173268\dots$$
 and hence
 $$ c_0 = \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)
 + \frac{2}{e^2} - \frac{\log 2}{2e} - \frac{1}{e} \int_e^\infty \{y\} \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}$$
-where $\{x\} \coloneqq x - \lfloor x \rfloor$.  The integrand here decays like $O(1/y^3)$, and so one can numerically evaluate the integral with high confidence as
-$$ \frac{1}{e} \int_e^\infty \{y\} \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} = 0.01849816\dots$$
+where $\{x\} \coloneqq x - \lfloor x \rfloor$.  The integrand here lies between $0$ and $1/y^3$, so the integral for $y \geq T$ lies between $0$ and $1/2T^2$.  Truncating to say $T = 10^5$ and performing the integral exactly, one can evaluate
+$$ \frac{1}{e} \int_e^\infty \{y\} \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2} = 0.018498162\dots$$
 so that
-$$ c_0 = 0.30441894\dots.$$
+$$ c_0 = 0.30441901\dots.$$
 A similar calculation (which we omit) reveals that
 \begin{align*}
   c'_1 &= \sum_{k=1}^\infty \frac{1+\log(k+1)}{2e}  \log^2\left(1+\frac{1}{k}\right) - \frac{1}{3e} \log^3\left(1+\frac{1}{k}\right)  \\

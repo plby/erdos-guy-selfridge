@@ -504,7 +504,7 @@ This proposition suggests the possibility of using linear programming (or intege
 In practice, the linear programming method is extremely accurate in upper and lower bounding $t(N)$; for instance, they give the exact value of $t(N)$ for all $N \leq 600$, with the sole exception of $N=155$, where the linear programming bounds instead give $45 \leq t(155) \leq 46$.  In this case, the (slower) integer programming method can be deployed to verify that $t(155)=45$.
 
 
-However, the large size of $J_{t,N}$ renders a direct application of the linear programming approach computationally expensive once $N$ exceeds $10^3$ or so.  For the purpose of establishing lower bounsd, one can of course reduce this set arbitrarily; we have found a good choice to be the integers between $t$ and $N$.  For the dual problem, we are also able to make such a reduction, under the additional hypotheses that the weights $w_p$ are non-decreasing:
+However, the large size of $J_{t,N}$ renders a direct application of the linear programming approach computationally expensive once $N$ exceeds $10^3$ or so.  For the purpose of establishing lower bounds, one can of course reduce this set arbitrarily; we have found a good choice to be the integers between $t$ and $N$.  For the dual problem, we are also able to make such a reduction, under the additional hypotheses that the weights $w_p$ are non-decreasing:
   
 \begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that \eqref{pj} holds
   for all $t \leq j \leq N$, and such that \eqref{hyp} also holds.
@@ -543,7 +543,7 @@ where we define the \emph{$t$-excess} $\excess_t(\tuple)$ of the multiset $\tupl
   \excess_t(\tuple) \coloneqq \sum_{a \in \tuple} \log \frac{a}{t}.
 \end{equation}
 
-\begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_2(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
+\begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_5(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
   $$ \excess_3(\tuple) = \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3} + \log \frac{5}{3} = 1.3093\dots$$
   and the accounting identity \eqref{accounting} become
   $$ 1.3093\dots + \log 2 - \log 5 = 0.3930\dots = \log 5! - 4 \log 3.$$

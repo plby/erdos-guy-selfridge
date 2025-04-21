@@ -65,6 +65,7 @@ def plot1():
     third = [1/3 for _ in range(len(values))]
     conj = [math.exp(-1) - 0.3044 / math.log(max(i+1,2)) for i in range(len(values))]
     upper = [best_t(i+1, values[i])/(i+1) for i in range(len(values))]
+    conj2 = [math.exp(-1) - 0.3044 / math.log(max(i+1,2)) - 0.7555 / math.log(max(i+1,2))**2 for i in range(len(values))]
 
     plt.figure(figsize=(8, 6))
     plt.plot(base, norm, label='$t(N)/N$' )
@@ -74,6 +75,7 @@ def plot1():
     plt.plot(base, conj, linestyle="--", label='$1/e - c_0/\\log N$' )
     plt.plot(base, alt, label='$\\lfloor 2N/7\\rfloor / N$' )
     plt.plot(base, upper, linestyle=":", label='Lemma 5.3' )
+    plt.plot(base, conj2, linestyle="--", label='$1/e - c_0/\\log N - c_1/\\log^2 N$' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.2,0.5)

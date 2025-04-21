@@ -289,7 +289,7 @@ for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloo
 
 \subsection{Author contributions and data}
 
-This project was initially concieved as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories at \url{https://credit.niso.org/}, are as follows:
+This project was initially concieved as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
 
 \begin{itemize}
 \item Boris Alexeev: ...
@@ -312,10 +312,41 @@ We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to deno
 
 If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $S$ is true and $1_S=0$ when $S$ is false.  If $x$ is a real number, we use $\lfloor x \rfloor$ to denote the greatest integer less than or equal to $x$, and $\lceil x \rceil$ to be the least integer greater than or equal to $x$.
 
-Throughout this paper, the symbol $p$ (or $p_0$, $p_1$, etc.) is always understood to be restricted to be prime.  The primes $2,3$ will play a special role\footnote{One could also run analogous arguments with other sets of tiny primes; for instance, the initial version \cite{tao} of this paper only utilized the prime $2$ in this fashion.} in this paper and will be referred to as \emph{tiny primes}. 
+Throughout this paper, the symbol $p$ (or $p_0$, $p_1$, etc.) is always understood to be restricted to be prime.  
+We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
+
+We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
+If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
+\begin{equation}\label{ftoa}
+  \sum_p \nu_p(r) \log p = \log r
+\end{equation}
+for any positive rational $r$.  
+
+For a natural number $n$, we can write
+\begin{equation}\label{nup-form} 
+  \nu_p(n) = \sum_{j=1}^\infty 1_{p^j|n}.
+\end{equation}
+Upon taking partial sums, we recover Legendre's formula
+\begin{equation}\label{legendre}
+  \nu_p(N!) = \sum_{j=1}^\infty \left\lfloor \frac{N}{p^j} \right\rfloor = \frac{N - s_p(N)}{p-1}
+\end{equation}
+where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
+
+Given a putative factorization $\tuple$ of $N!$,  
+we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$, and similarly refer to the negative $-\nu_p\left( \frac{N!}{\prod \tuple} \right) = \nu_p\left( \frac{\prod \tuple}{N!} \right)$ of this surplus as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
+
+To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
+\begin{equation}\label{stirling}
+\log N! = N \log N - N + \log \sqrt{2\pi N} + O_\leq^+\left(\frac{1}{12N}\right),
+\end{equation}
+valid for all natural numbers $N$. 
+
+\subsection{Approximation by \texorpdfstring{$3$}{3}-smooth numbers}
+
+The primes $2,3$ will play a special role\footnote{One could also run analogous arguments with other sets of tiny primes; for instance, the initial version \cite{tao} of this paper only utilized the prime $2$ in this fashion.} in this paper and will be referred to as \emph{tiny primes}. 
 Call a natural number \emph{$3$-smooth} if it is the product of tiny primes, i.e., it is of the form $2^n 3^m$ for some natural numbers $n,m$, and \emph{$3$-rough} if it is not divisible by any tiny prime, that is to say it is coprime to $6$.  Given a positive real number $x$, we use $\lceil x \rceil^{\langle 2,3 \rangle}$ to denote the smallest $3$-smooth number greater than or equal to $x$.  For instance, $\lceil 5 \rceil^{\langle 2,3 \rangle} = 6$ and $\lceil 10 \rceil^{\langle 2,3 \rangle} = 12$.  
 
-It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = \sqrt{12}^{N}$; see \eqref{legendre} below.  This makes $\log \sqrt{12}$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log \sqrt{12}$.} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
+It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = \sqrt{12}^{N}$; see \eqref{legendre} below.  This makes $\log \sqrt{12}$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log \sqrt{12} = \log 2 + \frac{1}{2} \log 3$.} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
 \begin{equation}\label{fancy-kappa-def}
   \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}
 \end{equation}
@@ -363,34 +394,7 @@ where
 
 We remark that when $x$ is a power of $12$, the left-hand sides of \eqref{12-2}, \eqref{12-3} are both equal to $\frac{\log x}{\log \sqrt{12}}$; thus the estimates \eqref{12-2}, \eqref{12-3} are quite efficient asymptotically.
 
-We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
-
-We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
-If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
-\begin{equation}\label{ftoa}
-  \sum_p \nu_p(r) \log p = \log r
-\end{equation}
-for any positive rational $r$.  
-
-For a natural number $n$, we can write
-\begin{equation}\label{nup-form} 
-  \nu_p(n) = \sum_{j=1}^\infty 1_{p^j|n}.
-\end{equation}
-Upon taking partial sums, we recover Legendre's formula
-\begin{equation}\label{legendre}
-  \nu_p(N!) = \sum_{j=1}^\infty \left\lfloor \frac{N}{p^j} \right\rfloor = \frac{N - s_p(N)}{p-1}
-\end{equation}
-where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
-
-Given a putative factorization $\tuple$ of $N!$,  
-we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$, and similarly refer to the negative $-\nu_p\left( \frac{N!}{\prod \tuple} \right) = \nu_p\left( \frac{\prod \tuple}{N!} \right)$ of this surplus as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
-
-To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
-\begin{equation}\label{stirling}
-\log N! = N \log N - N + \log \sqrt{2\pi N} + O_\leq^+\left(\frac{1}{12N}\right),
-\end{equation}
-valid for all natural numbers $N$. 
-
+\subsection{Sums over primes}
 
 We recall the effective prime number theorem from \cite[Corollary 5.2]{dusart}, which asserts that
 \begin{equation}\label{pi-lower}

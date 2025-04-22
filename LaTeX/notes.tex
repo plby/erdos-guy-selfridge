@@ -550,50 +550,50 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
     
     \begin{table}[ht]
       \centering
-      \begin{tabular}{|c|c|c|c|}
+      \begin{tabular}{|c|c|c|c|c|}
       \hline
-      $N$ & $t(N)$ & \Cref{upper-crit} & $\frac{N}{e}-\frac{c_0 N}{\log N} - \frac{c_1 N}{\log^2 N}$  \\
+      $N$ & $t(N)_-$ & $t(N)_+$ & \Cref{upper-crit} & $\frac{N}{e}-\frac{c_0 N}{\log N} - \frac{c_1 N}{\log^2 N}$  \\
       \hline
-$10^5$ & $\num{33462}+[0,184]$ & $\num{33462}+206$ & $\num{33573}$ \\
-$2 \times 10^5$ & $\num{67703}+[0,1]$ & $\num{67703}+36$ &$\num{67573}$ \\
-$3 \times 10^5$ & $\num{101903}+[0,4]$ & $\num{101903}+42$ &$\num{101697}$ \\
-$4 \times 10^5$ & $\num{136143}+[0,6]$ & $\num{136143}+43$ &$\num{135895}$ \\
-$5 \times 10^5$ & $\num{170456}+[0,8]$ & $\num{170456}+46$ &$\num{170146}$ \\
-$6 \times 10^5$ & $\num{204811}+[0,10]$ & $\num{204811}+47$ &$\num{204438}$ \\
-$7 \times 10^5$ & $\num{239187}+[0,23]$ & $\num{239187}+54$ &$\num{238763}$ \\
-$8 \times 10^5$ & $\num{273604}+[0,23]$ & $\num{273604}+64$ &$\num{273115}$ \\
-$9 \times 10^5$ & $\num{308029}+[0,13]$ & $\num{308029}+70$ &$\num{307490}$ \\
+$1 \times 10^5$ & $\num{33462}$ & $t(N)_- + 184$ & $t(N)_- + 206$ & $t(N)_- + \num{111}$ \\
+$2 \times 10^5$ & $\num{67703}$ & $t(N)_- + 1$ & $t(N)_- + 36$ & $t(N)_- - \num{130}$ \\
+$3 \times 10^5$ & $\num{101903}$ & $t(N)_- + 4$ & $t(N)_- + 42$ & $t(N)_- - \num{206}$ \\
+$4 \times 10^5$ & $\num{136143}$ & $t(N)_- + 6$ & $t(N)_- + 43$ & $t(N)_- - \num{248}$ \\
+$5 \times 10^5$ & $\num{170456}$ & $t(N)_- + 8$ & $t(N)_- + 46$ & $t(N)_- - \num{310}$ \\
+$6 \times 10^5$ & $\num{204811}$ & $t(N)_- + 10$ & $t(N)_- + 47$ & $t(N)_- - \num{373}$ \\
+$7 \times 10^5$ & $\num{239187}$ & $t(N)_- + 23$ & $t(N)_- + 54$ & $t(N)_- - \num{425}$ \\
+$8 \times 10^5$ & $\num{273604}$ & $t(N)_- + 23$ & $t(N)_- + 64$ & $t(N)_- - \num{490}$ \\
+$9 \times 10^5$ & $\num{308029}$ & $t(N)_- + 13$ & $t(N)_- + 70$ & $t(N)_- - \num{539}$ \\
 \hline
-$10^6$ & $\num{342505}+[0,3]$  & &$\num{341886}$ \\
-$2 \times 10^6$ & $\num{687796}+[0,6]$ & &$\num{686617}$ \\
-$3 \times 10^6$ & $\num{1033949}+[0,17]$ & &$\num{1032214}$ \\
-$4 \times 10^6$ & $\num{1380625}+[0,29]$ & &$\num{1378340}$ \\
-$5 \times 10^6$ & $\num{1727605}+[0,4]$ & &$\num{1724843}$ \\
-$6 \times 10^6$ & $\num{2074962}+[0,32]$ & &$\num{2071638}$ \\
-$7 \times 10^6$ & $\num{2422486}+[0,54]$ & &$\num{2418668}$ \\
-$8 \times 10^6$ & $\num{2770212}+[0,870]$ & &$\num{2765898}$ \\
-$9 \times 10^6$ & $\num{3118129}+[0,32]$ & &$\num{3113297}$ \\
+$1 \times 10^6$ & $\num{342505}$ & $t(N)_- + 3$ & $t(N)_- + 62$ & $t(N)_- - \num{619}$ \\
+$2 \times 10^6$ & $\num{687796}$ & $t(N)_- + 6$ & $t(N)_- + 87$ & $t(N)_- - \num{1180}$ \\
+$3 \times 10^6$ & $\num{1033949}$ & $t(N)_- + 17$ & $t(N)_- + 107$ & $t(N)_- - \num{1736}$ \\
+$4 \times 10^6$ & $\num{1380625}$ & $t(N)_- + 29$ & $t(N)_- + 122$ & $t(N)_- - \num{2286}$ \\
+$5 \times 10^6$ & $\num{1727605}$ & $t(N)_- + 4$ & $t(N)_- + 126$ & $t(N)_- - \num{2763}$ \\
+$6 \times 10^6$ & $\num{2074962}$ & $t(N)_- + 32$ & $t(N)_- + 152$ & $t(N)_- - \num{3326}$ \\
+$7 \times 10^6$ & $\num{2422486}$ & $t(N)_- + 54$ & $t(N)_- + 165$ & $t(N)_- - \num{3819}$ \\
+$8 \times 10^6$ & $\num{2770212}$ & $t(N)_- + 870$ & $t(N)_- + 177$ & $t(N)_- - \num{4316}$ \\
+$9 \times 10^6$ & $\num{3118129}$ & $t(N)_- + 32$ & $t(N)_- + 173$ & $t(N)_- - \num{4834}$ \\
 \hline
-$10^7$ & $\num{3466235}+[0,17]$ & &$\num{3460846}$ \\
-$2 \times 10^7$ & $\num{6952243}+[0,23]$ & &$\num{6941964}$ \\
-$3 \times 10^7$ & $\num{10444441}+[0,25]$ & &$\num{10429470}$ \\
-$4 \times 10^7$ & $\num{13940484}+[0,2176]$ && $\num{13920910}$ \\
-$5 \times 10^7$ & $\num{17439282}+[0,33]$ & &$\num{17415160}$ \\
-$6 \times 10^7$ & $\num{20940210}+[0,39]$ & &$\num{20911610}$ \\
-$7 \times 10^7$ & $\num{24442818}+[0,148]$ & &$\num{24409830}$ \\
-$8 \times 10^7$ & $\num{27946958}+[0,70]$ & &$\num{27909550}$ \\
-$9 \times 10^7$ & $\num{31452431}+[0,38]$ & &$\num{31410560}$ \\
+$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- + 17$ & $t(N)_- + 179$ & $t(N)_- - \num{5392}$ \\
+$2 \times 10^7$ & $\num{6952243}$ & $t(N)_- + 23$ & $t(N)_- + 234$ & $t(N)_- - \num{10284}$ \\
+$3 \times 10^7$ & $\num{10444441}$ & $t(N)_- + 25$ & $t(N)_- + 253$ & $t(N)_- - \num{14975}$ \\
+$4 \times 10^7$ & $\num{13940484}$ & $t(N)_- + 2176$ & $t(N)_- + 354$ & $t(N)_- - \num{19582}$ \\
+$5 \times 10^7$ & $\num{17439282}$ & $t(N)_- + 33$ & $t(N)_- + 356$ & $t(N)_- - \num{24124}$ \\
+$6 \times 10^7$ & $\num{20940210}$ & $t(N)_- + 39$ & $t(N)_- + 381$ & $t(N)_- - \num{28610}$ \\
+$7 \times 10^7$ & $\num{24442818}$ & $t(N)_- + 148$ & $t(N)_- + 415$ & $t(N)_- - \num{32996}$ \\
+$8 \times 10^7$ & $\num{27946958}$ & $t(N)_- + 70$ & $t(N)_- + 445$ & $t(N)_- - \num{37417}$ \\
+$9 \times 10^7$ & $\num{31452431}$ & $t(N)_- + 38$ & $t(N)_- + 428$ & $t(N)_- - \num{41882}$ \\
 \hline
-$10^8$ & $\num{34958725}+[0,342]$ & &$\num{34912700}$ \\
-$2 \times 10^8$ & $\num{70064782}+[0,343]$ && $\num{69976980}$ \\
-$3 \times 10^8$ & $\num{105218403}+[0,93]$ & &$\num{105090200}$ \\
-$4 \times 10^8$ & $\num{140401212}+[0,142]$ & &$\num{140233700}$ \\
-$5 \times 10^8$ & $\num{175605266}+[0,287]$ & &$\num{175399100}$ \\
-$6 \times 10^8$ & $\num{210825848}+[0,140]$ & &$\num{210581500}$ \\
-$7 \times 10^8$ & $\num{246059851}+[0,233]$ & &$\num{245777700}$ \\
+$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- + 342$ & $t(N)_- + 482$ & $t(N)_- - \num{46039}$ \\
+$2 \times 10^8$ & $\num{70064782}$ & $t(N)_- + 343$ & $t(N)_- + 644$ & $t(N)_- - \num{87837}$ \\
+$3 \times 10^8$ & $\num{105218403}$ & $t(N)_- + 93$ & $t(N)_- + 752$ & $t(N)_- - \num{128227}$ \\
+$4 \times 10^8$ & $\num{140401212}$ & $t(N)_- + 142$ & $t(N)_- + 887$ & $t(N)_- - \num{167495}$ \\
+$5 \times 10^8$ & $\num{175605266}$ & $t(N)_- + 287$ & $t(N)_- + 972$ & $t(N)_- - \num{206175}$ \\
+$6 \times 10^8$ & $\num{210825848}$ & $t(N)_- + 140$ & $t(N)_- + 1058$ & $t(N)_- - \num{244391}$ \\
+$7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 233$ & $t(N)_- + 1147$ & $t(N)_- - \num{282167}$ \\
       \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) bounds for $t(N)$ obtained by the linear programming method, the upper bound from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (to seven significant figures). {\bf had trouble calculating the third column after a while.}}\label{long-table}
+\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the upper bound on $t(N)_+$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer).}\label{long-table}
 \end{table}
 
       
@@ -857,9 +857,13 @@ B_{p_1} &\coloneqq \frac{1}{N} \sum_{m \leq K} \nu_{p_1}(m) \sum_{\frac{t}{m} \l
 with the convention that the upper bound $p < \frac{t}{m-1}$ in \eqref{B-def} is vacuous when $m=1$.  Then $t(N) \geq t$.
 \end{proposition}
 
-Note that the quantities $\delta_2, \delta$ essentially appeared previously in \Cref{upper-crit}.  Informally, $\delta$ and the condition \eqref{delta-cond} represent the ``budget'' of what one can ``spend'' on various imperfections of the approximate factorization $\tuple^{(0)}$ until we become unable to ``afford'' to ``buy'' a $t$-admissible subfactorization of cardinality at least $N$.  The quantity $\delta_2$ represents the ``fixed expense'' coming from large primes that is unavoidable; but the other expenditures $\delta_i, i \neq 2$ can be made small by suitable exploitation of the pool of tiny primes present in the factorization of $N!$ (which multiply out to roughly $\sqrt{12}^N$).  The secondary constraint \eqref{alpha-cond} can roughly speaking be viewed as a requirement that one does not completely exhaust this pool.
-
 In practice, the parameter $K$ will be quite small compared to $N$, and the quantities $\gamma_2, \gamma_3, \kappa_{*}$ will also be somewhat smaller than $1$.
+
+\begin{remark} In the notation of this proposition, \Cref{upper-crit} can essentially be interpreted as a necessary condition $\delta_2 \leq \delta$ for $t(N) \leq t$ to be provable; to use the above proposition effectively, it is thus desirable to have all the other $\delta_i, i \neq 2$ terms be as small as possible.  The criterion in \Cref{t-descrip} can similarly be rewritten as $\delta_1+\delta_9 \leq \delta$, where
+  $$ \delta_9 \coloneqq \frac{1}{N} \sum_p \left|\nu_{p_1}\left( \frac{N!}{\prod \tuple^{(0)}} \right)\right|_{\log p, \infty}.$$
+In practice, $\delta_9$ is too large (or infinite) for this criterion to be directly useful; the algorithm below is intended to replace this large quantity with something much smaller, and in particular to utilize tiny primes to gain factors such as $\kappa_L$ for various $L$ in the bounds of the main $\delta_i$ terms besides the ``non-negotiable'' $\delta_2$.  The secondary condition \eqref{alpha-cond} can be interpreted as a requirement that ``enough'' tiny primes are available in the factorization of $N!$ to perform such adjustments.
+\end{remark}
+
 
 The rest of this section will be devoted to the proof of this proposition.  It will be convenient to divide the primes into four classes:
   \begin{itemize}
@@ -1583,7 +1587,10 @@ and
 $$ 1-\frac{2}{\sqrt{y}} \leq 1-\frac{2}{\sqrt{t}} \leq 1.$$
 Finally, \eqref{pixy-upper}, \eqref{pixy-lower} come from specializing \eqref{bv-upper}, \eqref{bv-lower} to the case of an indicator function $b = 1_{(y,x]}$.
 
-
+\begin{remark} Due to the convexity of $\frac{1}{\log x}$, one has the upper and lower bounds
+$$ \frac{y-x}{\log \frac{x+y}{2}} \leq \int_y^x \frac{dt}{\log t} \leq \frac{y-x}{2\log y} + \frac{y-x}{2\log x}$$
+for $1 < y < x$, which can be used in conjunction with \eqref{pix} to improve \eqref{pixy-lower}, \eqref{pixy-upper} slightly (at the minor cost of worsening the $\frac{2E(x)}{\log x}$ error term in \eqref{pixy-lower} to $\frac{2E(x)}{\log y}$).
+\end{remark}
 
 \section{Computation of \texorpdfstring{$c_0$}{c\_0} and related quantities}\label{c0-app}
 

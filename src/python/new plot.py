@@ -79,7 +79,7 @@ def plot2():
     plt.plot(base, exact, label='$t(N)/N$ (exact)' )
     plt.plot(base, conj, linestyle="--", label='$\\frac{1}{e} - c_0/\\log N$' )
     plt.plot(base, alt, label='$\\lfloor 2N/7\\rfloor/N$' )
-    plt.plot(base, upper, linestyle=":", label='Lemma 5.3 (upper)' )
+    plt.plot(base, upper, linestyle=":", label='Lemma 5.1 (upper)' )
     plt.plot(base, conj2, linestyle="--", label='$1/e - c_0/\\log N - c_1/\\log^2 N$' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')

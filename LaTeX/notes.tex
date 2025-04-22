@@ -289,7 +289,7 @@ for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloo
 
 \subsection{Author contributions and data}
 
-This project was initially concieved as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
+This project was initially conceived as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
 
 \begin{itemize}
 \item Boris Alexeev: ...
@@ -411,7 +411,7 @@ $\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j
 $$
 \|b\|_{\mathrm{TV}^*(y,x]}
 \coloneqq |b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]},$$
-$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$ (which exists if $b$ is of finite total variation).  Equivalently, $\|b\|_{\mathrm{TV}^*(y,x]}$ is the total variation of $b$ if extended by zero outside of $(y,x]$. The indicator function $1_{(y,x]}$ clearly has an augumented total variation of $2$. 
+$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$ (which exists if $b$ is of finite total variation).  Equivalently, $\|b\|_{\mathrm{TV}^*(y,x]}$ is the total variation of $b$ if extended by zero outside of $(y,x]$. The indicator function $1_{(y,x]}$ clearly has an augmented total variation of $2$.
 
 We will use this augmented total variation to control sums over primes.  More precisely, in \Cref{primes-sec} we will show
 
@@ -458,7 +458,7 @@ The following simple greedy algorithm gives reasonably good performance to obtai
 \item[(2)] If $N! / \prod \tuple$ contains a multiple of $p$ that is greater than or equal to $t$, locate the smallest such multiple, add it to $\tuple$, and return to Step 1.  Otherwise, \texttt{HALT} the algorithm. 
 \end{enumerate}
 
-This procedure clearly halts in finite time to produce a $t$-admissible subfactoriation of $N!$.  For instance, applying this procedure with $N=9$, $t=3$ produces the $3$-admissible subfactorization
+This procedure clearly halts in finite time to produce a $t$-admissible subfactorization of $N!$.  For instance, applying this procedure with $N=9$, $t=3$ produces the $3$-admissible subfactorization
 $$ \{7 \times 1, 5 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 2 \times 2, 2 \times 2, 2 \times 2 \}$$
 which recovers the bound $t(9) \geq 3$ from \Cref{nine} (though with a slightly different subfactorization, in which the $8$ is replaced by $4$).
 
@@ -517,7 +517,7 @@ However, the large size of $J_{t,N}$ renders a direct application of the linear 
 \end{lemma}
   
 \begin{proof}
-By the previous remarks, it will suffice to show that the bound \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decerasing hypothesis on $w_p$, we have
+By the previous remarks, it will suffice to show that the bound \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decreasing hypothesis on $w_p$, we have
   $$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
   and hence by the minimality of $j$ we have
   $$ \sum_p w_p \nu_p(j) > 1, $$
@@ -926,7 +926,7 @@ Applying \Cref{t-descrip}, we conclude that $t(N) \geq t$ as claimed.
 
 \section{Estimating terms}\label{construction-sec}
 
-In order to use \Cref{repair} for a given choice of $N,t$, we need to find a $t$-admissible multiset $\tuple^{(0)}$ and parameters $K, \kappa_*, \gamma_2, \gamma_3$ obeying \eqref{conditions} as well as good upper bounds on the quantities $\delta_i$, $i=1,\dots,8$ and $\alpha_i$, $i=1,\dots,7$, that can either be evaluated asymptotically or numerically.  Many of theaw terms will be straightforward to estimate; we discuss only the more difficult ones gwew.
+In order to use \Cref{repair} for a given choice of $N,t$, we need to find a $t$-admissible multiset $\tuple^{(0)}$ and parameters $K, \kappa_*, \gamma_2, \gamma_3$ obeying \eqref{conditions} as well as good upper bounds on the quantities $\delta_i$, $i=1,\dots,8$ and $\alpha_i$, $i=1,\dots,7$, that can either be evaluated asymptotically or numerically.  Many of these terms will be straightforward to estimate; we discuss only the more difficult ones here.
 
 We introduce a further natural number parameter $A$ and define 
 \begin{equation}\label{sigma-def}
@@ -1083,7 +1083,7 @@ for some absolute constant $c>0$.  From \eqref{gammas-def}, \eqref{main-lower}, 
 $$ \gamma_2 = \frac{1}{10} \frac{\log 2}{\log \sqrt{3}} + O\left(\frac{1}{\log N}\right), \quad
  \gamma_3 = \frac{1}{10} \frac{\log \sqrt{3}}{\log 2} + O\left(\frac{1}{\log N}\right)
 $$
-and hence by \eqref{kappastar-def},  \eqref{kappastar-2-def}, \eqref{kappastar-3-def} we have for sufficienty large $N$ that
+and hence by \eqref{kappastar-def},  \eqref{kappastar-2-def}, \eqref{kappastar-3-def} we have for sufficiently large $N$ that
 $$ \kappa_{**} \ll 1.$$
 By \Cref{repair}, it thus suffices to establish the inequalities \eqref{delta-cond}, \eqref{alpha-cond}.
 Several of the quantities $\delta, \delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, \eqref{stirling}, and the prime number theorem:
@@ -1341,7 +1341,7 @@ The bounds available for the right-hand side are now monotone in $N$, and one ca
 for $N \geq 10^{70}$. This is better than the previous bound for $\alpha_5$.  For $\delta_5$, the bound is slightly worse, but this is more than compensated for by the improved bounds on $\delta_2$, $\delta_7$, and \eqref{delta-cond}, \eqref{alpha-cond} can be verified here with significant room to spare.
 
 This completes the proof of \Cref{main}(iii) (and hence \Cref{main}(ii)) in the cases $N=N_0$ and $N \geq 10^{70}$.  It remains to cover the intermediate range $N_0 < N \leq 10^{70}$.  Here we adopt the perspective of interval arithmetic.  If $N$ is constrained to a given interval, such as $[10^{11}, 5 \times 10^{11}]$, we can use the worst-case upper and lower bounds for $A_{p_1}, B_{p_1}$ to obtain conservative upper bounds on the most delicate quantities
-$\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in theese estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
+$\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in these estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
 $$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^14, 10^{20}]; \quad [10^{20}, 10^{70}]$$
 one can check that such bounds are sufficient to verify \eqref{delta-cond}, \eqref{alpha-cond} in these cases.  This now verifies \Cref{main}(ii), (iii) for all $N \geq 10^{11}$.
 (In fact, with more effort, this verification can be pushed down to $N \geq 6 \times 10^{10}$ using the same choice of parameters $A,K,L$.)
@@ -1540,7 +1540,7 @@ We begin with $c_0$.  As one might imagine from an inspection of \Cref{fig-mean}
 \begin{equation}\label{c0-alt}
    c_0 = \frac{1}{e} \int_1^\infty \lfloor y \rfloor \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}.
 \end{equation}
-Next, observe\footnote{We thank an anonymous commentor on the blog of one of the authors for this suggestion.} that
+Next, observe\footnote{We thank an anonymous commenter on the blog of one of the authors for this suggestion.} that
 \begin{align*}
   \frac{1}{e} \int_e^\infty y \log \frac{\lceil y/e \rceil}{y/e}\ \frac{dy}{y^2}
   &= \sum_{k=1}^\infty \int_{ke}^{(k+1)e} y \log \frac{k+1}{y/e}\ \frac{dy}{y^2} \\

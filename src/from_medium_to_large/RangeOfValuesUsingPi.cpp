@@ -27,6 +27,16 @@ cc_hash_table<long long, long long> smallestDivisor;
 
 vector<long long> primes;
 
+///////////////////////////////////
+/////// Pi of n stuff ///////
+///////////////////////////////////
+
+#define primesCutOff 9
+//Number of prime in ]y,x]
+long long lowerBoundOnPrimeBetween(double y, double x){
+  return ceil(((1-2/sqrt(y))* (x-y)- 2*(0.95 * sqrt(x) + 3.83*x/(1000000000LL)))/log(x) );
+}
+
 
 ///////////////////////////////////
 //// Precomputations of primes ////
@@ -66,23 +76,24 @@ void factorizationOfOtherIntervals(long long b, long long e){
     if(i%1000000000 == 0) cout <<"Precomputation reached  i = "<< i << " out of " << maxN << endl;
     if(firstDivisor[i-b] != -1){
         long long fd = primes[firstDivisor[i-b]];
-        if(i > LARGEST_COMPUTED_FACTORIZATION) continue;         
+        if(i>LARGEST_COMPUTED_FACTORIZATION) continue;         
         if(fd == 2 || fd == 3) continue;
         smallestDivisor[i] = firstDivisor[i-b];
     } else{
       primes.push_back(i);
-      if(i > LARGEST_COMPUTED_FACTORIZATION ) continue;
+      if(i>LARGEST_COMPUTED_FACTORIZATION) continue;
       smallestDivisor[i] = primes.size()-1;
     }
   } 
 }
 
 // compute prime and factorization for the whole range by invoking the two previous functions
+// we stope at maxN/(primesCutOff-1) because we will use the approximation of pi for larger primes
 void setUpFactorization(){
   factorizationOfFirstInterval(minN);
-  long long step = maxN/NUMBEROFINTERVALS;
-  for(long long i=minN; i<maxN; i+=step){
-    factorizationOfOtherIntervals(i+1, min(i+step, maxN));
+  long long step = (maxN/primesCutOff)/NUMBEROFINTERVALS;
+  for(long long i=minN; i<(maxN/(primesCutOff)); i+=step){
+    factorizationOfOtherIntervals(i+1, min(i+step, (maxN/(primesCutOff))));
   }
 }
 
@@ -100,7 +111,6 @@ long long findIndexLargerPrime(long long v){
   }
   return u;
 }
-
 
 ///////////////////////////////////
 /////// Factorization of n! ///////
@@ -148,8 +158,7 @@ class Factorizer{
     for(long long i=0; i<primes.size() && primes[i]<=n; i++){
       factors[i]=0;
       long long p = primes[i];
-      //this is quit ugly, but this avoids overflow in the multiplication
-      //other solution would involve anoying while conditions
+
       long long n_tmp = n/p;
       while(n_tmp > 0){
         factors[i] += n_tmp;
@@ -160,7 +169,7 @@ class Factorizer{
   //tbr is the index of one prime to be removed
   //toberemoved is a number to be removed (so we need to take its factorization)
   long long countRemovable(long long toBeRemoved, long long tbr){
-    if(toBeRemoved%2 != 0 && toBeRemoved%3 != 0 && (toBeRemoved > LARGEST_COMPUTED_FACTORIZATION )) return 0;
+    if(toBeRemoved%2 != 0 && toBeRemoved%3 != 0 && (toBeRemoved > LARGEST_COMPUTED_FACTORIZATION)) return 0;
     // we remove the content of the vector and the integer tbr
     // we use the fact that in toBeRemoved all occurences of the same element are next to each other
     long long removable = factors[tbr];
@@ -169,7 +178,7 @@ class Factorizer{
       long long v;
       if(toBeRemoved%2 == 0) v = 0;
       else if(toBeRemoved%3 == 0) v = 1;
-      else if(toBeRemoved > LARGEST_COMPUTED_FACTORIZATION ) return 0;
+      else if(toBeRemoved > LARGEST_COMPUTED_FACTORIZATION) return 0;
       else v = smallestDivisor[toBeRemoved];
       toBeRemoved /= primes[v];      
       long long nbocc=1;
@@ -184,8 +193,8 @@ class Factorizer{
   }
   // add the nbTimes the factorization of the number (toBeRemoved*primes[tbr])
   // this is always called with nbTimes large enough 
-  // (most of the time after checking via a previous call to countRemovable)
-  // we have two sanity checks, but they should not be necessary
+  // (most of the time after checking with a first call to countRemovable)
+  // we still have two sanity checks, but they should not be necessary
   void addToFactorization(long long nbTimes, long long toBeRemoved, long long tbr){
     found += nbTimes;
     factors[tbr] -= nbTimes;
@@ -194,6 +203,21 @@ class Factorizer{
       cout<<"error too small"<<endl;
       exit(1);
     }
+    while(toBeRemoved>1){
+      long long v;
+      if(toBeRemoved%2 == 0) v = 0;
+      else if(toBeRemoved%3 == 0) v = 1;
+      else v = smallestDivisor[toBeRemoved];
+      toBeRemoved /= primes[v];      
+      factors[v]-=nbTimes;
+      if(factors[v]<0){    //sanity check 2
+        cout<<"error neg val"<<endl;
+        exit(1);
+      }
+    }
+  }  
+  void addPartialToFactorization(long long nbTimes, long long toBeRemoved){
+    found += nbTimes;
     while(toBeRemoved>1){
       long long v;
       if(toBeRemoved%2 == 0) v = 0;
@@ -218,8 +242,32 @@ Factorizer factorizer;
 long long bestFact(long long n, long long eps = 0){
   long long targetVal = (n*(1000+eps)/1000)/3;
   factorizer.set(n, targetVal);
-  long long i = findIndexLargerPrime(n);
-  for(; primes[i]>n; i--){}
+  long long i;
+  if(n>=maxN/primesCutOff){
+    for(long long d = 1; d < primesCutOff && n/d>maxN/primesCutOff; d++){
+      long long upperBoundInterval = n/d;
+      long long lowerBoundInterval = max(n/(d+1), maxN/primesCutOff);
+      long long tgGoal = (targetVal+lowerBoundInterval-1)/lowerBoundInterval;
+      long long midInterval = (tgGoal>1)?targetVal/(tgGoal-1):-1;
+
+      if(midInterval == -1 || midInterval > upperBoundInterval){
+        long long countPrimes = lowerBoundOnPrimeBetween(lowerBoundInterval, upperBoundInterval);
+        factorizer.addPartialToFactorization(countPrimes*d, tgGoal);
+      }else{
+        long long countPrimes = lowerBoundOnPrimeBetween(lowerBoundInterval, midInterval);
+        factorizer.addPartialToFactorization(countPrimes*d, tgGoal);
+
+        countPrimes = lowerBoundOnPrimeBetween(midInterval, upperBoundInterval);
+        factorizer.addPartialToFactorization(countPrimes*d, tgGoal-1);
+
+      }
+    }
+    i = findIndexLargerPrime(maxN/primesCutOff-1);
+    for(; primes[i]>=maxN/primesCutOff; i--){}
+  }else{
+    i = findIndexLargerPrime(n);
+    for(; primes[i]>n; i--){}
+  }
   for(; primes[i]>=targetVal; i--){
     factorizer.addToFactorization(factorizer.factors[i], 1, i);
   }

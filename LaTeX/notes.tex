@@ -152,7 +152,7 @@
 \begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
 The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
 $$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
-for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we also establish several conjectures of Guy and Selfridge concerning effective estimates of this quantity, for instance establishing $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
+for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we obtain highly precise computations of $t(N)$ for wide ranges of $N$, establishing several explicit conjectures of Guy and Selfridge on this sequence.  For instance, we show that $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
 \end{abstract}
 
 
@@ -179,7 +179,9 @@ It is easy to see that $t(N)$ is non-decreasing in $N$, (any cardinality $N$ fac
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
-When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with high precision than in the general case.
+When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than in the general case.  For instance, we can show that
+$$ 0 \leq t(6 \times 10^8) - \num{210825848} \leq 140;$$
+see \Cref{long-table}.
 
 \begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient for both theoretical analysis of $t(N)$ and numerical computations.
 \end{remark}
@@ -545,6 +547,57 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
     \label{fig-longer}
     \end{figure}
 
+    
+    \begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|c|}
+      \hline
+      $N$ & $t(N)$ & \Cref{upper-crit} & $\frac{N}{e}-\frac{c_0 N}{\log N} - \frac{c_1 N}{\log^2 N}$  \\
+      \hline
+$10^5$ & $\num{33462}+[0,184]$ & $\num{33462}+206$ & $\num{33573}$ \\
+$2 \times 10^5$ & $\num{67703}+[0,1]$ & $\num{67703}+36$ &$\num{67573}$ \\
+$3 \times 10^5$ & $\num{101903}+[0,4]$ & $\num{101903}+42$ &$\num{101697}$ \\
+$4 \times 10^5$ & $\num{136143}+[0,6]$ & $\num{136143}+43$ &$\num{135895}$ \\
+$5 \times 10^5$ & $\num{170456}+[0,8]$ & $\num{170456}+46$ &$\num{170146}$ \\
+$6 \times 10^5$ & $\num{204811}+[0,10]$ & $\num{204811}+47$ &$\num{204438}$ \\
+$7 \times 10^5$ & $\num{239187}+[0,23]$ & $\num{239187}+54$ &$\num{238763}$ \\
+$8 \times 10^5$ & $\num{273604}+[0,23]$ & $\num{273604}+64$ &$\num{273115}$ \\
+$9 \times 10^5$ & $\num{308029}+[0,13]$ & $\num{308029}+70$ &$\num{307490}$ \\
+\hline
+$10^6$ & $\num{342505}+[0,3]$  & &$\num{341886}$ \\
+$2 \times 10^6$ & $\num{687796}+[0,6]$ & &$\num{686617}$ \\
+$3 \times 10^6$ & $\num{1033949}+[0,17]$ & &$\num{1032214}$ \\
+$4 \times 10^6$ & $\num{1380625}+[0,29]$ & &$\num{1378340}$ \\
+$5 \times 10^6$ & $\num{1727605}+[0,4]$ & &$\num{1724843}$ \\
+$6 \times 10^6$ & $\num{2074962}+[0,32]$ & &$\num{2071638}$ \\
+$7 \times 10^6$ & $\num{2422486}+[0,54]$ & &$\num{2418668}$ \\
+$8 \times 10^6$ & $\num{2770212}+[0,870]$ & &$\num{2765898}$ \\
+$9 \times 10^6$ & $\num{3118129}+[0,32]$ & &$\num{3113297}$ \\
+\hline
+$10^7$ & $\num{3466235}+[0,17]$ & &$\num{3460846}$ \\
+$2 \times 10^7$ & $\num{6952243}+[0,23]$ & &$\num{6941964}$ \\
+$3 \times 10^7$ & $\num{10444441}+[0,25]$ & &$\num{10429470}$ \\
+$4 \times 10^7$ & $\num{13940484}+[0,2176]$ && $\num{13920910}$ \\
+$5 \times 10^7$ & $\num{17439282}+[0,33]$ & &$\num{17415160}$ \\
+$6 \times 10^7$ & $\num{20940210}+[0,39]$ & &$\num{20911610}$ \\
+$7 \times 10^7$ & $\num{24442818}+[0,148]$ & &$\num{24409830}$ \\
+$8 \times 10^7$ & $\num{27946958}+[0,70]$ & &$\num{27909550}$ \\
+$9 \times 10^7$ & $\num{31452431}+[0,38]$ & &$\num{31410560}$ \\
+\hline
+$10^8$ & $\num{34958725}+[0,342]$ & &$\num{34912700}$ \\
+$2 \times 10^8$ & $\num{70064782}+[0,343]$ && $\num{69976980}$ \\
+$3 \times 10^8$ & $\num{105218403}+[0,93]$ & &$\num{105090200}$ \\
+$4 \times 10^8$ & $\num{140401212}+[0,142]$ & &$\num{140233700}$ \\
+$5 \times 10^8$ & $\num{175605266}+[0,287]$ & &$\num{175399100}$ \\
+$6 \times 10^8$ & $\num{210825848}+[0,140]$ & &$\num{210581500}$ \\
+$7 \times 10^8$ & $\num{246059851}+[0,233]$ & &$\num{245777700}$ \\
+      \hline
+\end{tabular}
+\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) bounds for $t(N)$ obtained by the linear programming method, the upper bound from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (to seven significant figures). {\bf had trouble calculating the third column after a while.}}\label{long-table}
+\end{table}
+
+      
+      
 \section{Some upper bounds}
 
 It is easy to check using \eqref{ftoa} that the weights $w_p \coloneqq \frac{\log p}{\log t}$ will obey the requirements \eqref{pj}, \eqref{hyp} as long as $0 > \log N! - N \log t$.  This recovers the trivial upper bound \eqref{trivial}.  By adjusting these weights at large primes, one can improve this bound as follows:

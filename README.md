@@ -85,7 +85,7 @@ Secondary goals are
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6) | Terence Tao | $c_0 \approx 0.30441901087$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Evan Conway | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/numerical%20integral.py) | Terence Tao | $c_1 \approx 0.7555$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
-| [21 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/interval_constants.py) | Terence Tao | $c_0 \in [0.30441901064575277447, 0.30441901109754626598]$ | Exact eval. of partial integral + rigorous bound on error | Rigorous (to 50 decimal precision)
+| [21 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/interval_constants.py) | Terence Tao | $c_0 \in [0.30441901064575277447, 0.30441901109754626598]$; $c_1 \in [0.75554808426110209307, 0.75554808757613112213]$ | Exact eval. of partial integral + rigorous bound on error | Rigorous (to 50 decimal precision)
 
 ## Data
 

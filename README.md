@@ -42,7 +42,7 @@ Secondary goals are
 1. Conjecture 1 **has been fully verified**, as a consequence of Conjecture 2 for $N \geq 43632$, and either the greedy or linear programming method for $N < 43632$.
 2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
-4. Non-rigorous numerics suggest that $c_0 \approx 0.30441901087$.  More rigorously, one has $c_0 = 0.304419011 \pm 7 \times 10^{-9}$ (assuming no significant roundoff errors in floating point arithmetic).  In principle, interval arithmetic could give a fully rigorous bound, but this has not yet been attempted.  Only a very rough estimate for $c_1 \approx 0.7555$ has been given so far.
+4. Using interval arithmetic and rigorous error bounds, one has $c_0 = 0.304419010\dots$ and $c_1 = 0.75554808\dots$.Non-rigorous heuristic calculations predict that $c_0 \approx 0.30441901087$.  
 
 ## Timeline on controlling $t(N)$
 

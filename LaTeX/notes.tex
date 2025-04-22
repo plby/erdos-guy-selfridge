@@ -427,23 +427,27 @@ where the error function $E(x)$ is defined as
 \end{equation}
 In particular one has
 \begin{equation}\label{pix}
-  \pi(x) - \pi(y) = \int_y^x \left(1-\frac{2}{\sqrt{t}}\right)\frac{dt}{\log t} + O_\leq\left(2 \frac{E(x)}{\log y}\right).
+  \pi(x) - \pi(y) = \int_y^x \left(1-\frac{2}{\sqrt{t}}\right)\frac{dt}{\log t} + O_\leq\left(2 \frac{E(x)}{\log y}\right);
 \end{equation}
-If $b$ is non-negative, one also has the upper bound
+estimating
+$$ 1-\frac{2}{\sqrt{y}} \leq 1-\frac{2}{\sqrt{t}} \leq 1$$
+and using the convexity of $t \mapsto \frac{1}{\log t}$, we obtain the upper bound
+\begin{equation}\label{pixy-upper}
+ \pi(x) - \pi(y) \leq \frac{x-y}{2\log y} + \frac{x-y}{2\log x} + 2 \frac{E(x)}{\log y}
+\end{equation}
+and the lower bound
+\begin{equation}\label{pixy-lower}
+  \pi(x) - \pi(y) \geq \left(1-\frac{2}{\sqrt{y}}\right) \frac{x-y}{\log \frac{x+y}{2}} - 2 \frac{E(x)}{\log y}.
+\end{equation}
+For non-negative $b$ and the trivial inequalities
+$$ \frac{b(p) \log p}{\log x}  \leq b(p) \leq \frac{b(p) \log p}{\log y} $$
+we similarly obtain the upper bound
 \begin{equation}\label{bv-upper}
    \sum_{y < p \leq x} b(p) \leq \frac{1}{\log y} \int_y^x b(t)\ dt + \|b\|_{\mathrm{TV}^*(y,x]} \frac{E(x)}{\log y}
 \end{equation}
 and the lower bound
 \begin{equation}\label{bv-lower}
   \sum_{y < p \leq x} b(p) \leq \frac{1-\frac{2}{\sqrt{y}}}{\log x} \int_y^x b(t)\ dt - \|b\|_{\mathrm{TV}^*(y,x]} \frac{E(x)}{\log x}.
-\end{equation}
-Thus for instance
-\begin{equation}\label{pixy-upper}
- \pi(x) - \pi(y) \leq \frac{x-y}{\log y} + 2 \frac{E(x)}{\log y}
-\end{equation}
-and
-\begin{equation}\label{pixy-lower}
-  \pi(x) - \pi(y) \geq \left(1-\frac{2}{\sqrt{y}}\right) \frac{x-y}{\log x} - 2 \frac{E(x)}{\log x}.
 \end{equation}
 One can also replace all occurrences of $E(x)$ here by the classical error term $O(x \exp(-c \sqrt{\log x}))$ for some absolute constant $c>0$ (in which case the $\frac{2}{\sqrt{t}}$ type terms can be absorbed into the error term).
 \end{lemma}
@@ -593,7 +597,7 @@ $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- + 140$ & $t(N)_- + 1058$ & $t(N)_-
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 233$ & $t(N)_- + 1147$ & $t(N)_- - \num{282167}$ \\
       \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the upper bound on $t(N)_+$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer).}\label{long-table}
+\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer).}\label{long-table}
 \end{table}
 
       
@@ -683,7 +687,8 @@ as $N \to \infty$.
     for $N$ sufficiently large depending on $\eps$.
 
     For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log^3 N}$.
-    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has a total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,1]$.  By \Cref{osc-lemma} (with classical error term), the left-hand side of \eqref{targ-sum} is at least
+    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has an (augmented) total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,1]$.   This implies that $x \mapsto \frac{1}{\log x} f_{N/t}(x/N)$ has an (augmented) total variation of $O(\log^2 N)$.
+   By \Cref{osc-lemma} (with classical error term), we conclude that the left-hand side of \eqref{targ-sum} is at least
     $$ \int_{N/\log^3 N}^N f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
     for some $c>0$.  Performing a change of variable, we reduce to showing that
     $$  \int_{1/\log^3 N}^1 f_{N/t}(x) \frac{\log N}{\log(Nx)}\ dx 
@@ -736,13 +741,13 @@ for $N > 5000$.  On $[1/e,1]$, one can compute
 $$ \|f_e\|_{\mathrm{TV}^*(1/e,1]}
 = 4 - 2 \log 2$$
 so by \Cref{osc-lemma} (noting that $5000/e > 1423$) we have
-$$ \sum_{N/e < p \leq N} f_{e}(p/N) \log p
-\geq N \int_{1/e}^1 \left(1-\frac{2}{\sqrt{Nx}}\right) f_e(x)\ dx - (4 - 2 \log 2) E(N).
+$$ \sum_{N/e < p \leq N} f_{e}(p/N) 
+\geq \frac{N \left(1-\frac{2}{\sqrt{N/e}}\right)}{\log N} \int_{1/e}^1 f_e(x)\ dx - (4 - 2 \log 2) \frac{E(N)}{\log N}
 $$
-By upper bounding $\log p$ by $\log N$ and lower bounding $\left(1-\frac{2}{\sqrt{Nx}}\right)$ by $1 - \frac{2}{\sqrt{N/e}}$, it suffices to show that
+and so it suffices to show that
 $$ \left(1 - \frac{2}{\sqrt{N/e}}\right) \int_{1/e}^1 f_e(x)\ dx \geq
 (4 - 2 \log 2) \frac{E(N)}{N}
-+ \frac{\log N \log(2\pi N)}{2N} + \frac{\log N}{12N^2}.$$
++ \frac{\log(2\pi N) \log N}{2N} + \frac{\log N}{12N^2}.$$
 The right-hand side is increasing in $N$ and the left-hand side is decreasing for $N \geq 5000$, so it suffices to verify this claim for $N=5000$; but this is a routine calculation (with plenty of room to spare; cf., \Cref{fig2}).
 \end{proof}
 
@@ -1288,7 +1293,7 @@ $$ \delta \geq \log N - \log t = \log \frac{3}{e} = 0.0986122\dots$$
 for all $N \geq N_0$.  
 
 We will use this lower bound as our unit of reference for all other $\delta_i$ quantities, bounding them by suitable multiples of $\delta$.  For instance, from \eqref{delta1-bound} one has
-$$ \delta_1 \leq \frac{9}{2A} + \frac{4}{N_0} \leq 0.023810 \delta$$
+$$ \delta_1 \leq \frac{9}{2A} + \frac{4}{N_0} \leq 0.241447 \delta$$
 for all $N \geq N_0$.
 
 From \eqref{delta2-def} and \Cref{osc-lemma}, and the monotonicity of $E(N)/N$, one has
@@ -1355,35 +1360,39 @@ where
 $$ a_{k,m} \coloneqq \max\left( \frac{1}{3m}-, \frac{1}{k} \right); \quad b_{k,m} \coloneqq \max\left( \frac{1}{3(m-1)}-, \frac{1}{k-1} \right)$$
 where the $-$ denotes the subtraction of an infinitesimal quantity to reflect the restriction to the range $\frac{t}{m} \leq p < \frac{t}{m-1}$ rather than
 $\frac{t}{m} < p \leq \frac{t}{m-1}$.  Using \Cref{osc-lemma} (and a limiting argument), we can upper bound this quantity by
-$$ B_{p_1} \leq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} \frac{k}{\log(N a_{k,m})} \left( a_{k,m}-b_{k,m} + 2\frac{E(N_0 b_{k,m})}{N_0} \right)$$
+$$ B_{p_1} \leq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} \left(\frac{k}{2\log(N a_{k,m})}+\frac{k}{2\log(N b_{k,m})}\right) (a_{k,m}-b_{k,m}) + 2\frac{E(N b_{k,m})}{N \log(N a_{k,m})} $$
 and lower bound it by
-$$ B_{p_1} \geq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} \frac{k}{\log(N b_{k,m})} \left( \left(1-\frac{2}{\sqrt{a_{k,m} N}}\right) (a_{k,m}-b_{k,m}) - 2\frac{E(N_0 b_{k,m})}{N_0 b_{k,m}} \right).$$
+\begin{align*}
+   B_{p_1} &\geq \sum_{m \leq K} \nu_{p_1}(m) \sum_{k: a_{k,m} < b_{k,m}} \frac{k\left(1-\frac{2}{\sqrt{a_{k,m} N}}\right)}{\log(N (a_{k,m}+b_{k,m})/2)}  (a_{k,m}-b_{k,m}) - 2\frac{E(N b_{k,m})}{N \log(N a_{k,m})}
+\end{align*}
 We caution here that while the upper bound for $B_{p_1}$ is monotone decreasing in $N$, the lower bound does not have a favorable monotonicity property, particularly as it will be used when \emph{subtracting} copies of $B_{p_1}$ rather than \emph{adding} then.
 
 From the monotonicity of the upper bound, one can use \eqref{alpha2-def} to calculate that 
-$$ \alpha_2 \leq 0.270233$$
+$$ \alpha_2 \leq 0.269878$$
 for all $N \geq N_0$.  For \eqref{delta7-def}, subtraction is involved, and one must proceed with more caution.  For $N=N_0$, one has
-$$ \delta_7 \leq 0.11363 \delta.$$
+$$ \delta_7 \leq 0.11359 \delta.$$
 For $N \geq 10^{70}$, we simply discard the negative terms here and obtain the bound
-$$ \delta_7 \leq \frac{\kappa_{4.5} \log \sqrt{12}}{\log(10^{70}/3)}  \leq 0.02265 \delta$$
+$$ \delta_7 \leq \frac{\kappa_{4.5} \log \sqrt{12}}{\log(10^{70}/3)}  \leq 0.02212 \delta$$
 
 As for the $A_{p_1}$, we know from \eqref{ap1-vanish} that this vanishes unless $3 < p_1 \leq K(1+\sigma)$.  From \eqref{ap1-small} and \Cref{osc-lemma} one has the upper bound
-$$
-A_{p_1} \leq \sum_{m \leq K(1+\sigma)}^* \frac{A \nu_{p_1}(m)}{\log(N/3\min(m,K))} \left( \frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)} + \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right) $$
+\begin{align*}
+A_{p_1} &\leq \sum_{m \leq K(1+\sigma)}^* \left(\frac{A \nu_{p_1}(m)}{2\log(N/3\min(m,K))} + \frac{A \nu_{p_1}(m)}{2\log(N(1+\sigma)/3m)} \right) \left( \frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)}\right) \\
+& \quad \quad + \frac{A \nu_{p_1}(m)}{\log(N/3\min(m,K))} \frac{2E(N(1+\sigma)/3m)}{N}  
+\end{align*}
 and the lower bound
 \begin{align*}
-A_{p_1} &\geq \sum_{m \leq K(1+\sigma)}^* \frac{A \nu_{p_1}(m)}{\log(N(1+\sigma)/3m)} \times \\
-& \quad \left( \left(1-\frac{2}{\sqrt{N_0(1+3\sigma)/3m}}\right) \left(\frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)}\right) - \frac{2E(N_0(1+\sigma)/3m)}{N_0} \right).
+A_{p_1} &\geq \sum_{m \leq K(1+\sigma)}^* \frac{A \nu_{p_1}(m)\left(1-\frac{2}{\sqrt{N_0/3\min(m,K)}}\right) }{\log((N/3\min(m,K) + N(1+\sigma)/3m)/2)} \left(\frac{1+\sigma}{3m} - \frac{1}{3\min(m,K)}\right) \\
+& \quad \quad - \frac{A \nu_{p_1}(m)}{\log(N/3\min(m,K))}  \frac{2E(N(1+\sigma)/3m)}{N}.
 \end{align*}
 Again, the upper bound is monotone decreasing in $N$, but the lower bound does not have a favorable monotonicity. At $N=N_0$, one can calculate using these bounds and \eqref{delta5-def}, \eqref{alpha5-def} to obtain
 \begin{align*}
-\delta_5 &\leq 0.062824 \delta \\
-\alpha_5 &\leq 0.315286
+\delta_5 &\leq 0.06203 \delta \\
+\alpha_5 &\leq 0.31418
 \end{align*}
 which, when combined with the previous bounds, gives
-$$ \sum_{i=1}^8 \delta_i  \leq 0.9742 \delta$$
+$$ \sum_{i=1}^8 \delta_i  \leq 0.9740 \delta$$
 and 
-$$ \sum_{i=1}^7 \alpha_i \leq 0.9467$$
+$$ \sum_{i=1}^7 \alpha_i \leq 0.9452$$
 at $N=N_0$, thus verifying \eqref{delta-cond}, \eqref{alpha-cond} in those cases.
 
 For $N \geq 10^{70}$, we use the triangle inequality to crudely upper bound
@@ -1392,8 +1401,8 @@ and
 $$ \alpha_5 \leq \frac{1}{\log \sqrt{12}} \sum_{3 < p_1 \leq K}  \frac{(\log K^2+\kappa_{**})\log p_1}{\log(t/K^2)} A_{p_1} + (\log p_1 + \kappa_{**}) B_{p_1}.$$
 The bounds available for the right-hand side are now monotone in $N$, and one can calculate that
 \begin{align*}
-  \delta_5 &\leq 0.077304 \delta \\
-  \alpha_5 &\leq 0.184984
+  \delta_5 &\leq 0.077301 \delta \\
+  \alpha_5 &\leq 0.184975
   \end{align*}
 for $N \geq 10^{70}$. This is better than the previous bound for $\alpha_5$.  For $\delta_5$, the bound is slightly worse, but this is more than compensated for by the improved bounds on $\delta_2$, $\delta_7$, and \eqref{delta-cond}, \eqref{alpha-cond} can be verified here with significant room to spare.
 
@@ -1581,16 +1590,7 @@ is established whenever $x \geq 5000$ and $4.92 \frac{x}{\sqrt{\log x}} \leq T$,
 \begin{remark} Assuming the Riemann hypothesis, the $\eps_1, \eps_2, \eps_3$ terms in the definition of $\tilde E(x)$ may be deleted, since \cite[(7.3)]{buthe} then holds for all $x \geq 5000$.  
 \end{remark}
 
-The claim \eqref{pix} now follows from \eqref{bv-exact} by setting $b(t) \coloneqq \frac{1}{\log t}$.  For non-negative $b$, the claims \eqref{bv-upper}, \eqref{bv-lower} follow from \eqref{bv-exact} and the pointwise bounds
-$$ \frac{b(p) \log p}{\log x}  \leq b(p) \leq \frac{b(p) \log p}{\log y} $$
-and
-$$ 1-\frac{2}{\sqrt{y}} \leq 1-\frac{2}{\sqrt{t}} \leq 1.$$
-Finally, \eqref{pixy-upper}, \eqref{pixy-lower} come from specializing \eqref{bv-upper}, \eqref{bv-lower} to the case of an indicator function $b = 1_{(y,x]}$.
-
-\begin{remark} Due to the convexity of $\frac{1}{\log x}$, one has the upper and lower bounds
-$$ \frac{y-x}{\log \frac{x+y}{2}} \leq \int_y^x \frac{dt}{\log t} \leq \frac{y-x}{2\log y} + \frac{y-x}{2\log x}$$
-for $1 < y < x$, which can be used in conjunction with \eqref{pix} to improve \eqref{pixy-lower}, \eqref{pixy-upper} slightly (at the minor cost of worsening the $\frac{2E(x)}{\log x}$ error term in \eqref{pixy-lower} to $\frac{2E(x)}{\log y}$).
-\end{remark}
+The claim \eqref{pix} now follows from \eqref{bv-exact} by setting $b(t) \coloneqq \frac{1}{\log t}$.  
 
 \section{Computation of \texorpdfstring{$c_0$}{c\_0} and related quantities}\label{c0-app}
 

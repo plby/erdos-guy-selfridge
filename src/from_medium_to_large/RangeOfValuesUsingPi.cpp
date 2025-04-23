@@ -17,10 +17,8 @@ cc_hash_table<long long, long long> smallestDivisor;
 // these constants define the interval for which we run the program
 // we require minN*minN >= maxN
 #define minN 10000000LL
-#define maxN 1000000000LL
+#define maxN 100000000000LL
 
-// this is the number of consecutive intervals that are used for precomputing primes and the factorization
-#define NUMBEROFINTERVALS 10000
 
 // this is the largest itneger for which we compute factorization (for larger integer we factorize it only if it is divisible by 2 or 3)
 #define LARGEST_COMPUTED_FACTORIZATION maxN/200
@@ -31,10 +29,11 @@ vector<long long> primes;
 /////// Pi of n stuff ///////
 ///////////////////////////////////
 
-#define primesCutOff 9
-//Number of prime in ]y,x]
-long long lowerBoundOnPrimeBetween(double y, double x){
-  return ceil(((1-2/sqrt(y))* (x-y)- 2*(0.95 * sqrt(x) + 3.83*x/(1000000000LL)))/log(x) );
+#define BOUND_ON_LARGEST_PRIME_COMPUTED maxN/21
+//Number of primes in ]y,x]
+long long lowerBoundOnNumberOfPrimesBetween(double y, double x){
+  //return ceil(((1-2/sqrt(y))* (x-y)- 2*(0.95 * sqrt(x) + 3.83*x/(1000000000LL)))/log(x) );
+  return ceil(((1-2/sqrt(y))* (x-y)/log((x+y)/2) - 2*(0.95 * sqrt(x) + 3.83*x/(1000000000LL))/log(y)));
 }
 
 
@@ -42,13 +41,16 @@ long long lowerBoundOnPrimeBetween(double y, double x){
 //// Precomputations of primes ////
 ///////////////////////////////////
 
+// this is the number of consecutive intervals that are used for precomputing primes and the factorization
+// this value should ideally be choosen such that  BOUND_ON_LARGEST_PRIME_COMPUTED/NUMBEROFINTERVALS fits in the L1 cache of your machine ()
+#define NUMBEROFINTERVALS 10000
+
+
 //compute the primes numbers and factorization for interval [0, e]
 void factorizationOfFirstInterval(long long e){
   vector<long long> firstDivisor(e+1, -1);
   for(long long i=2; i<firstDivisor.size(); i++){
-    if(firstDivisor[i] != -1){
-      long long fd = primes[firstDivisor[i]];
-    } else {
+    if(firstDivisor[i] == -1){
       primes.push_back(i);
       smallestDivisor[i] = firstDivisor[i] =  primes.size()-1;
       for(long long j = i; j*i<firstDivisor.size(); j++){
@@ -90,10 +92,10 @@ void factorizationOfOtherIntervals(long long b, long long e){
 // compute prime and factorization for the whole range by invoking the two previous functions
 // we stope at maxN/(primesCutOff-1) because we will use the approximation of pi for larger primes
 void setUpFactorization(){
-  factorizationOfFirstInterval(minN);
-  long long step = (maxN/primesCutOff)/NUMBEROFINTERVALS;
-  for(long long i=minN; i<(maxN/(primesCutOff)); i+=step){
-    factorizationOfOtherIntervals(i+1, min(i+step, (maxN/(primesCutOff))));
+  long long step = (BOUND_ON_LARGEST_PRIME_COMPUTED)/NUMBEROFINTERVALS;
+  factorizationOfFirstInterval(step);
+  for(long long i=step; i<BOUND_ON_LARGEST_PRIME_COMPUTED; i+=step){
+    factorizationOfOtherIntervals(i+1, min(i+step, BOUND_ON_LARGEST_PRIME_COMPUTED));
   }
 }
 
@@ -135,7 +137,7 @@ class Factorizer{
   void printFactors(){
     bool atLeastOne = false;
     cout << "[";
-      for (int i = 0; i < factors.size(); ++i) {
+      for (size_t i = 0; i < /*factors.size()*/ 100000; ++i) {
         if (factors[i] != 0) {
           if (atLeastOne) {
             cout << ", ";
@@ -155,7 +157,7 @@ class Factorizer{
   void set(long long n, long long tv){
     targetVal = tv;
     found = 0;
-    for(long long i=0; i<primes.size() && primes[i]<=n; i++){
+    for(long long i=0; i<primes.size() && primes[i] <= n; i++){
       factors[i]=0;
       long long p = primes[i];
 
@@ -243,27 +245,31 @@ long long bestFact(long long n, long long eps = 0){
   long long targetVal = (n*(1000+eps)/1000)/3;
   factorizer.set(n, targetVal);
   long long i;
-  if(n>=maxN/primesCutOff){
-    for(long long d = 1; d < primesCutOff && n/d>maxN/primesCutOff; d++){
+  if(n > BOUND_ON_LARGEST_PRIME_COMPUTED){
+    for(long long d = 1; n/d > BOUND_ON_LARGEST_PRIME_COMPUTED; d++){
+      //we consider the interval ]l,u] of primes that appear d times in the factorization
       long long upperBoundInterval = n/d;
-      long long lowerBoundInterval = max(n/(d+1), maxN/primesCutOff);
-      long long tgGoal = (targetVal+lowerBoundInterval-1)/lowerBoundInterval;
-      long long midInterval = (tgGoal>1)?targetVal/(tgGoal-1):-1;
+      long long lowerBoundInterval = max(n/(d+1), BOUND_ON_LARGEST_PRIME_COMPUTED);
 
-      if(midInterval == -1 || midInterval > upperBoundInterval){
-        long long countPrimes = lowerBoundOnPrimeBetween(lowerBoundInterval, upperBoundInterval);
+      //tgGoal is the smallest number such that tgGoal*upperBoundInterval >= targetVal
+      long long tgGoal = (targetVal+upperBoundInterval-1)/upperBoundInterval;
+
+      //the position where the goal change since we need to be carefull if it is in the middle of the interval
+      long long nextGoalChange = (targetVal+tgGoal)/(tgGoal+1);
+
+      if(nextGoalChange <= lowerBoundInterval ){
+        long long countPrimes = lowerBoundOnNumberOfPrimesBetween(lowerBoundInterval, upperBoundInterval);
         factorizer.addPartialToFactorization(countPrimes*d, tgGoal);
       }else{
-        long long countPrimes = lowerBoundOnPrimeBetween(lowerBoundInterval, midInterval);
+        long long countPrimes = lowerBoundOnNumberOfPrimesBetween(lowerBoundInterval, nextGoalChange);
+        factorizer.addPartialToFactorization(countPrimes*d, tgGoal+1);
+
+        countPrimes = lowerBoundOnNumberOfPrimesBetween(nextGoalChange, upperBoundInterval);
         factorizer.addPartialToFactorization(countPrimes*d, tgGoal);
-
-        countPrimes = lowerBoundOnPrimeBetween(midInterval, upperBoundInterval);
-        factorizer.addPartialToFactorization(countPrimes*d, tgGoal-1);
-
       }
     }
-    i = findIndexLargerPrime(maxN/primesCutOff-1);
-    for(; primes[i]>=maxN/primesCutOff; i--){}
+    i = findIndexLargerPrime(BOUND_ON_LARGEST_PRIME_COMPUTED);
+    for(; primes[i]>BOUND_ON_LARGEST_PRIME_COMPUTED; i--){}
   }else{
     i = findIndexLargerPrime(n);
     for(; primes[i]>n; i--){}
@@ -299,18 +305,22 @@ int main(){
     cout<<"Error: minN*minN < maxN"<<endl;
     return 0;
   }
+  if(BOUND_ON_LARGEST_PRIME_COMPUTED < LARGEST_COMPUTED_FACTORIZATION){
+    cout<<"Error: BOUND_ON_LARGEST_PRIME_COMPUTED < LARGEST_COMPUTED_FACTORIZATION"<<endl;
+    return 0;
+  }
   cout<<"Running with range [ "<<minN<<" , "<<maxN<<" ]"<<endl;
   cout<<"Precomputing the primes and factorizations."<<endl;
   setUpFactorization();
-  cout<<"There are "<<primes.size() <<" primes lessor equal than "<<maxN<<endl;
+  cout<<"There are "<<primes.size() <<" primes lessor equal than "<<BOUND_ON_LARGEST_PRIME_COMPUTED<<endl;
   cout<<"Number of integer factorized is " << smallestDivisor.size() << endl;
   factorizer.setMemory();
-  vector<long long> eps = {50,40,30,20,15,10,5,4,3,2,1,0};
+  return 0;
+  vector<long long> eps = {30,20,15,10,5,4,3,2,1,0};
   for(long long n=minN; n<=maxN;){
     if(n%3 != 0 && n>minN+1){ n++; continue;}
     bool done = false;
     for(long long e=0; e<eps.size() && !done; e++){
-      if(n<10000000000LL && eps[e]>40) continue;
       long long res = bestFact(n, eps[e]);
       if(res >= n){
         done = true;

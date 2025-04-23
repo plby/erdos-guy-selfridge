@@ -5,7 +5,7 @@ using namespace std;
 // these constants define the interval for which we run the program
 // we require minN*minN >= maxN
 #define minN 10000000LL
-#define maxN 1000000000LL
+#define maxN 100000000000LL
 
 // this is the number of consecutive intervals that are used for precomputing primes and the factorization
 #define NUMBEROFINTERVALS 10000
@@ -24,9 +24,7 @@ int* smallestDivisor = new int[LARGEST_COMPUTED_FACTORIZATION/2+1];
 void factorizationOfFirstInterval(long long e){
   vector<long long> firstDivisor(e+1, -1);
   for(long long i=2; i<firstDivisor.size(); i++){
-    if(firstDivisor[i] != -1){
-      long long fd = primes[firstDivisor[i]];
-    } else {
+    if(firstDivisor[i] == -1){
       primes.push_back(i);
       firstDivisor[i] =  primes.size()-1;
       if(i <= LARGEST_COMPUTED_FACTORIZATION && i%2 == 1){
@@ -117,7 +115,7 @@ class Factorizer{
   void printFactors(){
     bool atLeastOne = false;
     cout << "[";
-      for (int i = 0; i < /*factors.size()*/1000; ++i) {
+      for (size_t i = 0; i < /*factors.size()*/ 100000; ++i) {
         if (factors[i] != 0) {
           if (atLeastOne) {
             cout << ", ";
@@ -248,7 +246,7 @@ int main(){
   setUpFactorization();
   cout<<"There are "<<primes.size() <<" primes lessor equal than "<<maxN<<endl;
   factorizer.setMemory();
-  vector<long long> eps = {50,40,30,20,15,10,5,4,3,2,1,0};
+  vector<long long> eps = {30,20,15,10,5,4,3,2,1,0};
   for(long long n=minN; n<=maxN;){
     if(n%3 != 0 && n>minN+1){ n++; continue;}
     bool done = false;

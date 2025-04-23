@@ -180,7 +180,7 @@ $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
 When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than in the general case.  For instance, we can show that
-$$ 0 \leq t(6 \times 10^8) - \num{210825848} \leq 140;$$
+$$ 0 \leq t(7 \times 10^8) - \num{246059851} \leq 89;$$
 see \Cref{long-table}.
 
 \begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient for both theoretical analysis of $t(N)$ and numerical computations.

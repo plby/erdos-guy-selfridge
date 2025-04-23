@@ -74,8 +74,8 @@ Secondary goals are
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4]$ | Linear and integer programming |  
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N = 10^{12}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$  
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/27) | Terence Tao | 2 | $N = 10^{11}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$
-| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates | Interval arithmetic permits verification of all cases
-| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates | Close to the limit of existing estimates
+| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates + interval arithmetic | Completes verification of Conjectures 2,3
+| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates + + interval arithmetic | Close to the limit of existing estimates
 
 ## Computations of $c_0$, $c_1$
 

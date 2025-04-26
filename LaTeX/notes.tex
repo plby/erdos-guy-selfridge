@@ -550,7 +550,7 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for some randomly sampled $10^3 \leq N \leq 10^5$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion.}
+    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion.}
     \label{fig-longer}
     \end{figure}
 
@@ -799,9 +799,126 @@ One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend
 
 \section{Rearranging the standard factorization}\label{rearrange-sec}
 
-In this section we describe an approach to establishing lower bounds on $t(N)$ by starting with the standard factorization $\{1,\dots,N\}$, dividing out some small prime factors from some of the terms, and then redistributing them to other terms.  This approach was introduced in \cite{guy} to give lower bounds of the shape $\frac{t(N)}{N} \geq \frac{3}{16} + o(1)$ (by redistributing powers of two only) and $\frac{t(N)}{N} \geq \frac{1}{4} + o(1)$.  With computer assistance, we are also able to show that $\frac{t(N)}{N} \geq \frac{1}{3}+o(1)$ for sufficiently large $N$, in a simpler fashion than the method used to prove \Cref{main}(iv) in the next section.
+In this section we describe an approach to establishing lower bounds on $t(N)$ by starting with the standard factorization $\{1,\dots,N\}$, dividing out some small prime factors from some of the terms, and then redistributing them to other terms.  This approach was introduced in \cite{guy} to give lower bounds of the shape $\frac{t(N)}{N} \geq \frac{3}{16} + o(1)$ (by redistributing powers of two only) and $\frac{t(N)}{N} \geq \frac{1}{4} + o(1)$ (by redistributing powers of two and three).  With computer assistance, we are also able to show that $\frac{t(N)}{N} \geq \frac{1}{3}+o(1)$ for sufficiently large $N$, in a simpler fashion than the method used to prove \Cref{main}(iv) in the next section.
 
-\textbf{details needed here}
+We need some notation.  Define a \emph{downset} to be a finite set ${\mathcal D}$ of natural numbers, with the property that if $d \in {\mathcal D}$ then all factors of $d$ lie in ${\mathcal D}$.  If ${\mathcal D}$ is a downset and $d \in {\mathcal D}$, we define the density $\sigma_{d,{\mathcal D}}$ to be the product
+$$ \sigma_{d,{\mathcal D}}\prod_{p < P_+(d) \hbox{ or } pd \in {\mathcal D}} \left(1-\frac{1}{p}\right)$$
+where $P_+(d)$ is the largest prime factor of $d$ (with the convention $P_+(1)=1$). We will later establish the identity
+\begin{equation}\label{sigma-id}
+  \sum_{d \in {\mathcal D}} \frac{\sigma_{d,{\mathcal D}}}{d} = 1.
+\end{equation}
+
+\begin{example}  The set ${\mathcal D} = \{1,2,4\}$ is a downset, with $\sigma_{1,{\mathcal D}} = \sigma_{2,{\mathcal D}} = \frac{1}{2}$ and $\sigma_{4,\mathcal D} = 1$.  The set ${\mathcal D}' = \{1,2,3,4\}$ is also a downset with $\sigma_{1,{\mathcal D}} = \frac{1}{3}$, $\sigma_{2,{\mathcal D}} = \frac{1}{2}$, $\sigma_{3,{\mathcal D}} = \frac{1}{2}$, $\sigma_{4,{\mathcal D}} = 1$.  The identity \eqref{sigma-id} becomes
+$$ \frac{1/2}{1} + \frac{1/2}{2} + \frac{1}{4} = 1$$
+for the former downset and
+$$ \frac{1/3}{1} + \frac{1/2}{2} + \frac{1/2}{3} + \frac{1}{4} = 1$$
+for the latter downset.
+\end{example}
+
+\begin{proposition}[Criterion for asymptotic lower bound]\label{asym-crit}  Let ${\mathcal D}$ be a downset that contains at least one prime $p_0$, let $0  < \alpha < 1$, and suppose we have non-negative reals $a_\ell$ for all natural numbers $\ell$ obeying the following conditions:
+\begin{itemize}
+\item[(i)]  For all primes $p$, one has
+\begin{equation}\label{i-eq}
+   \sum_{\ell=1}^\infty \nu_p(\ell) a_\ell  \leq \sum_{d \in {\mathcal D}} \nu_p(d) \frac{\sigma_{d,{\mathcal D}}}{d}.
+\end{equation}
+\item[(ii)]  For every natural number $\ell$, we have
+\begin{equation}\label{l-eq} \sum_{\ell' > \ell} a_{\ell'} > \sum_{d \in {\mathcal D}} \sigma_{d,{\mathcal D}} \min\left( \frac{1}{d}, \frac{\alpha}{\ell}\right).
+\end{equation}
+\end{itemize}
+Then $t(N) \geq \alpha N$ for all sufficiently large $N$.
+\end{proposition}
+
+\begin{proof}  We first make a small technical modification to the sequence $a_\ell$. If $p \in {\mathcal D}$, then the right-hand side of \eqref{i-eq} is positive.  If equality holds here, then one of the $a_\ell$ with $\ell$ divisible by $p$ is positive; but one can reduce this quantity slightly without violating \eqref{l-eq}, since $a_\ell$ only impacts finitely many cases of these strict inequalities.  Thus, we may assume without loss of generality that the inequality \eqref{i-eq} is strict for all $p \in {\mathcal D}$.
+ 
+From \eqref{i-eq} and \eqref{ftoa} we see that
+$$ \sum_{\ell=1}^\infty a_\ell \log \ell \leq \sum_{d \in {\mathcal D}} \nu_p(d) \frac{\sigma(d)}{d}.$$
+In particular, from the dominated convergence theorem we have
+\begin{equation}\label{ar}
+r \sum_{\ell \geq p_0^r} a_\ell \to 0
+\end{equation}
+as $r \to \infty$.
+
+Let $N$ be sufficiently large.  It will suffice to obtain an $\alpha N$-admissible subfactorization $\tuple'$ of $N!$ of cardinality $N$.
+
+Every natural number can be uniquely factored as $n = p_1 \dots p_r$ for some primes $p_1 \leq \dots \leq p_r$.  If we let $d \coloneqq p_1 \dots p_k$ be the largest initial segment of this factorization that lies in ${\mathcal D}$, then we have $n=dm$ where $m$ lies in the set $A_{d,\mathcal{D}}$ of natural numbers not divisible by any prime $p$ with $p < P_+(d)$ or $pd \in \mathcal{D}$.  Conversely, every pair $d,m$ with $d \in {\mathcal D}$ and $m \in A_{d,\mathcal{D}}$ arises exactly once in this manner. We thus have the partition
+$$ \N = \biguplus_{d \in {\mathcal D}} d \cdot A_{d,{\mathcal D}}.$$
+From the Chinese remainder theorem, the $A_{d,{\mathcal D}}$ have density $\sigma_{d,{\mathcal D}}$, in the sense that
+$$ |A_{d,{\mathcal D}} \cap I| = \sigma_{d,{\mathcal D}} |I| + O(1)$$
+for all intervals $I$, where we allow the implied constants to depend on the downset ${\mathcal D}$.  Summing the densities, we conclude \eqref{sigma-id}.
+
+From this partition, we also have
+$$ \{1,\dots,N\} = \biguplus_{d \in {\mathcal D}} d \cdot (A_{d,{\mathcal D}} \cap [1,N/d])$$
+and on multiplying we obtain a factorization
+$$ N! = \prod_{d \in {\mathcal D}} d^{|A_{d,{\mathcal D}} \cap [1,N/d]|} \times \prod \tuple$$
+where $\tuple$ is the multiset
+$$ \tuple \coloneqq \biguplus_{d \in {\mathcal D}} \left(A_{d,{\mathcal D}} \cap \left[1,\frac{N}{d}\right]\right).$$
+Thus $\tuple$ has cardinality $|\tuple| = N$, and is a subfactorization of $N!$ with surplus
+\begin{equation}\label{p-surplus}
+\begin{split}
+ \nu_p\left( \frac{N!}{\prod \tuple} \right) &= \sum_{d \in {\mathcal D}} \nu_p(d) \left|A_{d,{\mathcal D}} \cap \left[1,\frac{N}{d}\right]\right| \\
+ &= N \sum_{d \in {\mathcal D}} \nu_p(d) \frac{\sigma_{d,{\mathcal D}}}{d} + O(1).
+\end{split}
+\end{equation}
+In particular this multiset is in balance for all primes $p \not \in {\mathcal D}$. 
+
+The multiset $\tuple$ will contain elements that are smaller than $\alpha N$; but we can compute the number of such elements fairly precisely.  Indeed, for any natural number $\ell$, the number of elements of $\tuple$ that are less than $\alpha N/\ell$ is
+\begin{equation}\label{N-sum}
+  \sum_{d \in {\mathcal D}} \left|A_{d,{\mathcal D}} \cap \left[1,\frac{N}{d}\right] \cap \left[1,\frac{\alpha N}{\ell}\right)\right| = N \sum_{d \in {\mathcal D}} \sigma_{d,{\mathcal D}} \min\left(\frac{1}{d}, \
+  \frac{\alpha}{\ell}\right) + O(1).
+\end{equation}
+  
+We now form a modification $\tuple'$ of the multiset $\tuple$ by multiplying each element of $\tuple$ by an appropriate natural number to make it at least $\alpha N$.  More precisely, we perform the following algorithm.
+\begin{itemize}
+  \item Initialize $\tuple'$ to be empty.
+  \item Choose a large natural number $r$.
+  \item For each $k \geq 1$, and each element $m$ of $\tuple$ that lies in the interval $[\alpha N/p_0^{r+k}, \alpha N/p_0^{r+k-1})$, add $p_0^{r+k} m$ to $\tuple'$.
+  \item For the $\lfloor (\sum_{\ell \geq p_0^r} a_\ell) N \rfloor$ smallest elements $m$ of $\tuple$ that are at least $\alpha N/p_0^r$, add $p_0^r m$ to $\tuple'$.
+  \item For the $\lfloor a_{p_0^r-1} N \rfloor$ next smallest elements $m$ of $\tuple$ that are at least $\alpha N/p_0^r$, add $(p_0^r-1)m$ to $\tuple'$.
+  \item Repeat the previous step with $p_0^r-1$ replaced in turn by $a_{p_0^r-2}, \dots, a_2$, halting if no further elements of $\tuple$ remain.
+  \item For any remaining elements $m$ of $\tuple$ that have not been involved in any previous step, add $m$ to $\tuple'$. 
+\end{itemize}
+It is clear that $\tuple'$ has the same cardinality $N$ as $\tuple$.  If $p \not \in {\mathcal D}$, the hypothesis (ii) forces $a_\ell=0$ for all $\ell$ that are divisible by $p$; because of this, $\tuple'$ remains in balance at those primes.  For the primes $p$ in ${\mathcal D}$, we see from construction that the $p$-surplus of $\tuple'$ has decreased from $\tuple$ by at most
+\begin{align*}
+  \nu_p\left( \frac{N!}{\prod \tuple} \right)  -  \nu_p\left( \frac{N!}{\prod \tuple'} \right)
+  &\leq \sum_{\ell < p_0^r} \nu_p(\ell) a_\ell N  \\
+  &\quad + \sum_{\ell \geq p_0^r} r a_\ell N  \\
+  &\quad + \sum_{k=1}^\infty (r+k)
+   |\tuple \cap [\alpha N/p_0^{r+k}, \alpha N/p_0^{r+k-1})|.
+\end{align*}
+The final summand is empty unless $k = O(\log N)$, and then by \eqref{N-sum} we can crudely bound
+\begin{align*}
+  \sum_{k=1}^\infty (r+k)
+   |\tuple \cap [\alpha N/p_0^{r+k}, \alpha N/p_0^{r+k-1})| &\ll
+   \sum_{k=1}^\infty (r+k) \frac{N}{p_0^{r+k}} + \log N\\
+   &\ll \frac{r}{p_0^r} N +\log N.
+\end{align*}
+If $r$ is sufficiently large, and then $N$ sufficiently large depending on $r$, this quantity is smaller than any given multiple of $N$; the same is true for $\sum_{\ell \geq p_0^r} r a_\ell N$ thanks to \eqref{ar}.  If we now compare with with \eqref{p-surplus} and the strictness of \eqref{i-eq}, we conclude for such choices of $r,N$ that
+$$ \nu_p\left( \frac{N!}{\prod \tuple'} \right) \geq 0$$
+for all $p \in {\mathcal D}$, thus $\tuple'$ remains a subfactorization of $N!$.
+
+It remains to verify that $\tuple'$ is $\alpha N$-admissible.  From an inspection of the algorithm, we see that the only way this can fail to be the case is if, for some $1 \leq \ell < p_0^r$, the number of elements of $\tuple$ in $[\alpha N/p_0^r, \alpha N/\ell)$ exceeds the quantity
+\begin{equation}\label{quant} 
+  \begin{split}
+  &  \left\lfloor a_{\ell+1} N \right\rfloor + \dots + \left\lfloor a_{p_0^r-1} N \right\rfloor
+  + \left\lfloor \left(\sum_{\ell \geq p_0^r} a_\ell\right) N \right\rfloor, \\
+&= N \sum_{\ell' > \ell} a_{\ell'} + O(p_0^r) 
+  \end{split}
+\end{equation}  
+since this quantity is the number of smallest elements of $\tuple$ that are at least $\alpha N/p_0^r$ by factors greater than $\ell$.  By \eqref{N-sum}, the number of elements of $\tuple$ in $[\alpha N/p_0^r, \alpha N/\ell)$ is at most
+$$ N\sum_{d \in {\mathcal D}} \sigma_{d,{\mathcal D}}  \max\left( \frac{1}{d}, \frac{\alpha}{\ell} \right) + O(1),$$
+so from \eqref{l-eq} we see that this quantity cannot exceed \eqref{quant} if $N$ is sufficiently large depending on $r$.
+Thus $\tuple'$ is $\alpha N$-admissible, and the claim follows.
+\end{proof}
+
+\begin{example}  Let $0 < \alpha < 3/16$ and ${\mathcal D} = \{1,2,4\}$.  If we set $a_{2^r} = \frac{3}{2^{r+3}}$ for $r \geq 1$, and $a_\ell=0$ for all other $\ell$, then one can calculate that
+$$ \sum_{\ell=1}^\infty a_\ell \nu_2(\ell) = \frac{3}{4} = \sum_{d \in {\mathcal D}} \nu_2(d) \frac{\sigma(d)}{d}$$
+and
+$$ \sum_{\ell > 2^r} a_{2^r} = \frac{3}{2^{r+3}} > \frac{2\alpha}{2^r} = \sum_{d \in {\mathcal D}} \sigma_{d,{\mathcal D}} \min\left( \frac{1}{d}, \frac{\alpha}{2^r} \right)$$
+for any $r \geq 1$.  From this one can readily check that the hypotheses of \Cref{asym-crit} are satisfied, and so we recover the bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ from \cite{guy}.
+\end{example}
+
+If one makes the ansatz $a_{2^r} = c / 2^r$ for some $c>0$ and all $r \geq r_0$, with $a_\ell = 0$ for all other $\ell > 2^{r_0}$, then the task of locating weights $a_r$ obeying the hypotheses of \Cref{asym-crit} becomes a linear programming problem.  
+programming problem.  Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/dnup}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$. We conjecture that this method can in fact recover the asymptotic $t(N) \geq (\frac{1}{e}-o(1))N$.
 
 
 \section{Modified approximate factorizations}\label{approx-sec}

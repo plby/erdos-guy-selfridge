@@ -658,6 +658,14 @@ In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially 
 \end{figure}
 
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{factors.png}
+  \caption{A histogram of an optimal factorization of $N!$ for $N=43632$, demonstrating that $t(N) = \lceil N/3\rceil = 14545$.  Of the $N$ factors, most ($\num{32147}$) of them are of the form $p \lceil t/p \rceil$ for $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$, thus directly contributing to the left-hand side of \Cref{upper-crit}.  (The factors arising from very large primes are lie to the right of the displayed graph, as a long tail of the histogram.)  The remaining $\num{11485}$ factors stay close to $t(N)$, with the largest being $14941$.
+  }\label{fig-factor}
+  \end{figure}
+  
+
 We can now prove the upper bound portion of \Cref{main}(iv):
 
   \begin{proposition}\label{upper-bound}  For large $N$, one has

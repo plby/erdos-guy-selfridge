@@ -46,7 +46,7 @@ def plot2():
     base = range(80,600)
     alt = [float(math.floor(2*N/7))/N for N in base]
     comparison = [math.exp(-1) for N in base]
-    comparison2 = [math.exp(logfac(N) / N)  for N in base]
+    comparison2 = [math.exp(logfac(N) / N)/N  for N in base]
     third = [1/3 for N in base]
     conj = [(math.exp(-1) - 0.3044 / math.log(max(N,2))) for N in base]
     conj2 = [math.exp(-1) - 0.3044 / math.log(max(N,2)) - 0.7555 / math.log(max(N,2))**2 for N in base]

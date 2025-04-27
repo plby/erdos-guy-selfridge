@@ -33,8 +33,6 @@ static struct pp {
 int32_t *M;                     // F[M[m]] holds the factorization of m <= MAXM for MAXP-smooth m, M[m]=0 ow
 
 
-static int verbose;
-
 static inline double get_time (void) // accurate to at least 10ms
     { struct timespec t; clock_gettime(CLOCK_MONOTONIC, &t); return (double)t.tv_sec + (double)t.tv_nsec / 1000000000.0L; }
 
@@ -120,9 +118,15 @@ static inline int64_t fcnt (int64_t *E, int64_t e, struct pp *f)
     return e;
 }
 
-int64_t tfac (int64_t N, int64_t t)
+// tfac returns a lower bound on the number of factors in any factorization of N! into parts of size >= t
+// we require N/3 < t < N/2 (this simplifies the algorithm and will always hold in the context of checking EGS
+// When check_feasibility is nonzero the algorithm will return 0 if discovers that the greedy algorithm cannot
+// produce >= N factors (this check is made before any suboptimal cofactors are used), and when this occurs
+// it applies not only to the inputs (N,t) but also to inputs (N,t') for all t' > t
+int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
 {
     double start = get_time();
+    if ( verbosity > 2 ) printf("tfac(%ld,%ld)\n",N,t);
     assert (N >= 10 && N < MAXN && 3*t >= N && 2*t < N);
     int32_t sqrtN = (int32_t)sqrt(N);
     int32_t s = sqrt(t); assert(s*(s-1) < t); while ( (int64_t)s*(s-1) < t ) s++;
@@ -169,7 +173,7 @@ int64_t tfac (int64_t N, int64_t t)
     int64_t mid = min((int64_t)pow(t,0.2),(t-1)/sqrtN);     // m > mid are large, m <= mid are small
     if ( (int64_t)sqrtN*mid >= t ) mid = (t-1)/sqrtN;       // force p > sqrtN for m < mid (handy)
 
-    if ( verbose > 2 ) printf ("N=%ld, t=%ld, sqrt(N)=%d, s=%d, maxpi=%d, maxm=%d, numm=%d, mid=%ld (%.6fs)\n", N, t, sqrtN, s, maxpi, maxm, numm, mid, get_time()-start);
+    if ( verbosity > 2 ) printf ("N=%ld, t=%ld, sqrt(N)=%d, s=%d, maxpi=%d, maxm=%d, numm=%d, mid=%ld (%.6fs)\n", N, t, sqrtN, s, maxpi, maxm, numm, mid, get_time()-start);
 
     primesieve_iterator ctx = primesieve_start(s,(t-1)/mid);
     int64_t p; // p will fit in 32 bits but we want to mults at 64-bits
@@ -184,7 +188,7 @@ int64_t tfac (int64_t N, int64_t t)
         cnt += n;
     }
 
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld for p in [s,sqrt(N)], m=%ld (%.6fs)\n", cnt, m, get_time()-start);
+    if ( verbosity > 2 ) printf("cnt=%ld for p in [s,sqrt(N)], m=%ld (%.6fs)\n", cnt, m, get_time()-start);
 
     int64_t pmmax = (t-1) / (m-1);  // largest p for this m
     assert (p>pmmax || m==cdiv(t,p));
@@ -203,7 +207,7 @@ int64_t tfac (int64_t N, int64_t t)
     }
     primesieve_stop(&ctx);
     int64_t lastpi = pi(plmmax);
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld for %ld p >= s with m < mid (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
+    if ( verbosity > 2 ) printf("cnt=%ld for %ld p >= s with m < mid (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
 
     // handle primes in (plmax,t] with small m in [mid,2] using primecount (this should take about half the time if mid is optimal)
     // here we iterate over m rather than p
@@ -218,14 +222,18 @@ int64_t tfac (int64_t N, int64_t t)
             lastpi = nextpi;
         }
     }
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld for %ld p in [s,t) (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
+    if ( verbosity > 2 ) printf("cnt=%ld for %ld p in [s,t) (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
 
     // Finally, handle primes p  in [t,N].  Here m=1 and n=3,2,1 (3 only if N=3t and t is prime)
     int64_t nextpi = pi(N/2);
     cnt += (N == 3*t && is_prime(t) ? 1 : 0) + 2*(nextpi-lastpi);
     lastpi = nextpi; nextpi = pi(N);
     cnt += nextpi-lastpi;
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld for %ld p in [s,N] (%.6fs)\n", cnt, nextpi-maxpi, get_time()-start);
+    if ( verbosity > 2 ) printf("cnt=%ld for %ld p in [s,N] (%.6fs)\n", cnt, nextpi-maxpi, get_time()-start);
+
+    // Verify our assumption that we can use the optimal m for all p >= s (this will be verified again at the end but
+    // the check is cheap so we do it now before a possible feasibility check).
+    for ( int32_t i = 1 ; i <= maxpi ; i++ ) assert(E[i] >= 0);
 
     /*
         At this point we have dealt with all prime factors p >= s of N! using the optimal m = cdiv(t,p)
@@ -251,6 +259,7 @@ int64_t tfac (int64_t N, int64_t t)
     for ( int32_t i = maxpi, j = cdiv(t,s) ; i >= pimin ; i-- ) {
         // Update j so that all m' >= m=sM[j] are valid for use with p=P[i]
         while ( (int64_t)P[i]*Ms[j] < t || F[M[Ms[j]]].pi >= i ) j++;
+        if ( feasible && Ms[j] >= 2*P[i] ) break;
         struct pp *f = F+M[Ms[j]]; assert(f);
         int64_t e = fcnt(E,E[i],f);    
         if ( e < E[i] ) { // if we cannot completely remove p from P^e using m, try p^2 and m=cdiv(t,p^2)
@@ -282,7 +291,13 @@ int64_t tfac (int64_t N, int64_t t)
             }
         }
     }
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld after initial pass of p in (cdiv(t,maxm),s) (%.6fs)\n", cnt, get_time()-start);
+    if ( feasible ) {
+        long double ebits = 0, epsilon = 0.0000000000000001L; // 10^{-15} < 2^52
+        for ( int32_t i = 1 ; i <= maxpi ; i++ ) ebits += E[i]*log(P[i]+epsilon); // make sure we get an upper bound
+        return cnt + floorl(ebits/log(t-epsilon));
+    }
+
+    if ( verbosity > 2 ) printf("cnt=%ld after initial pass of p in (cdiv(t,maxm),s) (%.6fs)\n", cnt, get_time()-start);
     while ( maxpi && !E[maxpi] ) maxpi--;
     free(Ms);
 
@@ -334,91 +349,175 @@ int64_t tfac (int64_t N, int64_t t)
     for ( struct pp *f = c ; f->pi ; f++ ) E[f->pi] += f->e; // restore any patial factor we did not remove so we can report/check remainder
     while ( maxpi && !E[maxpi] ) maxpi--;
     int64_t q = 1; for ( int32_t i = 1 ; i <= maxpi ; i++ ) { assert(E[i] >= 0); for ( int32_t e = 0 ; e < E[i] ; e++ ) { q *= P[i]; assert (q<t); } }
-    if ( verbose > 2 ) fprintf(stderr, "cnt=%ld after final pass, remainder is %ld (%.6fs)\n", cnt, q, get_time()-start);
+    if ( verbosity > 2 ) printf("cnt=%ld after final pass, remainder is %ld (%.6fs)\n", cnt, q, get_time()-start);
     free (E); E = 0;
     return cnt;
 }
 
+// returns a value of t >= N/3 that yields a good lower bound on t(N), or 0 if no such t can be found
+int64_t tbound (int64_t N, int optimal, int verbosity)
+{
+    int64_t t = cdiv(N,3);
+    int64_t cnt = tfac(N,t,verbosity,0);
+    if ( cnt < N ) return 0;
+    int64_t tmin = t, tmax = (2*N)/5;
+
+    /*
+        We use a modified bisection search of [tmin,tmax) for t with tfac(N,t) >= N but tfac(N,t+1) < N that
+        uses the excess/deficit (tfac(N,t)-N) to choose the next bisection point.
+    */
+    while ( tmin < tmax-1 ) {
+        if ( cnt >= N ) tmin = max(t,tmin); else tmax = min(t,tmax);
+        if ( verbosity > 1 ) fprintf (stderr,"t=%ld gave %ld extra factors, new t-range is [%ld,%ld)\n", t, cnt-N, tmin, tmax);
+        t = round(exp(log(t)+(cnt-N)*log(t)/N));
+        if ( t <= tmin ) t = max((3*tmin+tmax)/4,tmin+1);
+        if ( t >= tmax ) t = min((tmin+3*tmax)/4,tmax-1);
+        cnt = tfac(N,t,0,verbosity);
+    }
+    assert (tmax < (2*N)/5);
+    if ( ! optimal ) return tmin;
+    if ( verbosity > 0 ) printf("t(%ld) >= %ld proved\n", N,tmin);
+
+    /* Now use a binary search to get an upper bound on the best possiible t that tfac(N,t) could return */
+    int64_t low = tmin;
+    int64_t high = (2*N)/5;
+    cnt = tfac(N,high,1,verbosity);
+    assert (cnt < N);
+    while ( low < high-1 ) {
+        int64_t mid = (low+high)/2;
+        cnt = tfac(N,mid,1,verbosity);
+        if ( cnt < N ) { high = mid; tmax = mid; } else { low = mid; }
+    }
+    assert (tmax > tmin);
+    if ( verbosity > 0 ) printf("t(%ld) >= %ld cannot be proved\n",N,tmax);
+    if ( verbosity > 0 ) printf("checking %ld values of t\n", tmax-tmin-1);
+    for ( t = tmin+1 ; t < tmax ; t++ ) {
+        if ( tfac(N,t,0,verbosity) > N ) {
+                tmin = max(tmin,t);
+                if ( verbosity >= 0 ) printf("\rt(%ld) >= %ld proved\r", N,tmin);
+        }
+    }
+    return tmin;
+}
+
+static void usage (void)
+{
+    fprintf(stderr,
+        "Usage: egs [-v level] [-h filename] [-c] [-o] N-range [t]\n"
+        "       -v level      integer verbosity level -1 to 3 (optional, default is 0)\n"
+        "       -h filename   hint-file with records N:t (required if range of N is specified)\n"
+        "       -c            create hint-file rather than reading it (must be specified in combination with -h)\n"
+        "       -o            use the best t for which the algorithm can prove t(N) >= t (optional)\n"
+        "       N-range       integer N or range of integers M-N (required, scientific notation supported)\n"
+        "       t             integer t to use for single N (optional, a good t will be determined if unspecified)\n");
+
+}
+
 int main (int argc, char *argv[])
 {
-    if ( argc < 2 ) { puts("    egs N [t verbosity]\n    egs Nmin-Nmax [hint-file verbosity]"); return 0; }
-    int64_t N = atol(argv[1]);
-    if ( N < 10 || N >= MAXN ) { fprintf(stderr,"N=%ld must lie in the range [10,2^40)\n",N); }
-    char *s = strchr(argv[1],'-');
-    int64_t maxN = s ? atol(s+1) : N;
-    assert (maxN >= N);
-    int64_t t = 0;
-    if ( maxN == N ) {
-        t = argc > 2 ? atol(argv[2]) : cdiv(N,3);
-        if ( !t ) t = cdiv(N,3);
-        if ( 3*t < N || 2*t >= N ) { fprintf(stderr,"t=%ld must lie in the range (N/3,N/2)\n",t); }
+
+    if ( argc < 2 ) { usage(); return 0; }
+
+    int verbosity=0, optimal=0, create=0;
+    char *hintfile = 0;
+    int64_t minN=0, maxN=0, t=0;
+
+    for ( int i = 1 ; i < argc ; i++ ) {
+        char *s = argv[i];
+        if ( maxN > minN || t ) { fprintf(stderr, "ignoring extraneous argument %s\n",s); continue; }
+        if ( *s == '-' ) {
+            switch(*(s+1)) {
+            case 'v': { if ( i+1 >= argc) { usage(); return -1; } verbosity = atoi(argv[i+1]); i++; break; }
+            case 'h': { if ( i+1 >= argc || hintfile ) { usage(); return -1; } hintfile = argv[i+1]; i++; break; }
+            case 'c': { create = 1; break; }
+            case 'o': { optimal = 1; break; }
+            default: { usage(); return -1; }
+            }
+        } else {
+            if ( !minN ) {
+                if (*s=='[')s++;
+                double x = strtod(s,&s);
+                if ( (x-round(x)) > 0.0001 ) { fprintf(stderr, "N=%f must be an integer.\n",x); usage(); return -1; }
+                minN = round(x);
+                if ( s && *s ) {
+                    if ( *s == '.' ) { while (*(++s)=='.'); }
+                    else if ( *s == '-' || *s == ',' ) { s++; }
+                    else { puts(s); usage(); return -1; }
+                    maxN = strtold(s,0);
+                    assert(maxN >= minN);
+                } else {
+                    maxN = minN;
+                }
+            } else {
+                t = strtold(s,0);
+            }
+        }
     }
-    if ( argc > 3 ) {
-        verbose = atoi (argv[3]);
-        assert(verbose>=0);
-    }
+
+    if ( minN < 10 || maxN >= MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [10,2^40)\n", minN, maxN); return -1; }
+    if ( t && t < cdiv(minN,3) ) { fprintf(stderr,"t=%ld must be at least N/3\n", t); return -1; }
+
 
     double start = get_time();
     general_setup();
-    fprintf(stderr,"General setup took %.3fs\n", get_time()-start);
+    if ( verbosity > 0 ) fprintf(stderr,"General setup took %.3fs\n", get_time()-start);
 
     start = get_time();
-    if ( maxN > N ) {
-        int64_t minN = N;
-        if ( argc == 2 ) {
+    if ( maxN > minN ) {
+        if ( ! hintfile ) { fprintf(stderr, "You must specify a hint-file (either to read or to create) when using a range of N.\n"); return -1; }
+        if ( create ) {
+            if ( !hintfile ) { fprintf(stderr, "You must use the -h parameter to specify the hint-file to be created.\n"); return -1; }
+            FILE *fp = fopen(hintfile, "w");
+            if ( !fp ) { fprintf(stderr, "Error creating hint-file %s\n", hintfile); return -1; }
+            int64_t N = minN;
             while ( N <= maxN ) {
-                t = cdiv(N,3);
-                int64_t cnt = tfac(N,t);
-                if ( cnt < N ) break; // for mid-range N we could backup here, but for N > 10^6 this is never necessary 
-                int64_t tmin = t, tmax = N/2;
-                /* 
-                    Compute a value of t for which tfac(N,t) >= N but tfac(N,t+1) < N
-                    This isn't necessarily the largest t for which tfac(N,t) >= N, but it is likely close to it.
-                */
-                while ( tmin < tmax-1 ) {
-                    if ( cnt >= N ) tmin = max(t,tmin); else tmax = min(t,tmax);
-                    if ( verbose > 1 ) fprintf (stderr,"t=%ld gave %ld extra factors, new t-range is [%ld,%ld)\n", t, cnt-N, tmin, tmax);
-                    t = round(exp(log(t)+(cnt-N)*log(t)/N));
-                    if ( t <= tmin ) t = max((3*tmin+tmax)/4,tmin+1);
-                    if ( t >= tmax ) t = min((tmin+3*tmax)/4,tmax-1);
-                    cnt = tfac(N,t);
-                }
-                if ( tmin < cdiv(N,3) ) break;
-                fprintf (stderr,"t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, tmin, tmin-cdiv(N,3), get_time()-start);
-                fprintf(stdout,"%ld:%ld\n",N,t);
-                N += tmin-cdiv(N,3)+1;
+                t = tbound(N,optimal,verbosity);
+                if ( !t ) break;
+                if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, t, t-cdiv(N,3), get_time()-start);
+                fprintf(fp,"%ld:%ld\n",N,t);
+                N += t-cdiv(N,3)+1;
             }
             if ( N > maxN ) fprintf (stdout,"Verified the Guy-Selfridge-Erdos conjecture for N in [%ld,%ld] (%.3fs)\n",minN,maxN,get_time()-start);
+            else if ( N == minN ) fprintf (stdout,"Unable to verify Guy-Selfridge-Erdos conjecture for N=%ld (%.3fs)\n",minN,get_time()-start);
+            else fprintf (stdout,"Only able to verify the Guy-Selfridge-Erdos conjecture for N in [%ld,%ld] (%.3fs)\n",minN,N-1,get_time()-start);
         } else {
-            FILE *fp = fopen(argv[2],"r"); if (!fp) { fprintf(stderr, "Error opening file %s\n", argv[2]); return -1; }
+            FILE *fp = fopen(hintfile,"r"); if (!fp) { fprintf(stderr, "Error opening hint-file %s\n", hintfile); return -1; }
             char buf[256];
             int64_t minV = 0, maxV = 0;
             while ( fgets(buf,sizeof(buf),fp) ) {
-                N = atol(buf);
+                int64_t N = atol(buf);
                 char *s = strchr(buf,':'); if (!s) { fprintf(stderr, "Error parsing line %s\n", buf); return -1; }
                 t = atol(s+1);
-                if ( 3*t < N ) { fprintf (stderr, "Invalid N:t in hint file: 3*%ld < %ld\n", t, N); return -1; }
+                if ( 3*t < N ) { fprintf(stderr, "Invalid N:t in hint file: 3*%ld < %ld\n", t, N); return -1; }
                 double timer = get_time();
-                if ( tfac(N,t) < N ) { fprintf (stderr, "Failed to verify t(%ld) >= %ld !\n", N,t); return -1; }
+                if ( tfac(N,t,0,verbosity) < N ) { fprintf (stderr, "Failed to verify t(%ld) >= %ld !\n", N,t); return -1; }
                 if (!minV) {
-                    if ( N > minN ) { fprintf (stderr, "Hint file starting N=%ld above range minimum %ld\n", N, minN); return -1; }
+                    if ( N > minN ) { fprintf(stderr, "Hint file starting N=%ld above range minimum %ld\n", N, minN); return -1; }
                     minV = N;
                     maxV = N + (t-cdiv(N,3));
                 } else {
-                    if ( N > maxV+1 ) { fprintf (stderr, "Hint file starting N=%ld leaves a gap!\n", N); return -1; }
+                    if ( N > maxV+1 ) { fprintf(stderr, "Hint file starting N=%ld leaves a gap!\n", N); return -1; }
                     if ( N + (t-cdiv(N,3)) <= maxV ) { fprintf (stderr, "Hint at N=%ld did not extend verified range!\n", N); return -1; }
                     maxV = N + (t-cdiv(N,3));
                 }
-                if ( verbose ) fprintf (stdout,"t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-timer);
+                if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-timer);
                 if ( maxV >= maxN ) break;
             }
             if ( maxV < maxN ) { fprintf (stderr, "Hint file only allowed verification [%ld,%ld]\n", minV,maxV); return -1; }
             fprintf (stdout,"Verified the Guy-Selfridge-Erdos conjecture for N in [%ld,%ld] (%.3fs)\n",minV,maxV,get_time()-start);
         }
     } else {
-        int64_t cnt = tfac(N,t);
-        if ( cnt >= N ) fprintf (stderr,"t(%ld) >= %ld with %ld extra factors (%.3fs)\n", N, t, cnt - N, get_time()-start);
-        else fprintf (stderr,"failed to prove t(%ld) >= %ld with %ld missing factors (%.3fs)\n", N, t, N - cnt, get_time()-start);
+        int64_t N = minN;
+        if ( t && optimal ) { t=0; fprintf(stderr,"Ignoring specified value of t and searching for optimal value\n"); }
+        if ( !t ) {
+            t = tbound(N,optimal,verbosity);
+            if ( t ) printf("t(%ld) >= %ld%s with (t-ceil(N/3)) = %ld (%.3fs)\n",N,t,optimal ? " (optimal for algorithm)" : "", (t-cdiv(N,3)), get_time()-start);
+            else fprintf(stderr,"failed to prove t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-start);
+        } else {
+            int64_t cnt = tfac(N,t,0,verbosity);
+            if ( cnt >= N ) printf("t(%ld) >= %ld with %ld extra factors (%.3fs)\n", N, t, cnt - N, get_time()-start);
+            else fprintf (stderr,"failed to prove t(%ld) >= %ld with %ld missing factors (%.3fs)\n", N, t, N - cnt, get_time()-start);
+        }
     }
 
     return 0;

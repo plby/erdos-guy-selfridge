@@ -245,7 +245,7 @@ def plot():
 
     fig, ax = plt.subplots()
     ax.plot(base, asym, linestyle="--", label='$1/e-c_0/\\log N$', color='purple' )
-    ax.plot(base, asym2, linestyle="--", label='$1/e-c_0/\\log N$-c_1/\\log^2 N', color='gray' )
+    ax.plot(base, asym2, linestyle="--", label='$1/e-c_0/\\log N-c_1/\\log^2 N$', color='gray' )
     ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$', color='orange' )
     ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$', color='red' )
     ax.plot(base1, t1, label='LP lower bound', color='blue' )

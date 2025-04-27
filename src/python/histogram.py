@@ -90,6 +90,7 @@ width = (bins[1] - bins[0]) / 3  # width of each bar (smaller than bin width)
 plt.bar(bin_centers + width/2, counts2, width=width, label='Factors of the form $p \\lceil t/p \\rceil$ for $p \\geq t/\\lceil \\sqrt{t} \\rceil$')
 plt.bar(bin_centers - width/2, counts1, width=width, label='Other factors')
 
+plt.title('Optimal factorization of $N!$ for $N=43632$')
 plt.xlabel('Value')
 plt.ylabel('Count')
 plt.legend()

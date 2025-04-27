@@ -604,7 +604,52 @@ $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 89$ & $t(N)_- + 1147$ & $t(N)_- 
 \end{table}
 
       
-      
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+  $N$ & $t(N)_-$ & Fast greedy & Time (s) & Exhaustive greedy & Time (s) \\
+  \hline
+$1 \times 10^6$ & $\num{342505}$ & $t(N)_- - \num{4863}$ & 0.001 & $t(N)_- - \num{3723}$ & 0.118 \\
+$2 \times 10^6$ & $\num{687796}$ & $t(N)_- - \num{7710}$ & 0.001 & $t(N)_- - \num{6874}$ & 0.296 \\
+$3 \times 10^6$ & $\num{1033949}$ & $t(N)_- - \num{10793}$ & 0.002 & $t(N)_- - \num{9791}$ & 0.731 \\
+$4 \times 10^6$ & $\num{1380625}$ & $t(N)_- - \num{14637}$ & 0.003 & $t(N)_- - \num{11502}$ & 1.654 \\
+$5 \times 10^6$ & $\num{1727605}$ & $t(N)_- - \num{20847}$ & 0.003 & $t(N)_- - \num{15778}$ & 2.686 \\
+$6 \times 10^6$ & $\num{2074962}$ & $t(N)_- - \num{25872}$ & 0.002 & $t(N)_- - \num{21181}$ & 4.337 \\
+$7 \times 10^6$ & $\num{2422486}$ & $t(N)_- - \num{30334}$ & 0.003 & $t(N)_- - \num{22348}$ & 5.348 \\
+$8 \times 10^6$ & $\num{2770212}$ & $t(N)_- - \num{32103}$ & 0.003 & $t(N)_- - \num{27647}$ & 6.474 \\
+$9 \times 10^6$ & $\num{3118129}$ & $t(N)_- - \num{30721}$ & 0.004 & $t(N)_- - \num{30069}$ & 7.078 \\
+\hline
+$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- - \num{38594}$ & 0.007 & $t(N)_- - \num{33151}$ & 10.576 \\
+$2 \times 10^7$ & $\num{6952243}$ & $t(N)_- - \num{80533}$ & 0.008 & $t(N)_- - \num{67701}$ & 33.397 \\
+$3 \times 10^7$ & $\num{10444441}$ & $t(N)_- - \num{112826}$ & 0.013 & $t(N)_- - \num{98056}$ & 87.062 \\
+$4 \times 10^7$ & $\num{13940484}$ & $t(N)_- - \num{109009}$ & 0.016 & $t(N)_- - \num{104535}$ & 110.231 \\
+$5 \times 10^7$ & $\num{17439282}$ & $t(N)_- - \num{187980}$ & 0.026 & $t(N)_- - \num{147795}$ & 204.029 \\
+$6 \times 10^7$ & $\num{20940210}$ & $t(N)_- - \num{246858}$ & 0.027 & $t(N)_- - \num{228610}$ & 346.622 \\
+$7 \times 10^7$ & $\num{24442818}$ & $t(N)_- - \num{289249}$ & 0.018 & $t(N)_- - \num{233968}$ & 505.893 \\
+$8 \times 10^7$ & $\num{27946958}$ & $t(N)_- - \num{245135}$ & 0.036 & $t(N)_- - \num{231144}$ & 457.513 \\
+$9 \times 10^7$ & $\num{31452431}$ & $t(N)_- - \num{335660}$ & 0.042 & $t(N)_- - \num{275753}$ & 657.308 \\
+\hline
+$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- - \num{337459}$ & 0.082 & $t(N)_- - \num{292563}$ & 671.201 \\
+$2 \times 10^8$ & $\num{70064782}$ & $t(N)_- - \num{691712}$ & 0.144 & $t(N)_- - \num{623293}$ & 2035.745 \\
+$3 \times 10^8$ & $\num{105218403}$ & $t(N)_- - \num{956030}$ & 0.092 & $t(N)_- - \num{903647}$ & 3479.215 \\
+$4 \times 10^8$ & $\num{140401212}$ & $t(N)_- - \num{1332772}$ & 0.111 & $t(N)_- - \num{1142677}$ & 5336.544 \\
+$5 \times 10^8$ & $\num{175605266}$ & $t(N)_- - \num{1659922}$ & 0.303 & $t(N)_- - \num{1477924}$ & 7285.802 \\
+$6 \times 10^8$ & $\num{210825848}$ & $t(N)_- - \num{1786095}$ & 0.322 & $t(N)_- - \num{1590641}$ & 8735.219 \\
+$7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_- - \num{1920970}$ & 10462.708 \\
+\hline
+\end{tabular}
+\caption{For sample values of $N \in [10^6, 7 \times 10^8]$, the performance of the fast greedy algorithm (using heuristics to guess optimal choices of $t$), and more thorough run of the algorithm (that exhaustively searches over $t$ for which the algorithm works), compared against the lower bound $t(N)_-$ obtained from the linear programming method.}\label{greedy-table}
+\end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{verylarge.png}
+  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and fast greedy methods in the range $10^5 \leq N \leq 10^{12}$.}\label{fig-verylarge}
+\end{figure}
+
+
+
 \section{Some upper bounds}
 
 It is easy to check using \eqref{ftoa} that the weights $w_p \coloneqq \frac{\log p}{\log t}$ will obey the requirements \eqref{pj}, \eqref{hyp} as long as $0 > \log N! - N \log t$.  This recovers the trivial upper bound \eqref{trivial}.  By adjusting these weights at large primes, one can improve this bound as follows:

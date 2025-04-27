@@ -1,5 +1,6 @@
 import math
-
+import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter  
 
 data = [
     [100000, 33642, 33646, 33668],
@@ -38,7 +39,95 @@ data = [
     [700000000, 246059851, 246060084, 246060998]
 ]
 
-        
+data2 = [
+  [1000000, 337642, 0.001],
+    [2000000, 680086, 0.001],
+    [3000000, 1023156, 0.002],
+    [4000000, 1365988, 0.003],
+    [5000000, 1706758, 0.003],
+    [6000000, 2049090, 0.002],
+    [7000000, 2392152, 0.003],
+    [8000000, 2738109, 0.003],
+    [9000000, 3087408, 0.004],
+    [10000000, 3427641, 0.007],
+    [20000000, 6871710, 0.008],
+    [30000000, 10331615, 0.013],
+    [40000000, 13831475, 0.016],
+    [50000000, 17251302, 0.026],
+    [60000000, 20693352, 0.027],
+    [70000000, 24153569, 0.018],
+    [80000000, 27701823, 0.036],
+    [90000000, 31116771, 0.042],
+    [100000000, 34621266, 0.082],
+    [200000000, 69373070, 0.144],
+    [300000000, 104262373, 0.092],
+    [400000000, 139068440, 0.111],
+    [500000000, 173945344, 0.303],
+    [600000000, 209039753, 0.322],
+    [700000000, 244068022, 0.258],
+    [800000000, 278789148, 0.625],
+    [900000000, 313486040, 0.835],
+    [1000000000, 348657071, 0.617],
+    [2000000000, 699320285, 0.794],
+    [3000000000, 1049124132, 0.539],
+    [4000000000, 1398960734, 1.480],
+    [5000000000, 1752339872, 1.099],
+    [6000000000, 2102096670, 1.428],
+    [7000000000, 2451793859, 0.940],
+    [8000000000, 2801983995, 1.924],
+    [9000000000, 3156393636, 1.070],
+    [10000000000, 3506356455, 2.016],
+    [20000000000, 7023091874, 2.638],
+    [30000000000, 10548493144, 4.725],
+    [40000000000, 14058831325, 3.127],
+    [50000000000, 17588261838, 5.711],
+    [60000000000, 21113162440, 5.770],
+    [70000000000, 24651730580, 5.068],
+    [80000000000, 28165404213, 6.780],
+    [90000000000, 31698741537, 6.919],
+    [100000000000 ,35202875936 ,5.751],
+    [200000000000 ,70585006626 ,10.787],
+    [300000000000 ,105834652369 ,13.605],
+    [400000000000 ,141202811888 ,14.251],
+    [500000000000 ,176645101607 ,14.798],
+    [600000000000 ,211992899000 ,21.399],
+    [700000000000 ,247576785678 ,16.579],
+    [800000000000 ,282745256538 ,19.487],
+    [900000000000 ,317995451072 ,20.731],
+    [1000000000000,353583755012,22.688]  
+ ]
+
+data3 = [
+    [1000000, 338782, 0.118],
+    [2000000, 680922, 0.296],
+    [3000000, 1024158, 0.731],
+    [4000000, 1369123, 1.654],
+    [5000000, 1711827, 2.686],
+    [6000000, 2053781, 4.337],
+    [7000000, 2400138, 5.348],
+    [8000000, 2742565, 6.474],
+    [9000000, 3088060, 7.078],
+    [10000000, 3433084, 10.576],
+    [20000000, 6884542, 33.397],
+    [30000000, 10346385, 87.062],
+    [40000000, 13835949, 110.231],
+    [50000000, 17291487, 204.029],
+    [60000000, 20711600, 346.622],
+    [70000000, 24208850, 505.893],
+    [80000000, 27715814, 457.513],
+    [90000000, 31176678, 657.308],
+    [100000000, 34666162, 671.201],
+    [200000000, 69441489, 2035.745],
+    [300000000, 104314756, 3479.215],
+    [400000000, 139258535, 5336.544],
+    [500000000, 174127342, 7285.802],
+    [600000000, 209235207, 8735.219],
+    [700000000, 244138881, 10462.708],
+    [800000000, 279081738, 13959.032],
+    [900000000, 313666240, 18187.073],
+    [1000000000, 348901168, 19935.484]
+]
+
 def is_prime(n):
     """Return True if n is a prime number, else False."""
     if n < 2:
@@ -92,13 +181,77 @@ def round_to_sigfigs(n, sigfigs):
     factor = 10**(max(digits - sigfigs,0))
     return (n // factor) * factor
 
+def table1():
+    for x in data:
+        N, t_lower, t_upper, lemma = x
+        diff = t_upper - t_lower
+        lemmadiff = lemma - t_lower
+        approx = int(N / math.e - c0 * N / math.log(N) - c1 * N / (math.log(N) ** 2))
+        approxdiff = t_lower - approx  
+        digits = int(math.floor(math.log10(N))) 
 
-for x in data:
-    N, t_lower, t_upper, lemma = x
-    diff = t_upper - t_lower
-    lemmadiff = lemma - t_lower
-    approx = int(N / math.e - c0 * N / math.log(N) - c1 * N / (math.log(N) ** 2))
-    approxdiff = t_lower - approx  
-    digits = int(math.floor(math.log10(N))) 
+        print(f"${N//10**digits} \\times 10^{digits}$ & $\\num{{{t_lower}}}$ & $t(N)_- + {diff}$ & $t(N)_- + {lemmadiff}$ & $t(N)_- - \\num{{{approxdiff}}}$ \\\\")
 
-    print(f"${N//10**digits} \\times 10^{digits}$ & $\\num{{{t_lower}}}$ & $t(N)_- + {diff}$ & $t(N)_- + {lemmadiff}$ & $t(N)_- - \\num{{{approxdiff}}}$ \\\\")
+def table2():
+    for x in data:
+        N, t_lower, _, _ = x
+        t_greedy = t_lower
+        time_greedy = 0
+        t_greedy_2 = t_lower
+        time_greedy_2 = 0
+
+        for y in data2:
+            if y[0] == N:
+                t_greedy = y[1]
+                time_greedy = y[2]
+                break
+        for y in data3:
+            if y[0] == N:
+                t_greedy_2 = y[1]
+                time_greedy_2 = y[2]
+                break
+
+        digits = int(math.floor(math.log10(N))) 
+        print(f"${N//10**digits} \\times 10^{digits}$ & $\\num{{{t_lower}}}$ & $t(N)_- - \\num{{{t_lower-t_greedy}}}$ & {time_greedy} & $t(N)_- - \\num{{{t_lower-t_greedy_2}}}$ & {time_greedy_2} \\\\")
+
+def plot():
+    base1 = []
+    t1 = []
+    for x in data:
+        N, t_lower, _, _ = x
+        base1.append(N)
+        t1.append(t_lower / N)
+    
+
+    base2 = []
+    t2 = []
+    for x in data2:
+        N, t, _ = x
+        base2.append(N)
+        t2.append(t / N)
+
+
+    # form the union of base1 and base2
+    base = sorted(set(base1) | set(base2))
+    asym = [1/math.e - 0.30440119010/math.log(N) for N in base]
+    asym2 = [1/math.e - 0.30440119010/math.log(N) - 0.75554808/math.log(N)**2 for N in base]
+
+    fig, ax = plt.subplots()
+    ax.plot(base, asym, label='$1/e-c_0/\\log N$' )
+    ax.plot(base, asym2, label='$1/e-c_0/\\log N$-c_1/\\log^2 N' )
+    ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$' )
+    ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$' )
+    ax.plot(base1, t1, label='LP lower bound' )
+    ax.plot(base2, t2, label='Fast greedy lower bound' )
+    ax.set_xscale('log') 
+#    ax.xaxis.set_major_formatter(ScalarFormatter())
+#    ax.ticklabel_format(style='plain', axis='x')            # turn off offset
+    plt.title('Approximations to $t(N)/N$')
+    plt.xlabel('$N$')
+    plt.ylim(0.33,0.37)
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+plot()

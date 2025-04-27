@@ -230,6 +230,13 @@ def plot():
         base2.append(N)
         t2.append(t / N)
 
+    base3 = []
+    t3 = []
+    for x in data3:
+        N, t, _ = x
+        base3.append(N)
+        t3.append(t / N)
+
 
     # form the union of base1 and base2
     base = sorted(set(base1) | set(base2))
@@ -243,6 +250,7 @@ def plot():
     ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$' )
     ax.plot(base1, t1, label='LP lower bound' )
     ax.plot(base2, t2, label='Fast greedy lower bound' )
+    ax.plot(base3, t3, label='Exhaustive greedy lower bound' )
     ax.set_xscale('log') 
 #    ax.xaxis.set_major_formatter(ScalarFormatter())
 #    ax.ticklabel_format(style='plain', axis='x')            # turn off offset

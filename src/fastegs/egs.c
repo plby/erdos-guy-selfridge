@@ -358,7 +358,7 @@ int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
 int64_t tbound (int64_t N, int optimal, int verbosity)
 {
     int64_t t = cdiv(N,3);
-    int64_t cnt = tfac(N,t,verbosity,0);
+    int64_t cnt = tfac(N,t,0,verbosity);
     if ( cnt < N ) return 0;
     int64_t tmin = t, tmax = (2*N)/5;
 
@@ -512,7 +512,7 @@ int main (int argc, char *argv[])
         if ( !t ) {
             t = tbound(N,optimal,verbosity);
             if ( t ) printf("t(%ld) >= %ld%s with (t-ceil(N/3)) = %ld (%.3fs)\n",N,t,optimal ? " (optimal for algorithm)" : "", (t-cdiv(N,3)), get_time()-start);
-            else fprintf(stderr,"failed to prove t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-start);
+            else fprintf(stderr,"failed to prove t(%ld) >= %ld (%.3fs)\n", N, cdiv(N,3), get_time()-start);
         } else {
             int64_t cnt = tfac(N,t,0,verbosity);
             if ( cnt >= N ) printf("t(%ld) >= %ld with %ld extra factors (%.3fs)\n", N, t, cnt - N, get_time()-start);

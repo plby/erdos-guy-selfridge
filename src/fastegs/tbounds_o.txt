@@ -1,4 +1,4 @@
-t(100000) >= 33334 (optimal for algorithm) with (t-ceil(N/3)) = 0 (0.001s)
+t(100000) >= 33184 (optimal for algorithm) with (t-ceil(N/3)) = -150 (0.002s)
 t(200000) >= 66738 (optimal for algorithm) with (t-ceil(N/3)) = 71 (0.004s)
 t(300000) >= 100408 (optimal for algorithm) with (t-ceil(N/3)) = 408 (0.007s)
 t(400000) >= 134536 (optimal for algorithm) with (t-ceil(N/3)) = 1202 (0.015s)

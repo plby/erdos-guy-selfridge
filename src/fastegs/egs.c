@@ -127,7 +127,7 @@ int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
 {
     double start = get_time();
     if ( verbosity > 2 ) printf("tfac(%ld,%ld)\n",N,t);
-    assert (N >= 10 && N < MAXN && 3*t >= N && 2*t < N);
+    assert (N >= 10 && N < MAXN && 4*t > N && 2*t < N);
     int32_t sqrtN = (int32_t)sqrt(N);
     int32_t s = sqrt(t); assert(s*(s-1) < t); while ( (int64_t)s*(s-1) < t ) s++;
     assert (s <= MAXP);
@@ -206,7 +206,7 @@ int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
         cnt += x;
     }
     primesieve_stop(&ctx);
-    int64_t lastpi = pi(plmmax);
+    int64_t lastpi = pi(plmmax), nextpi;
     if ( verbosity > 2 ) printf("cnt=%ld for %ld p >= s with m < mid (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
 
     // handle primes in (plmax,t] with small m in [mid,2] using primecount (this should take about half the time if mid is optimal)
@@ -215,7 +215,7 @@ int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
         int64_t pmin = cdiv(t,m), pmax = (t-1)/(m-1);       // p in [pmin,pmax] are the p for this m
         n = N/pmin; pnmax = min(N/n,pmax);                  // p in [pmin,pnmax] are the p for this n
         while ( pmin <= pmax ) {
-            int64_t nextpi = pi(pnmax);
+            nextpi = pi(pnmax);
             int64_t c = n*(nextpi-lastpi); cnt += c;        // number of factors for this m and n
             for ( struct pp *q = F+M[m] ; q->pi ; q++ ) E[q->pi] -= c*q->e;
             pmin = pnmax+1; n--; pnmax = min(N/n,pmax);     // proceed to the next n
@@ -223,10 +223,15 @@ int64_t tfac (int64_t N, int64_t t, int feasible, int verbosity)
         }
     }
     if ( verbosity > 2 ) printf("cnt=%ld for %ld p in [s,t) (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
-
-    // Finally, handle primes p  in [t,N].  Here m=1 and n=3,2,1 (3 only if N=3t and t is prime)
-    int64_t nextpi = pi(N/2);
-    cnt += (N == 3*t && is_prime(t) ? 1 : 0) + 2*(nextpi-lastpi);
+    assert (lastpi == pi(t-1));
+    // Finally, handle primes p  in [t,N]
+    if ( 3*t <= N ) {
+        nextpi = pi(N/3);
+        cnt += 3*(nextpi-lastpi);
+        lastpi = nextpi;
+    }
+    nextpi = pi(N/2);
+    cnt += 2*(nextpi-lastpi);
     lastpi = nextpi; nextpi = pi(N);
     cnt += nextpi-lastpi;
     if ( verbosity > 2 ) printf("cnt=%ld for %ld p in [s,N] (%.6fs)\n", cnt, nextpi-maxpi, get_time()-start);
@@ -359,7 +364,7 @@ int64_t tbound (int64_t N, int optimal, int verbosity)
 {
     int64_t t = cdiv(N,3);
     int64_t cnt = tfac(N,t,0,verbosity);
-    if ( cnt < N ) return 0;
+    while ( cnt < N ) cnt = tfac(N,--t,0,verbosity);
     int64_t tmin = t, tmax = (2*N)/5;
 
     /*
@@ -453,9 +458,9 @@ int main (int argc, char *argv[])
             }
         }
     }
-
-    if ( minN < 10 || maxN >= MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [10,2^40)\n", minN, maxN); return -1; }
-    if ( t && t < cdiv(minN,3) ) { fprintf(stderr,"t=%ld must be at least N/3\n", t); return -1; }
+    // We need N at least 45 to ensure t=N/4 works
+    if ( minN < 45 || maxN >= MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [10,2^40)\n", minN, maxN); return -1; }
+    if ( t && t < cdiv(minN,4) ) { fprintf(stderr,"t=%ld must be at least N/4\n", t); return -1; }
 
 
     double start = get_time();
@@ -472,7 +477,7 @@ int main (int argc, char *argv[])
             int64_t N = minN;
             while ( N <= maxN ) {
                 t = tbound(N,optimal,verbosity);
-                if ( !t ) break;
+                if ( 3*t < N ) break;
                 if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, t, t-cdiv(N,3), get_time()-start);
                 fprintf(fp,"%ld:%ld\n",N,t);
                 N += t-cdiv(N,3)+1;
@@ -503,8 +508,8 @@ int main (int argc, char *argv[])
                 if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-timer);
                 if ( maxV >= maxN ) break;
             }
-            if ( maxV < maxN ) { fprintf (stderr, "Hint file only allowed verification [%ld,%ld]\n", minV,maxV); return -1; }
-            fprintf (stdout,"Verified the Guy-Selfridge-Erdos conjecture for N in [%ld,%ld] (%.3fs)\n",minV,maxV,get_time()-start);
+            if ( minV > minN || maxV < maxN ) { fprintf (stderr, "Hint file only allowed verification [%ld,%ld]\n", minV,maxV); return -1; }
+            fprintf (stdout,"Verified the Guy-Selfridge-Erdos conjecture for N in [%ld,%ld] (%.3fs)\n",minN,maxN,get_time()-start);
         }
     } else {
         int64_t N = minN;

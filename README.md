@@ -14,15 +14,15 @@ And here is a plot of $t(N)/N$ against some comparators for $N \leq 79$:
 
 Here is an extension of that image to $N \leq 200$:
 
-![Plot of $t(N)$ and comparators for $N \leq 200$](src/python/newplot_200.png)
+![Plot of $t(N)$ and comparators for $N \leq 200$](LaTeX/newplot_200.png)
 
 A view of $80 \leq N \leq 599$:
 
-![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](src/python/newplot_600_all.png)
+![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](LaTeX/newplot_600_all.png)
 
 An enlargement of the previous graph, also including the greedy algorithm lower bound:
 
-![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](src/python/newplot_600.png)
+![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](LaTeX/newplot_600.png)
 
 This repository records the efforts to verify the [Guy-Selfridge conjectures](https://zbmath.org/0918.11013) concerning the sequence $t(N)$:
 
@@ -40,7 +40,7 @@ Secondary goals are
 ## Current status
 
 1. Conjecture 1 **has been fully verified**, as a consequence of Conjecture 2 for $N \geq 43632$, and either the greedy or linear programming method for $N < 43632$.
-2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
+2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. A separate modified greedy method has verified the range $10^6 \leq N \leq 10^{12}$.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
 4. Using interval arithmetic and rigorous error bounds, one has $c_0 = 0.304419010\dots$ and $c_1 = 0.75554808\dots$.Non-rigorous heuristic calculations predict that $c_0 \approx 0.30441901087$.  
 

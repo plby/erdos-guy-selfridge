@@ -282,9 +282,9 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 
 \begin{itemize}
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
-  \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$;
-  \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an reasonable upper bound on $t(N)$ for all $N$, and is discussed in more detail in \Cref{accounting-sec};
-  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.
+  \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$, and which we apply in \Cref{upper-sec} to establish a general upper bound (\Cref{upper-crit}) on $t(N)$ that can be used to obtain \Cref{main}(i);
+  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$, as well as an analytic proof of \eqref{t1}.
+  \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an alternate proof of \Cref{upper-crit}, and also is the starting point for the modified factorization technique discussed below;
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
 
@@ -483,7 +483,6 @@ The other major modification is related to Step (2) in the above algorithm, wher
 
 By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $8 \times 10^4 \leq N \leq 10^{11}$.    Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $43632 \leq N < 8 \times 10^4$ and $N > 10^{11}$, and also to show that this claim fails for $N=43631$.
 
-{\bf would be nice to have some data to plot on the greedy algorithm performance for the range $10^4 \leq N \leq 10^{11}$}
 
 \section{Linear programming}\label{linprog-sec}
 
@@ -650,7 +649,7 @@ $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_-
 
 
 
-\section{Some upper bounds}
+\section{Some upper bounds}\label{upper-sec}
 
 It is easy to check using \eqref{ftoa} that the weights $w_p \coloneqq \frac{\log p}{\log t}$ will obey the requirements \eqref{pj}, \eqref{hyp} as long as $0 > \log N! - N \log t$.  This recovers the trivial upper bound \eqref{trivial}.  By adjusting these weights at large primes, one can improve this bound as follows:
 
@@ -813,34 +812,6 @@ The right-hand side is increasing in $N$ and the left-hand side is decreasing fo
   \caption{A plot of the left and right-hand sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
 \end{figure}
 
-\section{The accounting equation}\label{accounting-sec}
-
-Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting equation}
-\begin{equation}\label{accounting} 
-  \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p = \log N! - |\tuple| \log t
-\end{equation}
-where we define the \emph{$t$-excess} $\excess_t(\tuple)$ of the multiset $\tuple$ by the formula
-\begin{equation}\label{excess-def}
-  \excess_t(\tuple) \coloneqq \sum_{a \in \tuple} \log \frac{a}{t}.
-\end{equation}
-
-\begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_5(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
-  $$ \excess_3(\tuple) = \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3} + \log \frac{5}{3} = 1.3093\dots$$
-  and the accounting equation \eqref{accounting} becomes
-  $$ 1.3093\dots + \log 2 - \log 5 = 0.3930\dots = \log 5! - 4 \log 3.$$
-  If one replaces one of the copies of $5$ in ${\mathcal B}$ with a $2$, this erases both the $2$-surplus and the $5$-deficit, and creates a factorization $\tuple' = \{2,3,4,5\}$ of $5!$; the $3$-excess now drops to
-  $$ \excess_3(\tuple) = \log \frac{2}{3} + \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3}  = 0.3930\dots,$$
-  bringing the accounting equation back into balance.
-\end{example}
-  
-In view of \Cref{subfac}, one can now equivalently describe 
-$t(N)$ as follows:
-
-\begin{lemma}[Equivalent description of $t(N)$]\label{t-descrip}  $t(N)$ is the largest quantity $t$ for which there exists a $t$-admissible subfactorization of $N!$ with
-$$ \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p \leq \log N! - N \log t.$$
-\end{lemma}
-
-One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend'' on some combination of $t$-excess and $p$-surpluses.  For $t$ of the form $t = N/e^{1+\delta}$ for some $\delta>0$, the budget can be computed using the Stirling approximation \eqref{stirling} to be $\delta N + O(\log N)$.  The non-negativity of the $t$-excess and $p$-surpluses recovers the trivial upper bound \eqref{trivial}; but note that any prime $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$ must inevitably contribute at least $\log \frac{\lceil t/p\rceil}{t/p}$ to the $t$-excess if it is to appear in the multiset $\tuple$.  By pursuing this line of reasoning, one can obtain an alternate proof of \Cref{upper-crit}; see \cite[Lemma 2.1]{tao}.
 
 \section{Rearranging the standard factorization}\label{rearrange-sec}
 
@@ -1084,6 +1055,35 @@ which after routine Taylor expansion simplifies to
 $$ (\log p_-) \left(\frac{1}{\log \ell} - \frac{1}{\log p_+} + \frac{\log 2 - c_0 \log 2}{\log^2 \ell} + O\left( \frac{1}{\log^3 \ell}\right) \right).$$
 Since $\alpha < 1/e$, we can ensure that $c_0 \log 2 < \log\frac{1}{e\alpha}$ by taking $c_0$ small enough.  The claim \eqref{test} then follows.
 \end{proof}
+
+\section{The accounting equation}\label{accounting-sec}
+
+Given a $t$-admissible multiset $\tuple$ (which we view as an approximate factorization of $N!$), we can apply the fundamental theorem of arithmetic \eqref{ftoa} to the rational number  $N!/\prod \tuple$ and rearrange to obtain the \emph{accounting equation}
+\begin{equation}\label{accounting} 
+  \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p = \log N! - |\tuple| \log t
+\end{equation}
+where we define the \emph{$t$-excess} $\excess_t(\tuple)$ of the multiset $\tuple$ by the formula
+\begin{equation}\label{excess-def}
+  \excess_t(\tuple) \coloneqq \sum_{a \in \tuple} \log \frac{a}{t}.
+\end{equation}
+
+\begin{example} Suppose one wishes to factorize $5! = 2^3 \times 3 \times 5$.  The attempted $3$-admissible factorization $\tuple \coloneqq \{3,4,5,5\}$ has a $2$-surplus of $\nu_2(5!/\prod \tuple) = 1$, is in balance at $3$, and has a $5$-deficit of $\nu_5(\prod \tuple/5!) = 1$, so it is not a factorization or subfactorization of $5!$.  The $3$-excess of this multiset is
+  $$ \excess_3(\tuple) = \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3} + \log \frac{5}{3} = 1.3093\dots$$
+  and the accounting equation \eqref{accounting} becomes
+  $$ 1.3093\dots + \log 2 - \log 5 = 0.3930\dots = \log 5! - 4 \log 3.$$
+  If one replaces one of the copies of $5$ in ${\mathcal B}$ with a $2$, this erases both the $2$-surplus and the $5$-deficit, and creates a factorization $\tuple' = \{2,3,4,5\}$ of $5!$; the $3$-excess now drops to
+  $$ \excess_3(\tuple) = \log \frac{2}{3} + \log \frac{3}{3} + \log \frac{4}{3} + \log \frac{5}{3}  = 0.3930\dots,$$
+  bringing the accounting equation back into balance.
+\end{example}
+  
+In view of \Cref{subfac}, one can now equivalently describe 
+$t(N)$ as follows:
+
+\begin{lemma}[Equivalent description of $t(N)$]\label{t-descrip}  $t(N)$ is the largest quantity $t$ for which there exists a $t$-admissible subfactorization of $N!$ with
+$$ \excess_t(\tuple) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple} \right) \log p \leq \log N! - N \log t.$$
+\end{lemma}
+
+One can view $\log N! - N\log t$ as an available ``budget'' that one can ``spend'' on some combination of $t$-excess and $p$-surpluses.  For $t$ of the form $t = N/e^{1+\delta}$ for some $\delta>0$, the budget can be computed using the Stirling approximation \eqref{stirling} to be $\delta N + O(\log N)$.  The non-negativity of the $t$-excess and $p$-surpluses recovers the trivial upper bound \eqref{trivial}; but note that any prime $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$ must inevitably contribute at least $\log \frac{\lceil t/p\rceil}{t/p}$ to the $t$-excess if it is to appear in the multiset $\tuple$.  By pursuing this line of reasoning, one can obtain an alternate proof of \Cref{upper-crit}; see \cite[Lemma 2.1]{tao}.
 
 \section{Modified approximate factorizations}\label{approx-sec}
 

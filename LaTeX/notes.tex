@@ -536,6 +536,19 @@ We have found empirically that using linear programming to maximize the left-han
 
 One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, \Cref{lp-upper} can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the lower bound linear program produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The linear programming method can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$.  When combined with the greedy algorithm computations, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
 
+\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}
+The optimal dual weights $w^\star_p$ of the dual linear program~\eqref{pj}, \eqref{hyp} over all admissible subfactorizations $j \geq t$ of $N!$ with $t \leq N/2$ are weakly increasing.
+\end{lemma}
+
+\begin{proof}
+It is well known that if an optimal solution to a linear program exists, there exists a \emph{basic} solution where up to $\pi(N)$ constraints hold with equality (some $w^\star_p$ could be fixed at their lower bound). Let $\mathcal{B}$ denote the set of basic factors $j$ whose associated constraint $\sum_p \nu_p(j) \cdot w^\star_p = 1$.
+%From the discussion above on the domain $J_{t,N}$ it follows that all $j \in \mathcal{B}$ are bounded by $j \leq \max(N, t^2)$.
+
+Assume that the weights $w^\star$ are weakly increasing up to prime $p$ and that $w^\star_p > w^\star_q$ for the next larger prime $q$. Since $w^\star_p > 0$, the basis $\mathcal{B}$ contains a factor $j$ with $\nu_p(j) > 0$. If factor $j \cdot q / p $ is admissible, its associated constraint has $\sum_i \nu_i(j \tfrac{q}{p}) \cdot w^\star_i < 1$, contradicting the assumption that $w^\star$ is optimal.
+
+It remains to show that $j \cdot q / p $ is admissible. If $\nu_q(j) < \nu_q(N!)$ it clearly is. Thus, assume that $\nu_q(j) = \nu_q(N!)$. It holds that $q^{\nu_q(N!)} > N/2 \geq t$ for all primes $3 \leq q \leq N$ showing that $j$ could not be a basic factor in this case.
+\end{proof}
+
 {\bf more discussion here}
 
 

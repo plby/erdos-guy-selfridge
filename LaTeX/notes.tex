@@ -215,7 +215,7 @@ for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com};
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_200.png}
-  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main} implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange).  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
+  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main}(iv) implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange), although it appears that \eqref{tna} (gray) eventually becomes a sharper approximation.  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
   }\label{fig1}
   \end{figure}
   
@@ -550,7 +550,7 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion.}
+    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. {\bf perhaps further data can be generated near $N = 43632$ to allow for a zoomed in view?}}
     \label{fig-longer}
     \end{figure}
 
@@ -600,7 +600,7 @@ $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- + 68$ & $t(N)_- + 1058$ & $t(N)_- 
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 89$ & $t(N)_- + 1147$ & $t(N)_- - \num{282167}$ \\
       \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer).}\label{long-table}
+\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer). }\label{long-table}
 \end{table}
 
       
@@ -639,13 +639,13 @@ $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- - \num{1786095}$ & 0.322 & $t(N)_-
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_- - \num{1920970}$ & 10462.708 \\
 \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^6, 7 \times 10^8]$, the performance of the fast greedy algorithm (using heuristics to guess optimal choices of $t$), and more thorough run of the algorithm (that exhaustively searches over $t$ for which the algorithm works), compared against the lower bound $t(N)_-$ obtained from the linear programming method.}\label{greedy-table}
+\caption{For sample values of $N \in [10^6, 7 \times 10^8]$, the performance of the fast greedy algorithm (using heuristics to guess optimal choices of $t$), and more thorough run of the algorithm (that exhaustively searches over $t$ for which the algorithm works), compared against the lower bound $t(N)_-$ obtained from the linear programming method. {\bf need some details on what kind of machine these runs were made on, to make some sense of the run times.}}\label{greedy-table}
 \end{table}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{verylarge.png}
-  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and fast greedy methods in the range $10^5 \leq N \leq 10^{12}$.  (The linear programming upper bound is not displayed, as it is visually indistinguishable from the lower bound.)}\label{fig-verylarge}
+  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and fast greedy methods in the range $10^5 \leq N \leq 10^{12}$.  (The linear programming upper bound is not displayed, as it is visually indistinguishable from the lower bound.) {\bf would be nice to display data from other greedy methods for comparison}}\label{fig-verylarge}
 \end{figure}
 
 

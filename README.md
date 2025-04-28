@@ -99,10 +99,11 @@ Secondary goals are
 - [Values of t(N) for N up to 10000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/a034258-lpsolve.txt) - value at $t(9633)$ is currently only a lower bound, all other values verified to be exact.
 - [A factorization verifying t(41006) >= 13669](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/FC_41006.txt) - the first large positive case of Conjecture 2
 - [A factorization verifying t(43632) >= 14545](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/factorizations/43632-43632-14545.txt) - the first point where Conjecture 2 becomes true for this and all larger values of $N$
-- [Upper and lower bounds for t(N) for randomly sampled N between 10^3 and 10^5](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds.txt)
-- [Upper and lower bounds for t(N) for N between 10^3 and 10^5 that are multiples of 100](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds2.txt)
-- [Upper and lower bounds for t(N) for round number N between 10^5 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_large_n.txt)
-
+- [Upper and lower bounds for t(N) for randomly sampled N between 10^3 and 10^5](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds.txt) - obtained by linear programming
+- [Upper and lower bounds for t(N) for N between 10^3 and 10^5 that are multiples of 100](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds2.txt) - obtained by linear programming
+- [Upper and lower bounds for t(N) for round number N between 10^5 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_large_n.txt) - obtained by linear programming
+- [Lower bounds for t(N) for round N between 10^4 and 10^12](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds.txt) - obtained by a fast greedy method
+- [Lower bounds for t(N) for round N between 10^4 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_o.txt) - obtained by an exhaustive greedy method
 
 
 ## Additional links

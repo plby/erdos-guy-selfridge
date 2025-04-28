@@ -183,7 +183,7 @@ It is easy to see that $t(N)$ is non-decreasing in $N$, (any cardinality $N$ fac
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
-When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than in the general case.  For instance, we can show that
+When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than if one were factoring an arbitrary number.  For instance, we can show that
 $$ 0 \leq t(7 \times 10^8) - \num{246059851} \leq 89;$$
 see \Cref{long-table}.
 
@@ -313,7 +313,7 @@ TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web sit
 
 \section{Notation and basic estimates}
 
-We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$.  We also write $X \asymp Y$ for $X \ll Y \ll X$. For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$. We also use $O_{\leq}(Y)^+$ to denote a quantity of size $O_{\leq}(Y)$ that is also non-negative, that is to say it lies in the interval $[0,Y]$.  We also use $o(X)$ to denote any quantity bounded in magnitude by $c(N) X$, for some $c(N)$ that goes to zero as $N \to \infty$.
+We use the usual asymptotic notation $X = O(Y)$, $X \ll Y$, or $Y \gg X$ to denote an inequality of the form $|X| \leq CY$ for some absolute constant $C$; if we need this constant to depend on additional parameters, we will indicate this by subscripts, thus for instance $O_M(Y)$ denotes a quantity bounded in magnitude by $C_M Y$ for some $C_M$ depending on $M$.  We also write $X \asymp Y$ for $X \ll Y \ll X$. For effective estimates, we will use the more precise notation $O_{\leq}(Y)$ to denote any quantity whose magnitude is bounded by exactly at most $Y$. We also use $O_{\leq}(Y)^+$ to denote a quantity of size $O_{\leq}(Y)$ that is also non-negative, that is to say it lies in the interval $[0,Y]$.  We also use $o(X)$ to denote any quantity bounded in magnitude by $c(N) X$, for some $c(N)$ that goes to zero as $N \to \infty$.
 
 If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $S$ is true and $1_S=0$ when $S$ is false.  If $x$ is a real number, we use $\lfloor x \rfloor$ to denote the greatest integer less than or equal to $x$, and $\lceil x \rceil$ to be the least integer greater than or equal to $x$.
 
@@ -1024,7 +1024,7 @@ and \eqref{i-eq} for $p=2$ then follows from the choice of parameters after a br
 It remains to verify \eqref{l-eq}.  We first consider the case $\ell < 2^{C_0} p_-$.  In this case, the left-hand side simplifies using \eqref{telescope} to
 $$ \sum_{m: 2^m > \ell} \frac{C_0 m}{2^m} \mu_+ + (1-\mu_+)$$
 and the right-hand side similarly simplifies to
-$$ \sum_{0 \leq m \leq M}^* \frac{1}{2} \min( \frac{1}{2^m}, \frac{\alpha}{\ell}) \mu_+ + (1-\mu_+).$$
+$$ \sum_{0 \leq m \leq M}^* \frac{1}{2} \min\left( \frac{1}{2^m}, \frac{\alpha}{\ell}\right) \mu_+ + (1-\mu_+).$$
 Thus it suffices to show that
 \begin{equation}\label{lint} \sum_{0 \leq m \leq M}^* \frac{1}{2} \min( \frac{1}{2^m}, \frac{\alpha}{\ell}) < \sum_{m: 2^m > \ell} \frac{C_0 m}{2^m}.
 \end{equation}
@@ -1035,12 +1035,12 @@ $$ \sum_{m: 2^m > \ell} \frac{C_0 m}{2^m} \mu_+
 + \sum_{p_+/2 \leq p \leq p_+} \sum_{m: 2^{m+C_0} p > \ell} \frac{m}{2^m} \frac{\mu_p}{p}$$
 and the right-hand side is at most
 \begin{equation}\label{amp} 
-  \sum_{0 \leq m \leq M}^* \frac{1}{2} \min(\frac{1}{2^m}, \frac{\alpha}{\ell})\mu_+ + \sum_{0 \leq m \leq M}^* \frac{1}{2} \sum_{p_- \leq p \leq p_+} \min(\frac{1}{2^mp}, \frac{\alpha}{\ell}) \mu_p.
+  \sum_{0 \leq m \leq M}^* \frac{1}{2} \min(\frac{1}{2^m}, \frac{\alpha}{\ell})\mu_+ + \sum_{0 \leq m \leq M}^* \frac{1}{2} \sum_{p_- \leq p \leq p_+} \min\left(\frac{1}{2^mp}, \frac{\alpha}{\ell}\right) \mu_p.
 \end{equation}
 By \eqref{lint} it suffices to show that
 $$
 \sum_{p_+/2 \leq p \leq p_+} \sum_{m: 2^{m+C_0} p > \ell} \frac{m}{2^m} \frac{\mu_p}{p}
-> \sum_{0 \leq m \leq M}^* \frac{1}{2} \sum_{p_- \leq p \leq p_+} \min(\frac{1}{2^mp}, \frac{\alpha}{\ell}) \mu_p.$$
+> \sum_{0 \leq m \leq M}^* \frac{1}{2} \sum_{p_- \leq p \leq p_+} \min\left(\frac{1}{2^mp}, \frac{\alpha}{\ell}\right) \mu_p.$$
 The left-hand side can be computed using \eqref{mertens} and the prime number theorem to be
 $$ \gg 2^{C_0} \frac{\log p_-}{\log^2 p_+} \frac{\log (2+\ell/p_+)}{\ell}.$$
 By \eqref{mertens} and \Cref{osc-lemma}, the right-hand side may be bounded by
@@ -1065,22 +1065,22 @@ $$ \left( 1 + O\left(\frac{1}{\log^{10} p_-}\right)\right) \frac{\log p_-}{2} \s
 The minimum $\min(\frac{1}{2^m t}, \frac{\alpha}{\ell})$ is equal to $\frac{1}{2^m t}$ for $t \geq \ell/(2^m \alpha)$ and $\frac{\alpha}{\ell}$ for $t < \ell/(2^m \alpha)$.  Routine estimation then gives
 \begin{align*}
 &\int_{p_-}^{p_+} \min(\frac{1}{2^m t}, \frac{\alpha}{\ell})\ \frac{dt}{\log^2 t}\\
-&\leq \frac{1}{2^m \log((\ell/\alpha 2^m))} - \frac{1}{2^m \log p_+} + \frac{1}{2^m \log^2((\ell/\alpha 2^m))} + O_M\left( \frac{1}{\log^3 \ell}\right) \\
-&=  \frac{1}{2^m \log \ell} - \frac{1}{2^m \log p_+} + \frac{m \log 2 - \log(e\alpha)}{2^m \log^2 \ell} + O_M\left( \frac{1}{\log^3 \ell}\right).
+&\quad \leq \frac{1}{2^m \log \frac{\ell}{\alpha 2^m}} - \frac{1}{2^m \log p_+} + \frac{1}{2^m \log^2 \frac{\ell}{\alpha 2^m}} + O_M\left( \frac{1}{\log^3 \ell}\right) \\
+&\quad =  \frac{1}{2^m \log \ell} - \frac{1}{2^m \log p_+} + \frac{m \log 2 - \log \frac{1}{e\alpha}}{2^m \log^2 \ell} + O_M\left( \frac{1}{\log^3 \ell}\right).
 \end{align*}
 Performing the $m$ summation, we conclude that the right-hand side of \eqref{test} is at most
-$$ (\log p_-) \left(\frac{1}{\log \ell} - \frac{1}{\log p_+} + \frac{\log 2 - \log(e\alpha)}{\log^2 \ell} + O_M\left( \frac{1}{\log^3 \ell}\right) \right).$$
+$$ (\log p_-) \left(\frac{1}{\log \ell} - \frac{1}{\log p_+} + \frac{\log 2 - \log \frac{1}{e\alpha}}{\log^2 \ell} + O_M\left( \frac{1}{\log^3 \ell}\right) \right).$$
 Meanwhile, by \eqref{mertens}, the left-hand side of \eqref{test} can be computed to be
 $$
 \left( 1 + O\left(\frac{1}{\log^{10} p_-}\right)\right)
 (\log p_-) \left( c_0 \sum_{\ell < p \leq p_+} \frac{1}{p \log p} + (1-c_0) \sum_{\ell/2 < p \leq p_+} \frac{1}{p \log p} \right).$$
-Applying \Cref{osc-lemma}, we can bound this by
+Applying \Cref{osc-lemma} and evaluating the integrals, we can bound this by
 $$
 \left( 1 + O\left(\frac{1}{\log^{10} p_-}\right)\right)
 (\log p_-) \left( c_0 \left( \frac{1}{\log \ell} - \frac{1}{\log p_+} \right) + (1-c_0) \left( \frac{1}{\log(\ell/2)} - \frac{1}{\log p_+} \right) \right)$$
 which after routine Taylor expansion simplifies to
 $$ (\log p_-) \left(\frac{1}{\log \ell} - \frac{1}{\log p_+} + \frac{\log 2 - c_0 \log 2}{\log^2 \ell} + O\left( \frac{1}{\log^3 \ell}\right) \right).$$
-Since $\alpha < 1/e$, we can ensure that $c_0 \log 2 < \log(e\alpha)$ by taking $c_0$ small enough.  The claim \eqref{test} then follows.
+Since $\alpha < 1/e$, we can ensure that $c_0 \log 2 < \log\frac{1}{e\alpha}$ by taking $c_0$ small enough.  The claim \eqref{test} then follows.
 \end{proof}
 
 \section{Modified approximate factorizations}\label{approx-sec}

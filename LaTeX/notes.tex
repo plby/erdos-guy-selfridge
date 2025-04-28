@@ -873,6 +873,8 @@ for the latter downset.
 Then $t(N) \geq \alpha N$ for all sufficiently large $N$.
 \end{proposition}
 
+Informally, ${\mathcal D}$ represents the factors that one removes (as greedily as possible) from the standard factorization $\{1,\dots,N\}$ of $N!$ to free up some prime factors, and $a_\ell$ is the proportion of elements in the resulting subfactorization that are to be multiplied by $\ell$ (again, in a greedy fashion) to (hopefully) bring the subfactorization into $t$-admissibility.  The condition \eqref{i-eq} asserts that enough primes are freed up by the first step to ``afford'' the second step, while \eqref{l-eq} is the assertion that the $a_\ell$ have enough mass at large $\ell$ to bring even the make even the smallest elements of the subfactorization $t$-admissible.
+
 \begin{proof}  We first make a small technical modification to the sequence $a_\ell$. If $p \in {\mathcal D}$, then the right-hand side of \eqref{i-eq} is positive.  If equality holds here, then one of the $a_\ell$ with $\ell$ divisible by $p$ is positive; but one can reduce this quantity slightly without violating \eqref{l-eq}, since $a_\ell$ only impacts finitely many cases of these strict inequalities.  Thus, we may assume without loss of generality that the inequality \eqref{i-eq} is strict for all $p \in {\mathcal D}$.
  
 From \eqref{i-eq} and \eqref{ftoa} we see that

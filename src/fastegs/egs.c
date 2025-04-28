@@ -397,7 +397,7 @@ int64_t tbound (int64_t N, int optimal, int verbosity)
     if ( verbosity > 0 ) printf("t(%ld) >= %ld cannot be proved\n",N,tmax);
     if ( verbosity > 0 ) printf("checking %ld values of t\n", tmax-tmin-1);
     for ( t = tmin+1 ; t < tmax ; t++ ) {
-        if ( tfac(N,t,0,verbosity) > N ) {
+        if ( tfac(N,t,0,verbosity) >= N ) {
                 tmin = max(tmin,t);
                 if ( verbosity >= 0 ) printf("\rt(%ld) >= %ld proved\r", N,tmin);
         }
@@ -459,7 +459,7 @@ int main (int argc, char *argv[])
         }
     }
     // We need N at least 45 to ensure t=N/4 works
-    if ( minN < 45 || maxN >= MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [10,2^40)\n", minN, maxN); return -1; }
+    if ( minN < 45 || maxN > MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [45,2^40)\n", minN, maxN); return -1; }
     if ( t && t < cdiv(minN,4) ) { fprintf(stderr,"t=%ld must be at least N/4\n", t); return -1; }
 
 

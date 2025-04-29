@@ -501,7 +501,7 @@ $$ \sum_j m_j \leq N.$$
 This proposition suggests the possibility of using linear programming (or integer programming) methods to provide upper and lower bounds on $t(N)$. An immediate issue for computational purposes is that this program involves an infinite number of variables $m_j$.  However, observe that any $j$ not dividing $N!$ cannot be used; and furthermore if $j$ contains a strictly smaller factor that is at least $t$, then it could be replaced by that factor while still generating a $t$-admissible subfactorization of $N$.  As a consequence of these two facts, $j$ can be restricted to a finite set $J_{t,N}$ of the numbers $t \leq j \leq \max(N,t^2)$ dividing $N!$ with no proper factors greater than or equal to $t$.  This makes the integer program finite (though somewhat large), and in particular computable for small $N$, such as $N \leq 10^4$.  By relaxing the integer program to a linear program, one can also obtain upper and lower bounds as follows:
 
 \begin{itemize}
-  \item If one uses linear programming to maximize the quantity $\sum_{j \in J_{t,N}} m_j$ for non-negative \emph{reals} $m_j$ subject to the constraints \eqref{conditions}, and $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \geq N$, then $\prod_{j \in J_{t,N}} j^{\lfloor m_j \rfloor}$ represents a $t$-admissible subfactorization of $N!$ that witnesses $t(N) \geq t$.
+  \item If one uses linear programming to maximize the quantity $\sum_{j \in J_{t,N}} m_j$ for non-negative \emph{reals} $m_j$ subject to the constraints \eqref{conditions}, and $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \geq N$, then $\prod_{j \in J_{t,N}} j^{\lfloor m_j \rfloor}$ represents a $t$-admissible subfactorization of $N!$ that witnesses $t(N) \geq t$.  We call this the \emph{linear programming floor lower bound}.  In practice one can improve on this bound slightly by gathering all remaining primes not exhausted by this subfactorization (thus each $p$ remains with multiplicity $\nu_p(N!) - \sum_{j \geq t} \lfloor m_j\rfloor \nu_p(j)$), and applying a greedy algorithm to this collection to fashion a small number of additional $t$-admissible factors to add to the subfactorization; let us call this the \emph{linear programming floor+residuals lower bound}.
   \item If the dual linear program of finding non-negative reals $w_p$ for each prime $p \leq N$ that satisfy the dual constraints
   \begin{equation}\label{pj}
     \sum_p w_p \nu_p(j) \geq 1
@@ -510,18 +510,16 @@ This proposition suggests the possibility of using linear programming (or intege
    \begin{equation}\label{hyp}
     \sum_p w_p \nu_p(N!) < N,
     \end{equation}
-    then by multiplying \eqref{constraints} by $w_p$ and summing over $p \leq N$, we see that these constraints force $\sum_{j \in J_{t,N}} m_j < N$, and hence $t(N) < t$.
+    then by multiplying \eqref{constraints} by $w_p$ and summing over $p \leq N$, we see that these constraints force $\sum_{j \in J_{t,N}} m_j < N$, and hence $t(N) < t$.  We call this the \emph{linear programming upper bound}.
 \end{itemize}
 
-By the duality of linear programming, these upper bounds and lower bounds would match if the constraint $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \leq N$ in the lower bound were replaced with the linear constraint $\sum_{j \in J_{t,N}} m_j \leq N$.
+By the duality of linear programming, the linear programming floor lower bound and linear programming upper bound would match if the constraint $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \leq N$ in the lower bound were replaced with the linear constraint $\sum_{j \in J_{t,N}} m_j \leq N$.
 
-In practice, the linear programming method is extremely accurate in upper and lower bounding $t(N)$; for instance, they give the exact value of $t(N)$ for all $N \leq 600$, with the sole exception of $N=155$, where the linear programming bounds instead give $45 \leq t(155) \leq 46$.  In this case, the (slower) integer programming method can be deployed to verify that $t(155)=45$.
-
+For small values of $N$, such as $N \leq 10^3$, the linear programming method is extremely accurate in upper and lower bounding $t(N)$; for instance, these methods give the exact value of $t(N)$ for all $N \leq 600$, with the sole exception of $N=155$, where the linear programming bounds instead give $45 \leq t(155) \leq 46$.  In this case, the (slower) integer programming method can be deployed to verify that $t(155)=45$.
 
 However, the large size of $J_{t,N}$ renders a direct application of the linear programming approach computationally expensive once $N$ exceeds $10^3$ or so.  For the purpose of establishing lower bounds, one can of course reduce this set arbitrarily; we have found a good choice to be the integers between $t$ and $N$.  For the dual problem, we are also able to make such a reduction, under the additional hypotheses that the weights $w_p$ are non-decreasing:
   
-\begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that \eqref{pj} holds
-  for all $t \leq j \leq N$, and such that \eqref{hyp} also holds.
+\begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that \eqref{pj} holds for all $t \leq j \leq N$, and such that \eqref{hyp} also holds.  Then $t(N) < t$.
 \end{lemma}
   
 \begin{proof}
@@ -531,10 +529,11 @@ By the previous remarks, it will suffice to show that the bound \eqref{pj} in fa
   $$ \sum_p w_p \nu_p(j) > 1, $$
   a contradiction.
 \end{proof}
-  
-We have found empirically that using linear programming to minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  We were unable to rigorously demonstrate this weak decrease for this specific linear program, but we can show that weak decrease must occurs when one relaxes the constraint $t \leq j \leq N$ somewhat
 
-\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}
+
+We have found empirically that using linear programming to minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  We were unable to rigorously demonstrate this weak decrease for this specific linear program, but we can show that weak decrease must occur when one relaxes the constraint $t \leq j \leq N$ somewhat:
+
+\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}\ 
   \begin{itemize}
   \item[(i)] Let $w'_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for \emph{all} $j \geq t$.  Then the $w'_p$ are weakly increasing in $p$.
   \item[(ii)] Let $w''_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for those $j \geq t$ that divide $N!$.  Suppose further that $t \leq N/2$. Then the $w''_p$ are weakly increasing in $p$.
@@ -556,28 +555,41 @@ $$  p_2^{\lfloor N/p_2\rfloor} \geq 3^{\lfloor \sqrt{2N} \rfloor} \geq \frac{N}{
 for all $N$ (here we use that $3^k \geq \frac{(k+1)^2}{4}$ for $k \geq 1$).  Thus in all cases we have $j/p_1 \geq N/2 \geq t$, contradicting the hypothesis that $j$ has no proper factor that is at least $t$.
   \end{proof}
 
-By using \Cref{lp-upper}, the linear programming method can now be run to cover all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by integer programming; see \cite{github} and \Cref{fig-long}.
+This now gives a number of variants of the linear programming method to produce upper and lower bounds on $t(N)$ for medium values of $N$, say in the range $10^3 \leq N \leq 10^8$:
+\begin{itemize}
+\item[(i)] One can obtain a \emph{fast linear programming upper bound} by minimizing \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$, checking that the resulting weights $w_p$ are weakly non-decreasing, and then applying \Cref{lp-upper}.  In principle, this method could fail by producing weights that are not weakly non-decreasing, but we have not encountered this scenario in practice.  This bound works well for $N$ as large as $8 \times 10^8$ (see \Cref{fig-longer}).
+\item[(ii)] One can obtain an \emph{impatient integer programming lower bound} by applying integer programming (restricting to the range $t \leq j \leq N$ for speed) to see if a lower bound $t(N) \geq t$ can be obtained first for $t$ equal to the floor of the (fast) linear programming upper bound, then decrementing $t$ by one whenever the integer program fails to terminate in a reasonable length of time (e.g., a minute).  This works well in practice for $N$ up to about $10^5$; see \Cref{fig-surplus}.
+\item[(iii)] We developed a more complicated\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} \emph{smooth factorization lower bound} which used the greedy approach from the previous section to deal with large primes and linear programming methods (using smooth factors) to deal with small primes, which works well in practice for {\bf describe range of $N$}, and outperforms the simpler linear programming floor lower bound, though worse than the (slower) impatient integer programming bound; see \Cref{fig-surplus}.
+\end{itemize}
 
-One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, \Cref{lp-upper} can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the lower bound linear program produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The linear programming method can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$.  When combined with the greedy algorithm computations, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
+The fast linear programming upper bound, when combined with the impatient integer programming bound, can compute $t(N)$ exactly for all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by the full integer program; see \cite{github} and \Cref{fig-long}.
 
+One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, the fast linear program upper bound can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the linear programming floor+residuals lower bound method produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The fast linear programming upper bound and the impatient integer program lower bound can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$; see \Cref{fig-surplus}.  When combined with the greedy algorithm computations from the previous section, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
 
-{\bf more discussion here}
 
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{longplot.png}
-  \caption{$t(N)/N$ for $80 \leq N \leq 10^4$, obtained via linear programming in most cases (and integer programming in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
+  \caption{Exact values of $t(N)/N$ for $80 \leq N \leq 10^4$, obtained via fast linear and integer programming in most cases (and the full integer program in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
   \label{fig-long}
   \end{figure}
 
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. {\bf perhaps further data can be generated near $N = 43632$ to allow for a zoomed in view?}}
+    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming and smooth factorization for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
     \label{fig-longer}
     \end{figure}
 
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth]{surplus.png}
+      \caption{Bounds on $M(N)-N$ for $4 \times 10^5 \leq N \leq 4.5 \times 10^5$, where $M(N)$ is the largest cardinality of an $N/3$-admissible subfactorization of $N!$ (thus $t(N) \geq N/3$ if and only if $M(N)-N \geq 0$).  Fast linear programming provides an upper bound (red), which one can round down to the nearest integer.  Impatient integer programming (green) provides upper bounds that almost always matches the upper bound (rounded down) at this range of $N$; in particular it verifies $t(N) \geq N/3$ for $43632 \leq N \leq 4.5 \times 10^5$ {\bf not quite; there are four exceptions currently}.  The smooth factorization method (purple) gives slightly worse bounds than the(slower) impatient integer programming method, but slightly better than the (faster) linear algebra floor method (blue).}
+      \label{fig-surplus}
+      \end{figure}
+    
     
     \begin{table}[ht]
       \centering

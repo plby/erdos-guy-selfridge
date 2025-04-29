@@ -532,22 +532,34 @@ By the previous remarks, it will suffice to show that the bound \eqref{pj} in fa
   a contradiction.
 \end{proof}
   
-We have found empirically that using linear programming to minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  With this technique, the linear programming method can now be run to cover all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by integer programming; see \cite{github} and \Cref{fig-long}.
+We have found empirically that using linear programming to minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  We were unable to rigorously demonstrate this weak decrease for this specific linear program, but we can show that weak decrease must occurs when one relaxes the constraint $t \leq j \leq N$ somewhat
+
+\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}
+  \begin{itemize}
+  \item[(i)] Let $w'_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for \emph{all} $j \geq t$.  Then the $w'_p$ are weakly increasing in $p$.
+  \item[(ii)] Let $w''_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for those $j \geq t$ that divide $N!$.  Suppose further that $t \leq N/2$. Then the $w''_p$ are weakly increasing in $p$.
+  \end{itemize}
+  \end{lemma}
+  
+  \begin{proof}  For (i), suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w'_{p_1} > w'_{p_2}$.  Let $\tilde w'_p$ be the weights formed by setting $\tilde w'_p \coloneqq w'_p$ for all $p \neq p_1$ and $\tilde w'_{p_1} \coloneqq w'_{p_2}$.  Then $\sum_p \tilde w'_p \nu_p(N!) < \sum_p w'_p \nu_p(N!)$. On the other hand, for any $j \geq t$, we see that
+    $$ \sum_p \tilde w'_p \nu_p(j) = \sum_p w'_p \nu_p(\tilde j)$$
+    where $\tilde j$ is formed from $j$ by replacing all factors of $p_1$ in the prime factorization of $j$ with $p_2$.  Since $p_2 > p_1$, we have $\tilde j > j \geq t$, and so $\tilde w'_p$ also obeys the conditions \eqref{pj} for all $j \geq t$, contradicting the minimizing property of the $w'_p$.
+
+  For (ii), we similarly suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w''_{p_1} > w''_{p_2}$.  Let $\eps>0$ be a sufficiently small quantity, and define the modification $\tilde w''_p$ to $w''_p$ by decreasing $w''_{p_1}$ by $\eps$ and leaving all other $w''_p$ unchanged.  This again decreases the left-hand side of \eqref{hyp}, so to get a contradiction as before, it suffices to show that
+  $$ \sum_p \tilde w''_p \nu_p(j) \geq 1$$
+  for all $j \geq t$ dividing $N!$.  If $j$ has a proper factor $j'$ that is still at least $t$, the condition for $j$ would follow from that of $j'$, so we may restrict attention to the case where $j$ has no proper factor greater than or equal to $t$.  We can assume that $j$ is divisible by $p_1$, otherwise the claim follows from \eqref{pj}.  For $\eps$ small enough, one has
+  $$ \sum_p \tilde w''_p \nu_p(j) \geq \sum_p w''_p \nu_p(\frac{p_2}{p_1} j);$$
+since $\frac{p_2}{p_1} j \geq j \geq t$, we are done unless $\frac{p_2}{p_1} j$ is not divisible by $N!$. This only occurs when $\nu_{p_2}(j) = \nu_{p_2}(N!)$, but then
+$$ \frac{j}{p_1} \geq p_2^{\nu_{p_2}(N!)} \geq p_2^{\lfloor N/p_2\rfloor}.$$
+We claim that the right-hand side is at least $N/2$.  This is clear for $p_2 \geq N/2$, and also for $\sqrt{N/2} \leq p_2 < N/2$ since $\lfloor N/p_2\rfloor \geq 2$ in this case.  For $p_2 < \sqrt{N/2}$ one has 
+$$  p_2^{\lfloor N/p_2\rfloor} \geq 3^{\lfloor \sqrt{2N} \rfloor} \geq \frac{N}{2}$$
+for all $N$ (here we use that $3^k \geq \frac{(k+1)^2}{4}$ for $k \geq 1$).  Thus in all cases we have $j/p_1 \geq N/2 \geq t$, contradicting the hypothesis that $j$ has no proper factor that is at least $t$.
+  \end{proof}
+
+By using \Cref{lp-upper}, the linear programming method can now be run to cover all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by integer programming; see \cite{github} and \Cref{fig-long}.
 
 One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, \Cref{lp-upper} can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the lower bound linear program produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The linear programming method can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$.  When combined with the greedy algorithm computations, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
 
-\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}
-The optimal dual weights $w^\star_p$ of the dual linear program~\eqref{pj}, \eqref{hyp} over all admissible subfactorizations $j \geq t$ of $N!$ with $t \leq N/2$ are weakly increasing.
-\end{lemma}
-
-\begin{proof}
-It is well known that if an optimal solution to a linear program exists, there exists a \emph{basic} solution where up to $\pi(N)$ constraints hold with equality (some $w^\star_p$ could be fixed at their lower bound). Let $\mathcal{B}$ denote the set of basic factors $j$ whose associated constraint $\sum_p \nu_p(j) \cdot w^\star_p = 1$.
-%From the discussion above on the domain $J_{t,N}$ it follows that all $j \in \mathcal{B}$ are bounded by $j \leq \max(N, t^2)$.
-
-Assume that the weights $w^\star$ are weakly increasing up to prime $p$ and that $w^\star_p > w^\star_q$ for the next larger prime $q$. Since $w^\star_p > 0$, the basis $\mathcal{B}$ contains a factor $j$ with $\nu_p(j) > 0$. If factor $j \cdot q / p $ is admissible, its associated constraint has $\sum_i \nu_i(j \tfrac{q}{p}) \cdot w^\star_i < 1$, contradicting the assumption that $w^\star$ is optimal.
-
-It remains to show that $j \cdot q / p $ is admissible. If $\nu_q(j) < \nu_q(N!)$ it clearly is. Thus, assume that $\nu_q(j) = \nu_q(N!)$. It holds that $q^{\nu_q(N!)} > N/2 \geq t$ for all primes $3 \leq q \leq N$ showing that $j$ could not be a basic factor in this case.
-\end{proof}
 
 {\bf more discussion here}
 

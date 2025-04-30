@@ -640,7 +640,8 @@ The ``floor+residuals'' method proceeds by first running the primal linear progr
 The floor+residuals method is fast and highly accurate for small and medium $N$ (e.g., $N \leq 3 \times 10^5$).  For instance:
 \begin{itemize}
   \item The method computes $t(N)$ exactly for all $N \leq 600$, with the sole exception of $N=155$; see \Cref{fig-zoom}.  When $N=155$, the floor+residuals method provides a subfactorization that certifies $t(155) \geq 45$, while the linear programming upper bound \eqref{lp-upper} gives $t(155) \leq 46$.  Integer programming can then be deployed to confirm $t(155)=45$.
-  \item The method also verifies this lower bound for $N=41006$, while the linear programming upper bound \eqref{lp-upper} shows that $t(N) \geq N/3$ fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$; see \Cref{fig-surplus}.
+  \item The method establishes $t(N) \geq N/3$ for all $43632 \leq N \leq 4.5 \times 10^4$; see \Cref{fig-surplus}.
+  \item The method also verifies the lower bound $t(N)\geq N/3$ lower bound for $N=41006$, while the linear programming upper bound \eqref{lp-upper} shows that $t(N) \geq N/3$ fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$; see \Cref{fig-surplus}.
   \item The method establishes the matching lower bound
 \begin{equation}\label{mnt-lower}
 M(N,t) \geq N + 455
@@ -648,7 +649,7 @@ M(N,t) \geq N + 455
 to \eqref{mnt} when $N = 3 \times 10^5$ and $t=N/3$.
 \end{itemize}
 
-For larger $N$ (e.g., $10^4 \leq N \leq 9 \times 10^8$), the floor+residuals method becomes slow due to the large number $\pi(N)$ of variables $w_p$ that are involved in the linear program.  We developed a \emph{smooth factorization lower bound} method\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} to handle this range, by first using the greedy approach from the previous section to allocate all factors involving $p \geq \sqrt{N}$, and then using a version of the floor+residuals method to handle the smaller primes $p < \sqrt{N}$ (with $j$ now restricted to ``smooth'' numbers - numbers whose prime factors are less than $\sqrt{N}$).  Thus, the linear program now involves only $\pi(\sqrt{N})$ variables $w_p$, and runs considerably faster in ranges such as $10^4 < N \leq 9 \times 10^8$.  The lower bounds obtained by this method remain quite close to the linear programming upper bound \eqref{lp-upper}, and outperforms the greedy algorithm; see Table \ref{long-table} and \Cref{fig-longer}.
+For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+residuals method becomes slow due to the large number $\pi(N)$ of variables $w_p$ that are involved in the linear program.  We developed a \emph{smooth factorization lower bound} method\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} to handle this range, by first using the greedy approach from the previous section to allocate all factors involving $p \geq \sqrt{N}$, and then using a version of the floor+residuals method to handle the smaller primes $p < \sqrt{N}$ (with $j$ now restricted to ``smooth'' numbers - numbers whose prime factors are less than $\sqrt{N}$).  Thus, the linear program now involves only $\pi(\sqrt{N})$ variables $w_p$, and runs considerably faster in ranges such as $10^4 < N \leq 9 \times 10^8$.  The lower bounds obtained by this method remain quite close to the linear programming upper bound \eqref{lp-upper} (or the floor+residuals method), and outperforms the greedy algorithm; see Table \ref{long-table} and \Cref{fig-longer}.
 
 
   \begin{figure}
@@ -662,7 +663,7 @@ For larger $N$ (e.g., $10^4 \leq N \leq 9 \times 10^8$), the floor+residuals met
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^5 \leq N \leq 4.5 \times 10^5$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green), implemented in an \emph{ad hoc} fashion, provides lower bounds that almost always matches the upper bound (rounded down) at this range of $N$; in particular it verifies $t(N) \geq N/3$ for $43632 \leq N \leq 4.5 \times 10^5$.  The smooth factorization method (purple) gives slightly worse bounds than the (slower) ad hoc integer programming methods, but slightly better than the (faster) linear algebra floor method (blue) {\bf TODO: update this to floor+residuals}.}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind.}
       \label{fig-surplus}
       \end{figure}
     

@@ -153,7 +153,7 @@
 
 \subjclass[2020]{11A51}
 
-\begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
+\begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ integers greater than or equal to $t(N)$.
 The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
 $$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
 for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we obtain highly precise computations of $t(N)$ for wide ranges of $N$, establishing several explicit conjectures of Guy and Selfridge on this sequence.  For instance, we show that $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
@@ -166,7 +166,7 @@ for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0
 
 \section{Introduction}
 
-Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ such that the product
+Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ of natural numbers such that the product
 $$ \prod \tuple \coloneqq \prod_{a \in \tuple} a$$
 (where the elements are counted with multiplicity) is equal to $M$; more generally, define a \emph{subfactorization} of $M$ to be a finite multiset $\tuple$ such that $\prod \tuple$ divides $M$.  Given a threshold $t$, we say that a multiset $\tuple$ is \emph{$t$-admissible} if $a \geq t$ for all $a \in \tuple$.  For a given natural number $N$, we then define $t(N)$ to be the largest $t$ for which there exists a $t$-admissible factorization $\tuple$ of $N!$ of cardinality $|\tuple|=N$.  
 
@@ -179,7 +179,7 @@ $$|\{ 3,3,3,3,4,4,5,7,8\}| = 9,$$
  hence $t(9) \geq 3$.  One can check that no $4$-admissible factorization of $9!$ of this cardinality exists, hence $t(9) = 3$.
 \end{example}
 
-It is easy to see that $t(N)$ is non-decreasing in $N$, (any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The first few elements of the sequence $t(N)$ are
+It is easy to see that $t(N)$ is non-decreasing in $N$ (any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The first few elements of the sequence $t(N)$ are
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
@@ -195,9 +195,9 @@ By combining the obvious lower bound
  \prod \tuple \geq t^{|\tuple|}
 \end{equation}
 for any $t$-admissible multiset $\tuple$ with Stirling's formula \eqref{stirling}, we obtain the trivial upper bound
-\begin{equation}\label{trivial} \frac{t(N)}{N} \leq \frac{(N!)^{1/N}}{N} = \frac{1}{e} + O\left( \frac{\log N}{N}\right)
+\begin{equation}\label{trivial} \frac{t(N)}{N} \leq \frac{(N!)^{1/N}}{N} = \frac{1}{e} + O\left( \frac{\log N}{N}\right);
 \end{equation}
-for $N \geq 2$; see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublished work of Erd\H{o}s, Selfridge, and Straus established the asymptotic
+see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublished work of Erd\H{o}s, Selfridge, and Straus established the asymptotic
 \begin{equation}\label{t1}
   \frac{t(N)}{N} = \frac{1}{e} + o(1)
 \end{equation}
@@ -308,7 +308,7 @@ This project was initially conceived as a single-author manuscript by Terence Ta
 
 \subsection{Acknowledgments}
 
-TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where the author learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
+TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where TT learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
 
 
 \section{Notation and basic estimates}
@@ -320,7 +320,7 @@ If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $
 Throughout this paper, the symbol $p$ (or $p_0$, $p_1$, etc.) is always understood to be restricted to be prime.  
 We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
 
-We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
+We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive rational number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$.
 If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
 \begin{equation}\label{ftoa}
   \sum_p \nu_p(r) \log p = \log r
@@ -355,7 +355,7 @@ It will be convenient to introduce a variant of this quantity that is close to a
 \begin{equation}\label{fancy-kappa-def}
   \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}
 \end{equation}
-for any real $x \geq L \geq 1$, where $a \coloneqq \lfloor \frac{x/L}{\log 12} \rfloor$ is the largest integer such that $12^a \leq x/L$.  
+for any real $x \geq L \geq 1$, where $a \coloneqq \left\lfloor \frac{x/L}{\log 12} \right\rfloor$ is the largest integer such that $12^a \leq x/L$.
 
 For any $L \geq 1$, let $\kappa_L$ be the least quantity such that
 \begin{equation}\label{kappa-def}  
@@ -495,7 +495,7 @@ for some non-negative integers $m_j$ that obey the linear constraints
 for all primes $p$.  Thus, we have an alternative description of $t(N)$:
 
 \begin{proposition}  For any $N \geq 1$, $t(N)$ is the largest quantity $t$ for which there is a solution to the infinite integer program \eqref{constraints}, where $m_j$ are constrained to be non-negative integers with
-$$ \sum_j m_j \leq N.$$
+$$ \sum_j m_j \geq N.$$
 \end{proposition}
 
 This proposition suggests the possibility of using linear programming (or integer programming) methods to provide upper and lower bounds on $t(N)$. An immediate issue for computational purposes is that this program involves an infinite number of variables $m_j$.  However, observe that any $j$ not dividing $N!$ cannot be used; and furthermore if $j$ contains a strictly smaller factor that is at least $t$, then it could be replaced by that factor while still generating a $t$-admissible subfactorization of $N$.  As a consequence of these two facts, $j$ can be restricted to a finite set $J_{t,N}$ of the numbers $t \leq j \leq \max(N,t^2)$ dividing $N!$ with no proper factors greater than or equal to $t$.  This makes the integer program finite (though somewhat large), and in particular computable for small $N$, such as $N \leq 10^4$.  
@@ -776,7 +776,7 @@ as $N \to \infty$.
     for $N$ sufficiently large depending on $\eps$.
 
     For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log^3 N}$.
-    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has an (augmented) total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,1]$.   This implies that $x \mapsto \frac{1}{\log x} f_{N/t}(x/N)$ has an (augmented) total variation of $O(\log^2 N)$.
+    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has an (augmented) total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,N]$.   This implies that $x \mapsto \frac{1}{\log x} f_{N/t}(x/N)$ has an (augmented) total variation of $O(\log^2 N)$.
    By \Cref{osc-lemma} (with classical error term), we conclude that the left-hand side of \eqref{targ-sum} is at least
     $$ \int_{N/\log^3 N}^N f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
     for some $c>0$.  Performing a change of variable, we reduce to showing that
@@ -1845,7 +1845,7 @@ $$
 The claim then follows from \eqref{bj1}, \eqref{bj2} (and the obvious fact that $\kappa$ is monotone non-increasing after optimizing in $j$.
 
 \begin{remark}
-It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that irrationality measure of $\log 3 / \log 2$ is equal to $2$.
+It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that the irrationality measure of $\log 3 / \log 2$ is equal to $2$.
 \end{remark}
 
 
@@ -1867,7 +1867,7 @@ $$ g(z) \coloneqq  \sum_{y < n \leq z} a_n - \int_z^y f(u)\ du - C$$
 then $g$ has jump discontinuities at the natural numbers, but is otherwise continuously differentiable, and is also bounded uniformly in magnitude by $A$.  We can then compute the Riemann--Stieltjes integral
 $$ \int_{(y,x]} b\ dg = \sum_{y < n \leq x} b(n) a_n - \int_y^x f(t) b(t)\ dt.$$
 Since the discontinuities of $g$ and $b$ do not coincide, we may integrate by parts to obtain
-$$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g db.$$
+$$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g\ db.$$
 The left-hand side is $O_{\leq}(A \|b\|_{\mathrm{TV}^*(y,x]})$, and the claim follows.
 \end{proof}
 
@@ -1966,9 +1966,9 @@ $$ \frac{e}{2(K+1)} \leq \sum_{k=K+1}^\infty \frac{\frac{e}{2}}{k^2} \leq \frac{
 so one can instead look at the normalized tail
 $$ \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}.$$
 The Erd\H{o}s--Tur\'an inequality states that, for any absolutely convergent non-negative weights $c_k$, any interval $I \subset [0,1]$ of length $|I|$, and any real numbers $\xi_k$, and any $N \geq 1$, one has
-$$ |\sum_k c_k (1_I(\xi_k \mod 1) - |I|)| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) |\sum_k c_k e^{2\pi i n \xi_k}|;$$
+$$ \left|\sum_k c_k (1_I(\xi_k \mod 1) - |I|)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|;$$
 see the inequality\footnote{In the cited reference, only the special case in which $c_k$ is a uniform probability distribution function on $\{1,\dots,M\}$ is discussed, but it is easy to see that the argument in fact works for arbitrary absolutely convergent non-negative weights $c_k$.} after \cite[Theorem 20]{vaaler}.  Applying this for $I = [0,h]$ and then averaging in $h$ from $0$ to $1$, we conclude that
-$$ \left|\sum_k c_k \left(\{\xi_k\}-\frac{1}{2}\right)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) |\sum_k c_k e^{2\pi i n \xi_k}|.$$
+$$ \left|\sum_k c_k \left(\{\xi_k\}-\frac{1}{2}\right)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|.$$
 In particular, we have
 $$ \left| \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}\right| \leq \frac{1}{N+1} \sum_{k=K+1}^\infty \frac{e}{k^2}
 + \sum_{n=1}^N \left(\frac{2e}{\pi n} + \frac{2e}{N+1}\right) \left|\sum_{k=K+1}^\infty \frac{e^{2\pi i n k/e}}{k^2}\right|.

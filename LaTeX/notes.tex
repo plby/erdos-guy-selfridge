@@ -131,8 +131,8 @@
 
 
 \author[Conway]{Evan Conway}
-\address{???}
-\email{???}
+\address{UVA Department of Mathematics, Charlottesville, VA 22903}
+\email{auj4kq@virginia.edu}
 
 \author[Sutherland]{Andrew V. Sutherland}
 \address{MIT Department of Mathematics, Cambridge, MA 02139.}
@@ -1734,7 +1734,7 @@ for $N \geq 10^{70}$. This is better than the previous bound for $\alpha_5$.  Fo
 
 This completes the proof of \Cref{main}(iii) (and hence \Cref{main}(ii)) in the cases $N=N_0$ and $N \geq 10^{70}$.  It remains to cover the intermediate range $N_0 < N \leq 10^{70}$.  Here we adopt the perspective of interval arithmetic.  If $N$ is constrained to a given interval, such as $[10^{11}, 5 \times 10^{11}]$, we can use the worst-case upper and lower bounds for $A_{p_1}, B_{p_1}$ to obtain conservative upper bounds on the most delicate quantities
 $\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in these estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
-$$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^14, 10^{20}]; \quad [10^{20}, 10^{70}]$$
+$$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^{14}, 10^{20}]; \quad [10^{20}, 10^{70}]$$
 one can check that such bounds are sufficient to verify \eqref{delta-cond}, \eqref{alpha-cond} in these cases.  This now verifies \Cref{main}(ii), (iii) for all $N \geq 10^{11}$.
 (In fact, with more effort, this verification can be pushed down to $N \geq 6 \times 10^{10}$ using the same choice of parameters $A,K,L$.)
   

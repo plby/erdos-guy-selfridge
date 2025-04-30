@@ -2021,32 +2021,32 @@ Computing the sum $c''_1$ to reasonable accuracy requires some further analysis.
 $$0 \leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e}{k^2}$$
 and the integral test, one has the simple tail bound
 $$ 0 \leq \sum_{k=K+1}^\infty \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e}{K}$$
-but the convergence rate here is slow.  To accelerate the convergence, we write $\lceil\frac{k}{e} \rceil = \frac{k}{e} + \{\frac{k}{e}\}$ and use the more precise Taylor approximation
+but the convergence rate here is slow.  To accelerate the convergence, we write $\lceil\frac{k}{e} \rceil = \frac{k}{e} + \{1-\frac{k}{e}\}$ and use the more precise Taylor approximation
 $$ \frac{e \left\{\frac{k}{e}\right\}}{k^2} - \frac{e^2 \left\{\frac{k}{e}\right\}^2}{2k^3} 
-\leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e \left\{\frac{k}{e}\right\}}{k^2}.$$
-Bounding $\{k/e\}$ by one, we have the tail bound
-$$ 0 \leq \sum_{k=K+1}^\infty \frac{e^2 \left\{\frac{k}{e}\right\}^2}{2k^3} \leq \frac{e^2}{4K^2}$$
+\leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e \left\{1-\frac{k}{e}\right\}}{k^2}.$$
+Bounding $\{1-k/e\}$ by one, we have the tail bound
+$$ 0 \leq \sum_{k=K+1}^\infty \frac{e^2 \left\{1-\frac{k}{e}\right\}^2}{2k^3} \leq \frac{e^2}{4K^2}$$
 so the main task is then to control the simplified tail
-$$ \sum_{k=K+1}^\infty \frac{e\left\{\frac{k}{e}\right\}}{k^2}.$$
+$$ \sum_{k=K+1}^\infty \frac{e\left\{1-\frac{k}{e}\right\}}{k^2}.$$
 From the integral test one has
 $$ \frac{e}{2(K+1)} \leq \sum_{k=K+1}^\infty \frac{\frac{e}{2}}{k^2} \leq \frac{e}{2K}$$
 so one can instead look at the normalized tail
-$$ \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}.$$
+$$ \sum_{k=K+1}^\infty e\frac{\left\{1-\frac{k}{e}\right\}-\frac{1}{2}}{k^2}.$$
 The Erd\H{o}s--Tur\'an inequality states that, for any absolutely convergent non-negative weights $c_k$, any interval $I \subset [0,1]$ of length $|I|$, and any real numbers $\xi_k$, and any $N \geq 1$, one has
 $$ \left|\sum_k c_k (1_I(\xi_k \mod 1) - |I|)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|;$$
 see the inequality\footnote{In the cited reference, only the special case in which $c_k$ is a uniform probability distribution function on $\{1,\dots,M\}$ is discussed, but it is easy to see that the argument in fact works for arbitrary absolutely convergent non-negative weights $c_k$.} after \cite[Theorem 20]{vaaler}.  Applying this for $I = [0,h]$ and then averaging in $h$ from $0$ to $1$, we conclude that
 $$ \left|\sum_k c_k \left(\{\xi_k\}-\frac{1}{2}\right)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|.$$
 In particular, we have
-$$ \left| \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}\right| \leq \frac{1}{N+1} \sum_{k=K+1}^\infty \frac{e}{k^2}
-+ \sum_{n=1}^N \left(\frac{2e}{\pi n} + \frac{2e}{N+1}\right) \left|\sum_{k=K+1}^\infty \frac{e^{2\pi i n k/e}}{k^2}\right|.
+$$ \left| \sum_{k=K+1}^\infty e\frac{\left\{1-\frac{k}{e}\right\}-\frac{1}{2}}{k^2}\right| \leq \frac{1}{N+1} \sum_{k=K+1}^\infty \frac{e}{k^2}
++ \sum_{n=1}^N \left(\frac{2e}{\pi n} + \frac{2e}{N+1}\right) \left|\sum_{k=K+1}^\infty \frac{e^{-2\pi i n k/e}}{k^2}\right|.
 $$
 To estimate the exponential sum
-$$ S_{n,K} \coloneqq \sum_{k=K+1}^\infty \frac{e^{2\pi i n k/e}}{k^2}$$
+$$ S_{n,K} \coloneqq \sum_{k=K+1}^\infty \frac{e^{-2\pi i n k/e}}{k^2}$$
 observe from shifting $k$ by one that
-$$ S_{n,K} = e^{2\pi i n/e} \sum_{k=K}^\infty \frac{e^{2\pi i n k/e}}{(k+1)^2}
-= e^{2\pi i n/e} S_{n,K} + O_{\leq}\left( \frac{1}{(K+1)^2} + \sum_{k=K+1}^2 \frac{1}{k^2} -\frac{1}{(k+1)^2}\right)$$
+$$ S_{n,K} = e^{-2\pi i n/e} \sum_{k=K}^\infty \frac{e^{-2\pi i n k/e}}{(k+1)^2}
+= e^{-2\pi i n/e} S_{n,K} + O_{\leq}\left( \frac{1}{(K+1)^2} + \sum_{k=K+1}^2 \frac{1}{k^2} -\frac{1}{(k+1)^2}\right)$$
 and hence on summing the telescoping series
-$$ |S_{n,K}| \leq \frac{2}{|e^{2\pi i n/e}-1| (K+1)^2} = \frac{1}{(K+1)^2 \sin(\pi n/e)}.$$
+$$ |S_{n,K}| \leq \frac{2}{|e^{-2\pi i n/e}-1| (K+1)^2} = \frac{1}{(K+1)^2 \sin(\pi n/e)}.$$
 Because the irrationality measure of $e$ is $2$, this will give error terms of the shape $O(\log K/K^2)$ if one sets $N \approx K / \log K$.  Setting for instance $K = 10^6$, $N = 10^5$, an interval arithmetic computation then gives
 $$c''_1 = 1.679578996\dots$$
 and thus by \eqref{c1-def}

@@ -2022,7 +2022,7 @@ $$0 \leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\
 and the integral test, one has the simple tail bound
 $$ 0 \leq \sum_{k=K+1}^\infty \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e}{K}$$
 but the convergence rate here is slow.  To accelerate the convergence, we write $\lceil\frac{k}{e} \rceil = \frac{k}{e} + \{-\frac{k}{e}\}$ and use the more precise Taylor approximation
-$$ \frac{e \left\{\frac{k}{e}\right\}}{k^2} - \frac{e^2 \left\{\frac{k}{e}\right\}^2}{2k^3} 
+$$ \frac{e \left\{-\frac{k}{e}\right\}}{k^2} - \frac{e^2 \left\{-\frac{k}{e}\right\}^2}{2k^3} 
 \leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e \left\{-\frac{k}{e}\right\}}{k^2}.$$
 Bounding $\{-k/e\}$ by one, we have the tail bound
 $$ 0 \leq \sum_{k=K+1}^\infty \frac{e^2 \left\{-\frac{k}{e}\right\}^2}{2k^3} \leq \frac{e^2}{4K^2}$$

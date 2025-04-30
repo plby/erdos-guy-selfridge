@@ -26,7 +26,7 @@ t_lower2 = []
 t_upper2 = []
 t_lower_ip = []
 
-with open('../../../lp_bounds_40000-45000.txt', 'r') as f:
+with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
     next(f)
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
@@ -36,7 +36,7 @@ with open('../../../lp_bounds_40000-45000.txt', 'r') as f:
         t_lower_ip.append(d)
         t_upper2.append(e)
         if d < a and a >= 43632:
-            print(f"Impatient IP lower bound {d} for {a} is below the floor {c} at N={a}!")
+            print(f"Ad hoc IP lower bound {d} for {a} is below the floor {c} at N={a}!")
         
 
 

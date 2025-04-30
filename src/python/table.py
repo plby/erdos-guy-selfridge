@@ -146,6 +146,46 @@ data3 = [
     [1000000000, 348901168, 19935.484]
 ]
 
+
+data4 = [
+    [ 100000, 33614, 33642, 33646, 33668],
+    [ 200000, 67667, 67703, 67704, 67739],
+    [ 300000, 101854, 101903, 101906, 101945],
+    [ 400000, 136090, 136143, 136149, 136186],
+    [ 500000, 170402, 170456, 170459, 170502],
+    [ 600000, 204752, 204811, 204815, 204858],
+    [ 700000, 239135, 239187, 239196, 239241],
+    [ 800000, 273568, 273604, 273610, 273668],
+    [ 900000, 307968, 308029, 308042, 308099],
+    [1000000, 342450, 342505, 342508, 342567],
+    [2000000, 687735, 687796, 687800, 687883],
+    [3000000, 1033857, 1033949, 1033960, 1034056],
+    [4000000, 1380531, 1380625, 1380637, 1380747],
+    [5000000, 1727499, 1727605, 1727609, 1727731],
+    [6000000, 2074830, 2074962, 2074983, 2075114],
+    [7000000, 2422422, 2422486, 2422508, 2422651],
+    [8000000, 2770115, 2770212, 2770241, 2770389],
+    [9000000, 3118039, 3118129, 3118153, 3118302],
+    [10000000, 3466108, 3466235, 3466247, 3466414],
+    [20000000, 6952115, 6952243, 6952261, 6952477],
+    [30000000, 10444300, 10444441, 10444454, 10444694],
+    [40000000, 13940348, 13940484, 13940548, 13940838],
+    [50000000, 17439056, 17439282, 17439315, 17439638],
+    [60000000, 20940044, 20940210, 20940233, 20940591],
+    [70000000, 24442600, 24442818, 24442855, 24443233],
+    [80000000, 27946752, 27946958, 27947001, 27947403],
+    [90000000, 31452204, 31452431, 31452454, 31452859],
+    [100000000, 34958488, 34958725, 34958773, 34959207],
+    [200000000, 70064542, 70064782, 70064827, 70065426],
+    [300000000, 105218127, 105218403, 105218444, 105219155],
+    [400000000, 140400896, 140401212, 140401292, 140402099],
+    [500000000, 175604950, 175605266, 175605364, 175606238],
+    [600000000, 210825475, 210825848, 210825916, 210826906],
+    [700000000, 246059457, 246059851, 246059940, 246060998],
+    [800000000, 281304919, 281305291, 281305383, 281306449],
+    [900000000, 316560258, 316560601, 316560702, 316561839]
+]
+
 def is_prime(n):
     """Return True if n is a prime number, else False."""
     if n < 2:
@@ -232,6 +272,7 @@ def table2():
         digits = int(math.floor(math.log10(N))) 
         print(f"${N//10**digits} \\times 10^{digits}$ & $\\num{{{t_lower}}}$ & $t(N)_- - \\num{{{t_lower-t_greedy}}}$ & {time_greedy} & $t(N)_- - \\num{{{t_lower-t_greedy_2}}}$ & {time_greedy_2} \\\\")
 
+
 def plot():
     base1 = []
     t1 = []
@@ -280,4 +321,70 @@ def plot():
     plt.tight_layout()
     plt.show()
 
-plot()
+
+def plot2():
+    base1 = []
+    t1 = []
+    for x in data:
+        N, t_lower, _, _ = x
+        base1.append(N)
+        t1.append(t_lower / N)
+    
+
+    base2 = []
+    t2 = []
+    for x in data2:
+        N, t, _ = x
+        base2.append(N)
+        t2.append(t / N)
+
+    base3 = []
+    t3 = []
+    for x in data3:
+        N, t, _ = x
+        base3.append(N)
+        t3.append(t / N)
+
+    base4 = []
+    t4_floor = []
+    t4_lower = []
+    t4_upper = []
+    t4_bound = []
+    for x in data4:
+        N, t_floor, t_lower, t_upper, t_bound = x
+        base4.append(N)
+        t4_floor.append(t_floor / N)
+        t4_lower.append(t_lower / N)
+        t4_upper.append(t_upper / N)
+        t4_bound.append(t_bound / N)
+
+
+    # form the union of base1 and base2
+    base = sorted(set(base1) | set(base2))
+    asym = [1/math.e - 0.30440119010/math.log(N) for N in base]
+    asym2 = [1/math.e - 0.30440119010/math.log(N) - 0.75554808/math.log(N)**2 for N in base]
+
+    fig, ax = plt.subplots()
+    ax.plot(base, asym, linestyle="--", label='$1/e-c_0/\\log N$', color='purple' )
+    ax.plot(base, asym2, linestyle="--", label='$1/e-c_0/\\log N-c_1/\\log^2 N$', color='gray' )
+    ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$', color='orange' )
+    ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$', color='red' )
+    ax.plot(base4, t4_lower, label='LP lower bound', color='blue' )
+    ax.plot(base4, t4_upper, label='LP upper bound', color='cyan' )
+    ax.plot(base2, t2, label='Fast greedy lower bound', color='green' )
+    ax.plot(base3, t3, label='Exhaustive greedy lower bound', color='brown' )
+    ax.plot(base4, t4_floor, label='LP floor bound', color='pink' )
+    ax.plot(base4, t4_bound, label='Lemma 5.1', color='black' )
+    
+    ax.set_xscale('log') 
+#    ax.xaxis.set_major_formatter(ScalarFormatter())
+#    ax.ticklabel_format(style='plain', axis='x')            # turn off offset
+    plt.title('Approximations to $t(N)/N$')
+    plt.xlabel('$N$ (log scale)')
+    plt.ylim(0.33,0.37)
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+plot2()

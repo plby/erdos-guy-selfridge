@@ -77,6 +77,7 @@ Secondary goals are
 | [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates + interval arithmetic | Completes verification of Conjectures 2,3
 | [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates + + interval arithmetic | Close to the limit of existing estimates
 | [26 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/35) | Andrew Sutherland | 2 | $10^6 \leq N \leq 10^{12}$ | Fast modified greedy
+| [30 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/44) | Andrew Sutherland | 2 | $67425 \leq N \leq 8 \times 10^4$ | Greedy | Lower threshold optimal for vanilla greedy
 
 ## Computations of $c_0$, $c_1$
 

@@ -42,7 +42,7 @@ data = [
     [900000000, 316560601, 316560714, 316561839]
 ]
 
-# from tbounds.txt
+# from tbounds.txt, renamed to tbounds_heuristic_fast_greedy_1e4_1e12.txt
 data2 = [
     [10000, 3190, 0.000],
     [20000, 6525, 0.000],
@@ -119,7 +119,7 @@ data2 = [
     [1000000000000,353583755012,22.688]  
  ]
 
-# from tbounds_o.txt
+# from tbounds_o.txt, renamed to tbounds_exhaustive_fast_greedy_1e4_1e9.txt
 data3 = [
     [10000, 3190, 0.000],
     [20000, 6525, 0.000],
@@ -209,7 +209,7 @@ data4 = [
     [900000000, 316560258, 316560601, 316560702, 316561839]
 ]
 
-# from tbounds_g.txt
+# from tbounds_g.txt, renamed to tbounds_exhaustive_greedy_1e4_1e8.txt
 data5 = [
     [10000, 3258, 0.001],
     [20000, 6578, 0.002],
@@ -240,6 +240,58 @@ data5 = [
     [9000000, 3117029, 97.831],
     [10000000, 3465013, 97.678]
 ]
+
+
+# from tbounds_heuristic_greedy_1e4_1e9.txt
+data6 = [
+    [10000, 3258, 0.001],
+    [20000, 6578, 0.001],
+    [30000, 9912, 0.002],
+    [40000, 13303, 0.001],
+    [50000, 16667, 0.000],
+    [60000, 19950, 0.002],
+    [70000, 23380, 0.001],
+    [80000, 26767, 0.001],
+    [90000, 30172, 0.001],
+    [100000, 33337, 0.001],
+    [200000, 67482, 0.004],
+    [300000, 101708, 0.004],
+    [400000, 135728, 0.007],
+    [500000, 169893, 0.009],
+    [600000, 204191, 0.008],
+    [700000, 238765, 0.012],
+    [800000, 273035, 0.015],
+    [900000, 306791, 0.016],
+    [1000000, 340790, 0.019],
+    [2000000, 686738, 0.040],
+    [3000000, 1033006, 0.064],
+    [4000000, 1379632, 0.093],
+    [5000000, 1724823, 0.141],
+    [6000000, 2071720, 0.133],
+    [7000000, 2412529, 0.177],
+    [8000000, 2764900, 0.206],
+    [9000000, 3115006, 0.274],
+    [10000000, 3463360, 0.269],
+    [20000000, 6946752, 0.667],
+    [30000000, 10429746, 0.939],
+    [40000000, 13935056, 1.152],
+    [50000000, 17421954, 1.585],
+    [60000000, 20927883, 1.634],
+    [70000000, 24401463, 2.456],
+    [80000000, 27918926, 2.346],
+    [90000000, 31354920, 2.358],
+    [100000000, 34924234, 2.795],
+    [200000000, 69835925, 5.089],
+    [300000000, 105133902, 6.767],
+    [400000000, 140280238, 11.593],
+    [500000000, 175358640, 15.577],
+    [600000000, 210712478, 17.642],
+    [700000000, 245882180, 22.497],
+    [800000000, 281199770, 27.845],
+    [900000000, 316308547, 34.943],
+    [1000000000, 351661732, 25.872]
+]
+
 
 def is_prime(n):
     """Return True if n is a prime number, else False."""
@@ -430,10 +482,16 @@ def plot2():
         t_greedy_opt.append(t / N)
         print(N,t/N)
 
+    base6 = []
+    t_greedy_heuristic = []
+    for x in data6:
+        N, t, _ = x
+        base6.append(N)
+        t_greedy_heuristic.append(t / N)
 
 
     # form the union of base1 and base2
-    base = sorted(set(base1) | set(base2) | set(base3) | set(base4))
+    base = sorted(set(base1) | set(base2) | set(base3) | set(base4) | set(base5) | set(base6))
     asym = [1/math.e - 0.30440119010/math.log(N) for N in base]
     asym2 = [1/math.e - 0.30440119010/math.log(N) - 0.75554808/math.log(N)**2 for N in base]
 
@@ -448,6 +506,7 @@ def plot2():
     ax.plot(base3, t3, label='Exhaustive fast greedy', color='brown' )
     ax.plot(base4, t4_floor, label='LP floor bound', color='pink' )
     ax.plot(base4, t4_bound, label='Lemma 5.1', color='black' )
+    ax.plot(base6, t_greedy_heuristic, label='Heuristic greedy', color='olive' )
     ax.plot(base5, t_greedy_opt, label='Exhaustive greedy', color='orange' )
     
     ax.set_xscale('log') 

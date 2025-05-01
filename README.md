@@ -77,6 +77,7 @@ Secondary goals are
 | [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates + interval arithmetic | Completes verification of Conjectures 2,3
 | [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates + + interval arithmetic | Close to the limit of existing estimates
 | [26 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/35) | Andrew Sutherland | 2 | $10^6 \leq N \leq 10^{12}$ | Fast modified greedy
+| [30 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/44) | Andrew Sutherland | 2 | $67425 \leq N \leq 8 \times 10^4$ | Greedy | Lower threshold optimal for vanilla greedy
 
 ## Computations of $c_0$, $c_1$
 
@@ -96,7 +97,7 @@ Secondary goals are
 - [Greedy algorithm lower bounds on t(N) for N between 80 and 599](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/tbounds.txt).
 - [Examples and linear programming certificates for N up to 600](https://github.com/teorth/erdos-guy-selfridge/tree/main/Data/oeis_results) (explained [here](https://github.com/teorth/erdos-guy-selfridge/pull/1))
 - [Values of t(N) for N up to 600](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_up_to_600.txt)
-- [Values of t(N) for N up to 10000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/a034258-lpsolve.txt) - value at $t(9633)$ is currently only a lower bound, all other values verified to be exact.
+- [Values of t(N) for N up to 10000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/a034258-lpsolve.txt) 
 - [A factorization verifying t(41006) >= 13669](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/FC_41006.txt) - the first large positive case of Conjecture 2
 - [A factorization verifying t(43632) >= 14545](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/factorizations/43632-43632-14545.txt) - the first point where Conjecture 2 becomes true for this and all larger values of $N$
 - [Upper and lower bounds for t(N) for randomly sampled N between 10^3 and 10^5](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds.txt) - obtained by linear programming

@@ -26,7 +26,7 @@ t_lower2 = []
 t_upper2 = []
 t_lower_ip = []
 
-with open('../../../lp_bounds_40000-45000.txt', 'r') as f:
+with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
     next(f)
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
@@ -36,7 +36,7 @@ with open('../../../lp_bounds_40000-45000.txt', 'r') as f:
         t_lower_ip.append(d)
         t_upper2.append(e)
         if d < a and a >= 43632:
-            print(f"Impatient IP lower bound {d} for {a} is below the floor {c} at N={a}!")
+            print(f"Ad hoc IP lower bound {d} for {a} is below the floor {c} at N={a}!")
         
 
 
@@ -49,13 +49,13 @@ def plot():
     plt.figure(figsize=[8, 6])
 #    plt.plot(base, ub, label='Smoothfac (upper)', marker='.', markersize=3, color='green') 
     plt.plot(base2, ub2, label='Linear programming (upper)', marker='.', markersize=3, color='red') 
-    plt.plot(base, lb, label='Smooth factorization (lower)', marker='.',linestyle='None', markersize=3, color='purple' )
-    plt.plot(base2, lb_ip, label='Impatient IP (lower)', marker='.',linestyle='None', markersize=3, color='green' )
     plt.plot(base2, lb2, label='LP floor (lower)', marker='.',linestyle='None', markersize=3, color='blue' )
+    plt.plot(base, lb, label='Smooth factorization (lower)', marker='.',linestyle='None', markersize=3, color='purple' )
+    plt.plot(base2, lb_ip, label='Ad hoc IP (lower)', marker='.',linestyle='None', markersize=3, color='green' )
 #    plt.plot(base, [0 for _ in base], label='$0$',  color='purple')
-    plt.title('Surplus factors $M(N)-N$ in $N/3$-admissible factorization of N!')
+    plt.title('Surplus factors $M(N,N/3)-N$ in $N/3$-admissible factorization of N!')
     plt.xlabel('$N$')
-    plt.ylabel('$M(N)-N$')
+    plt.ylabel('$M(N,N/3)-N$')
     plt.ylim(-12,3)
     plt.legend()
     plt.grid(True)

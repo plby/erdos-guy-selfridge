@@ -126,13 +126,12 @@
 \title{Decomposing a factorial into large factors}
 
 \author[Alexeev]{Boris Alexeev}
-\address{???}
-\email{???}
-
+\address{Unaffiliated, Athens, GA 30605}
+\email{boris.alexeev@gmail.com}
 
 \author[Conway]{Evan Conway}
-\address{???}
-\email{???}
+\address{UVA Department of Mathematics, Charlottesville, VA 22903}
+\email{auj4kq@virginia.edu}
 
 \author[Sutherland]{Andrew V. Sutherland}
 \address{MIT Department of Mathematics, Cambridge, MA 02139.}
@@ -153,7 +152,7 @@
 
 \subjclass[2020]{11A51}
 
-\begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ numbers greater than or equal to $t(N)$.
+\begin{abstract}  Let $t(N)$ denote the largest number such that $N!$ can be expressed as the product of $N$ integers greater than or equal to $t(N)$.
 The bound $t(N)/N = 1/e-o(1)$ was apparently established in unpublished work of Erd\H{o}s, Selfridge, and Straus; but the proof is lost.  Here we obtain the more precise asymptotic 
 $$ \frac{t(N)}{N} = \frac{1}{e} - \frac{c_0}{\log N} + O\left( \frac{1}{\log^{1+c} N} \right)$$
 for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0$, answering a question of Erd\H{o}s and Graham.  For the upper bound, a further lower order term in the asymptotic expansion is also obtained.  With numerical assistance, we obtain highly precise computations of $t(N)$ for wide ranges of $N$, establishing several explicit conjectures of Guy and Selfridge on this sequence.  For instance, we show that $t(N) \geq N/3$ for $N \geq 43632$, with the threshold shown to be best possible. 
@@ -166,7 +165,7 @@ for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0
 
 \section{Introduction}
 
-Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ such that the product
+Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ of natural numbers such that the product
 $$ \prod \tuple \coloneqq \prod_{a \in \tuple} a$$
 (where the elements are counted with multiplicity) is equal to $M$; more generally, define a \emph{subfactorization} of $M$ to be a finite multiset $\tuple$ such that $\prod \tuple$ divides $M$.  Given a threshold $t$, we say that a multiset $\tuple$ is \emph{$t$-admissible} if $a \geq t$ for all $a \in \tuple$.  For a given natural number $N$, we then define $t(N)$ to be the largest $t$ for which there exists a $t$-admissible factorization $\tuple$ of $N!$ of cardinality $|\tuple|=N$.  
 
@@ -179,15 +178,15 @@ $$|\{ 3,3,3,3,4,4,5,7,8\}| = 9,$$
  hence $t(9) \geq 3$.  One can check that no $4$-admissible factorization of $9!$ of this cardinality exists, hence $t(9) = 3$.
 \end{example}
 
-It is easy to see that $t(N)$ is non-decreasing in $N$, (any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The first few elements of the sequence $t(N)$ are
+It is easy to see that $t(N)$ is non-decreasing in $N$ (any cardinality $N$ factorization of $N!$ can be extended to a cardinality $N+1$ factorization of $(N+1)!$ by adding $N+1$ to the multiset).  The first few elements of the sequence $t(N)$ are
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
 When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than if one were factoring an arbitrary number.  For instance, we can show that
-$$ 0 \leq t(7 \times 10^8) - \num{246059851} \leq 89;$$
+$$ 0 \leq t(9 \times 10^8) - \num{316560601} \leq 113;$$
 see \Cref{long-table}.
 
-\begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient for both theoretical analysis of $t(N)$ and numerical computations.
+\begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient both for theoretical analysis of $t(N)$ and for numerical computations.
 \end{remark}
 
 By combining the obvious lower bound
@@ -195,9 +194,9 @@ By combining the obvious lower bound
  \prod \tuple \geq t^{|\tuple|}
 \end{equation}
 for any $t$-admissible multiset $\tuple$ with Stirling's formula \eqref{stirling}, we obtain the trivial upper bound
-\begin{equation}\label{trivial} \frac{t(N)}{N} \leq \frac{(N!)^{1/N}}{N} = \frac{1}{e} + O\left( \frac{\log N}{N}\right)
+\begin{equation}\label{trivial} \frac{t(N)}{N} \leq \frac{(N!)^{1/N}}{N} = \frac{1}{e} + O\left( \frac{\log N}{N}\right);
 \end{equation}
-for $N \geq 2$; see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublished work of Erd\H{o}s, Selfridge, and Straus established the asymptotic
+see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublished work of Erd\H{o}s, Selfridge, and Straus established the asymptotic
 \begin{equation}\label{t1}
   \frac{t(N)}{N} = \frac{1}{e} + o(1)
 \end{equation}
@@ -269,46 +268,72 @@ In \Cref{c0-app} we give some details on the numerical computation of the consta
 
 \begin{remark}\label{old} In a previous version \cite{tao} of this manuscript, the weaker bounds
   $$ \frac{1}{e} - \frac{O(1)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0+o(1)}{\log N}$$
-were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \Cref{main}(i). 
+were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \Cref{main}(i). Numerically, the upper bound in \eqref{tna} appears to be a rather good approximation, and we conjecture that it is a lower bound as well.
 \end{remark}  
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{integ.png}
-  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.30441901\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
+  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.30441901\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming only slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
 \end{figure}
 
-As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows:
+As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows (and in \Cref{cases-table}):
 
 \begin{itemize}
-  \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small and medium values;
-  \item In \Cref{linprog-sec}, we present a \emph{linear programming} (or \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$, and which we apply in \Cref{upper-sec} to establish a general upper bound (\Cref{upper-crit}) on $t(N)$ that can be used to obtain \Cref{main}(i);
+  \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small, medium, and moderately large values;
+  \item In \Cref{linprog-sec}, we present a \emph{linear programming} (and \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$, and which we apply in \Cref{upper-sec} to establish a general upper bound (\Cref{upper-crit}) on $t(N)$ that can be used to obtain \Cref{main}(i);
   \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$, as well as an analytic proof of \eqref{t1}.
   \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an alternate proof of \Cref{upper-crit}, and also is the starting point for the modified factorization technique discussed below;
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
 
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+  Claim & Range of $N$ & Method used \\
+  \hline
+\Cref{main}(ii) & $N \leq 3 \times 10^5$ & Greedy \\
+\Cref{main}(ii), (iii) & $67425  \leq N \leq 10^{12}$ & Greedy  \\
+\hline
+\Cref{main}(i) & $N \leq 10^4$ & Linear programming \\
+\Cref{main}(iii) & $43632 \leq N \leq 8 \times 10^4$ & Integer programming \\
+\hline
+\Cref{main}(i) & $N > 80$ & \Cref{upper-crit} \\
+\Cref{main}(iv) (upper) & $N$ sufficiently large & \Cref{upper-crit} \\
+\hline
+\Cref{main}(ii), (iii) & $N$ sufficiently large & Rearrangement \\
+\hline
+\Cref{main}(ii), (iii) & $N \geq 10^{11}$ & Modified approximate factorization \\
+\Cref{main}(iv) (lower) & $N$ sufficiently large & Modified approximate factorization \\
+  \hline
+\end{tabular}
+\caption{The techniques in this paper can establish the various components of \Cref{main}, for various overlapping  ranges of $N$.}\label{cases-table}
+\end{table}
 
 The final approach is significantly more complicated than the other four, but gives the most efficient lower bounds in the asymptotic limit $N \to \infty$.  The key idea is to start with an approximate factorization
 $$ N! \approx \left(\prod_{j \in I} j\right)^A$$
 for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloor$) and a suitable set $I$ of natural numbers greater than or equal to $t$; there is some freedom to select parameters here, and we will take $I$ to be the natural numbers in $(t, t(1+\sigma)]$ that are $3$-rough (coprime to $6$), where $t$ is the target lower bound for $t(N)$ we wish to establish, and $\sigma \coloneqq \frac{3N}{tA}$ is chosen to bring the number of terms in the approximate factorization close to $N$.  With this choice of $I$, this product contains approximately the right number of copies of $p$ for medium-sized primes $p$; but it has the ``wrong'' number of copies of large primes, and is also constructed to avoid the ``tiny'' primes $p=2,3$.  One then performs a number of alterations to this approximate factorization to correct for the ``surpluses'' or ``deficits'' at various primes $p>3$, using the supply of available tiny primes $p=2,3$ as a sort of ``liquidity pool'' to efficiently reallocate primes in the factorization.  A key point will be that the incommensurability of $\log 2$ and $\log 3$ (i.e., the irrationality of $\log 3/\log 2$) means that the $3$-smooth numbers (numbers of the form $2^n 3^m$) are asymptotically dense (in logarithmic scale), allowing for other factors to be exchanged for $3$-smooth factors with little loss\footnote{The weaker results alluded to in \Cref{old} only used the prime $2$ as a supply of ``liquidity'', and thus encountered inefficiencies due to the inability to ``make change'' when approximating another factor by a power of two.}.
+
+
+
 
 \subsection{Author contributions and data}
 
 This project was initially conceived as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
 
 \begin{itemize}
-\item Boris Alexeev: ...
+\item Boris Alexeev: Formal Analysis, Investigation, Software.
 \item Evan Conway: ...
 \item Andrew Sutherland: ...
 \item Terence Tao: Conceptualization, Formal Analysis, Methodology, Project Administration, Visualization, Writing -- original draft, Writing -- review \& editing.
-\item Markus Uhr: Initial conception and implementation of linear programming, numerical analysis.
+\item Markus Uhr: Formal Analysis, Software.
 \item Kevin Ventullo: Software
 \end{itemize}
 
 \subsection{Acknowledgments}
 
-TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where the author learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
+TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where TT learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
 
 
 \section{Notation and basic estimates}
@@ -320,7 +345,7 @@ If $S$ is a statement, we use $1_S$ to denote its indicator, thus $1_S=1$ when $
 Throughout this paper, the symbol $p$ (or $p_0$, $p_1$, etc.) is always understood to be restricted to be prime.  
 We use $(a,b)$ to denote the greatest common divisor of $a$ and $b$, $a|b$ to denote the assertion that $a$ divides $b$, and $\pi(x) = \sum_{p \leq x} 1$ to denote the usual prime counting function.
 
-We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive natural number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$. 
+We use $\nu_p(a/b) = \nu_p(a)-\nu_p(b)$ to denote the $p$-adic valuation of a positive rational number $a/b$, that is to say the number of times $p$ divides the numerator $a$, minus the number of times $p$ divides the denominator $b$.  For instance, $\nu_2(32/27)=5$ and $\nu_3(32/27)=-3$.
 If one applies a logarithm to the fundamental theorem of arithmetic, one obtains the identity
 \begin{equation}\label{ftoa}
   \sum_p \nu_p(r) \log p = \log r
@@ -340,6 +365,8 @@ where $s_p(N)$ is the sum of the digits of $N$ in the base $p$ expansion.
 Given a putative factorization $\tuple$ of $N!$,  
 we refer to the quantity $\nu_p\left( \frac{N!}{\prod \tuple} \right)$ as the \emph{$p$-surplus} of $\tuple$ with respect to the target $N!$, and similarly refer to the negative $-\nu_p\left( \frac{N!}{\prod \tuple} \right) = \nu_p\left( \frac{\prod \tuple}{N!} \right)$ of this surplus as the \emph{$p$-deficit}, with the multiset being \emph{$p$-balanced} if the $p$-surplus (or $p$-deficit) is zero.  Thus, a factorization of $N!$ is achieved if and only if one is balanced at every prime $p$, whereas a subfactorization is achieved if one is either in balance or surplus at every prime $p$.
 
+Let $M(N,t)$ denote the maximal cardinality of a $t$-admissible subfactorization of $N!$; thus, by \Cref{subfac}, $t(N) \geq t$ if and only if $M(N,t) \geq N$. 
+
 To bound the factorial, we have the explicit Stirling approximation \cite{robbins}
 \begin{equation}\label{stirling}
 \log N! = N \log N - N + \log \sqrt{2\pi N} + O_\leq^+\left(\frac{1}{12N}\right),
@@ -355,7 +382,7 @@ It will be convenient to introduce a variant of this quantity that is close to a
 \begin{equation}\label{fancy-kappa-def}
   \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}
 \end{equation}
-for any real $x \geq L \geq 1$, where $a \coloneqq \lfloor \frac{x/L}{\log 12} \rfloor$ is the largest integer such that $12^a \leq x/L$.  
+for any real $x \geq L \geq 1$, where $a \coloneqq \left\lfloor \frac{x/L}{\log 12} \right\rfloor$ is the largest integer such that $12^a \leq x/L$.
 
 For any $L \geq 1$, let $\kappa_L$ be the least quantity such that
 \begin{equation}\label{kappa-def}  
@@ -459,7 +486,22 @@ We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on
 
 \section{Greedy algorithms}\label{greedy-sec}
 
-The following simple greedy algorithm gives reasonably good performance to obtain large $t$-admissible subfactorizations $\tuple$ of $N!$ for a given choice of $t$ and $N$:
+Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds on $M(N,t)$, can also produce lower bounds on $t(N)$, as follows:
+
+\begin{itemize}
+  \item[Step 1.] Use some heuristics to start with an initial proposed lower bound $t$ for $t(N)$.
+  \item[Step 2.] Use the provided lower bound algorithm for $M(N,t)$ to test if $M(N,t) \geq N$.
+  \item[Step 3.] If this algorithm succeeds (in a reasonable amount of time), then either \texttt{HALT} or increase $t$ by some amount (possibly guided by the extent to which $M(N,t)$ exceeds $N$), and return to Step 2.
+  \item[Step 4.] If instead the algorithm fails (or times out), then either \texttt{HALT} (with an error) or else decrease $t$ by some amount (again possibly guided by the extent to which $M(N,T)$ falls short of $N$) and return to Step 2.
+\end{itemize}
+
+One can similarly use an algorithm that can produce upper bounds for $M(N,t)$ to produce upper bounds for $t(N)$.
+
+The algorithm described above is imprecisely specified, because it requires one to make some implementation decisions about how to select the parameter $t$ at various steps of the algorithm, and also when to abandon the $M(N,t)$ algorithm in case it takes an excessive amount of time to run.  In particular, having some accurate heuristics (or ``hints'') about what the correct value of $t(N)$ should be (possibly based on the outcomes of previous stages of the algorithm) can greatly accelerate its performance.  But regardless of this variability in speed, the $M(N,t)$ algorithm will in practice produce a certificate (e.g., an explicit subfactorization of $N!$) that can be quickly and independently verified by a separate computer program to confirm the upper or lower bound on $t(N)$.  So the output of such imprecisely specified algorithms can at least be independently confirmed, if not reproduced exactly.  In particular, the lack of reproducibility is not a major concern when verifying a specific bound on $t(N)$, such as $t(N) \geq N/3$, so long as independently verifiable proof certificates (such as an $N/3$-admissible subfactorization of $N!$ of length $N$) are generated.
+
+We therefore turn to the question of how to algorithmically obtain good upper and lower bounds on $M(N,t)$.  In this section we will discuss greedy methods to obtain lower bounds on this quantity; in the next section we will discuss how linear programming and integer programming methods can also be used to obtain both upper and lower bounds on $M(N,t)$.
+
+The following simple greedy algorithm is a fast method to give reasonably good lower bounds on $M(N,t)$:
 
 \begin{enumerate}
 \item[(0)] Initialize $\tuple$ to be the empty multiset. 
@@ -467,13 +509,13 @@ The following simple greedy algorithm gives reasonably good performance to obtai
 \item[(2)] If $N! / \prod \tuple$ contains a multiple of $p$ that is greater than or equal to $t$, locate the smallest such multiple, add it to $\tuple$, and return to Step 1.  Otherwise, \texttt{HALT} the algorithm. 
 \end{enumerate}
 
-This procedure clearly halts in finite time to produce a $t$-admissible subfactorization of $N!$.  For instance, applying this procedure with $N=9$, $t=3$ produces the $3$-admissible subfactorization
+This procedure clearly halts in finite time to produce a $t$-admissible subfactorization of $N!$, with the length of this subfactorization giving a lower bound on $M(N,t)$ (which can then lead to lower bounds on $t(N)$ as discussed above).  For instance, applying this procedure with $N=9$, $t=3$ produces the $3$-admissible subfactorization
 $$ \{7 \times 1, 5 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 3 \times 1, 2 \times 2, 2 \times 2, 2 \times 2 \}$$
-which recovers the bound $t(9) \geq 3$ from \Cref{nine} (though with a slightly different subfactorization, in which the $8$ is replaced by $4$).
+which recovers the bound $M(9,3) \geq 9$ (and hence $t(9) \geq 3$) from \Cref{nine}, albeit with a slightly different subfactorization, in which the $8$ is replaced by $4$.
 
-This procedure is efficient for small $N$, for instance attaining the exact value of $t(N)$ for all $N \leq 79$, though it begins to degrade for larger $N$; see \Cref{fig-zoom}.  The performance is also respectable (though not optimal) for medium $N$; for instance, when $N=3 \times 10^5$ and $t=N/3$, it locates a $t$-admissible subfactorization of $N!$ of cardinality $N+372$, which is close to the linear programming limit of $N+455$ established in the next section.
+This procedure is efficient for small $N$, for instance attaining the exact value of $t(N)$ for all $N \leq 79$, though it begins to degrade for larger $N$; see \Cref{fig-zoom}.  The performance is also respectable (though not optimal) for medium $N$; for instance, when $N=3 \times 10^5$ and $t=N/3$, it establishes the lower bound $M(N,t) \geq N+372$, which is close to the exact value of $M(N,t) = N+455$ which we could establish by the linear programming methods of the next section (see \eqref{mnt}).
 
-{\bf discuss modifications to the algorithm to make it perform both faster and more accurately}
+{\bf discuss modifications to the algorithm to make it perform both faster and more accurately; talk about hints}
 
 In order to get this algorithm to validate all $8 \times 10^4 \leq N \leq 10^{11}$ on commodity hardware in a reasonable amount of time, two major modifications were implemented. 
 
@@ -481,104 +523,138 @@ First, when trying to improve an inequality $t(N) \geq \lambda N$ for all $N$ in
 
 The other major modification is related to Step (2) in the above algorithm, where one is searching for the least value of $c$ such that $cp\geq t$ and $c$ can be constructed from the remaining factors. In practice, the algorithm pre-computes and store information about all such candidates; absent any further heuristics, this amounts to storing information about all integers less than $N$, which becomes prohibitively expensive for large $N$. The key observation is that any such $c$ must satisfy a further arithmetic condition, namely that $\frac{cL(c)}{S(c)} < t$. By only storing information about $c$ which satisfy this condition, the memory footprint is reduced by several orders of magnitude.
 
-By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $8 \times 10^4 \leq N \leq 10^{11}$.    Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $43632 \leq N < 8 \times 10^4$ and $N > 10^{11}$, and also to show that this claim fails for $N=43631$.
+By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $67425 \leq N \leq 10^{12}$ {\bf provide more details and links to code}.    Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $43632 \leq N < 67425$ and $N > 10^{12}$, and also to show that this claim fails for $N=43631$.
 
 
 \section{Linear programming}\label{linprog-sec}
 
-A $t$-admissible subfactorization of $N!$ can also be viewed as a product
-$$ \prod_{j \geq t} j^{m_j}$$
-for some non-negative integers $m_j$ that obey the linear constraints
-\begin{equation}\label{constraints}
-  \sum_{j \geq t} m_j \nu_p(j) \leq \nu_p(N!)
-\end{equation}
-for all primes $p$.  Thus, we have an alternative description of $t(N)$:
+It turns out that linear programming and integer programming methods are quite effective at upper and lower bounding $M(N,t)$.  The starting point is the following integer program interpretation of $M(N,t)$. For any $t,N$, let $J_{t,N}$ be the collection of all $j \geq t$ that divide $N!$, and which do not have any proper factor $j' < j$ that is also greater than or equal to $t$.  For instance,
+$$ J_{4,5} = \{ 4, 5, 6, 9 \}.$$ 
 
-\begin{proposition}  For any $N \geq 1$, $t(N)$ is the largest quantity $t$ for which there is a solution to the infinite integer program \eqref{constraints}, where $m_j$ are constrained to be non-negative integers with
-$$ \sum_j m_j \leq N.$$
+\begin{proposition}[Integer programming description of $t(N)$]\label{fip}  For any $N,t \geq 1$, $M(N,t)$ is the maximum value of
+\begin{equation}\label{mj-sum}
+   \sum_{j \in J_{t,N}} m_j
+\end{equation}
+where the $m_j$ are non-negative integers subject to the constraints
+\begin{equation}\label{constraints}
+  \sum_{j \in J_{t,N}} m_j \nu_p(j) \leq \nu_p(N!)
+\end{equation}
+for all primes $p \leq N$.
 \end{proposition}
 
-This proposition suggests the possibility of using linear programming (or integer programming) methods to provide upper and lower bounds on $t(N)$. An immediate issue for computational purposes is that this program involves an infinite number of variables $m_j$.  However, observe that any $j$ not dividing $N!$ cannot be used; and furthermore if $j$ contains a strictly smaller factor that is at least $t$, then it could be replaced by that factor while still generating a $t$-admissible subfactorization of $N$.  As a consequence of these two facts, $j$ can be restricted to a finite set $J_{t,N}$ of the numbers $t \leq j \leq \max(N,t^2)$ dividing $N!$ with no proper factors greater than or equal to $t$.  This makes the integer program finite (though somewhat large), and in particular computable for small $N$, such as $N \leq 10^4$.  By relaxing the integer program to a linear program, one can also obtain upper and lower bounds as follows:
-
-\begin{itemize}
-  \item If one uses linear programming to maximize the quantity $\sum_{j \in J_{t,N}} m_j$ for non-negative \emph{reals} $m_j$ subject to the constraints \eqref{conditions}, and $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \geq N$, then $\prod_{j \in J_{t,N}} j^{\lfloor m_j \rfloor}$ represents a $t$-admissible subfactorization of $N!$ that witnesses $t(N) \geq t$.  We call this the \emph{linear programming floor lower bound}.  In practice one can improve on this bound slightly by gathering all remaining primes not exhausted by this subfactorization (thus each $p$ remains with multiplicity $\nu_p(N!) - \sum_{j \geq t} \lfloor m_j\rfloor \nu_p(j)$), and applying a greedy algorithm to this collection to fashion a small number of additional $t$-admissible factors to add to the subfactorization; let us call this the \emph{linear programming floor+residuals lower bound}.
-  \item If the dual linear program of finding non-negative reals $w_p$ for each prime $p \leq N$ that satisfy the dual constraints
-  \begin{equation}\label{pj}
-    \sum_p w_p \nu_p(j) \geq 1
-   \end{equation}
-   for all $j \in J_{t,N}$ as well as
-   \begin{equation}\label{hyp}
-    \sum_p w_p \nu_p(N!) < N,
-    \end{equation}
-    then by multiplying \eqref{constraints} by $w_p$ and summing over $p \leq N$, we see that these constraints force $\sum_{j \in J_{t,N}} m_j < N$, and hence $t(N) < t$.  We call this the \emph{linear programming upper bound}.
-\end{itemize}
-
-By the duality of linear programming, the linear programming floor lower bound and linear programming upper bound would match if the constraint $\sum_{j \in J_{t,N}} \lfloor m_j \rfloor \leq N$ in the lower bound were replaced with the linear constraint $\sum_{j \in J_{t,N}} m_j \leq N$.
-
-For small values of $N$, such as $N \leq 10^3$, the linear programming method is extremely accurate in upper and lower bounding $t(N)$; for instance, these methods give the exact value of $t(N)$ for all $N \leq 600$, with the sole exception of $N=155$, where the linear programming bounds instead give $45 \leq t(155) \leq 46$.  In this case, the (slower) integer programming method can be deployed to verify that $t(155)=45$.
-
-However, the large size of $J_{t,N}$ renders a direct application of the linear programming approach computationally expensive once $N$ exceeds $10^3$ or so.  For the purpose of establishing lower bounds, one can of course reduce this set arbitrarily; we have found a good choice to be the integers between $t$ and $N$.  For the dual problem, we are also able to make such a reduction, under the additional hypotheses that the weights $w_p$ are non-decreasing:
-  
-\begin{lemma}[Linear programming bound]\label{lp-upper}  Let $N$ be an natural number and $1 \leq t \leq N/2$.  Suppose for each prime $p \leq N$, one has a non-negative real number $w_p$ which is weakly non-decreasing in $p$ (thus $w_p \leq w_{p'}$ when $p \leq p'$), and such that \eqref{pj} holds for all $t \leq j \leq N$, and such that \eqref{hyp} also holds.  Then $t(N) < t$.
-\end{lemma}
-  
-\begin{proof}
-By the previous remarks, it will suffice to show that the bound \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decreasing hypothesis on $w_p$, we have
-  $$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
-  and hence by the minimality of $j$ we have
-  $$ \sum_p w_p \nu_p(j) > 1, $$
-  a contradiction.
+\begin{proof}  If $m_j, j \in J_{t,N}$ are non-negative numbers obeying \eqref{constraints}, then clearly
+  \begin{equation}\label{mj-subfac} 
+    \prod_{j \geq t} j^{m_j}
+  \end{equation}
+is a $t$-admissible subfactorization of $N!$, so that $M(N,t)$ is greater than or equal to \eqref{mj-sum}. Conversely, suppose that $M(N,t) \geq M$, thus we have a $t$-admissible subfactorization of $N!$ into $M$ factors.  Clearly, each of these factors $j$ is at least $t$, and divides $N!$.
+If one of these factors $j$ has a proper factor $j' < j$ that is greater than or equal to $t$, then we can replace the factor $j$ by the factor $j'$ in the subfactorization, and still obtain a $t$-admissible subfactorization of $N!$.  Iterating this, we may assume without loss of generality that all the factors $t$ lie in $J_{t,N}$.  We can then express this subfactorization as a product \eqref{mj-subfac}, and by computing $p$-valuations we conclude the constraints \eqref{constraints}.  The claim follows.
 \end{proof}
 
+This integer program formulation can be used, when combined with standard packages such as Gurobi or Mojo {\bf give more details here}, to compute $M(N,t)$ (and hence $t(N)$) precisely for any specific $N,t$ with $N$ as large as $10^4$, though in practice it is better to first use faster methods (which we discuss below) to control these quantities first, using integer programming as a last resort when these faster methods fail to achieve the desired result.
 
-We have found empirically that using linear programming to minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$ tends to generate weights $w_p$ that are in fact weakly decreasing, so that a rigorous upper bound $t(N) < t$ can be established by this method without needing to expand the linear program to all $j \in J_{t,N}$.  We were unable to rigorously demonstrate this weak decrease for this specific linear program, but we can show that weak decrease must occur when one relaxes the constraint $t \leq j \leq N$ somewhat:
+For larger $N$, the sets $J_{t,N}$ become somewhat large, and the integer program becomes computationally expensive.  For the purposes of lower bounding $M(N,t)$, one can arbitrarily replace $J_{t,N}$ with a smaller set (effectivelly setting $m_j=0$ for all $j$ outside this set) to speed up the integer program; empirically we have found that the set $\{ j: t \leq j \leq N \}$ is a good choice, as it appears to give the same bounds while being significantly faster.
 
-\begin{lemma}[Weakly increasing dual weights]\label{dual-weights}\ 
-  \begin{itemize}
-  \item[(i)] Let $w'_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for \emph{all} $j \geq t$.  Then the $w'_p$ are weakly increasing in $p$.
-  \item[(ii)] Let $w''_p \geq 0$, $p \leq N$ be weights that minimize the left-hand side of \eqref{hyp} subject to \eqref{pj} holding for those $j \geq t$ that divide $N!$.  Suppose further that $t \leq N/2$. Then the $w''_p$ are weakly increasing in $p$.
-  \end{itemize}
-  \end{lemma}
-  
-  \begin{proof}  For (i), suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w'_{p_1} > w'_{p_2}$.  Let $\tilde w'_p$ be the weights formed by setting $\tilde w'_p \coloneqq w'_p$ for all $p \neq p_1$ and $\tilde w'_{p_1} \coloneqq w'_{p_2}$.  Then $\sum_p \tilde w'_p \nu_p(N!) < \sum_p w'_p \nu_p(N!)$. On the other hand, for any $j \geq t$, we see that
-    $$ \sum_p \tilde w'_p \nu_p(j) = \sum_p w'_p \nu_p(\tilde j)$$
-    where $\tilde j$ is formed from $j$ by replacing all factors of $p_1$ in the prime factorization of $j$ with $p_2$.  Since $p_2 > p_1$, we have $\tilde j > j \geq t$, and so $\tilde w'_p$ also obeys the conditions \eqref{pj} for all $j \geq t$, contradicting the minimizing property of the $w'_p$.
+For upper bounds, we can relax the integer program to a linear program.  Let $M_\R(N,t)$ denote the maximum value of \eqref{mj-sum} where the $m_j, j \in J_{t,N}$ are now non-negative \emph{real} numbers obeying \eqref{constraints}.  Clearly we have the upper bound
+$$ M(N,t) \leq M_\R(N,t)$$
+which can be improved slightly to
+\begin{equation}\label{lp-upper} 
+  M(N,t) \leq \lfloor M_\R(N,t)\rfloor
+\end{equation}
+since $M(N,t)$ is an integer.  We refer to these bounds as the \emph{linear programming upper bounds}.
 
-  For (ii), we similarly suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w''_{p_1} > w''_{p_2}$.  Let $\eps>0$ be a sufficiently small quantity, and define the modification $\tilde w''_p$ to $w''_p$ by decreasing $w''_{p_1}$ by $\eps$ and leaving all other $w''_p$ unchanged.  This again decreases the left-hand side of \eqref{hyp}, so to get a contradiction as before, it suffices to show that
-  $$ \sum_p \tilde w''_p \nu_p(j) \geq 1$$
+The quantity $M_\R(N,t)$ can be computed by standard linear programming methods; in particular, upper bounds on $M_\R(t,N)$ can be obtained by solving a dual linear program involving some weights $w_p, p \leq N$ that obey constraints for each $j \in J_{t,N}$.  In fact we can restrict attention to those constraints with $j$ in the range $t \leq j \leq N$:
+
+\begin{proposition}[Dual description of $M_\R(N,t)$]\label{dual-desc} For any $N,t \geq 1$, $M_\R(N,t)$ is the minimum value of
+\begin{equation}\label{hyp}
+    \sum_{p \leq N} w_p \nu_p(N!)
+\end{equation}
+where $w_p$ are non-negative reals for primes $p \leq N$
+subject to the constraints that the $w_p$ are weakly decreasing, thus
+\begin{equation}\label{wp-decrease}
+w_{p_2} \leq w_{p_1}
+\end{equation}
+whenever $p_2 \geq p_1$, and 
+\begin{equation}\label{pj}
+  \sum_{p \leq N} w_p \nu_p(j) \geq 1
+ \end{equation}
+for all $t \leq j \leq N$.  In particular, if
+\begin{equation}\label{hyp-low}
+  \sum_{p \leq N} w_p \nu_p(N!) < N
+\end{equation}
+then $t(N) < t$.
+\end{proposition}
+
+\begin{proof}  Suppose first that $w_p$ are non-negative reals obeying \eqref{pj} for all $t \leq j \leq N$.
+We claim that \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decreasing hypothesis on $w_p$, we have
+  $$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
+  and hence by the minimality of $j$ we have
+  $$ \sum_p w_p \nu_p(j) > 1,$$
+  a contradiction.
+
+Now let $m_j, j \in J_{t,N}$ be non-negative reals obeying \eqref{constraints}.  Multiplying each constraint in \eqref{constraints} by $w_p$ and summing, we conclude from \eqref{pj} that
+$$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} \nu_p(N!)$$
+and hence \eqref{hyp} is an upper bound for $M_\R(N,t)$.
+
+In the converse direction, we need to locate weakly decreasing non-negative weights $w_p$ obeying \eqref{pj} for $t \leq j \leq N$ for which
+\begin{equation}\label{wpm} 
+  \sum_{p \leq N} w_p \nu_p(N!) = M_\R(N,t).
+\end{equation}
+To do this, we first make the technical observation that in the definition of $M_\R(N,t)$, we can enlarge the index set $J_{t,N}$ to the larger set $J'_{t,N}$ of natural numbers $j \geq t$ that divide $N!$.  This follows by repeating the proof of \Cref{fip}: if $m_j$ were non-zero for some $j \geq t$ dividing $N!$ that had a proper factor $j' \geq t$, then one could transfer the mass of $m_j$ to $m_{j'}$ (i.e., replace $m_{j'}$ with $m_{j'}+m_j$ and then set $m_j$ to zero) without affecting \eqref{constraints}.  
+
+If we then invoke the duality theorem of linear programming, we can find weights $w_p \geq 0$ for $p \leq N$ obeying \eqref{wpm} as well as \eqref{pj} for all $j \in J'_{t,N}$ (not just $j \in J_{t,N}$).  To conclude the proof, it suffices to show that the $w_p$ are weakly decreasing. Suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w_{p_1} > w_{p_2}$.  Let $\eps>0$ be a sufficiently small quantity, and define the modification $\tilde w_p$ to $w_p$ by decreasing $w_{p_1}$ by $\eps$ and leaving all other $w_p$ unchanged.  This decreases the left-hand side of \eqref{wpm}, so to get a contradiction with the already-obtained lower bound, it suffices to show that
+  $$ \sum_p \tilde w_p \nu_p(j) \geq 1$$
   for all $j \geq t$ dividing $N!$.  If $j$ has a proper factor $j'$ that is still at least $t$, the condition for $j$ would follow from that of $j'$, so we may restrict attention to the case where $j$ has no proper factor greater than or equal to $t$.  We can assume that $j$ is divisible by $p_1$, otherwise the claim follows from \eqref{pj}.  For $\eps$ small enough, one has
-  $$ \sum_p \tilde w''_p \nu_p(j) \geq \sum_p w''_p \nu_p(\frac{p_2}{p_1} j);$$
+  $$ \sum_p \tilde w_p \nu_p(j) \geq \sum_p w_p \nu_p\left(\frac{p_2}{p_1} j\right);$$
 since $\frac{p_2}{p_1} j \geq j \geq t$, we are done unless $\frac{p_2}{p_1} j$ is not divisible by $N!$. This only occurs when $\nu_{p_2}(j) = \nu_{p_2}(N!)$, but then
 $$ \frac{j}{p_1} \geq p_2^{\nu_{p_2}(N!)} \geq p_2^{\lfloor N/p_2\rfloor}.$$
 We claim that the right-hand side is at least $N/2$.  This is clear for $p_2 \geq N/2$, and also for $\sqrt{N/2} \leq p_2 < N/2$ since $\lfloor N/p_2\rfloor \geq 2$ in this case.  For $p_2 < \sqrt{N/2}$ one has 
 $$  p_2^{\lfloor N/p_2\rfloor} \geq 3^{\lfloor \sqrt{2N} \rfloor} \geq \frac{N}{2}$$
 for all $N$ (here we use that $3^k \geq \frac{(k+1)^2}{4}$ for $k \geq 1$).  Thus in all cases we have $j/p_1 \geq N/2 \geq t$, contradicting the hypothesis that $j$ has no proper factor that is at least $t$.
-  \end{proof}
+\end{proof}
 
-This now gives a number of variants of the linear programming method to produce upper and lower bounds on $t(N)$ for medium values of $N$, say in the range $10^3 \leq N \leq 10^8$:
-\begin{itemize}
-\item[(i)] One can obtain a \emph{fast linear programming upper bound} by minimizing \eqref{hyp} subject to \eqref{pj} for $t \leq j \leq N$, checking that the resulting weights $w_p$ are weakly non-decreasing, and then applying \Cref{lp-upper}.  In principle, this method could fail by producing weights that are not weakly non-decreasing, but we have not encountered this scenario in practice.  This bound works well for $N$ as large as $8 \times 10^8$ (see \Cref{fig-longer}).
-\item[(ii)] One can obtain an \emph{impatient integer programming lower bound} by applying integer programming (restricting to the range $t \leq j \leq N$ for speed) to see if a lower bound $t(N) \geq t$ can be obtained first for $t$ equal to the floor of the (fast) linear programming upper bound, then decrementing $t$ by one whenever the integer program fails to terminate in a reasonable length of time (e.g., a minute).  This works well in practice for $N$ up to about $10^5$; see \Cref{fig-surplus}.
-\item[(iii)] We developed a more complicated\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} \emph{smooth factorization lower bound} which used the greedy approach from the previous section to deal with large primes and linear programming methods (using smooth factors) to deal with small primes, which works well in practice for {\bf describe range of $N$}, and outperforms the simpler linear programming floor lower bound, though worse than the (slower) impatient integer programming bound; see \Cref{fig-surplus}.
-\end{itemize}
-
-The fast linear programming upper bound, when combined with the impatient integer programming bound, can compute $t(N)$ exactly for all $N \leq 10^4$ with the exception of $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, but in these cases $t(N)$ can be computed exactly by the full integer program; see \cite{github} and \Cref{fig-long}.
-
-One can also use this method to accurately bound subfactorizations of $N!$ for larger $N$, although the runtime becomes slow.  For instance, with $N = 3 \times 10^5$ and $t = N/3 = 10^5$, the fast linear program upper bound can be used to show that any $t$-admissible factorization has cardinality at most $N+455$, while the linear programming floor+residuals lower bound method produces a $t$-admissible factorization of exactly this cardinality.  This demonstrates \Cref{main}(ii), (iii) for this value of $N$.  The fast linear programming upper bound and the impatient integer program lower bound can also establish \Cref{main}(iii) in the range $43632 \leq N \leq 8 \times 10^4$, but show that this conjecture fails for $N = 43631$; it also holds for $N=41006$, but fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$; see \Cref{fig-surplus}.  When combined with the greedy algorithm computations from the previous section, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{11}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
-
-
+\Cref{dual-desc} allows for a fast method to compute $M_\R(N,t)$ by a linear program.  In practice, we have found that even if we drop the explicit constraint \eqref{wp-decrease} that the $w_p$ are weakly decreasing (or equivalently, if we return to the original primal problem of optimizing \eqref{mj-sum} for real $m_j \geq 0$ obeying \eqref{constraints}, but now with $j$ restricted to $t \leq j \leq N$), the optimal weights $w_p$ produced by the resulting linear program will be weakly decreasing anyway, although we could not prove this empirically observed fact rigorously.  For instance, when $N = 3 \times 10^5$ and $t = N/3$, this linear program produces non-decreasing weights which certify that
+$$ M_\R(N,t) = N + 445.83398\dots$$
+and hence by \eqref{lp-upper}
+\begin{equation}\label{mnt}
+  M(N,t) \leq N + 445
+\end{equation}
+for this choice of $N,t$.  In fact, as discussed later in this section, we know that equality holds in this particular case.  For $N \leq 10^4$, we found that the linear programming upper bound on $t(N)$ is in fact tight except when
+$N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, in which case integer programming was needed to precisely compute $t(N)$.  The values of $t(N)$ thus computed are  plotted in \Cref{fig-long}.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{longplot.png}
-  \caption{Exact values of $t(N)/N$ for $80 \leq N \leq 10^4$, obtained via fast linear and integer programming in most cases (and the full integer program in some exceptional cases).  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
+  \caption{Exact values of $t(N)/N$ for $80 \leq N \leq 10^4$, obtained via integer programming.  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
   \label{fig-long}
   \end{figure}
+
+
+With integer programming, we could also establish\footnote{Explicit factorizations in this range can be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/Data/factorizations}.} $t(N) \geq N/3$ for all $43632 \leq N \leq 8 \times 10^4$. 
+  In particular, when combined with the greedy algorithm computations from the previous section, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{12}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
+
+
+For $N \geq 10^4$, the integer programming method to lower bound $M(N,t)$ becomes slow.  We found two faster methods to give slightly weaker lower bounds on this quantity, which we call the ``floor+residuals'' method, and the ``smooth factorization'' method.
+
+The ``floor+residuals'' method proceeds by first running the primal linear program to find the real $m_j \geq 0$ for $t \leq j \leq N$ that maximize \eqref{mj-sum} subject to \eqref{constraints}.  The integer parts $\lfloor m_j \rfloor$ will then of course also obey \eqref{constraints} and thus form a subfactorization; but this subfactorization is somewhat inefficient because there can be a $p$-surplus of $\nu_p(N!) - \sum_{j \geq t} \lfloor m_j \rfloor \nu_p(j)$ at various primes $p \leq N$.  We then apply the greedy algorithm of the previous section to fashion as many factors greater than or equal to $t$ from these residual primes, to obtain our final subfactorization that provides a lower bound on $M(N,t)$.
+
+The floor+residuals method is fast and highly accurate for small and medium $N$ (e.g., $N \leq 3 \times 10^5$).  For instance:
+\begin{itemize}
+  \item The method computes $t(N)$ exactly for all $N \leq 600$, with the sole exception of $N=155$; see \Cref{fig-zoom}.  When $N=155$, the floor+residuals method provides a subfactorization that certifies $t(155) \geq 45$, while the linear programming upper bound \eqref{lp-upper} gives $t(155) \leq 46$.  Integer programming can then be deployed to confirm $t(155)=45$.
+  \item The method also verifies this lower bound for $N=41006$, while the linear programming upper bound \eqref{lp-upper} shows that $t(N) \geq N/3$ fails for all smaller $N$ except for $N=1,2,3,4,5,6,9$; see \Cref{fig-surplus}.
+  \item The method establishes the matching lower bound
+\begin{equation}\label{mnt-lower}
+M(N,t) \geq N + 455
+\end{equation}
+to \eqref{mnt} when $N = 3 \times 10^5$ and $t=N/3$.
+\end{itemize}
+
+For larger $N$ (e.g., $10^4 \leq N \leq 9 \times 10^8$), the floor+residuals method becomes slow due to the large number $\pi(N)$ of variables $w_p$ that are involved in the linear program.  We developed a \emph{smooth factorization lower bound} method\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} to handle this range, by first using the greedy approach from the previous section to allocate all factors involving $p \geq \sqrt{N}$, and then using a version of the floor+residuals method to handle the smaller primes $p < \sqrt{N}$ (with $j$ now restricted to ``smooth'' numbers - numbers whose prime factors are less than $\sqrt{N}$).  Thus, the linear program now involves only $\pi(\sqrt{N})$ variables $w_p$, and runs considerably faster in ranges such as $10^4 < N \leq 9 \times 10^8$.  The lower bounds obtained by this method remain quite close to the linear programming upper bound \eqref{lp-upper}, and outperforms the greedy algorithm; see Table \ref{long-table} and \Cref{fig-longer}.
+
 
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming and smooth factorization for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
+    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming upper bound and smooth factorization lower bound for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
     \label{fig-longer}
     \end{figure}
 
@@ -586,7 +662,7 @@ One can also use this method to accurately bound subfactorizations of $N!$ for l
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N)-N$ for $4 \times 10^5 \leq N \leq 4.5 \times 10^5$, where $M(N)$ is the largest cardinality of an $N/3$-admissible subfactorization of $N!$ (thus $t(N) \geq N/3$ if and only if $M(N)-N \geq 0$).  Fast linear programming provides an upper bound (red), which one can round down to the nearest integer.  Impatient integer programming (green) provides upper bounds that almost always matches the upper bound (rounded down) at this range of $N$; in particular it verifies $t(N) \geq N/3$ for $43632 \leq N \leq 4.5 \times 10^5$ {\bf not quite; there are four exceptions currently}.  The smooth factorization method (purple) gives slightly worse bounds than the(slower) impatient integer programming method, but slightly better than the (faster) linear algebra floor method (blue).}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^5 \leq N \leq 4.5 \times 10^5$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green), implemented in an \emph{ad hoc} fashion, provides lower bounds that almost always matches the upper bound (rounded down) at this range of $N$; in particular it verifies $t(N) \geq N/3$ for $43632 \leq N \leq 4.5 \times 10^5$.  The smooth factorization method (purple) gives slightly worse bounds than the (slower) ad hoc integer programming methods, but slightly better than the (faster) linear algebra floor method (blue) {\bf TODO: update this to floor+residuals}.}
       \label{fig-surplus}
       \end{figure}
     
@@ -634,9 +710,11 @@ $4 \times 10^8$ & $\num{140401212}$ & $t(N)_- + 80$ & $t(N)_- + 887$ & $t(N)_- -
 $5 \times 10^8$ & $\num{175605266}$ & $t(N)_- + 98$ & $t(N)_- + 972$ & $t(N)_- - \num{206175}$ \\
 $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- + 68$ & $t(N)_- + 1058$ & $t(N)_- - \num{244391}$ \\
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 89$ & $t(N)_- + 1147$ & $t(N)_- - \num{282167}$ \\
+$8 \times 10^8$ & $\num{281305291}$ & $t(N)_- + 1440$ & $t(N)_- + 1158$ & $t(N)_- - \num{319700}$ \\
+$9 \times 10^8$ & $\num{316560601}$ & $t(N)_- + 113$ & $t(N)_- + 1238$ & $t(N)_- - \num{357029}$ \\
       \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^5, 7 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by linear programming, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer). }\label{long-table}
+\caption{For sample values of $N \in [10^5, 9 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by smooth factorization and linear programming respectively, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer). }\label{long-table}
 \end{table}
 
       
@@ -681,14 +759,14 @@ $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_-
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{verylarge.png}
-  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and fast greedy methods in the range $10^5 \leq N \leq 10^{12}$.  (The linear programming upper bound is not displayed, as it is visually indistinguishable from the lower bound.) {\bf would be nice to display data from other greedy methods for comparison}}\label{fig-verylarge}
+  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and greedy methods in the range $10^5 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. {\bf would be nice to display data from other greedy methods for comparison}}\label{fig-verylarge}
 \end{figure}
 
 
 
 \section{Some upper bounds}\label{upper-sec}
 
-It is easy to check using \eqref{ftoa} that the weights $w_p \coloneqq \frac{\log p}{\log t}$ will obey the requirements \eqref{pj}, \eqref{hyp} as long as $0 > \log N! - N \log t$.  This recovers the trivial upper bound \eqref{trivial}.  By adjusting these weights at large primes, one can improve this bound as follows:
+It is easy to check using \eqref{ftoa} that the weights $w_p \coloneqq \frac{\log p}{\log t}$ will obey the conditions \eqref{hyp-low}, \eqref{pj} as long as $0 > \log N! - N \log t$.  This recovers the trivial upper bound \eqref{trivial}.  By adjusting these weights at large primes, one can improve this bound as follows:
 
 \begin{lemma}[Upper bound criterion]\label{upper-crit}  Suppose that $1 \leq t \leq N$ are such that
   \begin{equation}\label{contra}
@@ -705,7 +783,7 @@ w_p \coloneqq  \begin{cases}
   \frac{\log p}{\log t} - \frac{\log \frac{\lceil t/p \rceil}{t/p}}{\log t} = 1 - \frac{\log \lceil t/p \rceil}{\log t} & p  > \frac{t}{\lfloor \sqrt{t} \rfloor}.
 \end{cases}
 $$
-Clearly the $w_p$ are non-negative.  It will suffice to verify the conditions \eqref{pj}, \eqref{hyp}.  If $j \in J_{t,N}$ contains no prime factor $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$, then from \eqref{ftoa} we have
+Clearly the $w_p$ are non-negative.  It will suffice to verify the conditions \eqref{pj}, \eqref{hyp-low}.  If $j \in J_{t,N}$ contains no prime factor $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$, then from \eqref{ftoa} we have
 $$ \sum_p w_p \nu_p(j) = \frac{\sum_p \nu_p(j) \log p}{\log t} = \frac{\log j}{\log t} \geq 1.$$
 If $j \in J_{t,N}$ is of the form $j = mp_1$ where $p_1 > \frac{t}{\lfloor \sqrt{t} \rfloor}$ and $m$ contains no prime factor exceeding $\frac{t}{\lfloor \sqrt{t} \rfloor}$, then $m \geq \lceil t/p_1 \rceil$, and we have
 \begin{align*}
@@ -738,14 +816,14 @@ In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_600.png}
-  \caption{An enlarged version of \Cref{fig1-alt}, displaying the lower bound from the greedy algorithm and the upper bound from \Cref{upper-crit}.  The linear programming upper and lower bounds are exact in this region, except for $N=155$ in which the upper bound is off by one.}\label{fig-zoom}
+  \caption{An enlarged version of \Cref{fig1-alt}, displaying the lower bound from the greedy algorithm and the upper bound from \Cref{upper-crit}.  The linear programming upper bound and floor+residual bounds are exact in this region, except for $N=155$ in which the upper bound is off by one.}\label{fig-zoom}
 \end{figure}
 
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{factors.png}
-  \caption{A histogram of an optimal factorization of $N!$ for $N=43632$, demonstrating that $t(N) = \lceil N/3\rceil = 14545$.  Of the $N$ factors, most ($\num{32147}$) of them are of the form $p \lceil t/p \rceil$ for $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$, thus directly contributing to the left-hand side of \Cref{upper-crit}.  (The factors arising from very large primes are lie to the right of the displayed graph, as a long tail of the histogram.)  The remaining $\num{11485}$ factors stay close to $t(N)$, with the largest being $14941$.
+  \caption{A histogram of an optimal factorization of $N!$ for $N=43632$, demonstrating that $t(N) = N/3+1 = 14545$.  Of the $N$ factors, most ($\num{32147}$) of them are of the form $p \lceil t/p \rceil$ for $p > \frac{t}{\lfloor \sqrt{t} \rfloor}$, thus directly contributing to the left-hand side of \Cref{upper-crit}.  (The factors arising from very large primes are lie to the right of the displayed graph, as a long tail of the histogram.)  The remaining $\num{11485}$ factors stay close to $t(N)$, with the largest being $\num{14941}$.
   }\label{fig-factor}
   \end{figure}
   
@@ -779,7 +857,7 @@ as $N \to \infty$.
     for $N$ sufficiently large depending on $\eps$.
 
     For $N$ large enough, we have $\frac{t}{\lfloor\sqrt{t}\rfloor} \leq \frac{N}{\log^3 N}$.
-    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has an (augmented) total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,1]$.   This implies that $x \mapsto \frac{1}{\log x} f_{N/t}(x/N)$ has an (augmented) total variation of $O(\log^2 N)$.
+    On the interval $[1/\log^3 N,1]$, the piecewise smooth function $f_{N/t}$ is bounded by $O(1)$ thanks to \eqref{falpha-bound}, and has an (augmented) total variation of $O(\log^3 N)$; the same is then true for the rescaled function $x \mapsto f_{N/t}(x/N)$ on $[N/\log^3 N,N]$.   This implies that $x \mapsto \frac{1}{\log x} f_{N/t}(x/N)$ has an (augmented) total variation of $O(\log^2 N)$.
    By \Cref{osc-lemma} (with classical error term), we conclude that the left-hand side of \eqref{targ-sum} is at least
     $$ \int_{N/\log^3 N}^N f_{N/t}(x/N) \frac{dx}{\log x} + O\left( N \exp(-c\sqrt{\log N}) \right)$$
     for some $c>0$.  Performing a change of variable, we reduce to showing that
@@ -973,7 +1051,7 @@ for any $r \geq 1$.  From this one can readily check that the hypotheses of \Cre
 \end{example}
 
 If one makes the ansatz $a_{2^r} = c / 2^r$ for some $c>0$ and all $r \geq r_0$, with $a_\ell = 0$ for all other $\ell > 2^{r_0}$, then the task of locating weights $a_r$ obeying the hypotheses of \Cref{asym-crit} becomes a linear programming problem.  
-programming problem.  Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/dnup}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$. 
+Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/dnup}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$.
 
 We can also recover a weak version of \Cref{main}(iv) with this method:
 
@@ -1737,7 +1815,7 @@ for $N \geq 10^{70}$. This is better than the previous bound for $\alpha_5$.  Fo
 
 This completes the proof of \Cref{main}(iii) (and hence \Cref{main}(ii)) in the cases $N=N_0$ and $N \geq 10^{70}$.  It remains to cover the intermediate range $N_0 < N \leq 10^{70}$.  Here we adopt the perspective of interval arithmetic.  If $N$ is constrained to a given interval, such as $[10^{11}, 5 \times 10^{11}]$, we can use the worst-case upper and lower bounds for $A_{p_1}, B_{p_1}$ to obtain conservative upper bounds on the most delicate quantities
 $\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in these estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
-$$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^14, 10^{20}]; \quad [10^{20}, 10^{70}]$$
+$$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^{14}, 10^{20}]; \quad [10^{20}, 10^{70}]$$
 one can check that such bounds are sufficient to verify \eqref{delta-cond}, \eqref{alpha-cond} in these cases.  This now verifies \Cref{main}(ii), (iii) for all $N \geq 10^{11}$.
 (In fact, with more effort, this verification can be pushed down to $N \geq 6 \times 10^{10}$ using the same choice of parameters $A,K,L$.)
   
@@ -1848,7 +1926,7 @@ $$
 The claim then follows from \eqref{bj1}, \eqref{bj2} (and the obvious fact that $\kappa$ is monotone non-increasing after optimizing in $j$.
 
 \begin{remark}
-It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that irrationality measure of $\log 3 / \log 2$ is equal to $2$.
+It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that the irrationality measure of $\log 3 / \log 2$ is equal to $2$.
 \end{remark}
 
 
@@ -1870,7 +1948,7 @@ $$ g(z) \coloneqq  \sum_{y < n \leq z} a_n - \int_z^y f(u)\ du - C$$
 then $g$ has jump discontinuities at the natural numbers, but is otherwise continuously differentiable, and is also bounded uniformly in magnitude by $A$.  We can then compute the Riemann--Stieltjes integral
 $$ \int_{(y,x]} b\ dg = \sum_{y < n \leq x} b(n) a_n - \int_y^x f(t) b(t)\ dt.$$
 Since the discontinuities of $g$ and $b$ do not coincide, we may integrate by parts to obtain
-$$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g db.$$
+$$ \int_{(y,x]} b\ dg = b(x) g(x) - b(y^+) g(y^+) - \int_{(y,x]} g\ db.$$
 The left-hand side is $O_{\leq}(A \|b\|_{\mathrm{TV}^*(y,x]})$, and the claim follows.
 \end{proof}
 
@@ -1957,32 +2035,32 @@ Computing the sum $c''_1$ to reasonable accuracy requires some further analysis.
 $$0 \leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e}{k^2}$$
 and the integral test, one has the simple tail bound
 $$ 0 \leq \sum_{k=K+1}^\infty \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e}{K}$$
-but the convergence rate here is slow.  To accelerate the convergence, we write $\lceil\frac{k}{e} \rceil = \frac{k}{e} + \{\frac{k}{e}\}$ and use the more precise Taylor approximation
-$$ \frac{e \left\{\frac{k}{e}\right\}}{k^2} - \frac{e^2 \left\{\frac{k}{e}\right\}^2}{2k^3} 
-\leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e \left\{\frac{k}{e}\right\}}{k^2}.$$
-Bounding $\{k/e\}$ by one, we have the tail bound
-$$ 0 \leq \sum_{k=K+1}^\infty \frac{e^2 \left\{\frac{k}{e}\right\}^2}{2k^3} \leq \frac{e^2}{4K^2}$$
+but the convergence rate here is slow.  To accelerate the convergence, we write $\lceil\frac{k}{e} \rceil = \frac{k}{e} + \{-\frac{k}{e}\}$ and use the more precise Taylor approximation
+$$ \frac{e \left\{-\frac{k}{e}\right\}}{k^2} - \frac{e^2 \left\{-\frac{k}{e}\right\}^2}{2k^3} 
+\leq \frac{1}{k} \log\left(\frac{e}{k} \left\lceil \frac{k}{e} \right\rceil\right) \leq \frac{e \left\{-\frac{k}{e}\right\}}{k^2}.$$
+Bounding $\{-k/e\}$ by one, we have the tail bound
+$$ 0 \leq \sum_{k=K+1}^\infty \frac{e^2 \left\{-\frac{k}{e}\right\}^2}{2k^3} \leq \frac{e^2}{4K^2}$$
 so the main task is then to control the simplified tail
-$$ \sum_{k=K+1}^\infty \frac{e\left\{\frac{k}{e}\right\}}{k^2}.$$
+$$ \sum_{k=K+1}^\infty \frac{e\left\{-\frac{k}{e}\right\}}{k^2}.$$
 From the integral test one has
 $$ \frac{e}{2(K+1)} \leq \sum_{k=K+1}^\infty \frac{\frac{e}{2}}{k^2} \leq \frac{e}{2K}$$
 so one can instead look at the normalized tail
-$$ \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}.$$
+$$ \sum_{k=K+1}^\infty e\frac{\left\{-\frac{k}{e}\right\}-\frac{1}{2}}{k^2}.$$
 The Erd\H{o}s--Tur\'an inequality states that, for any absolutely convergent non-negative weights $c_k$, any interval $I \subset [0,1]$ of length $|I|$, and any real numbers $\xi_k$, and any $N \geq 1$, one has
-$$ |\sum_k c_k (1_I(\xi_k \mod 1) - |I|)| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) |\sum_k c_k e^{2\pi i n \xi_k}|;$$
+$$ \left|\sum_k c_k (1_I(\xi_k \mod 1) - |I|)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|;$$
 see the inequality\footnote{In the cited reference, only the special case in which $c_k$ is a uniform probability distribution function on $\{1,\dots,M\}$ is discussed, but it is easy to see that the argument in fact works for arbitrary absolutely convergent non-negative weights $c_k$.} after \cite[Theorem 20]{vaaler}.  Applying this for $I = [0,h]$ and then averaging in $h$ from $0$ to $1$, we conclude that
-$$ \left|\sum_k c_k \left(\{\xi_k\}-\frac{1}{2}\right)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) |\sum_k c_k e^{2\pi i n \xi_k}|.$$
+$$ \left|\sum_k c_k \left(\{\xi_k\}-\frac{1}{2}\right)\right| \leq \frac{1}{N+1} \sum_k c_k + \sum_{n=1}^N \left(\frac{2}{\pi n} + \frac{2}{N+1}\right) \left|\sum_k c_k e^{2\pi i n \xi_k}\right|.$$
 In particular, we have
-$$ \left| \sum_{k=K+1}^\infty e\frac{\left\{\frac{k}{e}\right\}-\frac{1}{2}}{k^2}\right| \leq \frac{1}{N+1} \sum_{k=K+1}^\infty \frac{e}{k^2}
-+ \sum_{n=1}^N \left(\frac{2e}{\pi n} + \frac{2e}{N+1}\right) \left|\sum_{k=K+1}^\infty \frac{e^{2\pi i n k/e}}{k^2}\right|.
+$$ \left| \sum_{k=K+1}^\infty e\frac{\left\{-\frac{k}{e}\right\}-\frac{1}{2}}{k^2}\right| \leq \frac{1}{N+1} \sum_{k=K+1}^\infty \frac{e}{k^2}
++ \sum_{n=1}^N \left(\frac{2e}{\pi n} + \frac{2e}{N+1}\right) \left|\sum_{k=K+1}^\infty \frac{e^{-2\pi i n k/e}}{k^2}\right|.
 $$
 To estimate the exponential sum
-$$ S_{n,K} \coloneqq \sum_{k=K+1}^\infty \frac{e^{2\pi i n k/e}}{k^2}$$
+$$ S_{n,K} \coloneqq \sum_{k=K+1}^\infty \frac{e^{-2\pi i n k/e}}{k^2}$$
 observe from shifting $k$ by one that
-$$ S_{n,K} = e^{2\pi i n/e} \sum_{k=K}^\infty \frac{e^{2\pi i n k/e}}{(k+1)^2}
-= e^{2\pi i n/e} S_{n,K} + O_{\leq}\left( \frac{1}{(K+1)^2} + \sum_{k=K+1}^2 \frac{1}{k^2} -\frac{1}{(k+1)^2}\right)$$
+$$ S_{n,K} = e^{-2\pi i n/e} \sum_{k=K}^\infty \frac{e^{-2\pi i n k/e}}{(k+1)^2}
+= e^{-2\pi i n/e} S_{n,K} + O_{\leq}\left( \frac{1}{(K+1)^2} + \sum_{k=K+1}^2 \frac{1}{k^2} -\frac{1}{(k+1)^2}\right)$$
 and hence on summing the telescoping series
-$$ |S_{n,K}| \leq \frac{2}{|e^{2\pi i n/e}-1| (K+1)^2} = \frac{1}{(K+1)^2 \sin(\pi n/e)}.$$
+$$ |S_{n,K}| \leq \frac{2}{|e^{-2\pi i n/e}-1| (K+1)^2} = \frac{1}{(K+1)^2 \sin(\pi n/e)}.$$
 Because the irrationality measure of $e$ is $2$, this will give error terms of the shape $O(\log K/K^2)$ if one sets $N \approx K / \log K$.  Setting for instance $K = 10^6$, $N = 10^5$, an interval arithmetic computation then gives
 $$c''_1 = 1.679578996\dots$$
 and thus by \eqref{c1-def}

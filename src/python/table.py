@@ -2,6 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter  
 
+# from lp_large_n.txt (old version)
 data = [
     [100000, 33642, 33646, 33668],
     [200000, 67703, 67704, 67739],
@@ -41,6 +42,7 @@ data = [
     [900000000, 316560601, 316560714, 316561839]
 ]
 
+# from tbounds.txt
 data2 = [
   [100000, 33184, 0.000],
   [200000, 66657, 0.000],
@@ -108,6 +110,7 @@ data2 = [
     [1000000000000,353583755012,22.688]  
  ]
 
+# from tbounds_o.txt
 data3 = [
     [100000, 33184, 0.000],
     [200000, 66738, 0.001],
@@ -148,7 +151,7 @@ data3 = [
     [1000000000, 348901168, 19935.484]
 ]
 
-
+# from lp_large_n_txt
 data4 = [
     [ 100000, 33614, 33642, 33646, 33668],
     [ 200000, 67667, 67703, 67704, 67739],
@@ -389,4 +392,4 @@ def plot2():
     plt.tight_layout()
     plt.show()
 
-table1()
+plot()

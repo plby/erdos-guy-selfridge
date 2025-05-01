@@ -52,7 +52,7 @@ def val(p):
 
 def read_file():
     # Open the file for reading
-    with open("..\\..\\data\\factorizations\\43632-43632-14545.txt", "r") as file:
+    with open("..\\..\\..\\data\\factorizations\\43632-43632-14545.txt", "r") as file:
         # Read the file line by line
         for line in file:
             parts = line.split()

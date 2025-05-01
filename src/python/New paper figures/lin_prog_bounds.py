@@ -2,13 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-# Plot the linear algebra bounds for N between 10^3 and 10^5, compared against the theoretical upper bound from Lemma 5.1
+# Plot the linear programming bounds for N between 10^3 and 10^5, compared against the theoretical upper bound from Lemma 5.1
 
 base = []
 t_lower = []
 t_upper = []
 
-with open('../../data/t_large_n_bounds_2.txt', 'r') as f:
+with open('../../../data/t_large_n_bounds_2.txt', 'r') as f:
     next(f)  # Skip the header line
     for line in f:
         parts = line.split()

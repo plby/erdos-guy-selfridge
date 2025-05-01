@@ -12,7 +12,7 @@ greedy_values = [0 for _ in range(600)]
 
 def read_file():
     # Open the file for reading
-    with open("..\\..\\data\\tbounds.txt", "r") as file:
+    with open("..\\..\\..\\data\\tbounds.txt", "r") as file:
         # Read the file line by line
         for line in file:
             # Split the line into parts (assuming numbers are separated by whitespace)

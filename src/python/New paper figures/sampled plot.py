@@ -8,7 +8,7 @@ base = []
 t_lower = []
 t_upper = []
 
-with open('../../data/t_large_n_bounds_2.txt', 'r') as f:
+with open('../../../data/t_large_n_bounds_2.txt', 'r') as f:
     next(f)  # Skip the header line
     for line in f:
         parts = line.split()

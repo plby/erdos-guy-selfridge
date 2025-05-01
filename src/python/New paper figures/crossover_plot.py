@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Plot the point where the length of the longest factorization with T = N/3 crosses over N
+
 data = {}
 
-file = "../../Data/crossover_bounds.txt"
+file = "../../../Data/crossover_bounds.txt"
 
 with open(file, 'r') as f:
     for line in f:
@@ -28,5 +30,5 @@ plt.xlabel('N')
 plt.ylabel('Bound Difference From N')
 plt.title('Bound Difference From N')
 plt.legend()
-plt.savefig("../../Data/crossover_difference.png")
+plt.savefig("../../../Data/crossover_difference.png")
 plt.show()

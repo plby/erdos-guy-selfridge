@@ -12,7 +12,7 @@ base = []
 t_lower = []
 t_upper = []
 
-with open('../../data/crossover_bounds.txt', 'r') as f:
+with open('../../../data/crossover_bounds.txt', 'r') as f:
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
         a, b, c = int(nums[0]), int(nums[1]), float(nums[2])
@@ -27,7 +27,7 @@ t_upper2 = []
 t_lower_ip = []
 t_lower_res = []
 
-with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
+with open('../../../data/lp_bounds_40000-45000.txt', 'r') as f:
     next(f)
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
@@ -44,7 +44,7 @@ with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
 base3 = []
 t_greedy = []
 
-with open('../fastegs/Mbounds_40000_45000_g.txt', 'r') as f:
+with open('../../fastegs/Mbounds_40000_45000_g.txt', 'r') as f:
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
         a, b, c,d = int(nums[0]), int(nums[1]), int(nums[2]), int(nums[3])

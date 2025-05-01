@@ -635,7 +635,7 @@ With integer programming, we could also establish\footnote{Explicit factorizatio
 
 For $N \geq 10^4$, the integer programming method to lower bound $M(N,t)$ becomes slow.  We found two faster methods to give slightly weaker lower bounds on this quantity, which we call the ``floor+residuals'' method, and the ``smooth factorization'' method.
 
-The ``floor+residuals'' method proceeds by first running the primal linear program to find the real $m_j \geq 0$ for $t \leq j \leq N$ that maximize \eqref{mj-sum} subject to \eqref{constraints}.  The integer parts $\lfloor m_j \rfloor$ will then of course also obey \eqref{constraints} and thus form a subfactorization; but this subfactorization is somewhat inefficient because there can be a $p$-surplus of $\nu_p(N!) - \sum_{j \geq t} \lfloor m_j \rfloor \nu_p(j)$ at various primes $p \leq N$.  We then apply the greedy algorithm of the previous section to fashion as many factors greater than or equal to $t$ from these residual primes, to obtain our final subfactorization that provides a lower bound on $M(N,t)$.
+The ``floor+residuals'' method proceeds by first running the primal linear program to find the real $m_j \geq 0$ for $t \leq j \leq N$ that maximize \eqref{mj-sum} subject to \eqref{constraints}.  The integer parts\footnote{This procedure turns out to be subtly dependent on the specific linear programming implementation, both due to roundoff errors, and also because the extremizer of the linear program can be non-unique, with different LP solvers arriving at different extremizers.} $\lfloor m_j \rfloor$ will then of course also obey \eqref{constraints} and thus form a subfactorization; but this subfactorization is somewhat inefficient because there can be a $p$-surplus of $\nu_p(N!) - \sum_{j \geq t} \lfloor m_j \rfloor \nu_p(j)$ at various primes $p \leq N$.  We then apply the greedy algorithm of the previous section to fashion as many factors greater than or equal to $t$ from these residual primes, to obtain our final subfactorization that provides a lower bound on $M(N,t)$.
 
 The floor+residuals method is fast and highly accurate for small and medium $N$ (e.g., $N \leq 3 \times 10^5$).  For instance:
 \begin{itemize}
@@ -663,7 +663,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind.}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind. (Without the residuals, the pure floor method gives lower bounds that are shifted downwards by about $5$ to $15$ in this range.)}
       \label{fig-surplus}
       \end{figure}
     

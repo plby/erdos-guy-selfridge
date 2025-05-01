@@ -41,7 +41,6 @@ with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
             print(f"Ad hoc IP lower bound {d} for {a} is below the floor {c} at N={a}!")
         
 
-
 def plot():
     lb = [t_lower[i]-base[i] for i in range(len(base))]
     ub = [t_upper[i]-base[i] for i in range(len(base))]

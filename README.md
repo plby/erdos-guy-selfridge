@@ -105,7 +105,7 @@ Secondary goals are
 - [Upper and lower bounds for t(N) for round number N between 10^5 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_large_n.txt) - obtained by linear programming
 - [Lower bounds for t(N) for round N between 10^4 and 10^12](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds.txt) - obtained by a fast greedy method
 - [Lower bounds for t(N) for round N between 10^4 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_o.txt) - obtained by an exhaustive greedy method
-
+- [Lower bounds for t(N) for N between 40000 and 45000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_bounds_40000-45000.txt) - uses "floor + residuals" linear programming method
 
 ## Additional links
 

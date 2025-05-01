@@ -44,6 +44,15 @@ data = [
 
 # from tbounds.txt
 data2 = [
+    [10000, 3190, 0.000],
+    [20000, 6525, 0.000],
+    [30000, 9822, 0.001],
+    [40000, 13169, 0.001],
+    [50000, 16392, 0.001],
+    [60000, 19690, 0.002],
+    [70000, 23030, 0.002],
+    [80000, 26530, 0.001],
+    [90000, 29709, 0.003],
   [100000, 33184, 0.000],
   [200000, 66657, 0.000],
   [300000, 100408, 0.000],
@@ -112,6 +121,15 @@ data2 = [
 
 # from tbounds_o.txt
 data3 = [
+    [10000, 3190, 0.000],
+    [20000, 6525, 0.000],
+    [30000, 9822, 0.001],
+    [40000, 13169, 0.001],
+    [50000, 16392, 0.001],
+    [60000, 19690, 0.002],
+    [70000, 23030, 0.002],
+    [80000, 26530, 0.001],
+    [90000, 29709, 0.003],
     [100000, 33184, 0.000],
     [200000, 66738, 0.001],
     [300000, 100408, 0.002],
@@ -151,7 +169,7 @@ data3 = [
     [1000000000, 348901168, 19935.484]
 ]
 
-# from lp_large_n_txt
+# from lp_large_n.txt
 data4 = [
     [ 100000, 33614, 33642, 33646, 33668],
     [ 200000, 67667, 67703, 67704, 67739],
@@ -189,6 +207,38 @@ data4 = [
     [700000000, 246059457, 246059851, 246059940, 246060998],
     [800000000, 281304919, 281305291, 281305383, 281306449],
     [900000000, 316560258, 316560601, 316560702, 316561839]
+]
+
+# from tbounds_g.txt
+data5 = [
+    [10000, 3258, 0.001],
+    [20000, 6578, 0.002],
+    [30000, 9912, 0.004],
+    [40000, 13303, 0.003],
+    [50000, 16667, 0.003],
+    [60000, 19950, 0.012],
+    [70000, 23414, 0.008],
+    [80000, 26791, 0.009],
+    [90000, 30177, 0.009],
+    [100000, 33572, 0.050],
+    [200000, 67613, 0.090],
+    [300000, 101849, 0.253],
+    [400000, 135996, 0.687],
+    [500000, 170405, 1.125],
+    [600000, 204597, 1.494],
+    [700000, 238908, 1.229],
+    [800000, 273378, 1.825],
+    [900000, 307803, 4.197],
+    [1000000, 342303, 6.419],
+    [2000000, 687503, 8.251],
+    [3000000, 1033385, 11.419],
+    [4000000, 1379920, 16.067],
+    [5000000, 1727135, 46.904],
+    [6000000, 2073482, 69.823],
+    [7000000, 2421657, 198.389],
+    [8000000, 2769029, 131.458],
+    [9000000, 3117029, 97.831],
+    [10000000, 3465013, 97.678]
 ]
 
 def is_prime(n):
@@ -301,9 +351,17 @@ def plot():
         base3.append(N)
         t3.append(t / N)
 
+    base5 = []
+    t5 = []
+    for x in data5:
+        N, t, _ = x
+        base5.append(N)
+        t5.append(t / N)
 
-    # form the union of base1 and base2
-    base = sorted(set(base1) | set(base2))
+
+    # form the union of bases
+    base = sorted(set(base1) | set(base2) | set(base5))
+
     asym = [1/math.e - 0.30440119010/math.log(N) for N in base]
     asym2 = [1/math.e - 0.30440119010/math.log(N) - 0.75554808/math.log(N)**2 for N in base]
 
@@ -313,8 +371,9 @@ def plot():
     ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$', color='orange' )
     ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$', color='red' )
     ax.plot(base1, t1, label='LP lower bound', color='blue' )
-    ax.plot(base2, t2, label='Fast greedy lower bound', color='green' )
-    ax.plot(base3, t3, label='Exhaustive greedy lower bound', color='brown' )
+    ax.plot(base2, t2, label='Heuristic fast greedy', color='green' )
+    ax.plot(base3, t3, label='Exhaustive fast greedy', color='brown' )
+    ax.plot(base5, t5, label='Exhaustive greedy', color='pink' )
     ax.set_xscale('log') 
 #    ax.xaxis.set_major_formatter(ScalarFormatter())
 #    ax.ticklabel_format(style='plain', axis='x')            # turn off offset
@@ -363,33 +422,43 @@ def plot2():
         t4_upper.append(t_upper / N)
         t4_bound.append(t_bound / N)
 
+    base5 = []
+    t_greedy_opt = []
+    for x in data5:
+        N, t, _ = x
+        base5.append(N)
+        t_greedy_opt.append(t / N)
+        print(N,t/N)
+
+
 
     # form the union of base1 and base2
-    base = sorted(set(base1) | set(base2))
+    base = sorted(set(base1) | set(base2) | set(base3) | set(base4))
     asym = [1/math.e - 0.30440119010/math.log(N) for N in base]
     asym2 = [1/math.e - 0.30440119010/math.log(N) - 0.75554808/math.log(N)**2 for N in base]
 
     fig, ax = plt.subplots()
     ax.plot(base, asym, linestyle="--", label='$1/e-c_0/\\log N$', color='purple' )
     ax.plot(base, asym2, linestyle="--", label='$1/e-c_0/\\log N-c_1/\\log^2 N$', color='gray' )
-    ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$', color='orange' )
+#    ax.plot(base, [1/math.e for _ in base], linestyle="--", label='$1/e$', color='orange' )
     ax.plot(base, [1/3 for _ in base], linestyle="--", label='$1/3$', color='red' )
     ax.plot(base4, t4_lower, label='LP lower bound', color='blue' )
     ax.plot(base4, t4_upper, label='LP upper bound', color='cyan' )
-    ax.plot(base2, t2, label='Fast greedy lower bound', color='green' )
-    ax.plot(base3, t3, label='Exhaustive greedy lower bound', color='brown' )
+    ax.plot(base2, t2, label='Heuristic fast greedy', color='green' )
+    ax.plot(base3, t3, label='Exhaustive fast greedy', color='brown' )
     ax.plot(base4, t4_floor, label='LP floor bound', color='pink' )
     ax.plot(base4, t4_bound, label='Lemma 5.1', color='black' )
+    ax.plot(base5, t_greedy_opt, label='Exhaustive greedy', color='orange' )
     
     ax.set_xscale('log') 
 #    ax.xaxis.set_major_formatter(ScalarFormatter())
 #    ax.ticklabel_format(style='plain', axis='x')            # turn off offset
     plt.title('Approximations to $t(N)/N$')
     plt.xlabel('$N$ (log scale)')
-    plt.ylim(0.33,0.37)
+    plt.ylim(0.33,0.36)
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
     plt.show()
 
-plot()
+plot2()

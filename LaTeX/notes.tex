@@ -521,7 +521,7 @@ In order to get this algorithm to validate all $8 \times 10^4 \leq N \leq 10^{11
 
 First, when trying to improve an inequality $t(N) \geq \lambda N$ for all $N$ in some range, one can avoid running the algorithm for every single $N$ in that range by instead proving a stronger inequality on a sparse subset. Namely, if one can show that $t(N_0) \geq (\lambda + \eps)N_0$, it follows that $t(N) \geq \lambda N$ for all $N \in \left[N_0, (1+\frac{\eps}{\lambda})N_0\right)$. If one can fix $\eps$, this reduces a brute force check of every value in a range of length $L$ to checking just $\log_{1+\frac{\eps}{\lambda}}(L)$ values. From the estimates in Section 1, one would expect to be able to take $\eps = \frac{1}{e}-\lambda$ asymptotically; in practice the algorithm uses slightly smaller values. 
 
-The other major modification is related to Step (2) in the above algorithm, where one is searching for the least value of $c$ such that $cp\geq t$ and $c$ can be constructed from the remaining factors. In practice, the algorithm pre-computes and store information about all such candidates; absent any further heuristics, this amounts to storing information about all integers less than $N$, which becomes prohibitively expensive for large $N$. The key observation is that any such $c$ must satisfy a further arithmetic condition, namely that $\frac{cL(c)}{S(c)} < t$. By only storing information about $c$ which satisfy this condition, the memory footprint is reduced by several orders of magnitude.
+The other major modification is related to Step (2) in the above algorithm, where one is searching for the least value of $c$ such that $cp\geq t$ and $c$ can be constructed from the remaining factors. In practice, the algorithm pre-computes and store information about all such candidates; absent any further heuristics, this amounts to storing information about all integers less than $N$, which becomes prohibitively expensive for large $N$. The key observation is that any such $c$ must satisfy a further arithmetic condition, namely that $\frac{cP^+(c)}{P^-(c)} < t$, where $P^+(c)$ and $P^-(c)$ are the largest and smallest prime factors of $c$; since otherwise one could replace $c$ by $c/P^-(c)$ and stil have $(c/P^-(c)) p \geq cP_+(c)/P^-(c) \geq t$. By only storing information about $c$ which satisfy this condition, the memory footprint is reduced by several orders of magnitude.
 
 By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $67425 \leq N \leq 10^{12}$ {\bf provide more details and links to code}.    Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $43632 \leq N < 67425$ and $N > 10^{12}$, and also to show that this claim fails for $N=43631$.
 
@@ -655,7 +655,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{Upper and lower bounds $t(N)/N$ obtained by linear programming upper bound and smooth factorization lower bound for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
+    \caption{The linear programming upper bound and smooth factorization lower bound on $t(N)/N$ for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
     \label{fig-longer}
     \end{figure}
 
@@ -663,7 +663,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind.}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  In this range, at least one of the integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals (blue) methods turn out to match this bound exactly, with the smooth factorization method (orange) not far behind.}
       \label{fig-surplus}
       \end{figure}
 
@@ -767,7 +767,7 @@ $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_-
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{verylarge.png}
-  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and greedy methods in the range $10^5 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. {\bf would be nice to display data from other greedy methods for comparison}}\label{fig-verylarge}
+  \caption{Lower bounds on $t(N)/N$ coming from the linear programming and greedy methods in the range $10^5 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. }\label{fig-verylarge}
 \end{figure}
 
 

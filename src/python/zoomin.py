@@ -44,12 +44,12 @@ with open('../../data/lp_bounds_40000-45000.txt', 'r') as f:
 base3 = []
 t_greedy = []
 
-with open('../fastegs/fcount_40000_45000_g.txt', 'r') as f:
+with open('../fastegs/Mbounds_40000_45000_g.txt', 'r') as f:
     for line in f:
         nums = re.findall(r"-?\d+(?:\.\d+)?", line)
-        a, b, c = int(nums[0]), int(nums[1]), int(nums[2])
+        a, b, c,d = int(nums[0]), int(nums[1]), int(nums[2]), int(nums[3])
         base3.append(a)
-        t_greedy.append(a+c)
+        t_greedy.append(c)
 
 
 def plot():
@@ -63,7 +63,7 @@ def plot():
     plt.figure(figsize=[8, 6])
 #    plt.plot(base, ub, label='Smoothfac (upper)', marker='.', markersize=3, color='green') 
     plt.plot(base2, ub2, label='Linear programming (upper)', marker='.', markersize=3, color='red') 
-    plt.plot(base2, lb2, label='LP floor (lower)', marker='.',linestyle='None', markersize=3, color='crimson' )
+    plt.plot(base2, lb2, label='LP floor (lower)', marker='.',linestyle='None', markersize=3, color='blue' )
 #    plt.plot(base, lb, label='Smooth factorization (lower)', marker='.',linestyle='None', markersize=3, color='orange' )
 #    plt.plot(base2, lb_res, label='LP floor+residuals (lower)', marker='.',linestyle='None', markersize=3, color='blue' )
  #   plt.plot(base2, lb_ip, label='Ad hoc IP (lower)', marker='.',linestyle='None', markersize=3, color='green' )
@@ -72,7 +72,7 @@ def plot():
     plt.title('Surplus factors $M(N,N/3)-N$ in $N/3$-admissible factorization of N!')
     plt.xlabel('$N$')
     plt.ylabel('$M(N,N/3)-N$')
-    plt.ylim(-3,3)
+    plt.ylim(-24,3)
     plt.legend()
     plt.grid(True)
     plt.show()

@@ -663,10 +663,17 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind. (Without the residuals, the pure floor method gives lower bounds that are shifted downwards by about $5$ to $15$ in this range.)}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  Integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals method (blue) often match this bound exactly, with the smooth factorization method (orange) not far behind.}
       \label{fig-surplus}
       \end{figure}
-    
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{surplus2.png}
+        \caption{Two weaker lower bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$ beyond those depicted in \Cref{fig-surplus}: the floor of a linear programming method (blue) without gathering residuals, and the greedy method (green), which performs erratically but usually gives worse bounds than any of the other methods in this range.}
+        \label{fig-surplus2}
+        \end{figure}
+  
     
     \begin{table}[ht]
       \centering

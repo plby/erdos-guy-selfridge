@@ -57,8 +57,8 @@ def piab_norm(a,b,N_mpi):
     assert low(N_mpi) > 1423, "Error: this bound is only valid for N > 1423"
     if a > b:
         return mpi(0,0)
-    lower = (1 - 2 / math.sqrt(low(N_mpi) * a)) * (b - a) / math.log(high(N_mpi) * b) - 2 * E_norm(b,N_mpi) / math.log(high(N_mpi) * b)
-    upper = (b-a) / math.log(low(N_mpi) * a) + 2 * E_norm(a,N_mpi) / math.log(low(N_mpi) * a)
+    lower = (1 - 2 / math.sqrt(low(N_mpi) * a)) * (b - a)/ math.log(high(N_mpi) * (a+b)/2) - 2 * E_norm(b,N_mpi) / math.log(low(N_mpi) * a)
+    upper = (b-a) * (1 / math.log(low(N_mpi) * a) + 1 / math.log(low(N_mpi) * b))/2 + 2 * E_norm(b,N_mpi) / math.log(low(N_mpi) * a)
     return mpi(lower, upper)
 
 # See Table 1
@@ -431,4 +431,4 @@ N_mpi = mpi(10 ** 20, 10 ** 70)
 
 # upper bound is irrelevant here, as crude bounds work
 N_mpi = mpi(10 ** 70, 10**100)
-evaluate(t_norm, N_mpi, A, K, L)
+#evaluate(t_norm, N_mpi, A, K, L)

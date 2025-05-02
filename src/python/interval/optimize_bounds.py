@@ -1,4 +1,4 @@
-from calculations import evaluate
+from python.interval.calculations import evaluate
 import numpy as np
 
 MIN_A = 160

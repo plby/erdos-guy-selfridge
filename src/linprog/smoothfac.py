@@ -158,6 +158,8 @@ def main(N: int, T: int, filename: Optional[str], lp_filename: Optional[str]):
     #     print(f"{'*' if x[j].X > 0.0 else '·'} {j:4d} {x[j].X:9.5f}    {str.join(' / ', (str(t) for t in coliter(f, j)))}")
     # ***ENDEBUG***
 
+    upper_bound_lp = mod.ObjVal
+
     # record counts of LP factors
     sc: Dict[int,int] = {}
     nf_lp = 0
@@ -232,6 +234,11 @@ def main(N: int, T: int, filename: Optional[str], lp_filename: Optional[str]):
             print("CERTIFICATE", file=file)
             # TODO
 
+    lower_bound = nf_nsmth+nf_lp+nf_grdy
+    upper_bound = nf_nsmth + upper_bound_lp # combine non-smooth factors and upper bound on smooth factors
+    print(f"Factor bounds: [{lower_bound}, {upper_bound}]")
+
+    return lower_bound, upper_bound
 
 
 if __name__ == '__main__':

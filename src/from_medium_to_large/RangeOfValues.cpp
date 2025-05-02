@@ -25,14 +25,116 @@ cc_hash_table<long long, long long> smallestDivisor;
 // this is the largest itneger for which we compute factorization (for larger integer we factorize it only if it is divisible by 2 or 3)
 #define LARGEST_COMPUTED_FACTORIZATION maxN/200
 
+
+// Chosen so that the product of the entries in a given list is not too large.
+// The current choice seems to work well. 
+//
+// Each list corresponds to a single array lookup for the primes covered.
+// So, e.g. checking divisibilty one prime at a time would roughly correspond to having
+// a separate list for each prime. For convenience, here is the % coverage for including all primes
+// up to p for the first several values of p:
+//  2 : 50.0 %
+//  3 : 66.7 %
+//  5 : 73.3 %
+//  7 : 77.1 %
+//  11 : 79.2 %
+//  13 : 80.8 %
+//  17 : 81.9 %
+//  19 : 82.9 %
+//  23 : 83.6 %
+//  29 : 84.2 %
+// 
+//  Note that getting above 90% requires the first 55 primes.
+// 
+// In general, more lists means more run-time lookups, but less memory used and hence better cacheability.
+// These can be rearranged or edited for tradeoffs. As written, the only logical requirement is they must 
+// cover exactly the first N primes for some N, and the primes must appear in order.
+const vector<vector<long long>> small_primes{
+    {2, 3, 5, 7}, {11, 13} 
+    // {17, 19},
+    // {23, 29, 31, 37},
+    // {41, 43, 47, 53}
+}; 
+
+// After running prepSmallPrimes, this will contain the same number of vectors as 
+// small_primes, but each one has length equal to the product of the primes in the corresponding
+// list in small_primes. The ith term of a sub-vector of small_prime_mods is
+// equal to the index in primes of the smallest prime that both divides i and belongs to the 
+// corresponding list in small_primes. Otherwise, -1 if i is not divisible by any of those primes. 
+// Thus, for any integer i > 0, if the smallest divisor of i is one of the small_primes,
+// the value can be determined by looking up, in order, the value of v[i%v.size()] for each v in small_prime_mods.
+vector<vector<long long>> small_prime_mods;
+
 vector<long long> primes;
 
+void prepSmallPrimes(){
+  // Populate directly as we will skip small primes in the main loop. 
+  for (const auto& v : small_primes) {
+    for (auto p : v) {
+      primes.push_back(p);
+    }
+  }
+  
+  long long curr_index = 0;
+
+  for (int i = 0; i < small_primes.size(); ++i){
+    long long vsize = 1;
+    const auto& curr_prime_list = small_primes[i];
+    // Compute the product of the primes in the sublist.
+    for (int j = 0; j < curr_prime_list.size(); ++j) {
+      vsize *= curr_prime_list[j];
+    }
+    // Allocate the vector of that size
+    vector<long long> curr_prime_mod(vsize, -1);
+    // Populate the vector
+    for (int j = 0; j < curr_prime_list.size(); ++j) {
+      auto p = curr_prime_list[j];
+      for(int k = 0; p*k<vsize; ++k) {
+        if(curr_prime_mod[p*k] == -1) {
+          curr_prime_mod[p*k] = curr_index;
+        }
+      }
+      curr_index++;
+    }
+
+    small_prime_mods.push_back(curr_prime_mod);
+
+  }
+  if(curr_index != primes.size()) {
+    cout << "error in small prime indexing" << endl;
+    exit(1);
+  }
+}
+
+// Returns the index into primes of the smallest divisor of x.
+long long getSmallestDivisor(long long x){
+  for (const auto& v : small_prime_mods) {
+    auto val = v[x%v.size()];
+    if (val != -1) {
+      return val;
+    }
+  }
+  return smallestDivisor[x]; 
+}
+
+bool hasSmallDivisor(long long x){
+  for (const auto& v : small_prime_mods) {
+    auto val = v[x%v.size()];
+    if (val != -1) {
+      return true;
+    }
+  }
+  return false; 
+}
 
 ///////////////////////////////////
 //// Precomputations of primes ////
 ///////////////////////////////////
 
 //compute the primes numbers and factorization for interval [0, e]
+//
+// Note: We only populate smallestDivisor[i] and largestDivisor[i] 
+// if i is not divisible by a small prime.
 void factorizationOfFirstInterval(long long e){
   vector<long long> firstDivisor(e+1, -1);
   for(long long i=2; i<firstDivisor.size(); i++){
@@ -40,6 +142,9 @@ void factorizationOfFirstInterval(long long e){
       primes.push_back(i);
       smallestDivisor[i] = firstDivisor[i] =  primes.size()-1;
       for(long long j = i; j*i<firstDivisor.size(); j++){
+        if (hasSmallDivisor(j*i)) {
+          continue;
+        }
         if(firstDivisor[j*i] == -1){
           firstDivisor[j*i] = primes.size()-1;
           smallestDivisor[j*i] = primes.size()-1;
@@ -55,6 +160,7 @@ void factorizationOfOtherIntervals(long long b, long long e){
   for(long long i=0; primes[i]*primes[i]<=e; i++){
     long long p = primes[i];
     for(long long j = max(p, (b+p-1)/p); j*p<=e; j++){
+      if (hasSmallDivisor(j*p)) continue;
       if(firstDivisor[j*p-b] == -1){
         firstDivisor[j*p-b] = i;
       } 
@@ -171,6 +277,9 @@ class Factorizer{
       else v = smallestDivisor[toBeRemoved];
       toBeRemoved /= primes[v];      
       long long nbocc=1;
+      // Note: The number of loop iterations here is v_p(toBeRemoved)
+      // This could be modified to 1+log_2(v_p(toBeRemoved)) iterations by 
+      // repeatedly squaring primes[v], then working your way back down. 
       while(toBeRemoved>1 &&  toBeRemoved % primes[v] == 0 ){
         nbocc++;
         toBeRemoved /= primes[v];
@@ -185,6 +294,7 @@ class Factorizer{
   // (most of the time after checking via a previous call to countRemovable)
   // we have two sanity checks, but they should not be necessary
   void addToFactorization(long long nbTimes, long long toBeRemoved, long long tbr){
+    // Handling tbr part. 
     found += nbTimes;
     factors[tbr] -= nbTimes;
     long long val = toBeRemoved*primes[tbr];
@@ -192,6 +302,8 @@ class Factorizer{
       cout<<"error too small"<<endl;
       exit(1);
     }
+    // Handling toBeRemoved part
+    // There might be some speedups here when toBeRemoved is divisible by a large prime power.
     while(toBeRemoved>1){
       long long v;
       if(toBeRemoved%2 == 0) v = 0;
@@ -245,6 +357,7 @@ long long bestFact(long long n, long long eps = 0){
 
 
 int main(){
+  prepSmallPrimes();
   if(minN < maxN/minN){
     cout<<"Error: minN*minN < maxN"<<endl;
     return 0;

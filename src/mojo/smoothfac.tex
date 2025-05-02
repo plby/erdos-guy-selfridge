@@ -1,0 +1,230 @@
+%\pdfoutput=1
+\documentclass[12pt,a4paper,reqno]{amsart}
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage[pdftex,pdfpagelabels]{hyperref}
+\usepackage{enumerate}
+\usepackage{comment}
+%\usepackage{psfig}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{tikz-cd}
+\usepackage{stix}
+\usepackage{bm}
+\DeclareMathAlphabet\mathbfcal{LS2}{stixcal}{b}{n}
+\numberwithin{equation}{section}
+
+%\usepackage{mathabx}
+
+
+\usepackage{mathtools}%                  http://www.ctan.org/pkg/mathtools
+\usepackage[tableposition=top]{caption}% http://www.ctan.org/pkg/caption
+\usepackage{booktabs,dcolumn}%           http://www.ctan.org/pkg/dcolumn + http://www.ctan.org/pkg/booktabs
+
+\parindent 0mm
+\parskip   5mm
+
+
+\begin{document}
+
+\title{smoothfac}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Problem}
+
+Let $N$ be a natural number and let $t$ be a fixed threshold. The problem is
+to find a subfactorization of $N!$ with admissible factors from the set $J =
+\{ t, t+1, \ldots, N \}$ such that
+\begin{equation*}
+  \prod_{j \in J} j^{x_j} \Big| N!
+\end{equation*}
+where the $x_j$ are non-negative integers counting how often $j$ is included
+in the product (the notation $a|b$ means $a$ divides $b$).
+
+The objective is to maximize the total number of factors used, \emph{i.e.} the
+sum of the $x_j$.
+
+A valid subfactorization of $N!$ satisfies
+\begin{equation}
+\label{eq:cstr}
+  \sum_{j \in J} \nu_p(j) \cdot x_j \leq \nu_p(N!) \qquad \forall p \in \Pi_N
+\end{equation}
+where $\Pi_N$ is the set of primes less than or equal to $N$ and
+$\nu_p(j)$ counts the number of times the prime $p$ divides the number
+$j$.
+
+The objective together with the constraints for each prime $p$ define an
+integer linear program. When relaxing the $x_j$ to be non-negative reals, the
+problem becomes a linear program. From any feasible value $x$ of the linear
+program, one can recover a subfactorization of $N!$ as
+\begin{equation*}
+  \prod_{j \in J} j^{\lfloor x_j \rfloor}.
+\end{equation*}
+
+The dual problem the the above linear program is to find weights $w_p$ that
+minimize
+\begin{equation*}
+  \sum_{p \in \Pi_N} \nu_p(N!) \cdot w_p
+\end{equation*}
+subject to the constraints
+\begin{equation}
+\label{eq:cstr_dual}
+  \sum_{p \in \Pi_N} \nu_p(j) \cdot w_p \geq 1 \qquad \forall j \in J
+\end{equation}
+
+
+\section{Algorithm}
+
+For further discussion, it is useful to switch to matrix notation. Let $F$ be
+the matrix with elements $(F)_{ij} = \nu_i(j)$ for $i \in \Pi_N$ and $j \in
+J$, let $c$ be the vector with elements $(c)_i = \nu_i(N!)$ for $i \in
+\Pi_N$ and let $e$ be the vector of all ones (with conforming dimension).
+Then, the problem can be written as
+\begin{equation}
+\label{eq:lp_full}
+  \begin{aligned}
+    \max_x          \quad & e^\mathsf{T} x \\
+    \mathrm{s.\,t.} \quad & \arraycolsep2pt\begin{array}[t]{rl}
+                                F x & \leq c \\
+                                  x & \geq 0.
+                            \end{array}
+  \end{aligned}
+\end{equation}
+
+The algorithm has three phases. It partitions the factors $J = J_S \cupdot J_R$
+where $J_S$ is the set of $\lceil \sqrt{N} \rceil$-smooth numbers (i.e. all
+prime divisors of $j \in J_S$ are smaller than or equal to $\lceil \sqrt{N}
+\rceil$), and $J_R$ contains all factors with a prime divisor larger than
+$\lceil \sqrt{N} \rceil$. The first phase deals with the non-smooth factors
+$J_R$ heuristically; the second phase handles the smooth factors $J_S$ using
+linear programming; the third phase handles the residual prime divisors not
+used by the subfactorization resulting from the first two phases.
+
+\subsection*{Phase 1}
+
+Partition the prime divisors in small primes $\Pi_S = \Pi_{\lceil \sqrt{N}
+\rceil}$ and large primes $\Pi_{L} = \Pi_N \backslash \Pi_S$. This allows to
+rewrite the inequality $Fx \leq c$ in block matrix form as
+\begin{equation*}
+  \begin{bmatrix}
+    F_{S,S} & F_{S,R} \\
+      0    & F_{L,R}
+  \end{bmatrix}
+  \cdot
+  \begin{bmatrix} x_S \\ x_R \end{bmatrix}
+  \leq
+  \begin{bmatrix} c_S \\ c_L \end{bmatrix}.
+\end{equation*}
+
+The first step of the algorithm is to fix values for $x_R$ greedily as
+follows. Partition the non-smooth factors $J_R$ according to their largest
+prime divisor
+\begin{equation*}
+  J_R = \bigcupdot_{p \in \Pi_L} J_p \qquad \mathrm{with} \qquad J_p = \{ j \,|\, \nu_p(j) = 1 \}
+\end{equation*}
+Choose for each $J_p$ its \emph{smallest} element and assign it the full weight
+$c_p$ of the right hand side
+\begin{equation*}
+  x_j =
+  \begin{cases}
+    \nu_p(N!) & \text{if} \enspace j = p \cdot \lceil t/p \rceil \\
+    0         & \text{otherwise,}
+  \end{cases}
+  \qquad j \in J_p, \; p \in \Pi_L.
+\end{equation*}
+
+This heuristic can be justified \emph{post hoc} by observing that the optimal
+dual multipliers $w^\star$ of the original linear program~\eqref{eq:lp_full}
+scale as
+\begin{equation*}
+  w^\star_p \approx \log{p} / \log{t} \qquad p \in \Pi_S.
+\end{equation*}
+Fixing $w_p = \log{p} / \log{t}$, $p \in \Pi_S$ makes the choice $j = p \cdot
+\lceil t/p \rceil$ optimal among all $j \in J_p = \{ p \cdot (\lceil t/p \rceil
++ k) \;|\; k=0, 1, \ldots \}$.
+
+\subsection*{Phase 2}
+
+Fixing $x_R$ as above allows to \emph{deflate} the problem and work with a
+reduced linear program
+\begin{equation}
+\label{eq:lp_dfltd}
+  \begin{aligned}
+    \max_{x_S}      \quad & e^\mathsf{T} x_S \\
+    \mathrm{s.\,t.} \quad & \arraycolsep2pt\begin{array}[t]{rl}
+                                F_{S,S} x_S & \leq d_S \\
+                                        x_S & \geq 0.
+                            \end{array}
+  \end{aligned}
+\end{equation}
+where the deflated right hand side $d_S = c_S - F_{S,R} \cdot x_R \geq 0$
+\textsc{\tiny [proof needed]}. This linear program has only $\pi(\lceil
+\sqrt{N} \rceil)$ constraints which is a significant reduction from the
+original $\pi(N)$ constraints.
+
+The reduced linear program can be efficiently solved using a sifting strategy.
+Start solving the problem with a subset of columns $W$ (the \emph{working
+set}) containing the $2\sqrt{N}$ smallest elements of $J_S$. After each solve,
+scan for columns not included in the working set having positive reduced cost
+\begin{equation*}
+  e - w^\star_W \cdot F_{S,S \backslash W}
+\end{equation*}
+where $w^\star_W$ are the optimal dual variables from the problem with working
+set $W$. Scanning is done from smallest to largest element in $J_S \backslash
+W$. Whenever a batch of 200 improving columns is found, reoptimize the problem
+with the columns added to the working set. When no more improving columns are
+found, the solution is optimal.
+
+\subsection*{Phase 3}
+
+Let $x^\star_S$ be an optimal solution of the reduced linear
+program~\eqref{eq:lp_dfltd}. The final step of the algorithm is to greedily use
+the residual prime divisors $d_S - F_{S,S} \cdot \lfloor x^\star_S \rfloor$ to
+find additional factors $j \geq t$. To this end, pick the largest available
+prime divisor $p$ and scan if any of the factors $p \cdot (\lceil t/p \rceil +
+k)$, for $k=0, 1, \ldots$ divides the product of the remaining prime divisors.
+If yes, add the factor, remove the divisors and reiterate; otherwise stop.
+
+
+\section{Implementation}
+
+The implementation attempts to be (somewhat) space efficient. The bulk of
+memory is used for one list \texttt{f[]} of length $N$. The elements stored in
+\texttt{f[]} are in the interval $[-\sqrt{N}, \sqrt{N}]$ which allows to use
+32-bit signed integers for the desired range $N \leq 10^{11}$. All other lists
+and dictionaries have size $O(\sqrt{N})$, except the explicit representation of
+the linear program which is (roughly) $O(\sqrt{N} \cdot \log{N})$ (assuming the
+size of the working set is a bounded multiple of $\sqrt{N}$).
+
+The list \texttt{f[]} is used to represent the matrices $F_{S,S}$, $F_{S,R}$
+and to store the divisor counts $\nu_p(N!)$ of the large primes $p \in \Pi_L$.
+The encoding is as follows:
+\begin{equation*}
+  \texttt{f[j]} =
+  \begin{cases}
+    \text{smallest} \, p | j & \text{if } j \in J_S \\
+    -\nu_j(N!)               & \text{if } j \in \Pi_L \\
+    -\lceil t/p \rceil       & \text{if } j = p \cdot \lceil t/p \rceil \text{, } p \in \Pi_L \text{, } p < t \\
+    0                        & \text{otherwise}
+  \end{cases}
+\end{equation*}
+The sign of \texttt{f[]} encodes whether $j$ is smooth or non-smooth. To
+determine whether $j \in \Pi_L$ for $j \geq t$, a trial division
+\texttt{j/-f[j]} is required.
+
+The columns of $F_{S,S}$ can be recovered by repeated division  
+\texttt{j ← j / f[j]}.  
+
+The same is possible for the columns of $F_{S,R}$ for which the corresponding
+variable in $x_R$ is non-zero. For a non-smooth composite $j$, \texttt{f[j]}
+contains the ($\lceil \sqrt{N} \rceil$-smooth) value $-\lceil t/p \rceil$.
+Thus, the repeated division strategy can be started at \texttt{-f[j]}.
+
+
+\end{document}

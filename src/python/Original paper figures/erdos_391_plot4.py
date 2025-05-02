@@ -2,13 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-# code for generating Figure 1 in the original paper
+# code for generating Figure 1 in the original paper, covering the range N <= 80
 
 def plot3():
     L = 15000
     base = [i/L for i in range(1, L+1)]
     fn = [math.floor(L/i) * math.log(math.e * i/L * math.ceil(L/(math.e*i))) / math.e for i in range(1,L+1)]
-    compare = [0.304419 for i in range(1,L+1)]
+    compare = [0.3044019010 for i in range(1,L+1)]
     upper = [math.log(1 + math.e*i/L)/(math.e*i/L) for i in range(1,L+1)]
     basetrunc = [i/L for i in range(math.ceil(L/math.sqrt(2*math.e)), L+1)]
     trunccompare = [math.log(math.e/2)/math.e for _ in range(math.ceil(L/math.sqrt(2*math.e)), L+1)]

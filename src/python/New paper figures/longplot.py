@@ -7,7 +7,7 @@ values=[0 for _ in base]
 
 def read_file():
     # Open the file for reading
-    with open("..\\..\\data\\a034258-lpsolve.txt", "r") as file:
+    with open("..\\..\\..\\data\\a034258-lpsolve.txt", "r") as file:
         # Read the file line by line
         for line in file:
             # Split the line into parts (assuming numbers are separated by whitespace)
@@ -70,11 +70,11 @@ def plot2():
 
     plt.figure(figsize=(8, 6))
     plt.plot(base2, exact, label='$t(N)/N$ (exact)' )
-    plt.plot(base2, asym, label='$1/e-c_0/\\log N$' )
-    plt.plot(base2, asym2, label='$1/e-c_0/\\log N$-c_1/\\log^2 N' )
     plt.plot(base2, e_inv, linestyle="--", label='$1/e$' )
-    plt.plot(base2, third, linestyle="--", label='$1/3$' )
-    plt.plot(sparse_base, sparse_upper, label='Lemma 5.1' )
+    plt.plot(base2, third, linestyle="--", label='$1/3$', color = 'red' )
+    plt.plot(base2, asym, linestyle="--", label='$1/e-c_0/\\log N$', color='purple' )
+    plt.plot(base2, asym2, linestyle="--", label='$1/e-c_0/\\log N$-c_1/\\log^2 N', color='gray' )
+    plt.plot(sparse_base, sparse_upper, label='Lemma 5.1', color='pink' )
     plt.title('$t(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.27,0.37)

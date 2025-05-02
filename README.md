@@ -2,7 +2,7 @@
 
 For a natural number $N$, let $t(N)$ be the largest number such that $N!$ can be factored into $N$ integer factors, each of which is at least $t(N)$.  It is known that $\frac{1}{e} - \frac{c_0+O(\log^{-c} N)}{\log N} \leq \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c_0}{\log N} -\frac{c_1+o(1)}{\log^2 N}$,
 where $c_0 := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right)\ dx = 0.304419010\dots,$
-answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  Here $c_1$ is the explicit constant $c_1 := c'_1 + c_0 c''_1 - ec_0^2/2 = 0.75554808\dots$, where $c_1^\prime := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right) \log \frac{1}{x}\ dx = 0.3702051\dots$ and $c_1^{\prime\prime} :=  \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) = 1.679587996\dots$. 
+answering a question of [Erdős and Graham](https://www.erdosproblems.com/391).  Here $c_1$ is the explicit constant $c_1 := c^\prime_1 + c_0 {c_1}^{\prime\prime} - ec_0^2/2 = 0.75554808\dots$, where ${c_1}^\prime := \frac{1}{e} \int_0^1 \left \lfloor \frac{1}{x} \right\rfloor \log \left( ex \left \lceil \frac{1}{ex} \right\rceil \right) \log \frac{1}{x}\ dx = 0.3702051\dots$ and ${c_1}^{\prime\prime} :=  \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) = 1.679587996\dots$. 
 
 Here is a graph of the integral defining $c_0$:
 
@@ -14,15 +14,15 @@ And here is a plot of $t(N)/N$ against some comparators for $N \leq 79$:
 
 Here is an extension of that image to $N \leq 200$:
 
-![Plot of $t(N)$ and comparators for $N \leq 200$](src/python/newplot_200.png)
+![Plot of $t(N)$ and comparators for $N \leq 200$](LaTeX/newplot_200.png)
 
 A view of $80 \leq N \leq 599$:
 
-![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](src/python/newplot_600_all.png)
+![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](LaTeX/newplot_600_all.png)
 
 An enlargement of the previous graph, also including the greedy algorithm lower bound:
 
-![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](src/python/newplot_600.png)
+![Plot of $t(N)$ and comparators for $80 \leq N \leq 599$](LaTeX/newplot_600.png)
 
 This repository records the efforts to verify the [Guy-Selfridge conjectures](https://zbmath.org/0918.11013) concerning the sequence $t(N)$:
 
@@ -40,7 +40,7 @@ Secondary goals are
 ## Current status
 
 1. Conjecture 1 **has been fully verified**, as a consequence of Conjecture 2 for $N \geq 43632$, and either the greedy or linear programming method for $N < 43632$.
-2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
+2. Conjecture 2 **has been verified** for all $N \geq 43632$, and is known to fail for $N = 43631$.  For $N \leq 8 \times 10^4$; these facts can be obtained by a linear programming method; for $8 \times 10^4 < N \leq 10^{11}$ by a modified greedy method; and for $N \geq 10^{11}$ by a modified approximate factorization method. A separate modified greedy method has verified the range $10^6 \leq N \leq 10^{12}$.  The smallest $N$ for which the conjecture holds (excluding the small cases $N=1,2,3,4,5,6,9$) is $N=41006$.  
 3. The OEIS tables have been extended to $N \leq 10000$ by the linear programming method (combined with integer programming to handle a few rare cases where the linear programming bounds are not tight).
 4. Using interval arithmetic and rigorous error bounds, one has $c_0 = 0.304419010\dots$ and $c_1 = 0.75554808\dots$.Non-rigorous heuristic calculations predict that $c_0 \approx 0.30441901087$.  
 
@@ -74,8 +74,10 @@ Secondary goals are
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/25) | Boris Alexeev | 3 | $[1,10^4]$ | Linear and integer programming |  
 | [17 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/95e68bd8cf5234d1f722b3c16de5b0dfb37446bc) | Terence Tao | 2 | $N = 10^{12}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$  
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/27) | Terence Tao | 2 | $N = 10^{11}$ | Modified approximate factorization + explicit estimates | Lack of monotonicity prevents generalizing to higher $N$
-| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates | Interval arithmetic permits verification of all cases
-| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates | Close to the limit of existing estimates
+| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/commit/a8a96161c2c4dc04e06981f5cabe786bd730c76c) | Terence Tao | 2 | $N \geq 10^{11}$ | Modified approximate factorization + explicit estimates + interval arithmetic | Completes verification of Conjectures 2,3
+| [20 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/29) | Evan Conway | 2 | $N \geq 6 \times 10^{10}$ | Modified approximate factorization + explicit estimates + + interval arithmetic | Close to the limit of existing estimates
+| [26 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/35) | Andrew Sutherland | 2 | $10^6 \leq N \leq 10^{12}$ | Fast modified greedy
+| [30 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/pull/44) | Andrew Sutherland | 2 | $67425 \leq N \leq 8 \times 10^4$ | Greedy | Lower threshold optimal for vanilla greedy
 
 ## Computations of $c_0$, $c_1$
 
@@ -85,7 +87,7 @@ Secondary goals are
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6) | Terence Tao | $c_0 \approx 0.30441901087$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
 | [11 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/issues/6#issuecomment-2797993853) | Evan Conway | $c_0 \in [0.3044190040310339, 0.304419017709828]$| Exact eval. of partial integral + rigorous bound on error | Rigorous (up to rounding errors)
 | [19 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/numerical%20integral.py) | Terence Tao | $c_1 \approx 0.7555$ | Exact evaluation of partial integral + heuristic estimate of error | Non-rigorous
-| [21 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/interval_constants.py) | Terence Tao | $c_0 \in [0.30441901064575277447, 0.30441901109754626598]$; $c_1 \in [0.75554808426110209307, 0.75554808757613112213]$ | Exact eval. of partial integral + rigorous bound on error | Rigorous (to 50 decimal precision)
+| [21 Apr 2025](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/interval/interval_constants.py) | Terence Tao | $c_0 \in [0.30441901064575277447, 0.30441901109754626598]$; $c_1 \in [0.75554808426110209307, 0.75554808757613112213]$ | Exact eval. of partial integral + rigorous bound on error | Rigorous (to 50 decimal precision)
 
 ## Data
 
@@ -95,12 +97,17 @@ Secondary goals are
 - [Greedy algorithm lower bounds on t(N) for N between 80 and 599](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/tbounds.txt).
 - [Examples and linear programming certificates for N up to 600](https://github.com/teorth/erdos-guy-selfridge/tree/main/Data/oeis_results) (explained [here](https://github.com/teorth/erdos-guy-selfridge/pull/1))
 - [Values of t(N) for N up to 600](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_up_to_600.txt)
-- [Values of t(N) for N up to 10000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/a034258-lpsolve.txt) - value at $t(9633)$ is currently only a lower bound, all other values verified to be exact.
+- [Values of t(N) for N up to 10000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/a034258-lpsolve.txt) 
 - [A factorization verifying t(41006) >= 13669](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/FC_41006.txt) - the first large positive case of Conjecture 2
-- [A factorization verifying t(43632) >= 14545](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/factorizations/43632-43632-14545.txt) - believed to be the first point where Conjecture 2 becomes true for this and all larger values of $N$
-- [Upper and lower bounds for t(N) for randomly sampled N between 10^3 and 10^5](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds.txt)
-
-
+- [A factorization verifying t(43632) >= 14545](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/factorizations/43632-43632-14545.txt) - the first point where Conjecture 2 becomes true for this and all larger values of $N$
+- [Upper and lower bounds for t(N) for randomly sampled N between 10^3 and 10^5](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds.txt) - obtained by linear programming
+- [Upper and lower bounds for t(N) for N between 10^3 and 10^5 that are multiples of 100](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/t_large_n_bounds_2.txt) - obtained by linear programming
+- [Upper and lower bounds for t(N) for round number N between 10^5 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_large_n.txt) - obtained by linear programming
+- [Lower bounds for t(N) for round N between 10^4 and 10^12](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_heuristic_fast_greedy_1e4_1e12.txt) - obtained by a heuristic fast greedy method
+- [Lower bounds for t(N) for round N between 10^4 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_exhaustive_fast_greedy_1e4_1e9.txt) - obtained by an exhaustive fast greedy method
+- [Lower bounds for t(N) for round N between 10^4 and 10^9](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_heuristic_greedy_1e4_1e9.txt) - obtained by a heuristic greedy method
+- [Lower bounds for t(N) for round N between 10^4 and 10^8](https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/tbounds_exhaustive_greedy_1e4_1e8.txt) - obtained by an exhaustive greedy method
+- [Lower bounds for t(N) for N between 40000 and 45000](https://github.com/teorth/erdos-guy-selfridge/blob/main/Data/lp_bounds_40000-45000.txt) - uses "floor + residuals" linear programming method
 
 ## Additional links
 

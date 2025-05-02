@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+# Plot numbers that are coprime to 6
+
 def coprime_6(n):
     if n % 6 == 1 or n % 6 == 5:
         return True

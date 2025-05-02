@@ -564,14 +564,14 @@ since $M(N,t)$ is an integer.  We refer to these bounds as the \emph{linear prog
 
 The quantity $M_\R(N,t)$ can be computed by standard linear programming methods; in particular, upper bounds on $M_\R(t,N)$ can be obtained by solving a dual linear program involving some weights $w_p, p \leq N$ that obey constraints for each $j \in J_{t,N}$.  In fact we can restrict attention to those constraints with $j$ in the range $t \leq j \leq N$:
 
-\begin{proposition}[Dual description of $M_\R(N,t)$]\label{dual-desc} For any $N,t \geq 1$, $M_\R(N,t)$ is the minimum value of
+\begin{proposition}[Dual description of $M_\R(N,t)$]\label{dual-desc} For any $N,t \geq 1$ with $t \leq N/2$, $M_\R(N,t)$ is the minimum value of
 \begin{equation}\label{hyp}
     \sum_{p \leq N} w_p \nu_p(N!)
 \end{equation}
 where $w_p$ are non-negative reals for primes $p \leq N$
-subject to the constraints that the $w_p$ are weakly decreasing, thus
+subject to the constraints that the $w_p$ are weakly increasing, thus
 \begin{equation}\label{wp-decrease}
-w_{p_2} \leq w_{p_1}
+w_{p_2} \geq w_{p_1}
 \end{equation}
 whenever $p_2 \geq p_1$, and 
 \begin{equation}\label{pj}
@@ -584,8 +584,10 @@ for all $t \leq j \leq N$.  In particular, if
 then $t(N) < t$.
 \end{proposition}
 
+The requirement $t \leq N/2$ applies in practice, since by \eqref{trivial} we have $t(N) \leq N/2$ except possibly for the small cases $N \leq 5$.
+
 \begin{proof}  Suppose first that $w_p$ are non-negative reals obeying \eqref{pj} for all $t \leq j \leq N$.
-We claim that \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j \geq t$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly decreasing hypothesis on $w_p$, we have
+We claim that \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq j \leq N$.  Indeed, if this were not the case, consider the first $j > N$ where \eqref{pj} fails.  Take a prime $p$ dividing $j$ and replace it by a prime in the interval $[p/2,p)$ which exists by Bertrand's postulate (or remove $p$ entirely, if $p=2$); this creates a new $j'$ in $[j/2,j)$ which is still at least $t$.  By the weakly increasing hypothesis on $w_p$, we have
   $$ \sum_p w_p \nu_p(j) \geq \sum_p w_p \nu_p(j')$$
   and hence by the minimality of $j$ we have
   $$ \sum_p w_p \nu_p(j) > 1,$$
@@ -595,13 +597,13 @@ Now let $m_j, j \in J_{t,N}$ be non-negative reals obeying \eqref{constraints}. 
 $$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} \nu_p(N!)$$
 and hence \eqref{hyp} is an upper bound for $M_\R(N,t)$.
 
-In the converse direction, we need to locate weakly decreasing non-negative weights $w_p$ obeying \eqref{pj} for $t \leq j \leq N$ for which
+In the converse direction, we need to locate weakly increasing non-negative weights $w_p$ obeying \eqref{pj} for $t \leq j \leq N$ for which
 \begin{equation}\label{wpm} 
   \sum_{p \leq N} w_p \nu_p(N!) = M_\R(N,t).
 \end{equation}
 To do this, we first make the technical observation that in the definition of $M_\R(N,t)$, we can enlarge the index set $J_{t,N}$ to the larger set $J'_{t,N}$ of natural numbers $j \geq t$ that divide $N!$.  This follows by repeating the proof of \Cref{fip}: if $m_j$ were non-zero for some $j \geq t$ dividing $N!$ that had a proper factor $j' \geq t$, then one could transfer the mass of $m_j$ to $m_{j'}$ (i.e., replace $m_{j'}$ with $m_{j'}+m_j$ and then set $m_j$ to zero) without affecting \eqref{constraints}.  
 
-If we then invoke the duality theorem of linear programming, we can find weights $w_p \geq 0$ for $p \leq N$ obeying \eqref{wpm} as well as \eqref{pj} for all $j \in J'_{t,N}$ (not just $j \in J_{t,N}$).  To conclude the proof, it suffices to show that the $w_p$ are weakly decreasing. Suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w_{p_1} > w_{p_2}$.  Let $\eps>0$ be a sufficiently small quantity, and define the modification $\tilde w_p$ to $w_p$ by decreasing $w_{p_1}$ by $\eps$ and leaving all other $w_p$ unchanged.  This decreases the left-hand side of \eqref{wpm}, so to get a contradiction with the already-obtained lower bound, it suffices to show that
+If we then invoke the duality theorem of linear programming, we can find weights $w_p \geq 0$ for $p \leq N$ obeying \eqref{wpm} as well as \eqref{pj} for all $j \in J'_{t,N}$ (not just $j \in J_{t,N}$).  To conclude the proof, it suffices to show that the $w_p$ are weakly increasing. Suppose for contradiction that there are primes $p_1 < p_2 \leq N$ such that $w_{p_1} > w_{p_2}$.  Let $\eps>0$ be a sufficiently small quantity, and define the modification $\tilde w_p$ to $w_p$ by decreasing $w_{p_1}$ by $\eps$ and leaving all other $w_p$ unchanged.  This decreases the left-hand side of \eqref{wpm}, so to get a contradiction with the already-obtained lower bound, it suffices to show that
   $$ \sum_p \tilde w_p \nu_p(j) \geq 1$$
   for all $j \geq t$ dividing $N!$.  If $j$ has a proper factor $j'$ that is still at least $t$, the condition for $j$ would follow from that of $j'$, so we may restrict attention to the case where $j$ has no proper factor greater than or equal to $t$.  We can assume that $j$ is divisible by $p_1$, otherwise the claim follows from \eqref{pj}.  For $\eps$ small enough, one has
   $$ \sum_p \tilde w_p \nu_p(j) \geq \sum_p w_p \nu_p\left(\frac{p_2}{p_1} j\right);$$

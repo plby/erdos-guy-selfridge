@@ -1540,9 +1540,9 @@ In practice, these expressions can be adequately controlled by \Cref{osc-lemma},
 
 With the above estimates, we can now establish the lower bound in \Cref{main}(iv).  Thus we aim to show that $t(N) \geq t$ for sufficiently large $N$, where
 \begin{equation}\label{main-lower}
-   t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c_1} N} \asymp N
+   t \coloneqq \frac{N}{e} - \frac{c_0 N}{\log N} + \frac{N}{\log^{1+c} N} \asymp N
 \end{equation}
-and $0 < c_1 < 1$ is a small absolute constant. We use the construction of the previous section with the parameters
+and $0 < c < 1$ is a small absolute constant. We use the construction of the previous section with the parameters
 \begin{align}
   A &\coloneqq \lfloor \log^2 N \rfloor\label{a-asym}\\
 K &\coloneqq \lfloor \log^3 N \rfloor \label{k-asym} \\
@@ -1555,22 +1555,24 @@ so from \eqref{sigma-def} one has
 The conditions \eqref{conditions}, \eqref{t-lower} are easily verified for $N$ large enough.
 
 By \eqref{kappas-eq}, \eqref{l-asym}, and \Cref{power-lemma}(ii) we have
-$$ \kappa_* \ll \log^{-c} N$$
-for some absolute constant $c>0$.  From \eqref{gammas-def}, \eqref{main-lower}, \eqref{l-asym} we have
+\begin{equation}\label{kappas-decay} 
+  \kappa_* \ll \log^{-c'} N
+\end{equation}
+for some absolute constant $c'>0$ (we can assume $c$ is smaller than $c'$).  From \eqref{gammas-def}, \eqref{main-lower}, \eqref{l-asym} we have
 $$ \gamma_2 = \frac{1}{10} \frac{\log 2}{\log \sqrt{3}} + O\left(\frac{1}{\log N}\right), \quad
  \gamma_3 = \frac{1}{10} \frac{\log \sqrt{3}}{\log 2} + O\left(\frac{1}{\log N}\right)
 $$
 and hence by \eqref{kappastar-def},  \eqref{kappastar-2-def}, \eqref{kappastar-3-def} we have for sufficiently large $N$ that
 $$ \kappa_{**} \ll 1.$$
 By \Cref{repair}, it thus suffices to establish the inequalities \eqref{delta-cond}, \eqref{alpha-cond}.
-Several of the quantities $\delta, \delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, \eqref{stirling}, and the prime number theorem:
+Several of the quantities $\delta, \delta_i, \alpha_i$ can now be immediately estimated using \eqref{alpha1-vanish}, \eqref{delta1-bound}, \Cref{delta3-alpha3-bound}, \eqref{stirling}, \eqref{kappas-decay}, and the prime number theorem:
 \begin{align*}
   \delta_1 &\ll \frac{1}{A} \asymp \frac{1}{\log^2 N} \\
   \delta_3 &\ll \frac{A}{K \log N} \asymp \frac{1}{\log^2 N} \\
   \delta_6 &\ll \frac{1}{N} \\
-  \delta_7 &\ll \frac{\kappa_*}{\log N} \ll \frac{1}{\log^{1+c} N} \\
+  \delta_7 &\ll \frac{\kappa_*}{\log N} \ll \frac{1}{\log^{1+c'} N} \\
   \delta_8 &\ll \frac{\log N}{N} \\
-  \delta &= \frac{ec_0}{\log N} + \frac{e}{\log^{1+c_1} N} + O\left( \frac{1}{\log^2 N} \right)\\  
+  \delta &= \frac{ec_0}{\log N} + \frac{e}{\log^{1+c} N} + O\left( \frac{1}{\log^2 N} \right)\\  
 \end{align*}
 \begin{align*}
   \alpha_1 &= 0 \\

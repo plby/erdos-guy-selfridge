@@ -39,7 +39,7 @@ fn main():
 
     var np = sieve(Nmax, p)
 
-    for E in range(5, 9):
+    for E in range(4, 9):
         for M in range(1, 10):
             var N = M*10**E
             print('Bisecting N=' + String(N) + '... ', end='')
@@ -49,7 +49,7 @@ fn main():
             for i in range(2, N+1):
                 L += log(Float64(i))
 
-            var T_lo = N//3
+            var T_lo = 2*N//7
             var T_hi = N//2
             while T_hi-T_lo > 1:
                 var T = (T_hi+T_lo)//2

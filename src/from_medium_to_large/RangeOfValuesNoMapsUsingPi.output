@@ -1,0 +1,943 @@
+Running with range [ 10000000 , 100000000000 ]
+Precomputing the primes and factorizations.
+Precomputation reached  i =1000000000 out of 100000000000
+Precomputation reached  i =2000000000 out of 100000000000
+Precomputation reached  i =3000000000 out of 100000000000
+Precomputation reached  i =4000000000 out of 100000000000
+There are 224283407 primes lessor equal than 100000000000
+Donne for n = 10000000 with eps = 30 next n = 10300001
+Each of the factors found where larger than: 3433333 (n/3 = 3333333).
+Remaining factors: [17:4]
+Donne for n = 10300002 with eps = 30 next n = 10609003
+Each of the factors found where larger than: 3536334 (n/3 = 3433334).
+Remaining factors: [41:1]
+Donne for n = 10609005 with eps = 30 next n = 10927276
+Each of the factors found where larger than: 3642425 (n/3 = 3536335).
+Remaining factors: [11:17376, 19:1]
+Donne for n = 10927278 with eps = 30 next n = 11255097
+Each of the factors found where larger than: 3751698 (n/3 = 3642426).
+Remaining factors: [5:3536, 7:1, 23:24320]
+Donne for n = 11255097 with eps = 30 next n = 11592750
+Each of the factors found where larger than: 3864249 (n/3 = 3751699).
+Remaining factors: [11:6]
+Donne for n = 11592750 with eps = 30 next n = 11940533
+Each of the factors found where larger than: 3980177 (n/3 = 3864250).
+Remaining factors: [2:89134, 29:1]
+Donne for n = 11940534 with eps = 30 next n = 12298751
+Each of the factors found where larger than: 4099583 (n/3 = 3980178).
+Remaining factors: [5:1, 71:2, 79:13936]
+Donne for n = 12298752 with eps = 30 next n = 12667715
+Each of the factors found where larger than: 4222571 (n/3 = 4099584).
+Remaining factors: [13:1, 53:2]
+Donne for n = 12667716 with eps = 30 next n = 13047748
+Each of the factors found where larger than: 4349249 (n/3 = 4222572).
+Remaining factors: [11:12194, 17:11619, 31:1]
+Donne for n = 13047750 with eps = 30 next n = 13439183
+Each of the factors found where larger than: 4479727 (n/3 = 4349250).
+Remaining factors: [23:31942]
+Donne for n = 13439184 with eps = 30 next n = 13842360
+Each of the factors found where larger than: 4614119 (n/3 = 4479728).
+Remaining factors: [7:1, 17:29305]
+Donne for n = 13842360 with eps = 30 next n = 14257631
+Each of the factors found where larger than: 4752543 (n/3 = 4614120).
+Remaining factors: [43:1]
+Donne for n = 14257632 with eps = 30 next n = 14685361
+Each of the factors found where larger than: 4895120 (n/3 = 4752544).
+Remaining factors: [43:2]
+Donne for n = 14685363 with eps = 30 next n = 15125924
+Each of the factors found where larger than: 5041974 (n/3 = 4895121).
+Remaining factors: [13:5]
+Donne for n = 15125925 with eps = 30 next n = 15579703
+Each of the factors found where larger than: 5193234 (n/3 = 5041975).
+Remaining factors: [3:2, 7:3, 53:17796, 59:13274]
+Donne for n = 15579705 with eps = 30 next n = 16047097
+Each of the factors found where larger than: 5349032 (n/3 = 5193235).
+Remaining factors: [5:1, 7:82193]
+Donne for n = 16047099 with eps = 30 next n = 16528512
+Each of the factors found where larger than: 5509503 (n/3 = 5349033).
+Remaining factors: [2:74195, 31:25901, 61:1, 67:3832]
+Donne for n = 16528512 with eps = 30 next n = 17024368
+Each of the factors found where larger than: 5674789 (n/3 = 5509504).
+Remaining factors: [11:4]
+Donne for n = 17024370 with eps = 30 next n = 17535102
+Each of the factors found where larger than: 5845033 (n/3 = 5674790).
+Remaining factors: [17:2]
+Donne for n = 17535102 with eps = 30 next n = 18061156
+Each of the factors found where larger than: 6020385 (n/3 = 5845034).
+Remaining factors: [29:2, 41:20260]
+Donne for n = 18061158 with eps = 30 next n = 18602993
+Each of the factors found where larger than: 6200997 (n/3 = 6020386).
+Remaining factors: [5:1, 7:12747, 23:20308, 43:1]
+Donne for n = 18602994 with eps = 30 next n = 19161084
+Each of the factors found where larger than: 6387027 (n/3 = 6200998).
+Remaining factors: [7:4, 19:5722]
+Donne for n = 19161084 with eps = 30 next n = 19735917
+Each of the factors found where larger than: 6578638 (n/3 = 6387028).
+Remaining factors: [13:27564, 83:25703, 89:4649]
+Donne for n = 19735917 with eps = 30 next n = 20327995
+Each of the factors found where larger than: 6775998 (n/3 = 6578639).
+Remaining factors: [11:15852]
+Donne for n = 20327997 with eps = 30 next n = 20937837
+Each of the factors found where larger than: 6979278 (n/3 = 6775999).
+Remaining factors: [2:64716, 5:67859, 17:19617, 23:2]
+Donne for n = 20937837 with eps = 30 next n = 21565973
+Each of the factors found where larger than: 7188657 (n/3 = 6979279).
+Remaining factors: [5:8378, 7:6092, 13:1, 37:2322]
+Donne for n = 21565974 with eps = 30 next n = 22212954
+Each of the factors found where larger than: 7404317 (n/3 = 7188658).
+Remaining factors: [11:1, 23:9995, 43:36736, 53:3]
+Donne for n = 22212954 with eps = 30 next n = 22879343
+Each of the factors found where larger than: 7626447 (n/3 = 7404318).
+Remaining factors: []
+Donne for n = 22879344 with eps = 30 next n = 23565725
+Each of the factors found where larger than: 7855241 (n/3 = 7626448).
+Remaining factors: [5:8939, 19:36617, 23:34199, 43:6375, 53:3]
+Donne for n = 23565726 with eps = 30 next n = 24272698
+Each of the factors found where larger than: 8090899 (n/3 = 7855242).
+Remaining factors: [13:5]
+Donne for n = 24272700 with eps = 30 next n = 25000882
+Each of the factors found where larger than: 8333627 (n/3 = 8090900).
+Remaining factors: [19:28293, 31:40040]
+Donne for n = 25000884 with eps = 30 next n = 25750911
+Each of the factors found where larger than: 8583636 (n/3 = 8333628).
+Remaining factors: [13:55713, 23:12239, 31:4984, 37:26113]
+Donne for n = 25750911 with eps = 30 next n = 26523439
+Each of the factors found where larger than: 8841146 (n/3 = 8583637).
+Remaining factors: [17:13890, 43:54470, 61:3243]
+Donne for n = 26523441 with eps = 30 next n = 27319145
+Each of the factors found where larger than: 9106381 (n/3 = 8841147).
+Remaining factors: [11:4, 61:1, 67:13407]
+Donne for n = 27319146 with eps = 30 next n = 28138721
+Each of the factors found where larger than: 9379573 (n/3 = 9106382).
+Remaining factors: [13:3, 19:65788]
+Donne for n = 28138722 with eps = 30 next n = 28982884
+Each of the factors found where larger than: 9660961 (n/3 = 9379574).
+Remaining factors: [11:53150, 19:2]
+Donne for n = 28982886 with eps = 30 next n = 29852373
+Each of the factors found where larger than: 9950790 (n/3 = 9660962).
+Remaining factors: [5:204911, 13:1]
+Donne for n = 29852373 with eps = 30 next n = 30747945
+Each of the factors found where larger than: 10249314 (n/3 = 9950791).
+Remaining factors: [3:106151]
+Donne for n = 30747945 with eps = 30 next n = 31670384
+Each of the factors found where larger than: 10556794 (n/3 = 10249315).
+Remaining factors: [41:2]
+Donne for n = 31670385 with eps = 30 next n = 32620497
+Each of the factors found where larger than: 10873498 (n/3 = 10556795).
+Remaining factors: [41:1]
+Donne for n = 32620497 with eps = 30 next n = 33599112
+Each of the factors found where larger than: 11199703 (n/3 = 10873499).
+Remaining factors: [11:94975, 17:2]
+Donne for n = 33599112 with eps = 30 next n = 34607086
+Each of the factors found where larger than: 11535695 (n/3 = 11199704).
+Remaining factors: [7:2, 19:25227]
+Donne for n = 34607088 with eps = 30 next n = 35645301
+Each of the factors found where larger than: 11881766 (n/3 = 11535696).
+Remaining factors: [13:5332, 41:1, 43:105420]
+Donne for n = 35645301 with eps = 30 next n = 36714661
+Each of the factors found where larger than: 12238220 (n/3 = 11881767).
+Remaining factors: [37:69328, 67:3]
+Donne for n = 36714663 with eps = 30 next n = 37816103
+Each of the factors found where larger than: 12605367 (n/3 = 12238221).
+Remaining factors: [5:104794, 41:79080]
+Donne for n = 37816104 with eps = 30 next n = 38950588
+Each of the factors found where larger than: 12983529 (n/3 = 12605368).
+Remaining factors: [13:83121, 17:1, 67:26046]
+Donne for n = 38950590 with eps = 30 next n = 40119108
+Each of the factors found where larger than: 13373035 (n/3 = 12983530).
+Remaining factors: [13:1, 17:3654, 23:113793]
+Donne for n = 40119108 with eps = 30 next n = 41322682
+Each of the factors found where larger than: 13774227 (n/3 = 13373036).
+Remaining factors: [47:4]
+Donne for n = 41322684 with eps = 30 next n = 42562365
+Each of the factors found where larger than: 14187454 (n/3 = 13774228).
+Remaining factors: [23:29557, 29:3]
+Donne for n = 42562365 with eps = 30 next n = 43839236
+Each of the factors found where larger than: 14613078 (n/3 = 14187455).
+Remaining factors: [11:207505, 41:17056]
+Donne for n = 43839237 with eps = 30 next n = 45154415
+Each of the factors found where larger than: 15051471 (n/3 = 14613079).
+Remaining factors: [13:3, 23:2, 31:43267, 41:100650]
+Donne for n = 45154416 with eps = 30 next n = 46509049
+Each of the factors found where larger than: 15503016 (n/3 = 15051472).
+Remaining factors: [41:2, 47:25776]
+Donne for n = 46509051 with eps = 30 next n = 47904323
+Each of the factors found where larger than: 15968107 (n/3 = 15503017).
+Remaining factors: [31:60916, 37:113890]
+Donne for n = 47904324 with eps = 30 next n = 49341454
+Each of the factors found where larger than: 16447151 (n/3 = 15968108).
+Remaining factors: [7:157737, 17:38818, 41:3699]
+Donne for n = 49341456 with eps = 30 next n = 50821700
+Each of the factors found where larger than: 16940566 (n/3 = 16447152).
+Remaining factors: [31:2, 37:81739, 47:2811]
+Donne for n = 50821701 with eps = 30 next n = 52346353
+Each of the factors found where larger than: 17448784 (n/3 = 16940567).
+Remaining factors: [3:269281, 7:3, 19:53832]
+Donne for n = 52346355 with eps = 30 next n = 53916746
+Each of the factors found where larger than: 17972248 (n/3 = 17448785).
+Remaining factors: [37:9613, 53:1, 59:1, 67:14651]
+Donne for n = 53916747 with eps = 30 next n = 55534250
+Each of the factors found where larger than: 18511416 (n/3 = 17972249).
+Remaining factors: [37:1, 41:78923, 43:20871, 61:34993]
+Donne for n = 55534251 with eps = 30 next n = 57200279
+Each of the factors found where larger than: 19066759 (n/3 = 18511417).
+Remaining factors: [7:198736, 19:43356, 31:72432]
+Donne for n = 57200280 with eps = 30 next n = 58916289
+Each of the factors found where larger than: 19638762 (n/3 = 19066760).
+Remaining factors: [7:13429, 19:171436, 47:615, 97:15115]
+Donne for n = 58916289 with eps = 30 next n = 60683778
+Each of the factors found where larger than: 20227925 (n/3 = 19638763).
+Remaining factors: [11:153091, 17:1]
+Donne for n = 60683778 with eps = 30 next n = 62504292
+Each of the factors found where larger than: 20834763 (n/3 = 20227926).
+Remaining factors: [41:2374, 47:40844, 53:126751]
+Donne for n = 62504292 with eps = 30 next n = 64379421
+Each of the factors found where larger than: 21459806 (n/3 = 20834764).
+Remaining factors: [17:2, 19:282762]
+Donne for n = 64379421 with eps = 30 next n = 66310804
+Each of the factors found where larger than: 22103601 (n/3 = 21459807).
+Remaining factors: [19:1, 41:63487, 61:166299]
+Donne for n = 66310806 with eps = 30 next n = 68300131
+Each of the factors found where larger than: 22766710 (n/3 = 22103602).
+Remaining factors: [17:66487, 29:3760, 37:34845, 41:1]
+Donne for n = 68300133 with eps = 30 next n = 70349137
+Each of the factors found where larger than: 23449712 (n/3 = 22766711).
+Remaining factors: [11:4, 13:111503]
+Donne for n = 70349139 with eps = 30 next n = 72459614
+Each of the factors found where larger than: 24153204 (n/3 = 23449713).
+Remaining factors: [37:164768]
+Donne for n = 72459615 with eps = 30 next n = 74633404
+Each of the factors found where larger than: 24877801 (n/3 = 24153205).
+Remaining factors: [7:22778, 41:2, 53:81443, 67:163929]
+Donne for n = 74633406 with eps = 30 next n = 76872409
+Each of the factors found where larger than: 25624136 (n/3 = 24877802).
+Remaining factors: [3:283448, 29:34421, 43:184720, 53:16348]
+Donne for n = 76872411 with eps = 30 next n = 79178584
+Each of the factors found where larger than: 26392861 (n/3 = 25624137).
+Remaining factors: [7:6]
+Donne for n = 79178586 with eps = 30 next n = 81553944
+Each of the factors found where larger than: 27184647 (n/3 = 26392862).
+Remaining factors: [19:1, 29:1, 41:72635, 53:55329, 71:1, 101:132305]
+Donne for n = 81553944 with eps = 30 next n = 84000563
+Each of the factors found where larger than: 28000187 (n/3 = 27184648).
+Remaining factors: [3:947076, 29:1, 79:49198]
+Donne for n = 84000564 with eps = 30 next n = 86520581
+Each of the factors found where larger than: 28840193 (n/3 = 28000188).
+Remaining factors: [13:1, 29:20696, 41:25737, 83:243815]
+Donne for n = 86520582 with eps = 30 next n = 89116200
+Each of the factors found where larger than: 29705399 (n/3 = 28840194).
+Remaining factors: [19:387375, 37:1, 53:22450]
+Donne for n = 89116200 with eps = 30 next n = 91789687
+Each of the factors found where larger than: 30596562 (n/3 = 29705400).
+Remaining factors: [7:179687, 17:275199, 47:1]
+Donne for n = 91789689 with eps = 30 next n = 94543380
+Each of the factors found where larger than: 31514459 (n/3 = 30596563).
+Remaining factors: [5:352217, 13:283280, 31:3952, 41:1]
+Donne for n = 94543380 with eps = 30 next n = 97379682
+Each of the factors found where larger than: 32459893 (n/3 = 31514460).
+Remaining factors: [11:6]
+Donne for n = 97379682 with eps = 30 next n = 100301073
+Each of the factors found where larger than: 33433690 (n/3 = 32459894).
+Remaining factors: [2:4, 3:2, 67:8393, 83:10806]
+Donne for n = 100301073 with eps = 30 next n = 103310106
+Each of the factors found where larger than: 34436701 (n/3 = 33433691).
+Remaining factors: [37:100707, 71:11634]
+Donne for n = 103310106 with eps = 30 next n = 106409410
+Each of the factors found where larger than: 35469803 (n/3 = 34436702).
+Remaining factors: [11:143647]
+Donne for n = 106409412 with eps = 30 next n = 109601695
+Each of the factors found where larger than: 36533898 (n/3 = 35469804).
+Remaining factors: [17:2]
+Donne for n = 109601697 with eps = 30 next n = 112889748
+Each of the factors found where larger than: 37629915 (n/3 = 36533899).
+Remaining factors: [5:84309, 7:431177, 41:1]
+Donne for n = 112889748 with eps = 30 next n = 116276441
+Each of the factors found where larger than: 38758813 (n/3 = 37629916).
+Remaining factors: [43:2, 47:407971]
+Donne for n = 116276442 with eps = 30 next n = 119764736
+Each of the factors found where larger than: 39921578 (n/3 = 38758814).
+Remaining factors: [5:2, 23:36218, 41:131915, 47:75832, 53:167679]
+Donne for n = 119764737 with eps = 30 next n = 123357680
+Each of the factors found where larger than: 41119226 (n/3 = 39921579).
+Remaining factors: [23:282522, 37:33243, 41:192809]
+Donne for n = 123357681 with eps = 30 next n = 127058412
+Each of the factors found where larger than: 42352803 (n/3 = 41119227).
+Remaining factors: [7:836911, 31:53066, 37:1]
+Donne for n = 127058412 with eps = 30 next n = 130870165
+Each of the factors found where larger than: 43623388 (n/3 = 42352804).
+Remaining factors: [19:290924, 41:130883, 43:24941, 53:75028]
+Donne for n = 130870167 with eps = 30 next n = 134796273
+Each of the factors found where larger than: 44932090 (n/3 = 43623389).
+Remaining factors: [13:197331, 17:221089]
+Donne for n = 134796273 with eps = 30 next n = 138840162
+Each of the factors found where larger than: 46280053 (n/3 = 44932091).
+Remaining factors: [3:4, 17:321162, 29:78542, 43:110950, 79:132853]
+Donne for n = 138840162 with eps = 30 next n = 143005367
+Each of the factors found where larger than: 47668455 (n/3 = 46280054).
+Remaining factors: [11:5, 23:88602, 29:524846]
+Donne for n = 143005368 with eps = 30 next n = 147295530
+Each of the factors found where larger than: 49098509 (n/3 = 47668456).
+Remaining factors: [19:51462, 41:217289, 47:232621, 89:144247]
+Donne for n = 147295530 with eps = 30 next n = 151714396
+Each of the factors found where larger than: 50571465 (n/3 = 49098510).
+Remaining factors: [37:2, 47:284322, 53:128942, 71:66371]
+Donne for n = 151714398 with eps = 30 next n = 156265830
+Each of the factors found where larger than: 52088609 (n/3 = 50571466).
+Remaining factors: [17:1, 37:242269, 43:1, 47:71602, 53:37119, 59:120102]
+Donne for n = 156265830 with eps = 30 next n = 160953805
+Each of the factors found where larger than: 53651268 (n/3 = 52088610).
+Remaining factors: [7:2, 17:179573, 29:138677, 71:86415, 83:115073, 109:1]
+Donne for n = 160953807 with eps = 30 next n = 165782422
+Each of the factors found where larger than: 55260807 (n/3 = 53651269).
+Remaining factors: [13:158838, 37:427616, 59:129676, 61:100372, 67:15101]
+Donne for n = 165782424 with eps = 30 next n = 170755897
+Each of the factors found where larger than: 56918632 (n/3 = 55260808).
+Remaining factors: [31:3348, 37:229162, 43:227891, 59:71695, 61:1, 67:160069]
+Donne for n = 170755899 with eps = 30 next n = 175878576
+Each of the factors found where larger than: 58626191 (n/3 = 56918633).
+Remaining factors: [23:469783, 47:147511, 73:40668]
+Donne for n = 175878576 with eps = 30 next n = 181154934
+Each of the factors found where larger than: 60384977 (n/3 = 58626192).
+Remaining factors: [41:1, 43:334136, 67:239387]
+Donne for n = 181154934 with eps = 30 next n = 186589583
+Each of the factors found where larger than: 62196527 (n/3 = 60384978).
+Remaining factors: [19:188782, 29:379706, 37:1, 43:223458]
+Donne for n = 186589584 with eps = 30 next n = 192187272
+Each of the factors found where larger than: 64062423 (n/3 = 62196528).
+Remaining factors: [17:448271, 41:192174, 97:331135]
+Donne for n = 192187272 with eps = 30 next n = 197952891
+Each of the factors found where larger than: 65984296 (n/3 = 64062424).
+Remaining factors: [47:396694, 53:51123, 101:29580, 103:208792]
+Donne for n = 197952891 with eps = 30 next n = 203891478
+Each of the factors found where larger than: 67963825 (n/3 = 65984297).
+Remaining factors: [37:357187, 43:372567, 47:242550]
+Donne for n = 203891478 with eps = 30 next n = 210008223
+Each of the factors found where larger than: 70002740 (n/3 = 67963826).
+Remaining factors: [13:608795, 47:45332, 71:155868, 79:104953, 97:21129, 101:53073, 103:132113]
+Donne for n = 210008223 with eps = 30 next n = 216308470
+Each of the factors found where larger than: 72102823 (n/3 = 70002741).
+Remaining factors: [7:834700, 43:367090, 47:64394]
+Donne for n = 216308472 with eps = 30 next n = 222797727
+Each of the factors found where larger than: 74265908 (n/3 = 72102824).
+Remaining factors: [19:587107, 61:1, 67:262645, 79:46762]
+Donne for n = 222797727 with eps = 30 next n = 229481659
+Each of the factors found where larger than: 76493886 (n/3 = 74265909).
+Remaining factors: [29:3, 31:484438, 53:207615, 89:2, 109:1, 127:321926]
+Donne for n = 229481661 with eps = 30 next n = 236366111
+Each of the factors found where larger than: 78788703 (n/3 = 76493887).
+Remaining factors: [17:1, 107:2, 113:183588, 137:111472, 139:165876, 149:227851]
+Donne for n = 236366112 with eps = 30 next n = 243457096
+Each of the factors found where larger than: 81152365 (n/3 = 78788704).
+Remaining factors: [31:2, 41:280425, 73:795835]
+Donne for n = 243457098 with eps = 30 next n = 250760811
+Each of the factors found where larger than: 83586936 (n/3 = 81152366).
+Remaining factors: [29:105647, 37:34290, 53:32778, 67:487119, 71:284892, 79:19831]
+Donne for n = 250760811 with eps = 30 next n = 258283636
+Each of the factors found where larger than: 86094545 (n/3 = 83586937).
+Remaining factors: [2:1, 37:249644, 41:551598]
+Donne for n = 258283638 with eps = 30 next n = 266032148
+Each of the factors found where larger than: 88677382 (n/3 = 86094546).
+Remaining factors: [23:47508, 43:350815, 67:14030, 83:2, 109:340994, 131:16809]
+Donne for n = 266032149 with eps = 30 next n = 274013114
+Each of the factors found where larger than: 91337704 (n/3 = 88677383).
+Remaining factors: [7:4, 19:495583, 41:115816, 43:575757]
+Donne for n = 274013115 with eps = 30 next n = 282233509
+Each of the factors found where larger than: 94077836 (n/3 = 91337705).
+Remaining factors: [37:3, 41:209276, 43:416255, 79:286748, 83:203357]
+Donne for n = 282233511 with eps = 30 next n = 290700517
+Each of the factors found where larger than: 96900172 (n/3 = 94077837).
+Remaining factors: [23:194412, 37:512107, 41:330789, 67:1]
+Donne for n = 290700519 with eps = 30 next n = 299421535
+Each of the factors found where larger than: 99807178 (n/3 = 96900173).
+Remaining factors: [53:1, 61:166207, 73:263641, 83:252308, 97:117558]
+Donne for n = 299421537 with eps = 30 next n = 308404184
+Each of the factors found where larger than: 102801394 (n/3 = 99807179).
+Remaining factors: [5:1102357, 23:1791, 43:353026, 71:582528]
+Donne for n = 308404185 with eps = 30 next n = 317656311
+Each of the factors found where larger than: 105885436 (n/3 = 102801395).
+Remaining factors: [19:249668, 37:795352]
+Donne for n = 317656311 with eps = 30 next n = 327186001
+Each of the factors found where larger than: 109062000 (n/3 = 105885437).
+Remaining factors: [5:408036, 7:3, 23:257009, 41:195448, 43:603354, 79:175363]
+Donne for n = 327186003 with eps = 30 next n = 337001584
+Each of the factors found where larger than: 112333861 (n/3 = 109062001).
+Remaining factors: [5:1, 11:1, 19:526320, 31:86287, 127:11310, 139:416103, 149:26356]
+Donne for n = 337001586 with eps = 30 next n = 347111634
+Each of the factors found where larger than: 115703877 (n/3 = 112333862).
+Remaining factors: [37:220487, 41:75188, 43:55412, 47:382817, 67:264175, 79:201079, 97:265097]
+Donne for n = 347111634 with eps = 30 next n = 357524984
+Each of the factors found where larger than: 119174994 (n/3 = 115703878).
+Remaining factors: [11:3, 47:865545, 79:273994, 89:134701]
+Donne for n = 357524985 with eps = 30 next n = 368250735
+Each of the factors found where larger than: 122750244 (n/3 = 119174995).
+Remaining factors: [17:2, 29:1390138, 37:539773]
+Donne for n = 368250735 with eps = 30 next n = 379298258
+Each of the factors found where larger than: 126432752 (n/3 = 122750245).
+Remaining factors: [19:1094702, 43:78563, 47:248256, 59:223043, 61:411802]
+Donne for n = 379298259 with eps = 30 next n = 390677207
+Each of the factors found where larger than: 130225735 (n/3 = 126432753).
+Remaining factors: [7:29126, 29:588894, 53:1, 59:1324658]
+Donne for n = 390677208 with eps = 30 next n = 402397525
+Each of the factors found where larger than: 134132508 (n/3 = 130225736).
+Remaining factors: [11:22339, 31:397910, 61:79762, 67:387280, 71:145532, 89:202867, 97:61933, 157:448676]
+Donne for n = 402397527 with eps = 30 next n = 414469453
+Each of the factors found where larger than: 138156484 (n/3 = 134132509).
+Remaining factors: [5:2066438, 19:1660424, 31:3]
+Donne for n = 414469455 with eps = 30 next n = 426903539
+Each of the factors found where larger than: 142301179 (n/3 = 138156485).
+Remaining factors: [37:2, 73:834717, 89:518469, 103:358783]
+Donne for n = 426903540 with eps = 30 next n = 439710647
+Each of the factors found where larger than: 146570215 (n/3 = 142301180).
+Remaining factors: [23:744545, 29:708561, 43:374677, 73:206469, 107:379673]
+Donne for n = 439710648 with eps = 30 next n = 452901968
+Each of the factors found where larger than: 150967322 (n/3 = 146570216).
+Remaining factors: [37:2, 41:280051, 47:697831, 73:1010606, 83:167360]
+Donne for n = 452901969 with eps = 30 next n = 466489029
+Each of the factors found where larger than: 155496342 (n/3 = 150967323).
+Remaining factors: [11:4, 41:111935, 61:1, 97:1015501]
+Donne for n = 466489029 with eps = 30 next n = 480483700
+Each of the factors found where larger than: 160161233 (n/3 = 155496343).
+Remaining factors: [13:269440, 19:1033390, 43:825642, 53:296570]
+Donne for n = 480483702 with eps = 30 next n = 494898214
+Each of the factors found where larger than: 164966071 (n/3 = 160161234).
+Remaining factors: [13:751360, 17:2, 19:178696, 79:889960, 97:231971]
+Donne for n = 494898216 with eps = 30 next n = 509745163
+Each of the factors found where larger than: 169915054 (n/3 = 164966072).
+Remaining factors: [17:11262, 23:573410, 29:102968, 31:501053, 37:1144041, 103:285975]
+Donne for n = 509745165 with eps = 30 next n = 525037520
+Each of the factors found where larger than: 175012506 (n/3 = 169915055).
+Remaining factors: [31:217740, 41:233754, 43:740372, 61:172130, 97:521205, 131:213222]
+Donne for n = 525037521 with eps = 30 next n = 540788647
+Each of the factors found where larger than: 180262882 (n/3 = 175012507).
+Remaining factors: [3:72350, 29:2528689, 41:276890, 47:83619, 67:2]
+Donne for n = 540788649 with eps = 30 next n = 557012309
+Each of the factors found where larger than: 185670769 (n/3 = 180262883).
+Remaining factors: [37:1045682, 43:904537, 73:114554, 79:55677, 101:63713, 103:160101, 109:1, 127:462350]
+Donne for n = 557012310 with eps = 30 next n = 573722680
+Each of the factors found where larger than: 191240893 (n/3 = 185670770).
+Remaining factors: [47:1, 59:349309, 73:18544, 79:754686, 83:84833, 97:953647, 103:28808]
+Donne for n = 573722682 with eps = 30 next n = 590934363
+Each of the factors found where larger than: 196978120 (n/3 = 191240894).
+Remaining factors: [11:1416017, 127:692694, 131:994464, 137:58556]
+Donne for n = 590934363 with eps = 30 next n = 608662394
+Each of the factors found where larger than: 202887464 (n/3 = 196978121).
+Remaining factors: [41:1017968, 43:1, 59:348650, 73:402143, 79:320511, 89:462744]
+Donne for n = 608662395 with eps = 30 next n = 626922267
+Each of the factors found where larger than: 208974088 (n/3 = 202887465).
+Remaining factors: [13:215073, 17:1351006, 71:1100171]
+Donne for n = 626922267 with eps = 30 next n = 645729936
+Each of the factors found where larger than: 215243311 (n/3 = 208974089).
+Remaining factors: [5:1322384, 23:2560, 29:1271528, 53:1461436]
+Donne for n = 645729936 with eps = 30 next n = 665101835
+Each of the factors found where larger than: 221700611 (n/3 = 215243312).
+Remaining factors: [13:3110152, 29:982414]
+Donne for n = 665101836 with eps = 30 next n = 685054892
+Each of the factors found where larger than: 228351630 (n/3 = 221700612).
+Remaining factors: [31:673162, 53:1, 67:1880522, 107:245029, 109:448784]
+Donne for n = 685054893 with eps = 30 next n = 705606540
+Each of the factors found where larger than: 235202179 (n/3 = 228351631).
+Remaining factors: [7:2445125, 31:1, 41:1158963, 53:388578, 61:1007052, 97:1]
+Donne for n = 705606540 with eps = 30 next n = 726774737
+Each of the factors found where larger than: 242258245 (n/3 = 235202180).
+Remaining factors: [37:661287, 41:1, 53:1163440, 67:428477, 79:777673, 89:427672]
+Donne for n = 726774738 with eps = 30 next n = 748577981
+Each of the factors found where larger than: 249525993 (n/3 = 242258246).
+Remaining factors: [13:31716, 41:1222690, 47:293687, 53:1, 109:1079487, 127:1, 131:604647, 139:80793, 151:86959]
+Donne for n = 748577982 with eps = 30 next n = 771035322
+Each of the factors found where larger than: 257011773 (n/3 = 249525994).
+Remaining factors: [23:506287, 61:114825, 73:869826, 89:257657, 97:219094, 107:709297, 149:609454, 181:236955]
+Donne for n = 771035322 with eps = 30 next n = 794166382
+Each of the factors found where larger than: 264722127 (n/3 = 257011774).
+Remaining factors: [2:3573731, 23:846191, 43:449435, 107:476108, 131:6542, 137:856179, 163:273496]
+Donne for n = 794166384 with eps = 30 next n = 817991376
+Each of the factors found where larger than: 272663791 (n/3 = 264722128).
+Remaining factors: [17:2561032, 37:440768, 47:1794018]
+Donne for n = 817991376 with eps = 30 next n = 842531118
+Each of the factors found where larger than: 280843705 (n/3 = 272663792).
+Remaining factors: [23:1, 41:1278091, 43:405270, 47:43092, 83:228170, 89:567106, 103:424137, 107:628980, 109:422810]
+Donne for n = 842531118 with eps = 30 next n = 867807052
+Each of the factors found where larger than: 289269017 (n/3 = 280843706).
+Remaining factors: [5:1568113, 13:1869309, 17:2, 53:977905, 67:677258, 109:675568]
+Donne for n = 867807054 with eps = 30 next n = 893841266
+Each of the factors found where larger than: 297947088 (n/3 = 289269018).
+Remaining factors: [19:3, 23:8417, 37:1025100, 59:1, 61:284442, 101:2203288, 103:130621, 127:1]
+Donne for n = 893841267 with eps = 30 next n = 920656506
+Each of the factors found where larger than: 306885501 (n/3 = 297947089).
+Remaining factors: [37:946556, 41:1, 67:847707, 73:133332, 101:118251, 113:806674, 131:562668]
+Donne for n = 920656506 with eps = 30 next n = 948276202
+Each of the factors found where larger than: 316092067 (n/3 = 306885502).
+Remaining factors: [19:1518128, 29:1547595, 31:1, 53:349226, 71:602976, 83:732261, 131:555901, 137:20090, 149:92202]
+Donne for n = 948276204 with eps = 30 next n = 976724491
+Each of the factors found where larger than: 325574830 (n/3 = 316092068).
+Remaining factors: [7:621197, 43:186476, 53:1525888, 71:101989, 97:100697, 101:92984, 107:172646, 109:403937]
+Donne for n = 976724493 with eps = 30 next n = 1006026228
+Each of the factors found where larger than: 335342075 (n/3 = 325574831).
+Remaining factors: [7:519224, 11:162203, 43:312424, 59:1069851, 67:1158896, 73:1, 103:1, 137:978436, 191:597741]
+Donne for n = 1006026228 with eps = 30 next n = 1036207015
+Each of the factors found where larger than: 345402338 (n/3 = 335342076).
+Remaining factors: [11:1153327, 41:133589, 47:532173, 71:1080000, 79:785277, 89:845812, 109:913892]
+Donne for n = 1036207017 with eps = 30 next n = 1067293228
+Each of the factors found where larger than: 355764409 (n/3 = 345402339).
+Remaining factors: [37:967353, 43:107463, 59:1046793, 67:1300889, 73:1]
+Donne for n = 1067293230 with eps = 30 next n = 1099312027
+Each of the factors found where larger than: 366437342 (n/3 = 355764410).
+Remaining factors: [61:932145, 71:1462494, 73:37193, 83:107361, 103:40048, 107:212677, 109:370914, 113:630142]
+Donne for n = 1099312029 with eps = 30 next n = 1132291390
+Each of the factors found where larger than: 377430463 (n/3 = 366437343).
+Remaining factors: [11:3698437, 23:2, 31:499074, 109:570676, 113:516593, 127:267041, 173:783355]
+Donne for n = 1132291392 with eps = 30 next n = 1166260134
+Each of the factors found where larger than: 388753377 (n/3 = 377430464).
+Remaining factors: [37:1459450, 41:275152, 59:819852, 67:350018, 103:500590, 109:1052002]
+Donne for n = 1166260134 with eps = 30 next n = 1201247939
+Each of the factors found where larger than: 400415979 (n/3 = 388753378).
+Remaining factors: [41:1303650, 71:116857, 97:112244, 101:2524287, 107:428629]
+Donne for n = 1201247940 with eps = 30 next n = 1237285379
+Each of the factors found where larger than: 412428459 (n/3 = 400415980).
+Remaining factors: [19:1354416, 37:4712075, 41:1876540, 43:46369, 67:1]
+Donne for n = 1237285380 with eps = 30 next n = 1274403942
+Each of the factors found where larger than: 424801313 (n/3 = 412428460).
+Remaining factors: [13:2, 67:265537, 83:2435821, 97:1731169, 103:1274228, 131:531896]
+Donne for n = 1274403942 with eps = 30 next n = 1312636061
+Each of the factors found where larger than: 437545353 (n/3 = 424801314).
+Remaining factors: [31:2541956, 61:1099436, 71:519254, 79:386137, 199:973111]
+Donne for n = 1312636062 with eps = 30 next n = 1352015144
+Each of the factors found where larger than: 450671714 (n/3 = 437545354).
+Remaining factors: [97:509874, 109:18063, 127:1174800, 131:1912147, 137:1383538]
+Donne for n = 1352015145 with eps = 30 next n = 1392575600
+Each of the factors found where larger than: 464191866 (n/3 = 450671715).
+Remaining factors: [11:1, 31:46882, 41:40973, 47:876375, 67:3535142, 71:230383, 101:579079, 107:2064730]
+Donne for n = 1392575601 with eps = 30 next n = 1434352870
+Each of the factors found where larger than: 478117623 (n/3 = 464191867).
+Remaining factors: [29:813786, 37:2222574, 41:114527, 89:2066827, 113:1486922, 127:157517, 131:443552]
+Donne for n = 1434352872 with eps = 30 next n = 1477383459
+Each of the factors found where larger than: 492461152 (n/3 = 478117624).
+Remaining factors: [43:1099847, 47:1235795, 53:954478, 59:909088, 61:3084910, 71:725023, 73:425668]
+Donne for n = 1477383459 with eps = 30 next n = 1521704963
+Each of the factors found where larger than: 507234987 (n/3 = 492461153).
+Remaining factors: [11:1712669, 29:701936, 73:56725, 89:1835937, 109:2538492, 137:12023, 139:763987]
+Donne for n = 1521704964 with eps = 30 next n = 1567356113
+Each of the factors found where larger than: 522452037 (n/3 = 507234988).
+Remaining factors: [19:539875, 31:21504, 43:1177730, 67:14026, 73:749101, 89:424669, 97:1680166, 101:497354]
+Donne for n = 1567356114 with eps = 30 next n = 1614376798
+Each of the factors found where larger than: 538125599 (n/3 = 522452038).
+Remaining factors: [37:967827, 47:2, 61:1794163, 83:175673, 89:711982, 101:963746, 103:1847136, 109:34962, 131:636660, 157:8027]
+Donne for n = 1614376800 with eps = 30 next n = 1662808105
+Each of the factors found where larger than: 554269368 (n/3 = 538125600).
+Remaining factors: [19:1173437, 37:4395138, 67:674792, 97:1771797, 109:39069, 127:634609, 137:1, 157:972525]
+Donne for n = 1662808107 with eps = 30 next n = 1712692351
+Each of the factors found where larger than: 570897450 (n/3 = 554269369).
+Remaining factors: [37:2, 59:97422, 61:3089800, 73:2842448, 83:1397293, 97:1218795, 157:196465]
+Donne for n = 1712692353 with eps = 30 next n = 1764073124
+Each of the factors found where larger than: 588024374 (n/3 = 570897451).
+Remaining factors: [7:1673055, 13:1, 23:170066, 37:1488893, 41:1107949, 53:436780, 97:910526, 101:408523, 109:56775, 113:2414236]
+Donne for n = 1764073125 with eps = 30 next n = 1816995319
+Each of the factors found where larger than: 605665106 (n/3 = 588024375).
+Remaining factors: [17:2654415, 19:778170, 31:2227987, 47:1391868, 53:1, 59:1721036, 79:1799293]
+Donne for n = 1816995321 with eps = 30 next n = 1871505181
+Each of the factors found where larger than: 623835060 (n/3 = 605665107).
+Remaining factors: [11:1389572, 17:3523544, 29:2071729, 41:417370, 47:542454, 127:1690443, 137:198787, 149:836553, 157:427299]
+Donne for n = 1871505183 with eps = 30 next n = 1927650339
+Each of the factors found where larger than: 642550112 (n/3 = 623835061).
+Remaining factors: [5:1347474, 7:1833713, 13:5096439, 17:446533, 23:190521, 41:1162484, 61:2523951, 131:1]
+Donne for n = 1927650339 with eps = 30 next n = 1985479850
+Each of the factors found where larger than: 661826616 (n/3 = 642550113).
+Remaining factors: [23:1045082, 29:2843975, 47:552105, 53:601431, 59:387409, 61:383748, 103:2234147, 137:2456476, 149:132274, 167:727853]
+Donne for n = 1985479851 with eps = 30 next n = 2045044247
+Each of the factors found where larger than: 681681415 (n/3 = 661826617).
+Remaining factors: [59:190278, 61:786721, 67:2229862, 71:130342, 89:3848996, 101:1204801, 103:334519, 109:664331, 113:565604]
+Donne for n = 2045044248 with eps = 30 next n = 2106395576
+Each of the factors found where larger than: 702131858 (n/3 = 681681416).
+Remaining factors: [7:8033398, 47:1393548, 59:273156, 67:1996020, 107:174525, 149:637394, 151:169940, 181:2833226]
+Donne for n = 2106395577 with eps = 30 next n = 2169587445
+Each of the factors found where larger than: 723195814 (n/3 = 702131859).
+Remaining factors: [5:3418144, 7:5, 41:1724884, 43:255979, 67:303859, 89:196729, 97:291623, 103:1965368, 107:2440737, 113:1572570, 151:1560537]
+Donne for n = 2169587445 with eps = 30 next n = 2234675069
+Each of the factors found where larger than: 744891689 (n/3 = 723195815).
+Remaining factors: [29:1087039, 37:107309, 61:2447096, 101:2630857, 131:834526, 139:1669306, 163:2058253, 181:820260]
+Donne for n = 2234675070 with eps = 30 next n = 2301715323
+Each of the factors found where larger than: 767238440 (n/3 = 744891690).
+Remaining factors: [43:3953831, 47:824714, 59:1339071, 67:199353, 73:1320916, 131:307531, 173:934055, 191:2709570, 199:674, 223:1]
+Donne for n = 2301715323 with eps = 30 next n = 2370766783
+Each of the factors found where larger than: 790255594 (n/3 = 767238441).
+Remaining factors: [11:2, 23:351040, 31:6251609, 59:2083101, 89:1165845, 97:1518463, 113:881249, 127:398966, 163:1]
+Donne for n = 2370766785 with eps = 30 next n = 2441889789
+Each of the factors found where larger than: 813963262 (n/3 = 790255595).
+Remaining factors: [47:2, 59:899200, 67:304358, 79:2207277, 83:3766985, 127:873172, 131:553912]
+Donne for n = 2441889789 with eps = 30 next n = 2515146483
+Each of the factors found where larger than: 838382160 (n/3 = 813963263).
+Remaining factors: [59:3, 67:2169253, 71:319553, 73:1313778, 101:746837, 107:2238384, 113:2368925, 127:646411, 139:1584525, 149:124865, 157:1003535]
+Donne for n = 2515146483 with eps = 30 next n = 2590600878
+Each of the factors found where larger than: 863533625 (n/3 = 838382161).
+Remaining factors: [11:418247, 19:1845425, 31:1685183, 61:2207477, 71:2202726, 83:1869526, 89:1619475, 127:1978711, 139:323432, 151:24469, 163:310092, 191:530820]
+Donne for n = 2590600878 with eps = 30 next n = 2668318905
+Each of the factors found where larger than: 889439634 (n/3 = 863533626).
+Remaining factors: [41:2574439, 67:2583374, 71:2982801, 79:2925226, 101:874272, 127:131174, 149:696062, 151:69394, 181:705822, 191:149482]
+Donne for n = 2668318905 with eps = 30 next n = 2748368473
+Each of the factors found where larger than: 916122824 (n/3 = 889439635).
+Remaining factors: [11:1052688, 17:8594263, 41:1, 67:1278747, 73:129866, 79:2154826, 151:1152401, 173:3448743]
+Donne for n = 2748368475 with eps = 30 next n = 2830819530
+Each of the factors found where larger than: 943606509 (n/3 = 916122825).
+Remaining factors: [11:2973734, 13:2, 67:4228005, 97:5080713, 101:156285, 107:2493756, 109:293717, 113:1, 167:1035829, 179:158786]
+Donne for n = 2830819530 with eps = 30 next n = 2915744116
+Each of the factors found where larger than: 971914705 (n/3 = 943606510).
+Remaining factors: [19:3688079, 31:630063, 37:6814705, 53:2890944, 61:316167, 67:111642, 71:1676034, 103:92222, 127:529187]
+Donne for n = 2915744118 with eps = 30 next n = 3003216442
+Each of the factors found where larger than: 1001072147 (n/3 = 971914706).
+Remaining factors: [13:1343066, 31:4279253, 73:1859181, 83:3542149, 127:2531385, 131:1875208, 139:1902279]
+Donne for n = 3003216444 with eps = 30 next n = 3093312938
+Each of the factors found where larger than: 1031104312 (n/3 = 1001072148).
+Remaining factors: [17:278701, 37:6666588, 47:2843300, 89:7312002, 103:124179, 131:144318]
+Donne for n = 3093312939 with eps = 30 next n = 3186112328
+Each of the factors found where larger than: 1062037442 (n/3 = 1031104313).
+Remaining factors: [29:6650011, 37:5140210, 67:3727038, 73:769284, 83:446944, 89:2117307]
+Donne for n = 3186112329 with eps = 30 next n = 3281695699
+Each of the factors found where larger than: 1093898566 (n/3 = 1062037443).
+Remaining factors: [29:1542932, 31:3828498, 79:166851, 109:3458411, 113:1, 157:2698900, 193:847201, 251:126893, 269:1147540, 277:654518, 281:638179]
+Donne for n = 3281695701 with eps = 30 next n = 3380146573
+Each of the factors found where larger than: 1126715524 (n/3 = 1093898567).
+Remaining factors: [5:13550052, 37:111979, 73:2478679, 79:183241, 97:450518, 101:1120654, 109:597034, 149:2590639, 151:201080, 173:557476, 181:1, 199:3713120]
+Donne for n = 3380146575 with eps = 30 next n = 3481550973
+Each of the factors found where larger than: 1160516990 (n/3 = 1126715525).
+Remaining factors: [19:12136242, 37:1, 47:987977, 61:2199729, 181:4077761]
+Donne for n = 3481550973 with eps = 30 next n = 3585997503
+Each of the factors found where larger than: 1195332500 (n/3 = 1160516991).
+Remaining factors: [19:1584243, 47:3456289, 71:5041701, 89:3430430, 103:716981, 109:1670822, 137:921296, 173:438817, 181:1, 211:710667]
+Donne for n = 3585997503 with eps = 30 next n = 3693577429
+Each of the factors found where larger than: 1231192476 (n/3 = 1195332501).
+Remaining factors: [23:1475905, 31:2276782, 47:2218760, 59:292289, 61:6036081, 83:810748, 151:2161957, 157:1493649, 163:2407045, 167:55056, 181:692404, 197:2]
+Donne for n = 3693577431 with eps = 30 next n = 3804384754
+Each of the factors found where larger than: 1268128251 (n/3 = 1231192477).
+Remaining factors: [31:7495590, 59:1163584, 61:3132116, 79:2628690, 89:343435, 127:3331326, 157:798034, 167:2254232, 211:217367]
+Donne for n = 3804384756 with eps = 30 next n = 3918516299
+Each of the factors found where larger than: 1306172099 (n/3 = 1268128252).
+Remaining factors: [5:1946853, 29:587943, 47:5476683, 71:8022167, 89:6139412, 103:1366825]
+Donne for n = 3918516300 with eps = 30 next n = 4036071790
+Each of the factors found where larger than: 1345357263 (n/3 = 1306172100).
+Remaining factors: [19:13022656, 47:3536000, 59:517607, 71:1145407, 89:431335, 107:2058657, 127:4576504, 139:1598426]
+Donne for n = 4036071792 with eps = 30 next n = 4157153946
+Each of the factors found where larger than: 1385717981 (n/3 = 1345357264).
+Remaining factors: [23:4137665, 67:2118312, 83:6097892, 89:8945355, 101:3179373]
+Donne for n = 4157153946 with eps = 30 next n = 4281868565
+Each of the factors found where larger than: 1427289521 (n/3 = 1385717982).
+Remaining factors: [41:50919, 61:408668, 89:7086514, 101:515417, 103:1339940, 107:1818014, 131:338744, 151:2429470, 163:985550, 167:966324, 173:1222402, 181:1298728, 193:2736822]
+Donne for n = 4281868566 with eps = 30 next n = 4410324623
+Each of the factors found where larger than: 1470108207 (n/3 = 1427289522).
+Remaining factors: [3:15532563, 31:2914739, 37:5698878, 47:1, 61:2972253, 101:683123, 139:908398, 163:6385084, 223:2221327]
+Donne for n = 4410324624 with eps = 30 next n = 4542634363
+Each of the factors found where larger than: 1514211454 (n/3 = 1470108208).
+Remaining factors: [11:5607373, 17:3615071, 31:8452596, 41:1, 73:1860934, 101:5010253, 151:5399215, 157:1151943]
+Donne for n = 4542634365 with eps = 30 next n = 4678913396
+Each of the factors found where larger than: 1559637798 (n/3 = 1514211455).
+Remaining factors: [19:63540, 47:7920270, 61:8419644, 83:5133330, 113:375078, 151:902396, 179:2176338, 239:105351]
+Donne for n = 4678913397 with eps = 30 next n = 4819280799
+Each of the factors found where larger than: 1606426932 (n/3 = 1559637799).
+Remaining factors: [17:400258, 19:3325620, 31:4227185, 41:7212075, 53:1040555, 59:4374136, 61:1584072, 79:4832255, 89:1978014, 137:1447823]
+Donne for n = 4819280799 with eps = 30 next n = 4963859223
+Each of the factors found where larger than: 1654619740 (n/3 = 1606426933).
+Remaining factors: [19:3073820, 71:1008757, 79:2909105, 89:21484, 101:2186044, 103:1621344, 107:3324399, 109:496788, 131:1, 163:1463787, 191:5039040, 197:2778833, 199:2105329]
+Donne for n = 4963859223 with eps = 30 next n = 5112775000
+Each of the factors found where larger than: 1704258333 (n/3 = 1654619741).
+Remaining factors: [41:8891179, 43:7711742, 53:1968336, 79:2944701, 113:226823, 137:2840728, 149:2596078, 179:730051, 197:1068964, 239:2061982]
+Donne for n = 5112775002 with eps = 30 next n = 5266158253
+Each of the factors found where larger than: 1755386084 (n/3 = 1704258334).
+Remaining factors: [19:11488448, 43:5397778, 47:29428, 71:1858738, 97:2319240, 103:2739955, 107:853363, 151:2775766]
+Donne for n = 5266158255 with eps = 30 next n = 5424143003
+Each of the factors found where larger than: 1808047667 (n/3 = 1755386085).
+Remaining factors: [43:1516752, 53:1594514, 61:1, 71:1880122, 79:4714639, 83:3191638, 89:1561515, 97:2135161, 101:2381655, 113:738231, 163:2363470, 167:2574507, 173:2570240]
+Donne for n = 5424143004 with eps = 30 next n = 5586867295
+Each of the factors found where larger than: 1862289098 (n/3 = 1808047668).
+Remaining factors: [29:917371, 31:2108499, 37:6529661, 53:6832226, 67:2994036, 83:7836496, 97:2595713, 113:1030310, 127:894804, 149:1334297, 173:251386, 179:1031607, 229:62357, 233:2]
+Donne for n = 5586867297 with eps = 30 next n = 5754473316
+Each of the factors found where larger than: 1918157771 (n/3 = 1862289099).
+Remaining factors: [53:3442366, 67:4148213, 101:3992983, 107:1224515, 127:4954067, 131:1420091, 137:3897323, 149:738432, 157:5143491, 179:2425119]
+Donne for n = 5754473316 with eps = 30 next n = 5927107516
+Each of the factors found where larger than: 1975702505 (n/3 = 1918157772).
+Remaining factors: [17:6988774, 31:1572223, 37:3813292, 53:5736359, 59:504153, 67:3972918, 73:6164289, 79:2276667, 89:1522939, 107:170768, 127:2550994, 131:2940400]
+Donne for n = 5927107518 with eps = 30 next n = 6104920744
+Each of the factors found where larger than: 2034973581 (n/3 = 1975702506).
+Remaining factors: [79:1826873, 83:6248720, 107:5401022, 113:5838511, 131:1352776, 151:3569554, 173:2336152]
+Donne for n = 6104920746 with eps = 30 next n = 6288068369
+Each of the factors found where larger than: 2096022789 (n/3 = 2034973582).
+Remaining factors: [41:4813408, 53:8070700, 89:7154353, 97:2102378, 151:1151539, 163:2580035, 173:644787, 193:3440494, 197:5186745]
+Donne for n = 6288068370 with eps = 30 next n = 6476710422
+Each of the factors found where larger than: 2158903473 (n/3 = 2096022790).
+Remaining factors: [13:11970891, 23:1294270, 31:148412, 59:9097566, 89:2032420, 103:2295110, 139:3282319, 179:3342581, 223:1261698, 227:587976, 229:414496, 239:3394127, 241:1445085]
+Donne for n = 6476710422 with eps = 30 next n = 6671011735
+Each of the factors found where larger than: 2223670578 (n/3 = 2158903474).
+Remaining factors: [13:10246677, 19:3577971, 29:1771263, 43:2470156, 101:3571274, 103:503704, 137:1920968, 167:5408832, 179:652390, 199:3565360, 229:1, 239:457372]
+Donne for n = 6671011737 with eps = 30 next n = 6871142090
+Each of the factors found where larger than: 2290380696 (n/3 = 2223670579).
+Remaining factors: [5:9217867, 19:215572, 23:328824, 71:8839445, 89:4330832, 107:1445507, 137:503024, 139:3724302, 157:3197873, 163:6481317, 167:3007232, 179:1276185]
+Donne for n = 6871142091 with eps = 30 next n = 7077276354
+Each of the factors found where larger than: 2359092117 (n/3 = 2290380697).
+Remaining factors: [11:14925884, 17:16134032, 41:9563538, 43:4274989, 47:991083, 79:1140148, 151:2371786, 193:1039777, 211:3769488]
+Donne for n = 7077276354 with eps = 30 next n = 7289594645
+Each of the factors found where larger than: 2429864881 (n/3 = 2359092118).
+Remaining factors: [11:2458876, 47:3686418, 71:4328180, 79:2663451, 101:4295746, 167:1, 191:5191290, 197:9740827, 211:2328314, 227:1263550, 251:862402, 263:158018, 271:844107, 281:957775, 283:1]
+Donne for n = 7289594646 with eps = 30 next n = 7508282486
+Each of the factors found where larger than: 2502760828 (n/3 = 2429864882).
+Remaining factors: [29:3810085, 47:6256569, 61:318831, 83:1321261, 139:3107685, 151:5193409, 167:6388398, 173:3673795, 179:420924, 197:429392]
+Donne for n = 7508282487 with eps = 30 next n = 7733530962
+Each of the factors found where larger than: 2577843653 (n/3 = 2502760829).
+Remaining factors: [31:917341, 37:1128807, 41:5127229, 67:1213242, 73:1134841, 89:1618128, 101:12078811, 113:5712122, 137:1025264, 139:5235724, 149:4705323, 163:990078]
+Donne for n = 7733530962 with eps = 30 next n = 7965536891
+Each of the factors found where larger than: 2655178963 (n/3 = 2577843654).
+Remaining factors: [43:1522297, 47:5187331, 53:1396148, 59:4046849, 83:2473732, 137:722869, 139:4407730, 151:502913, 167:1199606, 197:3695805, 227:5978993, 257:1041068, 271:2081470]
+Donne for n = 7965536892 with eps = 30 next n = 8204502999
+Each of the factors found where larger than: 2734834332 (n/3 = 2655178964).
+Remaining factors: [41:842656, 53:1, 59:4270416, 83:9849833, 101:9944406, 109:5010242, 113:1680020, 137:1, 151:697037, 163:5855728, 181:2933338, 223:1663971]
+Donne for n = 8204502999 with eps = 30 next n = 8450638089
+Each of the factors found where larger than: 2816879362 (n/3 = 2734834333).
+Remaining factors: [31:7584978, 59:12976786, 61:3079821, 71:4657067, 101:4890978, 113:2667214, 139:5572001, 163:4023029, 193:1849025, 241:666283]
+Donne for n = 8450638089 with eps = 30 next n = 8704157232
+Each of the factors found where larger than: 2901385743 (n/3 = 2816879363).
+Remaining factors: [17:18277067, 23:10729660, 43:3184394, 59:2498637, 113:5434091, 149:3229349, 151:3321054, 157:5967927, 163:195585, 167:3357105]
+Donne for n = 8704157232 with eps = 30 next n = 8965281949
+Each of the factors found where larger than: 2988427316 (n/3 = 2901385744).
+Remaining factors: [5:17028225, 29:4996871, 53:11387069, 73:9238164, 89:6933283, 157:871307, 167:4796903, 197:4805366, 223:1]
+Donne for n = 8965281951 with eps = 30 next n = 9234240410
+Each of the factors found where larger than: 3078080136 (n/3 = 2988427317).
+Remaining factors: [17:3650475, 37:17958219, 59:7062513, 61:8659999, 67:411825, 83:4384937, 89:918101, 101:648071, 107:7524728, 113:4586211]
+Donne for n = 9234240411 with eps = 30 next n = 9511267624
+Each of the factors found where larger than: 3170422541 (n/3 = 3078080137).
+Remaining factors: [13:9560150, 23:17380478, 41:1, 71:376909, 79:4864897, 83:6501982, 89:4883156, 97:8194461, 103:7416256, 149:1, 233:1, 251:989384]
+Donne for n = 9511267626 with eps = 30 next n = 9796605655
+Each of the factors found where larger than: 3265535218 (n/3 = 3170422542).
+Remaining factors: [19:21227033, 41:1, 47:31296958, 67:851932, 97:2723410, 101:597717, 103:8718342, 109:797214, 181:305033, 191:1650343]
+Donne for n = 9796605657 with eps = 30 next n = 10090503827
+Each of the factors found where larger than: 3363501275 (n/3 = 3265535219).
+Remaining factors: [13:4523029, 19:4702952, 23:5313147, 47:2, 71:5020735, 89:2802571, 101:19410836, 103:2974336, 113:1708065, 137:2504557, 167:8558260, 179:2764620]
+Donne for n = 10090503828 with eps = 30 next n = 10393218943
+Each of the factors found where larger than: 3464406314 (n/3 = 3363501276).
+Remaining factors: [19:1, 23:24318841, 29:33610830, 83:4304384, 89:4097468, 109:2954129, 131:5104596]
+Donne for n = 10393218945 with eps = 30 next n = 10705015514
+Each of the factors found where larger than: 3568338504 (n/3 = 3464406315).
+Remaining factors: [5:2, 17:46177, 37:6634382, 41:5511046, 71:31182, 79:6975933, 103:4311732, 113:2090853, 127:8830150, 157:1350045, 163:5945355, 173:1119585, 179:1898777, 227:10878919, 263:1]
+Donne for n = 10705015515 with eps = 30 next n = 11026165981
+Each of the factors found where larger than: 3675388660 (n/3 = 3568338505).
+Remaining factors: [11:13685924, 23:16860141, 59:13157816, 97:6380785, 127:342713, 173:2668894, 193:5128730, 197:4708836, 211:8193833, 317:2251948]
+Donne for n = 11026165983 with eps = 30 next n = 11356950963
+Each of the factors found where larger than: 3785650320 (n/3 = 3675388661).
+Remaining factors: [31:12005063, 37:745295, 43:1055699, 61:920810, 71:4731159, 89:5509333, 101:6917064, 113:6069651, 137:896963, 139:2748488, 163:11888125, 181:5218731, 211:1954759, 223:4961828]
+Donne for n = 11356950963 with eps = 30 next n = 11697659492
+Each of the factors found where larger than: 3899219830 (n/3 = 3785650321).
+Remaining factors: [29:190199, 41:1, 67:3194852, 71:7184121, 89:24863033, 151:6004432, 157:1903022, 163:5729222, 179:4094058, 229:3853799, 233:1650766, 239:5802708, 251:2]
+Donne for n = 11697659493 with eps = 30 next n = 12048589278
+Each of the factors found where larger than: 4016196425 (n/3 = 3899219831).
+Remaining factors: [23:447840, 41:6417777, 67:4269465, 73:10604418, 89:12693767, 103:12035635, 107:2909141, 139:5993812, 151:4279434, 157:1, 179:2179540, 191:793964]
+Donne for n = 12048589278 with eps = 30 next n = 12410046957
+Each of the factors found where larger than: 4136682318 (n/3 = 4016196426).
+Remaining factors: [5:10856320, 31:23680603, 47:4178003, 61:622949, 71:7082287, 109:4555780, 127:3646297, 139:3789834, 163:2061066, 179:13081314, 199:2643695, 229:2258320]
+Donne for n = 12410046957 with eps = 30 next n = 12782348366
+Each of the factors found where larger than: 4260782788 (n/3 = 4136682319).
+Remaining factors: [19:4286524, 23:16176028, 29:16496581, 31:20227531, 37:2, 61:872464, 83:9857503, 101:2176543, 107:1374513, 109:343036, 149:214547, 157:7736810, 167:684438, 181:4556934, 193:1559619]
+Donne for n = 12782348367 with eps = 30 next n = 13165818819
+Each of the factors found where larger than: 4388606272 (n/3 = 4260782789).
+Remaining factors: [31:2573672, 41:16699126, 53:6031994, 59:706861, 79:1216509, 83:8512513, 101:16815, 103:2939895, 113:4574036, 131:1376932, 137:5573271, 173:952167, 193:2561795, 199:1064277, 223:8581079, 241:107109, 263:1354822, 281:2228889, 283:912371]
+Donne for n = 13165818819 with eps = 30 next n = 13560793384
+Each of the factors found where larger than: 4520264461 (n/3 = 4388606273).
+Remaining factors: [7:1271983, 31:9753827, 37:17484493, 43:2246927, 59:14269002, 101:5477188, 103:13359, 149:497975, 157:3358814, 173:3913694, 181:4929044, 191:650344, 197:3503810, 199:7041657, 211:3764029]
+Donne for n = 13560793386 with eps = 30 next n = 13967617188
+Each of the factors found where larger than: 4655872395 (n/3 = 4520264462).
+Remaining factors: [7:36776342, 37:10734130, 73:243487, 79:7571376, 83:6083643, 89:4692280, 97:8102105, 107:5208863, 113:176186, 131:5417224, 163:267925, 167:3616789, 197:1878391, 199:6907244, 251:1195294]
+Donne for n = 13967617188 with eps = 30 next n = 14386645704
+Each of the factors found where larger than: 4795548567 (n/3 = 4655872396).
+Remaining factors: [23:18890065, 41:1178510, 43:460683, 67:6047453, 79:2277492, 83:10584301, 113:7729459, 137:11875847, 139:9100110, 163:8001905, 193:3170253, 211:7271678]
+Donne for n = 14386645704 with eps = 30 next n = 14818245076
+Each of the factors found where larger than: 4939415025 (n/3 = 4795548568).
+Remaining factors: [47:10622527, 61:5249345, 71:1323715, 79:5356023, 97:6830647, 101:9804211, 131:5065648, 149:830175, 151:3256002, 179:1867055, 181:1276757, 193:4834133, 229:2430799, 277:4669968, 293:8718428, 307:7955186]
+Donne for n = 14818245078 with eps = 30 next n = 15262792431
+Each of the factors found where larger than: 5087597476 (n/3 = 4939415026).
+Remaining factors: [19:34865174, 23:2388974, 83:7409381, 101:5617771, 103:7639466, 109:16522232, 113:1209726, 127:7178872, 173:6387521, 181:463408, 191:9751546]
+Donne for n = 15262792431 with eps = 30 next n = 15720676204
+Each of the factors found where larger than: 5240225401 (n/3 = 5087597477).
+Remaining factors: [19:2116104, 47:1638341, 59:4147897, 61:27093268, 89:6780468, 97:8170310, 101:861024, 131:171836, 163:2449327, 179:4800877, 197:2469940, 199:2250788, 211:1372453, 227:2182277, 233:5808678, 239:8338892]
+Donne for n = 15720676206 with eps = 30 next n = 16192296493
+Each of the factors found where larger than: 5397432164 (n/3 = 5240225402).
+Remaining factors: [13:38200104, 43:10686691, 47:2199205, 59:12139207, 73:6835225, 107:1307688, 109:5400955, 131:17037438, 137:7621660, 157:1036031, 163:1951021]
+Donne for n = 16192296495 with eps = 30 next n = 16678065390
+Each of the factors found where larger than: 5559355129 (n/3 = 5397432165).
+Remaining factors: [13:6344735, 43:5536342, 47:1, 61:18316524, 83:1016802, 89:2205361, 97:5757564, 103:3753519, 107:8876869, 109:1, 113:19475398, 127:4424305, 139:12980575, 193:1679091, 211:1736888, 223:3653277, 227:2430689, 241:675121, 263:2293630, 311:2043392]
+Donne for n = 16678065390 with eps = 30 next n = 17178407352
+Each of the factors found where larger than: 5726135783 (n/3 = 5559355130).
+Remaining factors: [29:3230217, 43:17338525, 47:8071476, 61:2842920, 71:11513414, 101:8654733, 103:22072492, 167:4118679, 199:5383426, 229:13886368, 233:3119882]
+Donne for n = 17178407352 with eps = 30 next n = 17693759573
+Each of the factors found where larger than: 5897919857 (n/3 = 5726135784).
+Remaining factors: [13:5742599, 19:1537025, 41:9600332, 53:3662547, 71:1, 73:5944093, 83:4783743, 89:5771973, 97:1, 107:8325177, 139:2680531, 157:10555498, 163:4643505, 199:13949056, 211:13381289, 223:1640216, 227:1036543, 271:5962955, 277:3864706, 311:592558, 359:553723]
+Donne for n = 17693759574 with eps = 30 next n = 18224572362
+Each of the factors found where larger than: 6074857453 (n/3 = 5897919858).
+Remaining factors: [41:26744694, 43:1200685, 79:2114878, 89:8581240, 97:13388418, 101:12057872, 113:2180370, 127:6195611, 149:949647, 157:1646794, 179:18625854, 193:1792359]
+Donne for n = 18224572362 with eps = 30 next n = 18771309533
+Each of the factors found where larger than: 6257103177 (n/3 = 6074857454).
+Remaining factors: [47:934504, 61:1038624, 83:9965419, 101:1, 103:7846814, 109:12004630, 113:8450262, 131:10186222, 137:15141791, 139:3813428, 193:10796884, 199:1653418, 211:11592801, 241:3839407, 257:955780, 269:7180962]
+Donne for n = 18771309534 with eps = 30 next n = 19334448821
+Each of the factors found where larger than: 6444816273 (n/3 = 6257103178).
+Remaining factors: [43:2502556, 61:3910169, 71:5221214, 107:13682418, 109:12072739, 113:4151800, 127:595904, 157:7150200, 163:4571846, 167:4792760, 179:17636975, 181:17362126, 199:1237473, 211:7102870, 227:6473559]
+Donne for n = 19334448822 with eps = 30 next n = 19914482287
+Each of the factors found where larger than: 6638160762 (n/3 = 6444816274).
+Remaining factors: [19:26370686, 41:4481871, 43:14551751, 47:3474159, 61:10025058, 67:16239584, 73:1836159, 137:1, 139:1, 149:8701007, 163:1738710, 181:1939206, 191:12398803, 193:11785235]
+Donne for n = 19914482289 with eps = 30 next n = 20511916758
+Each of the factors found where larger than: 6837305585 (n/3 = 6638160763).
+Remaining factors: [17:10939277, 29:9588420, 47:15265630, 53:1111390, 67:22384167, 79:7908707, 107:416542, 109:7315572, 127:4146264, 137:3568965, 157:12467891, 163:5984517, 173:10726278, 233:8206413, 239:2776311, 257:4640649]
+Donne for n = 20511916758 with eps = 30 next n = 21127274261
+Each of the factors found where larger than: 7042424753 (n/3 = 6837305586).
+Remaining factors: [23:28129250, 37:38651504, 71:6363671, 101:6591193, 103:3330238, 109:5585602, 131:2745705, 163:8284873, 173:2008333, 199:3873866, 211:139938, 239:8443727, 257:5248768, 271:10381750]
+Donne for n = 21127274262 with eps = 30 next n = 21761092490
+Each of the factors found where larger than: 7253697496 (n/3 = 7042424754).
+Remaining factors: [67:14540272, 103:146715, 107:5465208, 127:4697046, 131:11086283, 137:5468893, 139:17424392, 151:5385640, 167:16993867, 173:13503101, 211:4271580, 233:4643008, 241:9689612, 251:9560870, 263:359847]
+Donne for n = 21761092491 with eps = 30 next n = 22413925266
+Each of the factors found where larger than: 7471308421 (n/3 = 7253697497).
+Remaining factors: [13:26530125, 53:10864212, 59:2763796, 61:14243064, 73:11566081, 107:8312216, 127:1783095, 131:6340478, 173:7663717, 193:307362, 223:1641192, 233:791871, 257:3111512, 263:10234240]
+Donne for n = 22413925266 with eps = 30 next n = 23086343024
+Each of the factors found where larger than: 7695447674 (n/3 = 7471308422).
+Remaining factors: [23:6675119, 59:13886266, 67:9454082, 73:874795, 79:1417722, 83:4764515, 101:7446792, 107:11481514, 109:18850398, 113:3712640, 127:6544355, 139:6709182, 197:1237749, 239:9148660, 241:5497181, 257:7298790, 263:8092832, 281:9179161, 293:3850280]
+Donne for n = 23086343025 with eps = 30 next n = 23778933316
+Each of the factors found where larger than: 7926311105 (n/3 = 7695447675).
+Remaining factors: [79:3, 83:2552240, 97:10567511, 109:15580483, 131:17398772, 139:15701885, 149:4538305, 151:1654778, 157:18863623, 163:4923293, 179:1758514, 191:1107377, 197:3725885, 239:3579760, 251:11735531, 269:11603566, 277:8034350]
+Donne for n = 23778933318 with eps = 30 next n = 24492301318
+Each of the factors found where larger than: 8164100439 (n/3 = 7926311106).
+Remaining factors: [11:10485966, 29:9547115, 31:7306525, 41:40912876, 53:321732, 101:11195515, 149:12551738, 181:12058306, 193:1207405, 197:4147979, 223:417980, 227:5570720, 251:2198194, 269:8120819, 271:13177374, 277:774155, 283:11056562]
+Donne for n = 24492301320 with eps = 30 next n = 25227070360
+Each of the factors found where larger than: 8409023453 (n/3 = 8164100440).
+Remaining factors: [17:9684060, 43:6193220, 53:9708458, 107:13981409, 109:7039406, 113:779981, 151:23044836, 173:3449083, 179:14094801, 191:23322362, 193:6773768, 197:3702934, 199:6494818, 227:11087870, 229:10163232]
+Donne for n = 25227070362 with eps = 30 next n = 25983882473
+Each of the factors found where larger than: 8661294157 (n/3 = 8409023454).
+Remaining factors: [43:2, 59:1, 73:5147124, 89:17468918, 101:1447605, 109:7576027, 139:14345897, 149:1832084, 151:7782822, 199:10308820, 233:8116701, 263:4337498, 283:11162236, 307:6470370, 317:7593186, 337:12778940, 373:10457866, 389:2954136]
+Donne for n = 25983882474 with eps = 30 next n = 26763398949
+Each of the factors found where larger than: 8921132982 (n/3 = 8661294158).
+Remaining factors: [7:39553407, 13:14261841, 31:32505584, 37:19635537, 53:1, 71:9419537, 101:11208161, 157:5418276, 179:32796709, 181:9894672]
+Donne for n = 26763398949 with eps = 30 next n = 27566300918
+Each of the factors found where larger than: 9188766972 (n/3 = 8921132983).
+Remaining factors: [23:25297397, 43:5270381, 53:9792094, 61:2999085, 67:37659296, 101:11658027, 109:4740120, 157:5784816, 167:31746501, 193:26298339, 211:11629888, 227:448475, 263:1]
+Donne for n = 27566300919 with eps = 30 next n = 28393289947
+Each of the factors found where larger than: 9464429982 (n/3 = 9188766973).
+Remaining factors: [17:25364714, 23:5364124, 31:9465942, 47:308026, 83:23217950, 97:19272531, 103:30236030, 127:8782584, 151:2072172, 179:2486999, 181:1656871, 191:4752943, 199:5923605, 223:4154789, 227:5228160, 263:4829169, 307:11894202, 331:8865006, 379:813158]
+Donne for n = 28393289949 with eps = 30 next n = 29245088648
+Each of the factors found where larger than: 9748362882 (n/3 = 9464429983).
+Remaining factors: [11:66860828, 41:13387716, 47:14169597, 71:30544825, 89:12209047, 97:9792249, 107:21718724, 113:1, 139:3108393, 149:4378221, 167:28114044]
+Donne for n = 29245088649 with eps = 30 next n = 30122441309
+Each of the factors found where larger than: 10040813769 (n/3 = 9748362883).
+Remaining factors: [73:261528, 79:2, 97:14751109, 103:5836960, 127:14525599, 139:2738265, 151:5898017, 163:12569382, 173:972289, 181:10515191, 193:4924734, 199:4455135, 211:4411822, 223:11203307, 227:7548160, 229:27900157, 241:14367017, 271:7615125, 277:6242009, 281:2786146, 293:8657118]
+Donne for n = 30122441310 with eps = 30 next n = 31026114550
+Each of the factors found where larger than: 10342038183 (n/3 = 10040813770).
+Remaining factors: [59:7282169, 79:6240239, 83:1, 97:21702670, 101:2185134, 103:16592541, 137:14669807, 139:7863415, 157:11851076, 179:12908293, 191:12326107, 197:4451066, 233:14511158, 241:20998766, 277:240569, 281:3388407, 283:18440161, 293:3728264, 311:650203]
+Donne for n = 31026114552 with eps = 30 next n = 31956897989
+Each of the factors found where larger than: 10652299329 (n/3 = 10342038184).
+Remaining factors: [31:13593019, 37:34795650, 43:3360834, 47:18725885, 71:20542849, 79:17083417, 103:10568, 151:8539485, 163:13029701, 233:23396794, 241:940844, 269:7112983, 271:1376034, 307:7607531, 313:9108569, 337:4118918, 347:3863238, 367:4648728]
+Donne for n = 31956897990 with eps = 30 next n = 32915604930
+Each of the factors found where larger than: 10971868309 (n/3 = 10652299330).
+Remaining factors: [101:26543502, 113:1013740, 127:13745806, 137:11002495, 149:7718635, 151:4486532, 157:11664095, 173:13451344, 193:23757995, 197:11236877, 199:14464485, 211:20839525, 229:12707468, 233:7991042, 239:2013091, 257:1552204]
+Donne for n = 32915604930 with eps = 30 next n = 33903073078
+Each of the factors found where larger than: 11301024359 (n/3 = 10971868310).
+Remaining factors: [43:4166892, 71:6164255, 83:24325454, 89:6395286, 97:22972828, 151:29943403, 157:16730877, 163:676631, 167:6162849, 173:8281081, 179:10352848, 193:632647, 199:18237442, 211:24743672, 229:1064670, 233:2403134, 251:7467889, 269:8699992]
+Donne for n = 33903073080 with eps = 30 next n = 34920165273
+Each of the factors found where larger than: 11640055090 (n/3 = 11301024360).
+Remaining factors: [29:9997538, 47:22359293, 89:11871596, 101:1165095, 103:10476342, 113:3215122, 131:17377612, 137:13249052, 139:1995080, 163:24083718, 191:20356871, 211:2564024, 271:10952680, 307:9424485, 311:13306348, 347:7368340, 359:13670944, 383:1496322, 397:9399246]
+Donne for n = 34920165273 with eps = 30 next n = 35967770232
+Each of the factors found where larger than: 11989256743 (n/3 = 11640055091).
+Remaining factors: [17:24921266, 37:10284402, 47:15577603, 59:16632874, 73:14902566, 79:8301769, 113:7640738, 149:29092810, 179:249667, 199:1112777, 223:17062186, 229:11569621, 271:12293833, 281:2410533, 293:14719806, 313:22375577, 421:9398206]
+Donne for n = 35967770232 with eps = 30 next n = 37046803339
+Each of the factors found where larger than: 12348934446 (n/3 = 11989256744).
+Remaining factors: [13:39383815, 23:39681138, 71:2321986, 73:24202171, 83:9642203, 97:1040741, 101:43232906, 107:109096, 137:14371267, 149:4588317, 173:12300394, 197:2155475, 229:7972952, 257:6404725, 277:4119292, 281:1055305, 337:19808014, 347:13504631, 353:4068431, 367:1]
+Donne for n = 37046803341 with eps = 30 next n = 38158207442
+Each of the factors found where larger than: 12719402480 (n/3 = 12348934447).
+Remaining factors: [31:15201644, 53:18083550, 73:3228133, 101:17766128, 109:11421321, 127:23549361, 131:31487371, 139:10980783, 173:30907358, 181:18161931, 193:3612148, 227:6543316, 251:21594610, 311:2439890, 317:11039960, 347:4003404]
+Donne for n = 38158207443 with eps = 30 next n = 39302953667
+Each of the factors found where larger than: 13100984555 (n/3 = 12719402481).
+Remaining factors: [13:6569416, 17:8344614, 23:2421671, 37:51333698, 41:24080849, 47:19677557, 71:14332620, 83:17126116, 89:6081311, 137:14749923, 149:14764427, 151:8711091, 167:832756, 179:2728909, 199:5939705, 211:1309766, 223:8117111, 241:20537323, 257:1193057, 271:3154867, 283:3668272, 307:4405757, 317:10068356]
+Donne for n = 39302953668 with eps = 30 next n = 40482042279
+Each of the factors found where larger than: 13494014092 (n/3 = 13100984556).
+Remaining factors: [17:5336765, 47:2137579, 97:27369251, 103:7646573, 131:41629810, 163:25347490, 167:27338046, 173:5350722, 181:14417464, 193:15037868, 197:5277067, 223:9955178, 257:8711298, 263:20120791, 311:12389480]
+Donne for n = 40482042279 with eps = 30 next n = 41696503548
+Each of the factors found where larger than: 13898834515 (n/3 = 13494014093).
+Remaining factors: [11:31026516, 17:4028082, 41:11296091, 61:397219, 67:16710809, 137:18757993, 139:4250374, 173:24135803, 197:17961756, 233:8073648, 241:4679441, 251:1947424, 263:14462334, 269:7868830, 281:3124818, 313:4529538, 353:3277002]
+Donne for n = 41696503548 with eps = 30 next n = 42947398655
+Each of the factors found where larger than: 14315799551 (n/3 = 13898834516).
+Remaining factors: [53:25374655, 67:20842229, 97:7015125, 107:2032406, 109:11994983, 131:12760514, 137:27584870, 139:7211680, 157:1286784, 193:9255483, 197:10491018, 211:33070262, 223:21702849, 233:6161797, 241:11563911, 251:8111762, 257:16537668, 263:4510069, 269:3505728]
+Donne for n = 42947398656 with eps = 30 next n = 44235820616
+Each of the factors found where larger than: 14745273538 (n/3 = 14315799552).
+Remaining factors: [23:20796691, 29:51304361, 67:3470283, 79:37782609, 97:1734043, 101:3140157, 109:11888676, 139:7577426, 163:57568, 167:15381812, 173:26017167, 193:34063902, 197:7412665, 223:5054764, 263:18666781, 277:26517139]
+Donne for n = 44235820617 with eps = 30 next n = 45562895236
+Each of the factors found where larger than: 15187631745 (n/3 = 14745273539).
+Remaining factors: [13:9780098, 19:5007385, 37:10757117, 41:5768109, 53:37633666, 61:3206400, 97:4182153, 101:27420209, 103:278866, 109:4307559, 113:18607838, 137:197163, 157:30393285, 197:1354466, 211:33522487, 223:6942584, 227:19339216, 233:10869644, 271:3171204, 277:7631982, 281:16955207, 337:10038522, 347:8943942, 353:686021]
+Donne for n = 45562895238 with eps = 30 next n = 46929782096
+Each of the factors found where larger than: 15643260698 (n/3 = 15187631746).
+Remaining factors: [37:41429582, 71:22779479, 79:25986656, 113:20832199, 127:863452, 137:9061902, 139:11377485, 149:6651127, 179:8178278, 197:23301931, 233:826084, 239:22204274, 241:1851237, 283:3212782, 331:17414476, 347:1688648, 379:14377915, 383:19350675, 397:5739926]
+Donne for n = 46929782097 with eps = 30 next n = 48337675560
+Each of the factors found where larger than: 16112558519 (n/3 = 15643260699).
+Remaining factors: [7:72270927, 17:605064, 29:41243259, 59:20517252, 61:3316567, 71:1283846, 73:11459402, 83:2464338, 101:23935276, 103:37603764, 127:881398, 139:17463326, 157:12114850, 163:4103586, 167:16828756, 173:6165631, 191:14303281, 199:3540432, 227:6481421, 251:23446242, 271:7048510, 277:1132442]
+Donne for n = 48337675560 with eps = 30 next n = 49787805827
+Each of the factors found where larger than: 16595935275 (n/3 = 16112558520).
+Remaining factors: [137:14164518, 149:2455661, 157:37363254, 163:48282476, 167:27973856, 179:2885796, 181:19104847, 191:16640282, 193:644750, 211:21282086, 223:13087413, 239:24865827, 269:7972883, 277:13755505, 283:16974151, 313:17397729]
+Donne for n = 49787805828 with eps = 30 next n = 51281440003
+Each of the factors found where larger than: 17093813334 (n/3 = 16595935276).
+Remaining factors: [17:41011629, 29:10916310, 31:22007281, 59:24566924, 71:19754369, 79:7403953, 103:3452410, 127:11518434, 167:7948485, 179:13856062, 181:1153326, 227:8883646, 229:14770824, 241:27398349, 281:6500589, 311:5340653, 331:13432680, 337:18201431, 347:7363151, 353:13744207, 367:19339888, 397:4520958]
+Donne for n = 51281440005 with eps = 30 next n = 52819883206
+Each of the factors found where larger than: 17606627735 (n/3 = 17093813335).
+Remaining factors: [13:53407153, 29:2858087, 37:18394689, 43:20565864, 53:24141164, 61:1458739, 83:12557724, 103:7710619, 127:721233, 167:12700948, 173:16509173, 179:29816998, 191:10935943, 193:10236909, 199:5817313, 229:21854880, 241:34570303, 269:1271736, 271:12971194, 283:16880604, 307:15954506, 317:1, 389:17633690]
+Donne for n = 52819883208 with eps = 30 next n = 54404479705
+Each of the factors found where larger than: 18134826568 (n/3 = 17606627736).
+Remaining factors: [29:87304562, 31:10592050, 41:8191873, 59:10703151, 71:68578518, 103:7886372, 157:44223078, 191:19724624, 211:9566356, 233:328644, 251:20405955, 271:8324712, 281:445368, 311:1401772, 331:26851667, 347:14669737, 419:11897636, 421:11176512]
+Donne for n = 54404479707 with eps = 30 next n = 56036614099
+Each of the factors found where larger than: 18678871366 (n/3 = 18134826569).
+Remaining factors: [17:16929037, 41:62858710, 47:11858206, 101:20492144, 127:44821944, 139:8337644, 163:15075245, 173:1688887, 191:20534574, 223:7691072, 227:25075912, 229:7752492, 257:4480498, 281:35546059, 283:6295658, 337:2410284, 347:1186393, 359:13904236, 367:3388680, 373:14215974, 401:4134583, 431:19524083]
+Donne for n = 56036614101 with eps = 30 next n = 57717712525
+Each of the factors found where larger than: 19239237508 (n/3 = 18678871367).
+Remaining factors: [53:73528647, 67:3516686, 89:46683782, 97:21422317, 109:6709401, 113:2354119, 139:10105540, 149:4605699, 151:23236709, 179:12893926, 223:8706954, 227:1, 269:518750, 277:13022163, 283:5082427, 311:14530778, 313:46219834]
+Donne for n = 57717712527 with eps = 30 next n = 59449243903
+Each of the factors found where larger than: 19816414634 (n/3 = 19239237509).
+Remaining factors: [41:32965320, 53:20954516, 71:47738862, 73:56984723, 107:6861857, 109:21388631, 113:18232287, 137:17589125, 157:32798215, 167:129748, 173:1270114, 191:8740267, 193:10694735, 227:6833713, 251:3323321, 263:1845153, 281:8439572, 293:4162944, 311:14020576, 337:7929665, 353:6423586, 379:6093246, 401:19320007, 431:11442386, 487:1958187]
+Donne for n = 59449243905 with eps = 30 next n = 61232721223
+Each of the factors found where larger than: 20410907074 (n/3 = 19816414635).
+Remaining factors: [83:1, 127:5089860, 137:9099086, 157:16434325, 179:11422621, 181:1, 193:4711875, 199:18907061, 211:19044230, 227:36105616, 241:7496256, 257:18150022, 271:22117421, 277:19560600, 283:15333126, 307:6179702, 311:30749567, 331:23128775, 349:10301334, 359:5622834]
+Donne for n = 61232721225 with eps = 30 next n = 63069702862
+Each of the factors found where larger than: 21023234287 (n/3 = 20410907075).
+Remaining factors: [53:25148984, 67:47064184, 83:32233499, 107:21651935, 109:1, 131:18747845, 179:22304022, 181:16213784, 191:20001916, 197:2233397, 199:4190523, 211:25821795, 229:2971466, 257:26179677, 263:8382702, 277:826716, 283:2936749, 307:5805934, 311:90361]
+Donne for n = 63069702864 with eps = 30 next n = 64961793950
+Each of the factors found where larger than: 21653931316 (n/3 = 21023234288).
+Remaining factors: [5:250457288, 29:50295468, 41:2469805, 67:24742902, 71:4171634, 113:16468231, 127:30569657, 181:7615626, 197:11868556, 199:1846610, 227:9947684, 229:32286663, 269:13709303, 271:17878372, 293:2534576, 353:4341139, 383:17101686, 389:1351914, 409:7089853]
+Donne for n = 64961793951 with eps = 30 next n = 66910647770
+Each of the factors found where larger than: 22303549256 (n/3 = 21653931317).
+Remaining factors: [5:13468381, 13:27966305, 29:2, 37:35095382, 41:20245983, 59:46980782, 67:52345558, 83:763831, 137:2316091, 163:9992151, 173:6085868, 179:33684144, 197:36627305, 227:9642447, 233:22387133, 269:36568277, 277:768843, 389:32211297, 401:7193621]
+Donne for n = 66910647771 with eps = 30 next n = 68917967205
+Each of the factors found where larger than: 22972655734 (n/3 = 22303549257).
+Remaining factors: [5:110686631, 23:2044784, 37:101375749, 97:17892969, 101:11123455, 127:3844378, 137:12994762, 149:41004322, 163:34195993, 181:3958243, 193:19221482, 197:29949260, 199:2314783, 223:18052963, 241:74375, 263:11977828, 293:9655801, 313:13007449, 349:3966423]
+Donne for n = 68917967205 with eps = 30 next n = 70985506222
+Each of the factors found where larger than: 23661835407 (n/3 = 22972655735).
+Remaining factors: [5:83730608, 41:22158373, 53:71621199, 59:48838613, 79:1, 97:7263188, 167:62421097, 193:19983091, 227:2212534, 229:16942829, 233:12978511, 257:587042, 269:28142571, 271:927150, 277:17410440, 311:2685781, 353:936560, 359:20683635]
+Donne for n = 70985506224 with eps = 30 next n = 73115071411
+Each of the factors found where larger than: 24371690470 (n/3 = 23661835408).
+Remaining factors: [5:239628904, 43:33711510, 59:179480, 61:43510747, 67:2, 73:27966302, 83:885393, 89:34793104, 101:1547134, 127:40671423, 137:2030627, 139:1, 163:25270912, 239:9818319, 257:12536603, 263:9839247, 281:9908152, 293:28408985, 317:10031266]
+Donne for n = 73115071413 with eps = 30 next n = 75308523556
+Each of the factors found where larger than: 25102841185 (n/3 = 24371690471).
+Remaining factors: [5:108017045, 19:45813482, 41:5481282, 89:23446908, 107:36938756, 137:4365453, 151:45023778, 157:14779009, 163:432792, 167:1, 199:23671166, 229:15329777, 241:4981706, 257:12478352, 263:11563572, 269:1, 281:20530340, 337:21307073, 349:17466698]
+Donne for n = 75308523558 with eps = 30 next n = 77567779265
+Each of the factors found where larger than: 25855926421 (n/3 = 25102841186).
+Remaining factors: [5:125044005, 13:32225707, 19:66796735, 29:27235102, 73:51727329, 97:36086436, 107:22810925, 179:8915128, 223:1012831, 233:11265468, 239:25961451, 241:22775294, 257:1835637, 283:25940989, 389:323944]
+Donne for n = 77567779266 with eps = 30 next n = 79894812644
+Each of the factors found where larger than: 26631604214 (n/3 = 25855926422).
+Remaining factors: [5:239236676, 47:27603723, 59:5379214, 71:18045410, 97:32041500, 101:751885, 103:89006003, 109:18412357, 113:74439376, 127:1, 191:33180610, 229:6963739, 251:11784186]
+Donne for n = 79894812645 with eps = 30 next n = 82291657025
+Each of the factors found where larger than: 27430552341 (n/3 = 26631604215).
+Remaining factors: [5:126952484, 41:21887694, 59:19022297, 61:8195171, 97:21917400, 107:40494669, 131:7516730, 191:8987315, 199:696510, 239:23083902, 251:6644178, 257:16710647, 277:9359502, 283:26838650, 313:56857699, 317:3988661, 373:49374603]
+Donne for n = 82291657026 with eps = 30 next n = 84760406737
+Each of the factors found where larger than: 28253468912 (n/3 = 27430552342).
+Remaining factors: [5:196644350, 37:53845774, 43:30734167, 61:12792, 71:64355432, 83:10785520, 97:18514564, 103:52824691, 113:47628888, 157:17704714, 191:6359086, 199:33595972, 223:12673871, 239:11416469, 271:12736987, 277:5072394]
+Donne for n = 84760406739 with eps = 30 next n = 87303218942
+Each of the factors found where larger than: 29101072980 (n/3 = 28253468913).
+Remaining factors: [5:149964553, 29:38854902, 43:17335703, 59:42612550, 71:42262887, 89:41406692, 109:19152679, 157:3342789, 181:39583049, 223:46109251, 241:14903185, 257:3668367, 263:22796138, 271:21509293]
+Donne for n = 87303218943 with eps = 30 next n = 89922315512
+Each of the factors found where larger than: 29974105170 (n/3 = 29101072981).
+Remaining factors: [5:150446520, 67:4049678, 83:18401381, 103:80407033, 109:10453513, 137:5223547, 149:2685603, 151:9325423, 193:7536559, 241:37092952, 251:12896995, 263:41117754, 271:35299507, 277:32250641, 283:5067632, 337:17086157, 347:5020930, 367:8337938, 379:22853797, 443:6712942]
+Donne for n = 89922315513 with eps = 30 next n = 92619984979
+Each of the factors found where larger than: 30873328326 (n/3 = 29974105171).
+Remaining factors: [5:648058222, 17:126128353, 41:1, 61:14255271, 67:34437510, 101:1, 107:43436502, 151:20060744]
+Donne for n = 92619984981 with eps = 30 next n = 95398584531
+Each of the factors found where larger than: 31799528176 (n/3 = 30873328327).
+Remaining factors: [5:569647279, 7:9662776, 37:44109273, 41:7272985, 67:26539122, 89:64078813, 103:11509180, 131:1, 167:2559099, 191:30109059, 197:21762008, 211:13431767, 281:1, 283:24981941, 311:4974800]
+Donne for n = 95398584531 with eps = 30 next n = 98260542067
+Each of the factors found where larger than: 32753514022 (n/3 = 31799528177).
+Remaining factors: [5:30812782, 7:150902802, 17:27366928, 61:3483255, 83:6653124, 89:32678456, 139:35498579, 173:1, 227:49216575, 269:23582874, 271:62279960, 347:31089155, 383:13181479, 389:32319367, 419:33782265, 421:29195616, 457:13362616]
+Donne for n = 98260542069 with eps = 30 next n = 101208358332
+Each of the factors found where larger than: 33736119443 (n/3 = 32753514023).
+Remaining factors: [5:465529099, 7:14443110, 23:29511539, 59:51386120, 61:89465830, 79:27308281, 101:2304802, 149:8257483, 163:41371107, 191:53158893, 257:6552527, 281:14897403, 331:36710378, 337:7929287]

@@ -172,9 +172,9 @@ data3 = [
 
 # from lp_large_n.txt
 data4 = [
-    [ 10000, 3252, 3269, 3271, 3333],
-    [ 20000, 6588, 6604, 6605, 6666],
-    [  30000, 9943, 9962, 9964, 10000],
+    [ 10000, 3252, 3269, 3271, 3278],
+    [ 20000, 6588, 6604, 6605, 6616],
+    [  30000, 9943, 9962, 9964, 9977],
     [ 40000, 13304, 13325, 13327, 13342],
     [ 50000, 16669, 16700, 16701, 16716],
     [ 60000, 20049, 20074, 20077, 20094],
@@ -522,7 +522,7 @@ def plot2():
 #    ax.ticklabel_format(style='plain', axis='x')            # turn off offset
     plt.title('Approximations to $t(N)/N$')
     plt.xlabel('$N$ (log scale)')
-    plt.ylim(0.33,0.36)
+    plt.ylim(0.33,0.355)
     plt.legend()
     plt.grid(True)
     plt.tight_layout()

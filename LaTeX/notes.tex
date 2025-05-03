@@ -763,7 +763,7 @@ $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- - \num{1786095}$ & 0.322 & $t(N)_-
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- - \num{1991829}$ & 0.258 & $t(N)_- - \num{1920970}$ & 10462.708 \\
 \hline
 \end{tabular}
-\caption{For sample values of $N \in [10^6, 7 \times 10^8]$, the performance of the fast greedy algorithm (using heuristics to guess optimal choices of $t$), and more thorough run of the algorithm (that exhaustively searches over $t$ for which the algorithm works), compared against the lower bound $t(N)_-$ obtained from the linear programming method. {\bf need some details on what kind of machine these runs were made on, to make some sense of the run times.}}\label{greedy-table}
+\caption{For sample values of $N \in [10^6, 7 \times 10^8]$, the performance of the fast greedy algorithm (using heuristics to guess optimal choices of $t$), and more thorough run of the algorithm (that exhaustively searches over $t$ for which the algorithm works), compared against the lower bound $t(N)_-$ obtained from the linear programming method. All computations were performed on an AMD Ryzen 9 7940HS CPU with 8/16 cores. Fast greedy was computed as a single-threaded computation, while exhaustive used 16 threads.}\label{greedy-table}
 \end{table}
 
 \begin{figure}

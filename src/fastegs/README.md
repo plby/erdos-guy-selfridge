@@ -40,7 +40,13 @@ t(1000000) >= 338782 (exhaustive fast) with (t-ceil(N/3)) = 5448 (0.065s)
 
 ```
 
-To see all command options, run `egs` without specifying any arguments:
+The following files contain bounds on $$t(N)$$ produced as above:
+- `tbounds_heuristic_greedy_1e4_1e9.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via heuristic search with the greedy algorithm (`egs N`)
+- `tbounds_heuristic_fast_1e4_1e12.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via heuristic search method with the fast variant of the greedy algorithm (`egs -f N`)
+- `tbounds_exhaustive_greedy_1e4_1e9.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via exhaustive search with the greedy algorithm (`egs -o N`)
+- `tbounds_exhaustive_fast_1e4_1e8.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via exhaustive search method with the fast variant of the greedy algorithm (`egs -o -f N`)
+
+To see all the command line options that are supported, run `egs` without specifying any arguments:
 ```
 $ ./egs
 Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-o] [-f] N-range [t]

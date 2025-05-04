@@ -1,13 +1,14 @@
 from fractions import Fraction
 import logging
+import math
 
-#logging.basicConfig(level=logging.INFO)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.DEBUG)
 
 # Parameters for the verification
-MAX_TWO = 16
-MAX_THREE = 10
-M = 2 * 3**8 # 13122
+MAX_TWO = 19
+MAX_THREE = 12
+M = 2**2 * 3**9 # 78732
 
 # Generate some 3-smooth numbers, including all of them less than 4*M
 assert 2**MAX_TWO > 4*M
@@ -75,16 +76,20 @@ rhs = Fraction(0, 1)
 # The first two inequalities will be the prime budgets.  These are
 # inequalities where the lhs is of the form sum_x v_p(x) a_x.
 
-# The budget for 2 is 1.  The coefficient of this inequality is 2/27.
-coefficient = Fraction(2, 27)
+# All coefficients will have denominator 32.
+denominator = 32
+
+# The budget for 2 is 1.  The coefficient of this inequality is 2/32 =
+# 1/16.
+coefficient = Fraction(2, denominator)
 rhs += coefficient * Fraction(1, 1)
 for two in range(MAX_TWO+1):
     for three in range(MAX_THREE+1):
         x = 2**two * 3**three
         lhs[x] += coefficient * two
 
-# The budget for 3 is 1/2.  The coefficient is 3/27 = 1/9.
-coefficient = Fraction(3, 27)
+# The budget for 3 is 1/2.  The coefficient is 3/32.
+coefficient = Fraction(3, denominator)
 rhs += coefficient * Fraction(1, 2)
 for two in range(MAX_TWO+1):
     for three in range(MAX_THREE+1):
@@ -105,14 +110,14 @@ for x in smooth:
 for two in range(MAX_TWO+1):
     for three in range(MAX_THREE+1):
         x = 2**two * 3**three
-        # The coefficient is 2/27 if x=1, 1/27 if x is nice, and 0
+        # The coefficient is 2/32 if x=1, 1/32 if x is nice, and 0
         # otherwise.  Nice means that x<=M and the power of 2 is at
         # most 2.
         coefficient = 0
         if two <= 2:
-            coefficient = Fraction(1, 27)
+            coefficient = Fraction(1, denominator)
         if x == 1:
-            coefficient = Fraction(2, 27)
+            coefficient = Fraction(2, denominator)
         if x > M:
             coefficient = 0
         if coefficient == 0:
@@ -143,4 +148,58 @@ for x in smooth:
 logging.debug(f"{float(rhs)=} {rhs=}")
 assert rhs < Fraction(1, 1)
 
-print("We have proven that, for sufficiently large N, it is NOT possible to split N! into N factors, each of which is >=N/4, by only moving factors of 2 and 3.")
+# That completes the proof, but let's also compute the bound in
+# another (faster) way and check that it's equal.  Along the way we
+# also compute a bound on N when this argument takes effect.
+def sumd(k):
+    result = 0
+    for m in smooth:
+        if m < 4*k:
+            result += (Fraction(1,m)-Fraction(1,4*k)) * Fraction(1,3)
+    return result
+def sume(k):
+    result = 0
+    for m in smooth:
+        if m < 4*k:
+            result += Fraction(4,3)
+    return result
+
+c = 0
+b = 0
+b += Fraction(2, denominator) * Fraction(1, 1) # 2-budget
+b += Fraction(3, denominator) * Fraction(1, 2) # 3-budget
+for two in range(MAX_TWO+1):
+    for three in range(MAX_THREE+1):
+        x = 2**two * 3**three
+        # The coefficient is 2/32 if x=1, 1/32 if x is nice, and 0
+        # otherwise.  Nice means that x<=M and the power of 2 is at
+        # most 2.
+        coefficient = 0
+        if two <= 2:
+            coefficient = Fraction(1, denominator)
+        if x == 1:
+            coefficient = Fraction(2, denominator)
+        if x > M:
+            coefficient = 0
+        if coefficient == 0:
+            continue
+        b += coefficient * sumd(x)
+        c += coefficient * sume(x)
+assert rhs == b
+
+print("We have proven that, for sufficiently large N, it is NOT possible to split N! into N factors,")
+print("each of which is >=N/4, by only moving factors of 2 and 3.")
+print("")
+print("Specifically, it is not possible to get asymptotically more than b*N factors, where")
+print(f"b = {b} ~ {float(b)}.")
+print("")
+
+print(f"Note that b = 1 - epsilon, where epsilon ~ 1/{math.floor(1/(1-b))}.")
+print("")
+
+print("The 'sufficiently large' can be quantified.  We get an inequality 1 <= b + O_\le(c / N) for b as above and")
+print(f"c = {c} ~ {math.ceil(c)}, from which it follows that it holds for N >= c/(1-b):")
+print("")
+
+N0 = math.ceil(c/(1-b))
+print(f"N >= {N0}.")

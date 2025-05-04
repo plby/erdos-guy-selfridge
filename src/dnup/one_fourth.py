@@ -162,6 +162,8 @@ def sume(k):
     for m in smooth:
         if m < 4*k:
             result += Fraction(4,3)
+        elif m == 4*k:
+            result += Fraction(1,1)
     return result
 
 c = 0

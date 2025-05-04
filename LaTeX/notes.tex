@@ -306,7 +306,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 \Cref{main}(iv) (upper) & $N$ sufficiently large & \Cref{upper-crit} \\
 \hline
 \Cref{main}(ii), (iii) & $N$ sufficiently large & Rearrangement \\
-\Cref{main}(v) & $N > \num{1307702}$ & Rearrangement \\
+\Cref{main}(v) & $N \ge \num{1328148}$ & Rearrangement \\
 \hline
 \Cref{main}(ii), (iii) & $N \geq 10^{11}$ & Modified approximate factorization \\
 \Cref{main}(iv) (lower) & $N$ sufficiently large & Modified approximate factorization \\
@@ -1110,7 +1110,7 @@ Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/mai
 
 By a modification of the above techniques, we can now establish \Cref{main}(v) for large $N$.  Let $t_{2,3}(N)$ denote the largest $t$ for which it is possible to create a $t$-admissible factorization (or subfactorization) of $N!$ purely by rearranging powers of $2$ and $3$ in the standard factorization $\{1,\dots,N\}$.  For instance, the lower bounds produced above on $t(N)$ in fact will bound the smaller quantity $t_{2,3}(N)$ as long as ${\mathcal D}$ consists solely of $3$-smooth numbers. On the other hand, there is a limit to this method:
 
-\begin{proposition}  Let $N > 1307702$.  Then $t_{2,3}(N) < N/4$.
+\begin{proposition}  Let $N \ge 1328148$.  Then $t_{2,3}(N) < N/4$.
 \end{proposition}
 
 \begin{proof} Suppose for contradiction that there is an $N/4$-admissible factorization of $N!$, where the tuple is formed by decomposing each $n \in \{1,\dots,N\}$ into the product $n=dm$ of a $3$-smooth part $d$ and a $3$-rough part $m$, and replacing $d$ by some other $3$-smooth number $\ell$.  If we let $a_\ell$ be the proportion of numbers that are multiplied by $\ell$, then to maintain balance we must have
@@ -1142,10 +1142,10 @@ c_2 - \frac{c_3}{2} - \sum_{\ell} w_\ell \sum_{d \in \N^{\langle 2,3 \rangle}: d
   Numerical computation reveals that if one selects\footnote{These coefficients were discovered by applying a linear program to a finite truncation of the problem, combined with trial-and-error experimentation.} $c_2 = 2/35$, $c_3 = 3/35$, $w_1 = 2/35$, and $w_\ell = 1/35$ for all $3$-smooth $1 < \ell \leq 2^2 3^{10}$ with $\nu_2(\ell) \leq 2$, with $w_\ell=0$ otherwise, then  \eqref{ell-cond} holds for all $3$-smooth $\ell$ (note that this is automatic once $\nu_2(\ell)$ or $\nu_3(\ell)$ is large enough, so this is a finite check) with
 $$\eps = \frac{218038591}{4458050224128} > 0$$
 and
-$$ C = \frac{1535}{24}$$
-and one then we obtain the desired contradiction for $N \geq 1307702 > \frac{C}{\eps}$.
+$$ C = \frac{1559}{24}$$
+and one then we obtain the desired contradiction for $N \geq 1328148 > \frac{C}{\eps}$.
 
-{\bf Update these numbers with the additional $1$ error term, also link to code}
+{\bf Update these numbers with the additional $1$ error term (done!), also link to code}
 \end{proof}
 
 {\bf TODO: pictures of $t_{2,3}(N)/N$, etc. }

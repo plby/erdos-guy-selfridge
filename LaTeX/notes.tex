@@ -615,7 +615,7 @@ We claim that \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq 
   a contradiction.
 
 Now let $m_j, j \in J_{t,N}$ be non-negative reals obeying \eqref{constraints}.  Multiplying each constraint in \eqref{constraints} by $w_p$ and summing, we conclude from \eqref{pj} that
-$$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} \nu_p(N!)$$
+$$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} w_p \nu_p(N!)$$
 and hence \eqref{hyp} is an upper bound for $M_\R(N,t)$.
 
 In the converse direction, we need to locate weakly increasing non-negative weights $w_p$ obeying \eqref{pj} for $t \leq j \leq N$ for which
@@ -834,7 +834,7 @@ Finally, if $j \in J_{t,N}$ is divisible by two primes $p_1, p_2 > {t}{\lfloor \
 Thus we have verified \eqref{pj} for all $j \in J_{t,N}$.  Finally, from \eqref{ftoa}, \eqref{legendre}, \eqref{contra} we have
 \begin{align*}
   \sum_p w_p \nu_p(N!) &= \frac{\sum_p \nu_p(N!) \log p}{\log t} - \sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \frac{\nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}}{\log t} \\
-  &\geq \frac{\log N!}{\log t} -  \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p}}{\log t}\\
+  &\leq \frac{\log N!}{\log t} -  \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p}}{\log t}\\
   &= \frac{\log N!}{\log t} - \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} f_{N/t}(p/N)}{\log t} \\
   &< N,
 \end{align*}

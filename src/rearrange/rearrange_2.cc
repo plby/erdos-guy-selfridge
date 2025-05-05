@@ -1,15 +1,13 @@
 #include <iostream>
 #include <queue>
 
-int N;
-int budget;
-std::priority_queue<
-        int,
-        std::vector<int>,
-        std::greater<int>
-	> factors;
-
 int main( ) {
+	int budget = 0;
+	std::priority_queue<
+		int,
+		std::vector<int>,
+		std::greater<int>
+		> factors{};
 	for( int N = 1; true; N++ ) {
 		{
 			int t = N;

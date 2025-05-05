@@ -576,7 +576,7 @@ is a $t$-admissible subfactorization of $N!$, so that $M(N,t)$ is greater than o
 If one of these factors $j$ has a proper factor $j' < j$ that is greater than or equal to $t$, then we can replace the factor $j$ by the factor $j'$ in the subfactorization, and still obtain a $t$-admissible subfactorization of $N!$.  Iterating this, we may assume without loss of generality that all the factors $t$ lie in $J_{t,N}$.  We can then express this subfactorization as a product \eqref{mj-subfac}, and by computing $p$-valuations we conclude the constraints \eqref{constraints}.  The claim follows.
 \end{proof}
 
-This integer program formulation can be used, when combined with standard packages such as Gurobi or Mojo {\bf give more details here}, to compute $M(N,t)$ (and hence $t(N)$) precisely for any specific $N,t$ with $N$ as large as $10^4$, though in practice it is better to first use faster methods (which we discuss below) to control these quantities first, using integer programming as a last resort when these faster methods fail to achieve the desired result.
+This integer program formulation can be used, when combined with standard packages such as Gurobi~\cite{gurobi} or \texttt{lp\_solve}~\cite{lpsolve}, to compute $M(N,t)$ (and hence $t(N)$) precisely for any specific $N,t$ with $N$ as large as $10^4$, though in practice it is better to first use faster methods (which we discuss below) to control these quantities first, using integer programming as a last resort when these faster methods fail to achieve the desired result.
 
 For larger $N$, the sets $J_{t,N}$ become somewhat large, and the integer program becomes computationally expensive.  For the purposes of lower bounding $M(N,t)$, one can arbitrarily replace $J_{t,N}$ with a smaller set (effectivelly setting $m_j=0$ for all $j$ outside this set) to speed up the integer program; empirically we have found that the set $\{ j: t \leq j \leq N \}$ is a good choice, as it appears to give the same bounds while being significantly faster.
 
@@ -620,7 +620,7 @@ We claim that \eqref{pj} in fact holds for all $j \geq t$, not just for $t \leq 
   a contradiction.
 
 Now let $m_j, j \in J_{t,N}$ be non-negative reals obeying \eqref{constraints}.  Multiplying each constraint in \eqref{constraints} by $w_p$ and summing, we conclude from \eqref{pj} that
-$$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} \nu_p(N!)$$
+$$ \sum_{j \in J_{t,N}} m_j  \leq \sum_{j \in J_{t,N}} m_j \sum_{p \leq N} w_p \nu_p(j) \leq \sum_{p \leq N} w_p \nu_p(N!)$$
 and hence \eqref{hyp} is an upper bound for $M_\R(N,t)$.
 
 In the converse direction, we need to locate weakly increasing non-negative weights $w_p$ obeying \eqref{pj} for $t \leq j \leq N$ for which
@@ -839,7 +839,7 @@ Finally, if $j \in J_{t,N}$ is divisible by two primes $p_1, p_2 > {t}{\lfloor \
 Thus we have verified \eqref{pj} for all $j \in J_{t,N}$.  Finally, from \eqref{ftoa}, \eqref{legendre}, \eqref{contra} we have
 \begin{align*}
   \sum_p w_p \nu_p(N!) &= \frac{\sum_p \nu_p(N!) \log p}{\log t} - \sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \frac{\nu_p(N!) \log \frac{\lceil t/p \rceil}{t/p}}{\log t} \\
-  &\geq \frac{\log N!}{\log t} -  \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p}}{\log t}\\
+  &\leq \frac{\log N!}{\log t} -  \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} \lfloor \frac{N}{p} \rfloor \log \frac{\lceil t/p \rceil}{t/p}}{\log t}\\
   &= \frac{\log N!}{\log t} - \frac{\sum_{p > \frac{t}{\lfloor \sqrt{t} \rfloor}} f_{N/t}(p/N)}{\log t} \\
   &< N,
 \end{align*}
@@ -2195,6 +2195,9 @@ P. Erd\H{o}s, \emph{Some problems I presented or planned to present in my short 
 \bibitem{erdos-graham}
 P. Erd\H{o}s, R. Graham, \emph{Old and new problems and results in combinatorial number theory}, Monographies de L'Enseignement Mathematique 1980.
 
+\bibitem{gurobi}
+Gurobi Optimization, LLC, \emph{Gurobi Optimizer Reference Manual}, \url{https://www.gurobi.com}, accessed May 5, 2025. 
+
 \bibitem{guy}
 R. K. Guy, \emph{Unsolved Problems in Number Theory}, 3rd Edition, Springer, 2004.
 
@@ -2203,6 +2206,9 @@ R. K. Guy, J. L. Selfridge, \emph{Factoring factorial $n$}, Amer. Math. Monthly 
 
 \bibitem{johnston-yang}
 D. Johnston, A. Yang, \emph{Some explicit estimates for the error term in the prime number theorem}, J. Math. Anal. Appl., \textbf{527} (2) (2023), Paper No. 127460.
+
+\bibitem{lpsolve}
+M. Berkelaar, K. Eikland, P. Notebaert, \texttt{lp\_solve}, Version 5.5.2.11, \url{https://lpsolve.sourceforge.net/5.5/}, accessed May 5, 2025. 
 
 \bibitem{platt-rh}
 D. Platt, T. Trudgian, \emph{The Riemann hypothesis is true up to $3\cdot10^{12}$}, Bull. Lond. Math. Soc. \textbf{53} (2021), no. 3, 792--797.

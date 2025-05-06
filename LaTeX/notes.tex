@@ -208,7 +208,7 @@ see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublish
 \begin{equation}\label{Tbound}
    \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c}{\log N}
 \end{equation}
-for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistibuting them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is in fact not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made (except for the first, they also appear in \cite{guy}):
+for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is in fact not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made (except for the first, they also appear in \cite{guy}):
 \begin{enumerate}
 \item One has $t(N) \leq N/e$ for $N \neq 1,2,4$.
 \item One has $t(N) \geq \lfloor 2N/7 \rfloor$ for $N \neq 56$.
@@ -327,7 +327,7 @@ for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloo
 
 \subsection{Author contributions and data}
 
-This project was initially conceived as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the Github repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
+This project was initially conceived as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the GitHub repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
 
 \begin{itemize}
 \item Boris Alexeev: Formal Analysis, Investigation, Software.
@@ -546,7 +546,7 @@ In order to get this algorithm to validate all $8 \times 10^4 \leq N \leq 10^{11
 
 First, when trying to improve an inequality $t(N) \geq \lambda N$ for all $N$ in some range, one can avoid running the algorithm for every single $N$ in that range by instead proving a stronger inequality on a sparse subset. Namely, if one can show that $t(N_0) \geq (\lambda + \eps)N_0$, it follows that $t(N) \geq \lambda N$ for all $N \in \left[N_0, (1+\frac{\eps}{\lambda})N_0\right)$. If one can fix $\eps$, this reduces a brute force check of every value in a range of length $L$ to checking just $\log_{1+\frac{\eps}{\lambda}}(L)$ values. From the estimates in Section 1, one would expect to be able to take $\eps = \frac{1}{e}-\lambda$ asymptotically; in practice the algorithm uses slightly smaller values. 
 
-The other major modification is related to Step (2) in the above algorithm, where one is searching for the least value of $c$ such that $cp\geq t$ and $c$ can be constructed from the remaining factors. In practice, the algorithm pre-computes and store information about all such candidates; absent any further heuristics, this amounts to storing information about all integers less than $N$, which becomes prohibitively expensive for large $N$. The key observation is that any such $c$ must satisfy a further arithmetic condition, namely that $\frac{cP^+(c)}{P^-(c)} < t$, since otherwise one could replace $c$ by $c/P^-(c)$ and stil have $(c/P^-(c)) p \geq cP_+(c)/P^-(c) \geq t$. By only storing information about $c$ which satisfy this condition, the memory footprint is reduced by several orders of magnitude.
+The other major modification is related to Step (2) in the above algorithm, where one is searching for the least value of $c$ such that $cp\geq t$ and $c$ can be constructed from the remaining factors. In practice, the algorithm pre-computes and store information about all such candidates; absent any further heuristics, this amounts to storing information about all integers less than $N$, which becomes prohibitively expensive for large $N$. The key observation is that any such $c$ must satisfy a further arithmetic condition, namely that $\frac{cP^+(c)}{P^-(c)} < t$, since otherwise one could replace $c$ by $c/P^-(c)$ and still have $(c/P^-(c)) p \geq cP_+(c)/P^-(c) \geq t$. By only storing information about $c$ which satisfy this condition, the memory footprint is reduced by several orders of magnitude.
 
 By using the greedy method, \Cref{main}(ii) can be verified for $N \leq 3 \times 10^5$, and \Cref{main}(iii) can be verified for $67425 \leq N \leq 10^{12}$ {\bf provide more details and links to code}.    Thus, to resolve these claims, it remains to only establish \Cref{main}(iii) in the regime $43632 \leq N < 67425$ and $N > 10^{12}$, and also to show that this claim fails for $N=43631$.
 
@@ -577,7 +577,7 @@ If one of these factors $j$ has a proper factor $j' < j$ that is greater than or
 
 This integer program formulation can be used, when combined with standard packages such as Gurobi~\cite{gurobi} or \texttt{lp\_solve}~\cite{lpsolve}, to compute $M(N,t)$ (and hence $t(N)$) precisely for any specific $N,t$ with $N$ as large as $10^4$, though in practice it is better to first use faster methods (which we discuss below) to control these quantities first, using integer programming as a last resort when these faster methods fail to achieve the desired result.
 
-For larger $N$, the sets $J_{t,N}$ become somewhat large, and the integer program becomes computationally expensive.  For the purposes of lower bounding $M(N,t)$, one can arbitrarily replace $J_{t,N}$ with a smaller set (effectivelly setting $m_j=0$ for all $j$ outside this set) to speed up the integer program; empirically we have found that the set $\{ j: t \leq j \leq N \}$ is a good choice, as it appears to give the same bounds while being significantly faster.
+For larger $N$, the sets $J_{t,N}$ become somewhat large, and the integer program becomes computationally expensive.  For the purposes of lower bounding $M(N,t)$, one can arbitrarily replace $J_{t,N}$ with a smaller set (effectively setting $m_j=0$ for all $j$ outside this set) to speed up the integer program; empirically we have found that the set $\{ j: t \leq j \leq N \}$ is a good choice, as it appears to give the same bounds while being significantly faster.
 
 For upper bounds, we can relax the integer program to a linear program.  Let $M_\R(N,t)$ denote the maximum value of \eqref{mj-sum} where the $m_j, j \in J_{t,N}$ are now non-negative \emph{real} numbers obeying \eqref{constraints}.  Clearly we have the upper bound
 $$ M(N,t) \leq M_\R(N,t)$$
@@ -1005,7 +1005,7 @@ We can use this partition to rearrange the standard factorization $\{1,\dots,N\}
 
   Informally, ${\mathcal D}$ represents the factors that one removes (as greedily as possible) from the standard factorization $\{1,\dots,N\}$ of $N!$ to free up some prime factors, and $a_\ell$ is the proportion of elements in the resulting subfactorization that are to be multiplied by $\ell$ (again, in a greedy fashion) to (hopefully) bring the subfactorization into $t$-admissibility.  The condition \eqref{i-eq-1} asserts that enough primes are freed up by the first step to ``afford'' the second step, while \eqref{l-eq-1} is the assertion that the $a_\ell$ have enough mass at large $\ell$ to bring even the make even the smallest elements of the subfactorization $t$-admissible.
 
-  \begin{proof}  Restricting \eqref{partition} to $[1,N]$ and multiplying, we obtain a factorizatio
+  \begin{proof}  Restricting \eqref{partition} to $[1,N]$ and multiplying, we obtain a factorization
   $$ N! = \prod_{d \in {\mathcal D}} d^{|A_{d,{\mathcal D}} \cap [1,N/d]|} \times \prod \tuple$$
   where $\tuple$ is the multiset
   $$ \tuple \coloneqq \biguplus_{d \in {\mathcal D}} \left(A_{d,{\mathcal D}} \cap \left[1,\frac{N}{d}\right]\right).$$
@@ -2242,7 +2242,7 @@ J. Rosser, L. Schoenfeld, \emph{Approximate formulas for some functions of prime
 T. Tao, \emph{Decomposing factorials into bounded factors}, preprint, 2025. \url{https://arxiv.org/abs/2503.20170v2}
 
 \bibitem{github}
-T. Tao, \emph{Verifying the Guy--Selfridge conjecture}, Github repository, 2025.  \url{https://github.com/teorth/erdos-guy-selfridge}.
+T. Tao, \emph{Verifying the Guy--Selfridge conjecture}, GitHub repository, 2025.  \url{https://github.com/teorth/erdos-guy-selfridge}.
 
 \bibitem{vaaler}
 J. D. Vaaler, \emph{Some extremal functions in Fourier analysis}, Bulletin (New Series) of the American Mathematical Society, Bull. Amer. Math. Soc. (N.S.) \textbf{12}(2), 183--216, (April 1985).

@@ -297,12 +297,11 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
   \begin{tabular}{|c|c|c|}
   \hline
   Claim & Range of $N$ & Method used \\
-\hline
-\Cref{main}(v) & $N \leq 5 \times 10^6$ & Direct computation \\
   \hline
 \Cref{main}(ii) & $N \leq 3 \times 10^5$ & Greedy \\
 \Cref{main}(ii), (iii) & $\num{67425}  \leq N \leq 10^{12}$ & Greedy  \\
 \hline
+\Cref{main}(v) & $N \leq 5 \times 10^6$ & Linear programming \\
 \Cref{main}(i) & $N \leq 10^4$ & Linear programming \\
 \Cref{main}(iii) & $\num{43632} \leq N \leq 8 \times 10^4$ & Integer programming \\
 \hline
@@ -1110,10 +1109,23 @@ $$ \sum_{\ell > 2^r} a_{2^r} = \frac{3}{2^{r+3}} > \frac{2\alpha}{2^r} = \sum_{d
 for any $r \geq 1$.  From this one can readily check that the hypotheses of \Cref{asym-crit} are satisfied, and so we recover the bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ from \cite{guy-selfridge}.
 \end{example}
 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{t2.png}
+  \caption{The function $t_2(N)/N$ was computed exactly in \cite{guy-selfridge}, and converges quickly to $3/16$.}\label{fig-t2}
+\end{figure}
+
 If one makes the ansatz $a_{2^r} = c / 2^r$ for some $c>0$ and all $r \geq r_0$, with $a_\ell = 0$ for all other $\ell > 2^{r_0}$, then the task of locating weights $a_r$ obeying the hypotheses of \Cref{asym-crit} becomes a linear programming problem.  
 Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/dnup}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$.
 
-By a modification of the above techniques, we can now establish \Cref{main}(v) for large $N$.  Let $t_{2,3}(N)$ denote the largest $t$ for which it is possible to create a $t$-admissible factorization (or subfactorization) of $N!$ purely by rearranging powers of $2$ and $3$ in the standard factorization $\{1,\dots,N\}$.  For instance, the lower bounds produced above on $t(N)$ in fact will bound the smaller quantity $t_{2,3}(N)$ as long as ${\mathcal D}$ consists solely of $3$-smooth numbers. On the other hand, there is a limit to this method:
+By a modification of the above techniques, we can now establish \Cref{main}(v) for large $N$.  Let $t_{2,3}(N)$ denote the largest $t$ for which it is possible to create a $t$-admissible factorization (or subfactorization) of $N!$ purely by rearranging powers of $2$ and $3$ in the standard factorization $\{1,\dots,N\}$.  For instance, the lower bounds produced above on $t(N)$ in fact will bound the smaller quantity $t_{2,3}(N)$ as long as ${\mathcal D}$ consists solely of $3$-smooth numbers. On the other hand, there is a limit to this method (see also \Cref{fig-t3}):
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{t3.png}
+  \caption{The function $t_{2,3}(N)/N$ can be readily computed by linear programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
+\end{figure}
 
 \begin{proposition}  Let $N \ge 1328148$.  Then $t_{2,3}(N) < N/4$.
 \end{proposition}
@@ -1153,7 +1165,11 @@ and one then we obtain the desired contradiction for $N \geq 1328148 > \frac{C}{
 {\bf Update these numbers with the additional $1$ error term (done!), also link to code}
 \end{proof}
 
-{\bf TODO: pictures of $t_{2,3}(N)/N$, etc. }
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{t5.png}
+  \caption{The function $t_{2,3,5}(N)/N$ is asymptotically larger than $1/4$, but falls well short of $\lfloor 2N/7 \rfloor/N$, let alone $1/3$ or $1/e$.}\label{fig-t5}
+\end{figure}
 
 Finally, we can recover a weak version of \Cref{main}(iv) with this method:
 

@@ -994,10 +994,10 @@ We can use this partition to rearrange the standard factorization $\{1,\dots,N\}
   \begin{itemize}
   \item[(i)]  For all primes $p$, one has
   \begin{equation}\label{i-eq-1}
-     \sum_{\ell=1}^\infty \nu_p(\ell) a_\ell  \leq \sum_{d \in {\mathcal D}} \frac{\nu_p(d)}{d} \frac{\# A_{d,{\mathcal D}} \cap [1,N/d]}{N/d}.
+     \sum_{\ell=1}^\infty \nu_p(\ell) a_\ell  \leq \sum_{d \in {\mathcal D}} \frac{\nu_p(d)}{d} \frac{\# (A_{d,{\mathcal D}} \cap [1,N/d])}{N/d}.
   \end{equation}
   \item[(ii)]  For every natural number $\ell$, we have
-  \begin{equation}\label{l-eq-1} \sum_{\ell' > \ell} a_{\ell'} \geq \sum_{d \in {\mathcal D}} \frac{\# A_{d,{\mathcal D}} \cap [1,\min(N/d, \alpha N/\ell)]}{N}.
+  \begin{equation}\label{l-eq-1} \sum_{\ell' > \ell} a_{\ell'} \geq \sum_{d \in {\mathcal D}} \frac{\# (A_{d,{\mathcal D}} \cap [1,\min(N/d, \alpha N/\ell)])}{N}.
   \end{equation}
   \end{itemize}
   Suppose further that the $a_\ell N$ are integers for all $\ell$.   Then $t(N) \geq \alpha N$.
@@ -1083,7 +1083,7 @@ In particular, we have the decay bound
 (we allow implied constants to depend on ${\mathcal D}$).
 
 Now let $\ell_0$ be a sufficiently large natural number, and assume that $N$ is sufficiently large depending on ${\mathcal D}$ and $\ell_0$.  We introduce the modified sequence
-$$ a'_\ell \coloneqq \left\lfloor (a_\ell + \frac{1_{\ell \in S}}{\sqrt{\ell}}) N \right\rfloor / N,$$
+$$ a'_\ell \coloneqq \left\lfloor \left(a_\ell + \frac{1_{\ell \in S}}{\sqrt{\ell}}\right) N \right\rfloor / N,$$
 where $S$ is the set of all natural numbers $\ell > \ell_0$ that are only divisible by primes in ${\mathcal D}$.
 Clearly the $N a'_\ell$ are integers, so by \Cref{rearrange-crit} it will suffice to verify the hypotheses \eqref{i-eq-1}, \eqref{l-eq-1}.
 
@@ -1169,6 +1169,12 @@ and one then we obtain the desired contradiction for $N \geq 1328148 > \frac{C}{
   \centering
   \includegraphics[width=0.8\textwidth]{t5.png}
   \caption{The function $t_{2,3,5}(N)/N$ is asymptotically larger than $1/4$, but falls well short of $\lfloor 2N/7 \rfloor/N$, let alone $1/3$ or $1/e$.}\label{fig-t5}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{t7.png}
+  \caption{The function $t_{2,3,5,7}(N)/N$ numerically converges to a limit between $2/7$ and $1/3$.}\label{fig-t7}
 \end{figure}
 
 Finally, we can recover a weak version of \Cref{main}(iv) with this method:

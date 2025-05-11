@@ -66,5 +66,20 @@ def plot5():
     plt.grid(True)
     plt.show()
 
+def plot7():
+    read_file("..\\..\\..\\data\\rearrange\\up_to_7.txt")
 
-plot3()
+    exact = [values[i]/base[i] for i in range(len(base))]
+    compare = [math.ceil(2*N//7)/N for N in base]
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(base, compare, label='$2/7$', color='brown' )
+    plt.plot(base, exact, label='$t_{2,3,5,7}(N)/N$' )
+    plt.title('$t_{2,3,5,7}(N)/N$')
+    plt.xlabel('$N$')
+    plt.ylim(0.285,0.293)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+plot7()

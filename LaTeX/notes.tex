@@ -208,7 +208,7 @@ see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublish
 \begin{equation}\label{Tbound}
    \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c}{\log N}
 \end{equation}
-for some constant $c>0$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is in fact not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made (except for the first, they also appear in \cite{guy}):
+for some constant $c>0$ and sufficiently large $N$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made (except for the first, they also appear in \cite{guy}):
 \begin{enumerate}
 \item One has $t(N) \leq N/e$ for $N \neq 1,2,4$.
 \item One has $t(N) \geq \lfloor 2N/7 \rfloor$ for $N \neq 56$.
@@ -287,7 +287,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 \begin{itemize}
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small, medium, and moderately large values;
   \item In \Cref{linprog-sec}, we present a \emph{linear programming} (and \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$, and which we apply in \Cref{upper-sec} to establish a general upper bound (\Cref{upper-crit}) on $t(N)$ that can be used to obtain \Cref{main}(i);
-  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$, as well as an analytic proof of \eqref{t1}.
+  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.  We also give a computer-assisted proof of \Cref{main}(v) for $N\ge 2\times 10^6$.  Finally, we give an analytic proof of \eqref{t1}.
   \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an alternate proof of \Cref{upper-crit}, and also is the starting point for the modified factorization technique discussed below;
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
@@ -301,15 +301,15 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 \Cref{main}(ii) & $N \leq 3 \times 10^5$ & Greedy \\
 \Cref{main}(ii), (iii) & $\num{67425}  \leq N \leq 10^{12}$ & Greedy  \\
 \hline
-\Cref{main}(v) & $N \leq 5 \times 10^6$ & Linear (or dynamic) programming \\
 \Cref{main}(i) & $N \leq 10^4$ & Linear programming \\
 \Cref{main}(iii) & $\num{43632} \leq N \leq 8 \times 10^4$ & Integer programming \\
+\Cref{main}(v) & $\num{26244} \leq N \leq 5 \times 10^6$ & Linear (or dynamic) programming \\
 \hline
 \Cref{main}(i) & $N > 80$ & \Cref{upper-crit} \\
 \Cref{main}(iv) (upper) & $N$ sufficiently large & \Cref{upper-crit} \\
 \hline
 \Cref{main}(ii), (iii) & $N$ sufficiently large & Rearrangement \\
-\Cref{main}(v) & $N \ge \num{1328148}$ & Rearrangement \\
+\Cref{main}(v) & $N \ge 2\times 10^6$ & Rearrangement \\
 \hline
 \Cref{main}(ii), (iii) & $N \geq 10^{11}$ & Modified approximate factorization \\
 \Cref{main}(iv) (lower) & $N$ sufficiently large & Modified approximate factorization \\
@@ -388,7 +388,7 @@ valid for all natural numbers $N$.
 The primes $2,3$ will play a special role\footnote{One could also run analogous arguments with other sets of tiny primes; for instance, the initial version \cite{tao} of this paper only utilized the prime $2$ in this fashion.} in this paper and will be referred to as \emph{tiny primes}. 
 Call a natural number \emph{$3$-smooth} if it is the product of tiny primes, i.e., it is of the form $2^n 3^m$ for some natural numbers $n,m$, and \emph{$3$-rough} if it is not divisible by any tiny prime, that is to say it is coprime to $6$.  Given a positive real number $x$, we use $\lceil x \rceil^{\langle 2,3 \rangle}$ to denote the smallest $3$-smooth number greater than or equal to $x$.  For instance, $\lceil 5 \rceil^{\langle 2,3 \rangle} = 6$ and $\lceil 10 \rceil^{\langle 2,3 \rangle} = 12$.  
 
-It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = \sqrt{12}^{N}$; see \eqref{legendre} below.  This makes $\log \sqrt{12}$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log \sqrt{12} = \log 2 + \frac{1}{2} \log 3$.} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
+It will be convenient to introduce a variant of this quantity that is close to a power\footnote{The significance of the base $12$ is that the $3$-smooth portion $2^{\nu_2(N!)} 3^{\nu_3(N!)}$ of $N!$, which serves as our ``liquidity pool'', is approximately $2^N 3^{N/2} = \sqrt{12}^{N}$; see \eqref{legendre} above.  This makes $\log \sqrt{12}$ a natural ``unit of currency'' in which to conduct various factor exchanges, with various integer linear combinations of $\log 2$ and $\log 3$ usable as ``small change'' to approximate quantities that are not integer multiples of $\log \sqrt{12} = \log 2 + \frac{1}{2} \log 3$.} of $12$.  If $1 \leq L \leq x$ is an additional real parameter, we define
 \begin{equation}\label{fancy-kappa-def}
   \lceil x \rceil^{\langle 2,3\rangle}_L \coloneqq 12^a \lceil x/12^a \rceil^{\langle 2,3 \rangle}
 \end{equation}
@@ -1127,7 +1127,7 @@ By a modification of the above techniques, we can now establish \Cref{main}(v) f
   \caption{The function $t_{2,3}(N)/N$ can be readily computed by linear programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
 \end{figure}
 
-\begin{proposition}\label{onefourth}  Let $N \ge 1328148$.  Then $t_{2,3}(N) < N/4$.
+\begin{proposition}\label{onefourth}  Let $N \ge 2\times 10^6$.  Then $t_{2,3}(N) < N/4$.
 \end{proposition}
 
 \begin{proof} Suppose for contradiction that there is an $N/4$-admissible factorization of $N!$, where the tuple is formed by decomposing each $n \in \{1,\dots,N\}$ into the product $n=dm$ of a $3$-smooth part $d$ and a $3$-rough part $m$, and replacing $d$ by some other $3$-smooth number $\ell$.  If we let $a_\ell$ be the proportion of numbers that are multiplied by $\ell$, then to maintain balance we must have
@@ -1160,9 +1160,9 @@ c_2 - \frac{c_3}{2} - \sum_{\ell} w_\ell \sum_{d \in \N^{\langle 2,3 \rangle}: d
 $$\eps = \frac{218038591}{4458050224128} > 0$$
 and
 $$ C = \frac{1559}{24}$$
-and one then we obtain the desired contradiction for $N \geq 1328148 > \frac{C}{\eps}$.
+and one then we obtain the desired contradiction for $N \geq 2\cdot 10^6 > 1328148 = \lceil\frac{C}{\eps}\rceil$.
 
-{\bf Update these numbers with the additional $1$ error term (done!), also link to code}
+{\bf Link to code.  Mention verification for small N.}
 \end{proof}
 
 \begin{figure}

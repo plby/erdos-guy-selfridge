@@ -233,7 +233,7 @@ In this paper we answer all of these questions.
 \begin{theorem}[Main theorem]\label{main} Let $N$ be a natural number.
 \begin{itemize}
 \item[(i)] If $N \neq 1,2,4$, then $t(N) \leq N/e$.
-\item[(ii)]  If $N \neq 56$, then $t(N) \geq \lfloor 2N/7 \rfloor$.
+\item[(ii)]  If $N \neq 56$, then $t(N) \geq \lfloor 2N/7 \rfloor$.  Moreover, this can be achieved by rearranging only the prime factors $2,3,5,7$.
 \item[(iii)]  If $N \geq 43632$, then $t(N) \geq N/3$.  The threshold $43632$ is best possible.
 \item[(iv)]  For large $N$, one has
   \begin{equation}\label{asym}
@@ -287,7 +287,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 \begin{itemize}
   \item In \Cref{greedy-sec}, we discuss \emph{greedy algorithms} to construct subfactorizations, that provide quickly computable, though suboptimal, lower bounds on $t(N)$ for small, medium, and moderately large values;
   \item In \Cref{linprog-sec}, we present a \emph{linear programming} (and \emph{integer programming}) method that provides quite accurate upper and lower bounds on $t(N)$ for small and medium values of $N$, and which we apply in \Cref{upper-sec} to establish a general upper bound (\Cref{upper-crit}) on $t(N)$ that can be used to obtain \Cref{main}(i);
-  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give a computer-assisted proof that \Cref{main}(iii) holds for sufficiently large $N$.  We also give a computer-assisted proof of \Cref{main}(v) for $N\ge 2\times 10^6$.  Finally, we give an analytic proof of \eqref{t1}.
+  \item In \Cref{rearrange-sec}, we extend the \emph{rearrangement approach} from \cite{guy-selfridge} to give computer-assisted proofs of \Cref{main}(ii), \Cref{main}(iii) for sufficiently large $N$, and \Cref{main}(v).  We also give an analytic proof of \eqref{t1}.
   \item In \Cref{accounting-sec}, we introduce an \emph{accounting equation} linking the ``$t$-excess'' of a subfactorization with its ``$p$-surpluses'' at various primes, which provides an alternate proof of \Cref{upper-crit}, and also is the starting point for the modified factorization technique discussed below;
   \item In \Cref{approx-sec}, we give \emph{modified approximate factorization} strategy, which provides lower bounds on $t(N)$, that become asymptotically quite efficient.
 \end{itemize}
@@ -298,18 +298,19 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
   \hline
   Claim & Range of $N$ & Method used \\
   \hline
-\Cref{main}(ii) & $N \leq 3 \times 10^5$ & Greedy \\
-\Cref{main}(ii), (iii) & $\num{67425}  \leq N \leq 10^{12}$ & Greedy  \\
+\Cref{main}(iii) & $\num{67425}  \leq N \leq 10^{12}$ & Greedy  \\
 \hline
 \Cref{main}(i) & $N \leq 10^4$ & Linear programming \\
+\Cref{main}(ii) & $N \leq 1.2\times 10^7$ & Integer programming \\
 \Cref{main}(iii) & $\num{43632} \leq N \leq 8 \times 10^4$ & Integer programming \\
 \Cref{main}(v) & $\num{26244} \leq N \leq 5 \times 10^6$ & Linear (or dynamic) programming \\
 \hline
 \Cref{main}(i) & $N > 80$ & \Cref{upper-crit} \\
 \Cref{main}(iv) (upper) & $N$ sufficiently large & \Cref{upper-crit} \\
 \hline
-\Cref{main}(ii), (iii) & $N$ sufficiently large & Rearrangement \\
-\Cref{main}(v) & $N \ge 2\times 10^6$ & Rearrangement \\
+\Cref{main}(ii) & $N\ge 8\times 10^6$ & Rearrangement \\
+\Cref{main}(iii) & $N$ sufficiently large & Rearrangement \\
+\Cref{main}(v) & $N \ge 1.4\times 10^6$ & Rearrangement \\
 \hline
 \Cref{main}(ii), (iii) & $N \geq 10^{11}$ & Modified approximate factorization \\
 \Cref{main}(iv) (lower) & $N$ sufficiently large & Modified approximate factorization \\
@@ -449,7 +450,6 @@ We use the notation $\sum^*$ to denote summation restricted to $3$-rough numbers
 
 \begin{proof}  By the triangle inequality, it suffices to show that $\sum_{0 < k \leq x}^* 1 - \frac{x}{3} = O_{\leq}(2/3)$ for all $x \geq 0$.  This is easily verified for $0 \leq x \leq 6$, and the left-hand side is $6$-periodic in $x$, giving the claim; see \Cref{fig-saw}.
 \end{proof}
-
 
 \subsection{Sums over primes}
 
@@ -1056,6 +1056,17 @@ $$ \frac{1/3}{1} + \frac{1/2}{2} + \frac{1/2}{3} + \frac{1}{4} = 1$$
 for the latter downset.
 \end{example}
 
+As an aside, we make the constant in \eqref{crt} explicit in certain situations that will arise later in \Cref{two-sevenths}:
+\begin{lemma} \label{lit7}
+  Suppose $p\le 7$ is prime.  Let $A_{p}$ denote the $p$-rough numbers, that is, integers not divisible by any prime $p'\le p$.  Then
+  $$ \#(A_{p}\cap[1,x]) = x\prod_{p'\le p} \left(1-\frac{1}{p'}\right) + O_{\le}(53/35). $$
+\end{lemma}
+\begin{proof}
+  As in the proof of \Cref{lit}, we consider the functions $$\#(A_{p}\cap[1,x]) - x\prod_{p'\le p} \left(1-\frac{1}{p'}\right)$$
+  for each prime $p\le 7$.
+  These functions are periodic with period $\prod_{p'\le p} p'$ respectively (which is at most $2\cdot 3\cdot 5\cdot 7=210$), and we can check that the maximum (absolute) value attained across all of them is for $p=7$ at $x=210-11$ or as $x\to 11^{-}$.
+\end{proof}
+
 We now have an asymptotic version of \Cref{rearrange-crit}:
 
 \begin{proposition}[Criterion for asymptotic lower bound]\label{asym-crit}  Let ${\mathcal D}$ be a downset that contains at least one prime $p_0$, let $0  < \alpha < 1$, and suppose we have non-negative reals $a_\ell$ for all natural numbers $\ell$ obeying the following conditions:
@@ -1109,15 +1120,76 @@ $$ \sum_{\ell > 2^r} a_{2^r} = \frac{3}{2^{r+3}} > \frac{2\alpha}{2^r} = \sum_{d
 for any $r \geq 1$.  From this one can readily check that the hypotheses of \Cref{asym-crit} are satisfied, and so we recover the bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ from \cite{guy-selfridge}.
 \end{example}
 
-
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{t2.png}
   \caption{The function $t_2(N)/N$ was computed exactly in \cite{guy-selfridge}, and converges quickly to $3/16$.}\label{fig-t2}
 \end{figure}
 
-If one makes the ansatz $a_{2^r} = c / 2^r$ for some $c>0$ and all $r \geq r_0$, with $a_\ell = 0$ for all other $\ell > 2^{r_0}$, then the task of locating weights $a_r$ obeying the hypotheses of \Cref{asym-crit} becomes a linear programming problem.  
-Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/dnup}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$.
+Unfortunately, our further applications of \Cref{rearrange-crit} and \Cref{asym-crit} are not as human-readable as this example.
+However, these two criteria are (infinite) linear programs, so they are very amenable to computer-assisted proofs.
+Furthermore, the solutions to the linear programs can be verified with relatively simple code and in exact arithmetic, thereby avoiding some potential pitfalls of computer-assisted proofs.
+
+\begin{proposition}[\Cref{main}(iii) for sufficiently large $N$ only] \label{onethird-large} Let $N$ be sufficiently large.  Then $t(N) \ge N/3$.
+\end{proposition}
+\begin{proof}[Computer-assisted proof]
+If one makes the ansatz $a_{2^r} = c / 2^r$ for some $c>0$ and all $r \geq r_0$, with $a_\ell = 0$ for all other $\ell > 2^{r_0}$, then the task of locating weights $a_r$ obeying the hypotheses of \Cref{asym-crit} becomes a \emph{finite} linear programming problem.  
+Numerically\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/data.py}}, we were able to locate such weights for $\alpha=1/3$, ${\mathcal D} = \{d: 1 \leq d \leq 2^{11}\}$, and $r_0=11$.
+Once the weights were found, they were converted into rational numbers and the linear program was verified\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/verify.py}} in exact arithmetic, thus establishing that $t(N) \geq N/3$ for sufficiently large $N$.
+\end{proof}
+
+We do not explicitly compute a bound on $N$ which is necessary for the previous Proposition to hold because we expect it to be significantly worse than that obtained by the modified approximate factorization strategy later in \Cref{10^{11}}, and in particular, far worse than what would be necessary to link up with the calculations using the greedy method of \Cref{greedy-sec}.
+However, we can use \Cref{rearrange-crit} to prove \Cref{main}(ii):
+\begin{proposition}\label{two-sevenths} Suppose $N\ne 56$.  Then $t_{2,3,5,7}(N) \ge \lfloor 2N/7\rfloor$.
+\end{proposition}
+\begin{proof}[Computer-assisted proof]
+For small $N$, we are able to compute $t_{2,3,5,7}(N)$ exactly using integer programming techniques similar to those mentioned earlier.
+This verifies that $t_{2,3,5,7}(N)\ge \lfloor 2N/7\rfloor$ for all $N\le 1.2\times 10^7$, except $N=56$ of course.
+As a result, in the remainder of the proof we may assume that $N$ exceeds this bound.
+
+In the asymptotic regime, we can apply \Cref{asym-crit} directly.
+The simplest setup we found has $\mathcal{D}=\{1,2,3,4,5,6,7,8,9,10,12,14,15,16,18,20,21,24,25,27,28\}$, the $7$-smooth numbers (that is, the numbers only divisible by primes up to $7$) no more than $28$.
+Note that since we only use $7$-smooth numbers, we are indeed rearranging only prime factors up to $7$.
+
+Because the linear program for the $a_\ell$ is infinite, we used the ansatz that $a_\ell = a_{\ell/2}/2$ if $\ell\ge \ell_0$ is sufficiently large to simplify the setup.
+(This $\ell_0$ is not related to the $\ell_0$ in the \emph{proof} of \Cref{asym-crit}, which we do not use.)
+We found a solution to the linear program that produced decent bounds with $\ell_0 = 52$, which gives explicit values for $a_\ell$ for $28$ small indices $\ell<52$ and then exponential decay afterwards as above, so for example $\ell_{54}=\ell_{27}/2$.
+In this setup, the terms in \eqref{i-eq}~and~\eqref{l-eq} are manageable infinite series and it is fairly straightforward to verify the conditions are satisfied.
+This proves the result for sufficiently large $N$, but it is more difficult to compute precisely how large $N$ should be.
+
+For a given $N$, we produce an explicit sequence $a_\ell$ that satisfies the conditions of \Cref{rearrange-crit}, but we use a different strategy from the proof of \Cref{asym-crit}.
+Specifically, we define an alternative modified sequence $ a'_\ell \coloneqq \lceil a_\ell N \rceil/N$ if $\ell < 2^L N$ and $0$ otherwise.
+Because $a'_\ell N$ are integers, it suffices to verify the conditions \eqref{i-eq-1}~and~\eqref{l-eq-1}.
+There are two effects on the terms on the left-hand sides of these inequalities, which is that they potentially get slightly larger due to the ceiling, but also the infinite sums get smaller because we truncate their tails.
+
+In the left-hand sum $\sum_{\ell=1}^\infty \nu_p(\ell) a'_\ell$ of \eqref{i-eq-1}, we ignore the effect of the truncation (as it only makes the situation better for us) and bound the effect of the ceilings.
+Because $\lceil a_\ell N\rceil < a_\ell N+1$, each factor $a'_\ell$ increases by at most $1/N$.
+If $p=2$, then each term featuring a ceiling (those with $\ell \le 2^L N$) is at most $\nu_p(\ell) \le \nu_p(2^L N) \le L+\log_2(N)$.
+If $p>2$, then each term is at most $\nu_p(\ell)$ for a ``small'' $\ell$, namely those less than $52$.
+(We have $\nu_3(\ell) \le 3$, $\nu_5(\ell) \le 2$, and $\nu_7(\ell) \le 1$; note that $a_{49}=0$ in our table of explicit values.)
+Each $\ell\le 2^L N$ is a power of $2$ times an odd part, so we can bound the number of terms by simply counting the number of possible odd parts $\ell$ less than $52$ with $a_\ell>0$ and considering that each can appear at most with at most $\log_2 N$ factors of two.
+(The odd part $1$ can appear one more time, because of fencepost-counting reasons, but the effect is more than compensated by the larger odd parts appearing fewer times.)
+All in all, the total increase to the left-hand side of \eqref{i-eq-1} relative to \eqref{i-eq} is at most $(L+\log_2(N))\cdot (\#\text{odd $\ell$s})\cdot \log_2(N)/N$ for $p=2$ and a similar but simpler expression if $p>2$.
+Note that this expression is decreasing for $N\ge\exp(2)$.
+
+Now consider \eqref{l-eq-1}.
+This inequality is automatically true when $\ell > \alpha N$, so we may assume $\ell \le \alpha N$.
+In the left-hand sum $\sum_{\ell' > \ell} a'_{\ell'}$, we ignore the effects of the ceilings (as it only makes the situation better for us) and bound the effect of the truncation.
+We first separately compute the smallest $A$ so that $\sum_{\ell' > \ell} a_{\ell'} \le A/\ell$, by explicitly computing these sums for our values~$a_{\ell}$.
+Then since $\ell \le \alpha N$, $2^L N \ge (2^L/\alpha)\ell$.
+If $\sum_{\ell' > \ell} a_{\ell'} \le A/\ell$ for all $\ell$, it follows $\sum_{\ell' > 2^L N} a_{\ell'} \le \sum_{\ell' > (2^L/\alpha)\ell} a_{\ell'} \le (A \alpha/2^L)/\ell$.
+So (again, ignoring the ceiling) the truncated sum $\sum_{\ell' > \ell} a'_{\ell'} = (\sum_{\ell' > \ell} a_{\ell'}) - (\sum_{\ell' > 2^L N} a_{\ell'})$ goes down by at most this much.
+
+We must also account for the deviation of the right-hand sides from their asymptotic values.
+Because our downset~$\mathcal{D}$ consists of $7$-smooth numbers, the sets $A_{d,{\mathcal D}}$ consist of $p$-smooth numbers for some $p\le 7$ (or simply of all integers).
+We can thus make use of \Cref{lit7} to obtain
+$$ \sum_{d \in {\mathcal D}} \frac{\nu_p(d)}{d} \frac{\# (A_{d,{\mathcal D}} \cap [1,N/d])}{N/d} = \sum_{d \in {\mathcal D}} \nu_p(d)\left(\frac{\sigma_{d,{\mathcal D}}}{d} + O_{\le}\left(\frac{53}{35N}\right)\right) $$
+and
+$$ \sum_{d \in {\mathcal D}} \frac{\# (A_{d,{\mathcal D}} \cap [1,\min(N/d, \alpha N/\ell)])}{N} = \sum_{d \in {\mathcal D}} \left(\sigma_{d,{\mathcal D}} \min\left( \frac{1}{d}, \frac{\alpha}{\ell}\right) + O_{\le}\left(\frac{53}{35N}\right)\right) .$$
+
+Combining all of these error estimates, we can now programmatically compute the terms of \eqref{i-eq-1} and \eqref{l-eq-1} and verify that the inequalities hold for a particular~$N$, even if all terms $O_{\le}(C/N)$ are as extreme as possible.
+We performed this verification\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/two_sevenths.py}} (in exact arithmetic as with all other proofs in this section), for $N=8\times 10^6$, which is better than the results of our small $N$ computation above required, so we are done.
+\end{proof}
 
 By a modification of the above techniques, we can now establish \Cref{main}(v) for large $N$.  Let $t_{2,3}(N)$ denote the largest $t$ for which it is possible to create a $t$-admissible factorization (or subfactorization) of $N!$ purely by rearranging powers of $2$ and $3$ in the standard factorization $\{1,\dots,N\}$.  For instance, the lower bounds produced above on $t(N)$ in fact will bound the smaller quantity $t_{2,3}(N)$ as long as ${\mathcal D}$ consists solely of $3$-smooth numbers. On the other hand, there is a limit to this method (see also \Cref{fig-t3}):
 
@@ -1127,10 +1199,16 @@ By a modification of the above techniques, we can now establish \Cref{main}(v) f
   \caption{The function $t_{2,3}(N)/N$ can be readily computed by linear programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
 \end{figure}
 
-\begin{proposition}\label{onefourth}  Let $N \ge 2\times 10^6$.  Then $t_{2,3}(N) < N/4$.
+\begin{proposition}\label{onefourth}  Let $N > 26244$.  Then $t_{2,3}(N) < N/4$.  The threshold is the best possible.
 \end{proposition}
 
-\begin{proof} Suppose for contradiction that there is an $N/4$-admissible factorization of $N!$, where the tuple is formed by decomposing each $n \in \{1,\dots,N\}$ into the product $n=dm$ of a $3$-smooth part $d$ and a $3$-rough part $m$, and replacing $d$ by some other $3$-smooth number $\ell$.  If we let $a_\ell$ be the proportion of numbers that are multiplied by $\ell$, then to maintain balance we must have
+\begin{proof}[Computer-assisted proof]
+For small $N$, we are able to compute $t_{2,3}(N)$ exactly using the integer programming techniques mentioned earlier.
+Alternatively, specifically for this task, we also wrote a \emph{dynamic} programming implementation out of curiosity and to double-check the computations.
+This verifies that $t_{2,3}(N)=N/4$ for $N=26244$, and then a combination of integer and linear programming techniques verifies that $t_{2,3}(N) < N/4$ for $26244 < N \le 5\times 10^6$.
+As a result, in the remainder of this proof we may assume that $N$ exceeds this bound.
+
+Suppose for contradiction that there is an $N/4$-admissible factorization of $N!$, where the tuple is formed by decomposing each $n \in \{1,\dots,N\}$ into the product $n=dm$ of a $3$-smooth part $d$ and a $3$-rough part $m$, and replacing $d$ by some other $3$-smooth number $\ell$.  If we let $a_\ell$ be the proportion of numbers that are multiplied by $\ell$, then to maintain balance we must have
   \begin{align*}
     \sum_\ell a_\ell &= 1 \\
     \sum_\ell \nu_2(\ell) a_\ell &= \frac{\nu_2(N!)}{N} \leq 1 \\
@@ -1156,13 +1234,16 @@ By a modification of the above techniques, we can now establish \Cref{main}(v) f
 c_2 - \frac{c_3}{2} - \sum_{\ell} w_\ell \sum_{d \in \N^{\langle 2,3 \rangle}: d < 4\ell} \left( \frac{1}{d} - \frac{1}{4\ell} \right)$$
   $$ C \coloneqq \sum_\ell w_\ell (\frac{4}{3} \# \left\{ d \in \N^{\langle 2,3 \rangle}: d < 4\ell \right\} + 1).$$
  Thus, once one produces weights for which $\eps>0$, one obtains a contradiction for $N > C/\eps$.
-  Numerical computation reveals that if one selects\footnote{These coefficients were discovered by applying a linear program to a finite truncation of the problem, combined with trial-and-error experimentation to optimize the threshold.} $c_2 = 2/32$, $c_3 = 3/32$, $w_1 = 2/32$, and $w_\ell = 1/32$ for all $3$-smooth $1 < \ell \leq 2^2 3^9$ with $\nu_2(\ell) \leq 2$, with $w_\ell=0$ otherwise, then  \eqref{ell-cond} holds for all $3$-smooth $\ell$ (note that this is automatic once $\nu_2(\ell)$ or $\nu_3(\ell)$ is large enough, so this is a finite check) with
+  Numerical computation reveals that if one selects\footnote{These coefficients were discovered by applying a linear program to a finite truncation of the problem, choosing the truncation so as to optimize the threshold.} $c_2 = 2/32$, $c_3 = 3/32$, $w_1 = 2/32$, and $w_\ell = 1/32$ for all $3$-smooth $1 < \ell \leq 2^2 3^9$ with $\nu_2(\ell) \leq 2$, with $w_\ell=0$ otherwise, then  \eqref{ell-cond} holds for all $3$-smooth $\ell$ (note that this is automatic once $\nu_2(\ell)$ or $\nu_3(\ell)$ is large enough, so this is a finite check) with
 $$\eps = \frac{218038591}{4458050224128} > 0$$
 and
 $$ C = \frac{1559}{24}$$
-and one then we obtain the desired contradiction for $N \geq 2\cdot 10^6 > 1328148 = \lceil\frac{C}{\eps}\rceil$.
+and one then we obtain the desired contradiction for $N > 1328148 = \lceil\frac{C}{\eps}\rceil$.
 
-{\bf Link to code.  Mention verification for small N.}
+As in \Cref{onethird-large}, we verified\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/one_fourth.py}} the linear programming certificate in exact arithmetic.
+However, in this case we note that the proof is fundamentally human-checkable.
+There are only a few dozen $3$-smooth numbers up to $2^2 3^9$ and the coefficients and weights are very simple.
+It's possible that examining this construction in more detail would reveal some greater human understanding of the asymptotic efficiency of these rearrangement methods.
 \end{proof}
 
 \begin{figure}
@@ -1780,7 +1861,7 @@ The inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data 
 
 
 
-\section{Guy--Selfridge conjecture}
+\section{Guy--Selfridge conjecture} \label{10^{11}}
 
 We now establish the Guy--Selfridge conjecture $t(N) \geq N/3$ in the range
 $$ N \geq N_0 \coloneqq 10^{11}.$$

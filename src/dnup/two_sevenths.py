@@ -137,7 +137,7 @@ print("")
 
 # Now we will try to estimate how "sufficiently large" N must be.
 
-# We use the modified sequence a'_\ell = ceil(a_\ell) for \ell <=
+# We use the modified sequence a'_\ell = ceil(a_\ell N)/N for \ell <=
 # 2^L*N, and 0 otherwise.  This means we are truncating the infinite
 # series, and we will have to account for that accordingly below.
 # This value was chosen by hand.

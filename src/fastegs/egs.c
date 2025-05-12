@@ -6,30 +6,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <primecount.h>         // uncomment if you want to use primecount_pi rather than loading pi.dat
+#include <primecount.h>
 #include <primesieve.h>
 #include <primesieve/iterator.h>
 
-#define MAXN    ((1L<<40)-1)
+#define MAXN    ((1L<<48)-1)
+
+/*
+     MCUTOFF is a tunable parameter to choose cutoff between enumerating/counting primes
+     We will seive p until p > t^(1-
+*/
+
+static double MCUTOFF = 0.225;      // tunable parameter to control prime enumeration/counting cutff
+                                    // should be around 0.25, but primeisieve is very fast so a bit lower is better
 
 /*
     The tables P,PI,F,M are independent of N < 2^40 and computed at startup (about 0.5s)
     and are read-only after that.  They use about 300MB memory (this is most of what we will use)
 */
 
-static int32_t *P;              // P[n] is the nth prime for n up to MAXPI, and we put P[0] = 1
-static int32_t *PI;             // PI[n] = pi(n) for n <= MAXP (in particular, P[PI[p]]=p for primes p)
-static int32_t MAXP = 821603;   // we require pi(MAXP) < MAXPI
-static int32_t MAXPI = 65565;   // keep this to 16-bits
+static int32_t *P;                  // P[n] is the nth prime for n up to MAXPI, and we put P[0] = 1
+static int32_t *PI;                 // PI[n] = pi(n) for n <= MAXP (in particular, P[PI[p]]=p for primes p)
+static int32_t MAXP = 310248233;    // we require pi(MAXP) <= MAXPI
+static int32_t MAXPI = ((1<<24)-1);
 
 // Factorizations of cofactors m are zero-terminated lists of pp's
 // We only consider m that are MAXP-smooth, so pi fits in 16-bits (could extend to 24 bits and make e 8bits)
 static struct pp {
-    uint16_t pi;                // index into P
-    uint16_t e;
+    unsigned pi : 24;               // index into P
+    unsigned e : 8;
 } *F,*Fend;                         // concatenation of zero-terminated factorizations in descending order by pi
-static int32_t *M;                  // F[M[m]] holds the factorization of m <= MAXM for MAXP-smooth m, M[m]=0 ow
-static int32_t MAXM = 0x7FFFFFFF;   // Largest m for which M[m] is valid (so M has length (MAXM+1)), set at startup time.
+static uint32_t *M;                 // F[M[m]] holds the factorization of m <= MAXM for MAXP-smooth m, M[m]=0 ow
+static uint32_t MAXM = 0x7FFFFFFF;  // Largest m for which M[m] is valid (so M has length (MAXM+1)), set at startup time.
 
 
 static inline double get_time (void) // accurate to at least 10ms
@@ -78,16 +86,22 @@ void setup (int64_t maxp, int64_t maxm)
     for ( int32_t p = 0, n = 1 ; (p = primesieve_next_prime(&ctx)) <= MAXP ; ) { P[n] = p; PI[p] = n++; }
     primesieve_stop(&ctx);
 
-    // set PI[n] to pi(n) for all n (using values already set for n prime)    
+    // set PI[n] to pi(n) for all n (using values already set for n prime)
     for ( int32_t n = 1 ; n <= MAXP ; n++ ) if ( !PI[n] ) PI[n] = PI[n-1];
 
     // set M[m]=n where p_n is the largest odd prime divisor of M up to MAXP (and zero if no such p_n exists)
+    // we don't use a windowed sieve here as we cap maxm at a modest value for the standard greedy algorithm
+    // and for the fast variant we are only sieving out to N^(5/8)
     M = calloc(maxm+1,sizeof(*M));
-    for ( int32_t pi = 2 ; pi <= MAXPI ; pi++ ) for ( int p=P[pi], q = p ; q <= maxm ; q+=p ) M[q] = pi;
+    for ( int32_t pi = 1 ; pi <= MAXPI ; pi++ ) for ( int32_t p=P[pi], q = p ; q <= maxm ; q+=p ) M[q] = pi;
 
     // Compute F and update M so that F[M[m]] holds the factorization of m for all MAXP-smooth m <= MAXM
     // Factorizations are zero terminated lists of pp in reverse order by prime
-    int64_t Fsize = max(3*maxm,1<<10);
+
+    // This step could be sped up signficantly (e.g by avoiding divisions), but we expect to reuse this
+    // data for many values of N and t so that the amortized cost is negligible and for the fast variant
+    // it is negligible even for a single (N,t), since maxm = O(N^(2/3))
+    int64_t Fsize = max(4*maxm,1<<10);
     F = malloc(Fsize*sizeof(*F));
     struct pp *f = F; (f++)->pi = 0;                // skip offset 0
     for ( int64_t m = maxm ; m > 1 ; m-= 2 ) {      // handle odd m first
@@ -103,6 +117,7 @@ void setup (int64_t maxp, int64_t maxm)
         M[m] = f-F; f = g;
         if ( f-F > Fsize-16 ) { int64_t d = f-F; Fsize = (5*Fsize)/4; F = realloc(F,Fsize*sizeof(*F)); f = F+d; }
     }
+
     M[1] = f-F; (f++)->pi = 0;
     for ( int64_t m = maxm-1 ; m > 1 ; m-= 2 ) {    // now handle even m
         int64_t e = v2(m), q = m>>e;
@@ -113,7 +128,9 @@ void setup (int64_t maxp, int64_t maxm)
         f->pi = 1; (f++)->e = e; (f++)->pi = 0;
         if ( f-F > Fsize-16 ) { int64_t d = f-F; Fsize = (5*Fsize)/4; F = realloc(F,Fsize*sizeof(*F)); f = F+d; }
     }
+
     Fsize = f-F;
+    assert (Fsize < (1L<<32));
     F = realloc (F, Fsize*sizeof(*F));
     Fend = F+Fsize;
 }
@@ -286,13 +303,15 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
 
     // Compute upper bound maxm on the smooth cofactors m we will ever use.
     // For the standard greedy algorithm these could be as large as t-1
+    // For the fast variant we set maxm = t^(5/8), which works better in practice than t^(2/3)
     if (!fast) assert(t<=MAXM+1);
-    int32_t maxm = fast?(int32_t)pow(t,0.625):t-1;
+    int64_t maxm = fast ? pow(t,0.625) : t-1;
     assert (maxm <= MAXM);
-    int32_t *Ms = malloc((maxm+1)*sizeof(*Ms)); Ms[0] = 0;
-    for ( int32_t m = 1, *p = Ms+1 ; m < s ; m++ ) *p++ = m;
-    int32_t numm = s;
-    for ( int32_t m = s ; m <= maxm ; m++ ) if ( F[M[m]].pi && F[M[m]].pi <= (fast ? PI[t/m] : maxpi) ) Ms[numm++] = m;
+    uint32_t *Ms = malloc((maxm+1)*sizeof(*Ms)); Ms[0] = 0;
+    for ( uint32_t m = 1, *p = Ms+1 ; m < s ; m++ ) *p++ = m;
+    uint32_t numm = s;
+    // For the standard greedy algorithm essentially all of the post-setup time is spent here (if fast is set, this step takes negligible time)
+    for ( uint32_t m = s ; m <= maxm ; m++ ) if ( F[M[m]].pi && F[M[m]].pi <= (fast ? PI[t/m] : maxpi) ) Ms[numm++] = m;
     Ms = realloc(Ms, numm*sizeof(*Ms));
     numm--; maxm = Ms[numm];
 
@@ -317,10 +336,14 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
 
     int64_t m = cdiv(t,s);                                  // largest possible m for p >= s
     assert (m <= maxm && Ms[m] == m);
-    int64_t mid = min((int64_t)pow(t,0.2),(t-1)/sqrtN);     // m > mid are large, m <= mid are small
-    if ( (int64_t)sqrtN*mid >= t ) mid = (t-1)/sqrtN;       // force p > sqrtN for m < mid (handy)
 
-    if ( verbosity > 2 ) fprintf(stderr,"N=%ld, t=%ld, sqrt(N)=%d, s=%d, maxpi=%d, maxm=%d, numm=%d, mid=%ld (%.6fs)\n", N, t, sqrtN, s, maxpi, maxm, numm, mid, get_time()-start);
+    // mid determines the crossover point between sieving primes and counting them
+    // the asymptotically correct choice for the implementation of pi(x) we are using is t^(1/6)
+    // but we use a slightly larger t^(1/5) here to better balance the time spent sieving/counting primes
+    int64_t mid = min((int64_t)pow(t,MCUTOFF),(t-1)/sqrtN); // we will enumerate p up to (t-1)/mid, then switch to counting primes
+    if ( (int64_t)sqrtN*mid >= t ) mid = (t-1)/sqrtN;       // force p > sqrtN for m < mid (for convenience only)
+
+    if ( verbosity > 2 ) fprintf(stderr,"N=%ld, t=%ld, sqrt(N)=%d, s=%d, maxpi=%d, maxm=%ld, numm=%d, mid=%ld (%.6fs)\n", N, t, sqrtN, s, maxpi, maxm, numm, mid, get_time()-start);
 
     primesieve_iterator ctx = primesieve_start(s,(t-1)/mid);
     int64_t p; // p will fit in 32 bits but we want to mults at 64-bits
@@ -573,7 +596,7 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
 
 
 // returns a value of t >= N/3 that yields a good lower bound on t(N), or 0 if no such t can be found
-int64_t tbound (int64_t N, int fast, int optimal, int verbosity, int verify)
+int64_t tbound (int64_t N, int fast, int exhaustive, int verbosity, int verify)
 {
     int64_t t = cdiv(N,3);
     int64_t cnt = tfac(N,t,fast,0,verbosity,verify,0);
@@ -593,7 +616,7 @@ int64_t tbound (int64_t N, int fast, int optimal, int verbosity, int verify)
         cnt = tfac(N,t,fast,0,verbosity,verify,0);
     }
     assert (tmax < (2*N)/5);
-    if ( ! optimal ) return tmin;
+    if ( ! exhaustive ) return tmin;
     if ( verbosity > 0 ) fprintf(stderr,"t(%ld) >= %ld proved\n", N,tmin);
 
     /* Now use a binary search to get an upper bound on the best possiible t that tfac(N,t) could return */
@@ -631,14 +654,15 @@ int64_t tbound (int64_t N, int fast, int optimal, int verbosity, int verify)
 static void usage (void)
 {
     fprintf(stderr,
-        "Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-o] [-f] N-range [t]\n"
+        "Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t]\n"
         "       -v level      integer verbosity level -1 to 4 (optional, default is 0)\n"
         "       -h filename   hint-file with records N:t (required if range of N is specified)\n"
         "       -d filename   output-file to dump factorization to (one factor per line, only valid if t is specified)\n"
         "       -r            verify factorization (set automatically if dump is specified)\n"
         "       -c            create hint-file rather than reading it (must be specified in combination with -h)\n"
-        "       -o            use the best t for which the algorithm can prove t(N) >= t (optional)\n"
+        "       -e            use the best t for which the algorithm can prove t(N) >= t (optional)\n"
         "       -f            use fast version of greedy algorithm\n"
+        "       -m            exponent for primecount/primesieve cutuff, must lie in [1/6,1/3]\n"
         "       N-range       integer N or range of integers minN-maxN (required, scientific notation supported)\n"
         "       t             integer t to use for single N (optional, a good t will be determined if unspecified)\n");
 
@@ -648,7 +672,7 @@ int main (int argc, char *argv[])
 {
     if ( argc < 2 ) { usage(); return 0; }
 
-    int verbosity=0, optimal=0, create=0, fast=0, verify=0;
+    int verbosity=0, exhaustive=0, create=0, fast=0, verify=0;
     char *hintfile = 0, *dumpfile = 0;
     int64_t minN=0, maxN=0, t=0;
 
@@ -662,9 +686,10 @@ int main (int argc, char *argv[])
             case 'd': { if ( i+1 >= argc || dumpfile ) { usage(); return -1; } dumpfile = argv[i+1]; assert(dumpfile[0] != '-'); i++; verify=1; break; }
             case 'r': { verify = 1; break; }
             case 'c': { create = 1; break; }
-            case 'o': { optimal = 1; break; }
+            case 'm': { double x = atof(argv[i+1]); assert (x >= 0.2 && x <= 0.3); MCUTOFF = x; i++; break; }
+            case 'e': { exhaustive = 1; break; }
             case 'f': { fast = 1; break; }
-            default: { usage(); return -1; }
+            default: { printf("unrecognized option %s\n", s); usage(); return -1; }
             }
         } else {
             if ( !minN ) {
@@ -687,17 +712,20 @@ int main (int argc, char *argv[])
         }
     }
     // We need N at least 45 to ensure t=N/4 works
-    if ( minN < 45 || maxN > MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [45,2^40)\n", minN, maxN); return -1; }
+    if ( minN < 45 || maxN > MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [45,%ld)\n", minN, maxN, MAXN); return -1; }
     if ( t && t < cdiv(minN,4) ) { fprintf(stderr,"t=%ld must be at least N/4\n", t); return -1; }
     if ( dumpfile && maxN > (1<<30) ) { fprintf(stderr,"dumpfile cannot be specified for N > 2^30\n"); return -1; }
-
-    //primesieve_set_num_threads(1); // just to make timings consistent
 
     double start = get_time();
     int64_t maxt = 2*maxN/5;
     int64_t maxp = fac_s(maxt);
-    int64_t maxm = fast ? pow(maxt,0.625) : maxt-1;
-    if ( maxp > MAXP || maxm > MAXM ) { fprintf(stderr,"N=%ld is too large for this implementation of the %s algorithm\n", maxN, fast ? "fast" : "greedy"); return -1; }
+    // Set the global upper bound on maxm for this run, sufficient to handle any N <= maxN and t <= maxt
+    // For the fast variant we use t^(5/8) rather than t^(2/3) because this is faster in practice (possibly due to caching) and doesn't really change the quality of the bounds
+    int64_t maxm = fast ? pow(maxt,5.0/8) : maxt-1;
+    if ( maxp > MAXP || maxm > MAXM ) {
+        assert (!fast);
+        fprintf(stderr,"N=%ld is too large for for this implementation of the standard greedy algorithm.  Use the -f option to switch to fast variant.\n", maxN); return -1;
+    }
 
     setup(maxp,maxm);
     if ( verbosity > 0 ) fprintf(stderr,"Computed %d-smooth factorizations of m <= %d using %.3fMB of memory (%.3fs)\n", MAXP,MAXM,4.0*(MAXM+(Fend-F))/(1<<20),get_time()-start);
@@ -721,7 +749,7 @@ int main (int argc, char *argv[])
             if ( !fp ) { fprintf(stderr, "Error creating hint-file %s\n", hintfile); return -1; }
             int64_t N = minN;
             while ( N <= maxN ) {
-                t = tbound(N,fast,optimal,verbosity,verify);
+                t = tbound(N,fast,exhaustive,verbosity,verify);
                 if ( 3*t < N ) break;
                 if ( verbosity >= 0 ) fprintf (stderr,"t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, t, t-cdiv(N,3), get_time()-start);
                 fprintf(fp,"%ld:%ld\n",N,t);
@@ -758,10 +786,10 @@ int main (int argc, char *argv[])
         }
     } else {
         int64_t N = minN;
-        if ( t && optimal ) { t=0; fprintf(stderr,"Ignoring specified value of t and searching for optimal value\n"); }
+        if ( t && exhaustive ) { t=0; fprintf(stderr,"Ignoring specified value of t and searching for optimal value\n"); }
         if ( !t ) {
-            t = tbound(N,fast,optimal,verbosity,verify);
-            if ( t ) printf("t(%ld) >= %ld (%s %s) with (t-ceil(N/3)) = %ld (%.3fs)\n",N,t,optimal ? "exhaustive" : "heuristic", fast ? "fast" : "greedy",(t-cdiv(N,3)),get_time()-start);
+            t = tbound(N,fast,exhaustive,verbosity,verify);
+            if ( t ) printf("t(%ld) >= %ld (%s %s) with (t-ceil(N/3)) = %ld (%.3fs)\n", N, t, exhaustive ? "exhaustive" : "heuristic", fast ? "fast" : "greedy",(t-cdiv(N,3)),get_time()-start);
             else fprintf(stderr,"failed to prove t(%ld) >= %ld (%.3fs)\n", N, cdiv(N,3), get_time()-start);
         } else {
             int64_t cnt = tfac(N,t,fast,0,verbosity,verify,dumpfile);

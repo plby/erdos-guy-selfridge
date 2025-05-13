@@ -271,18 +271,8 @@ static int fac_verify (struct fac *v, int verbose)
 static int fac_dump (struct fac *v, char *filename)
 {
     FILE *fp = fopen(filename, "w"); assert(fp);
-    for ( struct fac_item *r = v->L ; r < v->L + v->cnt ; r++ ) {
-        if ( r->q <= MAXP ) {
-            for ( int32_t pi = PI[r->p]+1 ; pi <= PI[r->q] ; pi++ )
-                for ( int64_t i = 0 ; i < r->n ; i++ ) fprintf(fp,"%ld\n",r->m*P[pi]);
-        } else {
-            primesieve_iterator ctx = primesieve_start(r->p+1,r->q);
-            int64_t p;
-            while ( (p=primesieve_next_prime(&ctx)) <= r->q )
-                for ( int64_t i = 0 ; i < r->n ; i++ ) fprintf(fp,"%ld\n",r->m*p);
-            primesieve_stop(&ctx);
-        }
-    }
+    for ( struct fac_item *r = v->L ; r < v->L + v->cnt ; r++ ) fprintf(fp,"%ld,%ld,%ld,%ld\n",r->n,r->m,r->p,r->q);
+    fclose(fp);
     return 1;
 }
 
@@ -585,7 +575,7 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
     if ( verify ) fac_verify(v,verbosity);
     if ( verbosity > 1 ) fprintf(stderr,"%ld factors >= %ld with remainder %ld (%.6fs)\n", cnt, t, q, get_time()-start);
     if ( v && dumpfile ) {
-        fprintf(stderr,"Dumped factorization to %s\n", dumpfile);
+        fprintf(stderr,"Dumping factorization certificate to %s ...\n", dumpfile);
         fac_dump(v,dumpfile);
     }
     if ( v ) fac_free(v);
@@ -714,7 +704,6 @@ int main (int argc, char *argv[])
     // We need N at least 45 to ensure t=N/4 works
     if ( minN < 45 || maxN > MAXN ) { fprintf(stderr,"N-range [%ld,%ld] must be contained in [45,%ld)\n", minN, maxN, MAXN); return -1; }
     if ( t && t < cdiv(minN,4) ) { fprintf(stderr,"t=%ld must be at least N/4\n", t); return -1; }
-    if ( dumpfile && maxN > (1<<30) ) { fprintf(stderr,"dumpfile cannot be specified for N > 2^30\n"); return -1; }
 
     double start = get_time();
     int64_t maxt = 2*maxN/5;

@@ -295,26 +295,26 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{|l|rcl|l|}
+  \begin{tabular}{|l|r@{}c@{}l|l|}
   \hline
   Part & \multicolumn{3}{c|}{Range of $N$} & Method used \\
   \hline
-(iii) & $\num{67425} \leq$ & $N$ & $\leq 10^{14}$ & Greedy  \\
+(i) & & $N$ & ${}\leq 10^4$ & Linear programming \\
+ & $80<{}$ &$N$ & & \Cref{upper-crit} \\
 \hline
-(i) & & $N$ & $\leq 10^4$ & Linear programming \\
-(ii) & & $N$ & $\leq 1.2\times 10^7$ & Integer programming \\
-(iii) & $\num{43632} \leq$ & $N$ & $\leq 8 \times 10^4$ & Integer programming \\
-(v) & $\num{26244} \leq$ & $N$ & $\leq 5 \times 10^6$ & Linear (or dynamic) programming \\
+(ii) & & $N$ & ${}\leq 1.2\times 10^7$ & Integer programming \\
+ & $8\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
 \hline
-(i) & $80<$ &$N$ & & \Cref{upper-crit} \\
+(iii) & & $N$ & ${}\leq 8 \times 10^4$ & Integer programming \\
+ & $\num{67425} \leq{}$ & $N$ & ${}\leq 10^{14}$ & Greedy  \\
+ & $10^{11} \leq{}$ & $N$ & & Modified approximate factorization \\
+ & \multicolumn{3}{c|}{$N$ sufficiently large} & Rearrangement \\
+\hline
 (iv) (upper) & \multicolumn{3}{c|}{$N$ sufficiently large} & \Cref{upper-crit} \\
+\phantom{(iv)} (lower) & \multicolumn{3}{c|}{$N$ sufficiently large} & Modified approximate factorization \\
 \hline
-(ii) & $8\times 10^6 \leq$ & $N$ & & Rearrangement \\
-(iii) & \multicolumn{3}{c|}{$N$ sufficiently large} & Rearrangement \\
-(v) & $1.4\times 10^6 \leq$ & $N$ & & Rearrangement \\
-\hline
-(iii) & $10^{11} \leq $ & $N$ & & Modified approximate factorization \\
-(iv) (lower) & \multicolumn{3}{c|}{$N$ sufficiently large} & Modified approximate factorization \\
+(v) & & $N$ & ${}\leq 5 \times 10^6$ & Linear (or dynamic) programming \\
+ & $1.4\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
   \hline
 \end{tabular}
 \medskip

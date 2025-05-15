@@ -488,7 +488,7 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
                 for ( int32_t k = j+1 ; k <= numm ; k++ ) {
                     struct pp *g = F+M[Ms[k]];
                     int64_t x = fcnt(E,E[i],g);
-                    if ( x > e ) {  e = x; f=g; if ( e == E[i] ) break; }
+                    if ( x > e ) {  e = x; f = g; m = Ms[k]; if ( e == E[i] ) break; }
                 }
                 if ( e ) {
                     if ( v ) fac_extend_mp (v,e,m,f,P[i],verbosity);
@@ -721,28 +721,18 @@ int main (int argc, char *argv[])
 
     start = get_time();
     if ( maxN > minN ) {
-        if ( ! hintfile ) {
-            fprintf(stderr, "No hint-file specified, using t=ceil(N/3) for every N in [%ld,%ld] (for N > 10^5 it will be faster to create or use a hint file).\n", minN,maxN);
-            int64_t success = 0;
-            for ( int64_t N = minN ; N <= maxN ; N++ ) {
-                int64_t cnt = tfac(N,cdiv(N,3),fast,1,verbosity,verify,0);
-                printf("%ld:%ld:%ld:%ld\n",N,cdiv(N,3),cnt,cnt-N);
-                if ( cnt >= N ) success++;
-            }
-            fprintf(stderr, "Verified the Erdős-Guy-Selfridge conjecture for %ld of %ld N in [%ld,%ld]\n", success, maxN-minN, minN,maxN);
-            return 0;
-        }
-        if ( create ) {
-            if ( !hintfile ) { fprintf(stderr, "You must use the -h parameter to specify the hint-file to be created.\n"); return -1; }
-            FILE *fp = fopen(hintfile, "w");
-            if ( !fp ) { fprintf(stderr, "Error creating hint-file %s\n", hintfile); return -1; }
+        if ( create || !hintfile) {
+            if ( create && !hintfile ) { fprintf(stderr, "You must use the -h parameter to specify the hint-file to be created.\n"); return -1; }
+            if ( !hintfile) fprintf(stderr, "No hint-file specified so t-choices will not be save (use -c -h hintfile.txt options to save them).\n");
+            FILE *fp = hintfile ? fopen(hintfile, "w") : 0;
+            if ( hintfile && !fp ) { fprintf(stderr, "Error creating hint-file %s\n", hintfile); return -1; }
             int64_t N = minN;
             while ( N <= maxN ) {
                 t = tbound(N,fast,exhaustive,verbosity,verify);
                 if ( 3*t < N ) break;
                 if ( verbosity >= 0 ) fprintf (stderr,"t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, t, t-cdiv(N,3), get_time()-start);
-                fprintf(fp,"%ld:%ld\n",N,t);
-                N += t-cdiv(N,3)+1;
+                if ( fp ) fprintf(fp,"%ld:%ld\n",N,t);
+                N = 3*t+1;
             }
             if ( N > maxN ) fprintf (stderr,"Verified the Erdős-Guy-Selfridge conjecture for N in [%ld,%ld] (%.3fs)\n",minN,maxN,get_time()-start);
             else if ( N == minN ) fprintf (stderr,"Unable to verify Erdős-Guy-Selfridge conjecture for N=%ld (%.3fs)\n",minN,get_time()-start);
@@ -761,11 +751,11 @@ int main (int argc, char *argv[])
                 if (!minV) {
                     if ( N > minN ) { fprintf(stderr, "Hint file starting N=%ld above range minimum %ld\n", N, minN); return -1; }
                     minV = N;
-                    maxV = N + (t-cdiv(N,3));
+                    maxV = 3*t;
                 } else {
                     if ( N > maxV+1 ) { fprintf(stderr, "Hint file starting N=%ld leaves a gap!\n", N); return -1; }
-                    if ( N + (t-cdiv(N,3)) <= maxV ) { fprintf (stderr, "Hint at N=%ld did not extend verified range!\n", N); return -1; }
-                    maxV = N + (t-cdiv(N,3));
+                    if ( 3*t <= maxV ) { fprintf (stderr, "Hint at N=%ld did not extend verified range!\n", N); return -1; }
+                    maxV = 3*t;
                 }
                 if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-timer);
                 if ( maxV >= maxN ) break;

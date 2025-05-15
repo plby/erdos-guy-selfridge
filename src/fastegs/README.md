@@ -19,7 +19,7 @@ To verify the range $$[10^{11},10^{14}]$$ use
 ```
 which should take 5-10 minutes (again, depending on your CPU).
 
-The *hint-files* contain lists of pairs $$(N,t)$$ such that the algorithm is known to produce at least $$N$$ factors of size at least $$t \ge N/3$$ on these inputs, such that the range of $$N$$ is completely covered by the intervals $$[N,3t]$$ (here we are exploiting the fact that $$t(N+1) \ge t(N)$$, so $$t(N)\ge t \ge N/3$$ implies $$t(M)\ge t \ge M/3$$ for $$N\le M\le 3t$$.
+The *hint-files* contain lists of pairs $$(N,t)$$ such that the algorithm is known to produce at least $$N$$ factors of size at least $$t \ge N/3$$ on these inputs, such that the range of $$N$$ is completely covered by the intervals $$[N,3t]$$ (here we are exploiting the fact that $$M\ge N$$ implies $$t(M) \ge t(N)$$, so $$t(N)\ge t$$ implies $$t(M)\ge t \ge M/3$$ for $$N\le M\le 3t$$.
 
 To recreate the hint-file `hint_1e6_1e11_heuristic_fast.txt` (or create a new one for a different range) you can type
 ```

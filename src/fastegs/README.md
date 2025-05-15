@@ -19,7 +19,7 @@ To verify the range $$[10^{11},10^{14}]$$ use
 ```
 which should take 5-10 minutes (again, depending on your CPU).
 
-The *hint-files* contain lists of pairs $$(N,t)$$ such that the algorithm is known to produce at least $$N$$ factors of size at least $$t \ge N/3$$ on these inputs, such that the range of $$N$$ is completely covered by the intervals $$[N,3t]$$ (here we are exploiting the fact that $$t(N+1) \ge t(N)$$, so $$t(N)\ge t \ge N/3$$ implies $$t(N')\ge N'/3$$ for $$N\le N'\le 3t$$.
+The *hint-files* contain lists of pairs $$(N,t)$$ such that the algorithm is known to produce at least $$N$$ factors of size at least $$t \ge N/3$$ on these inputs, such that the range of $$N$$ is completely covered by the intervals $$[N,3t]$$ (here we are exploiting the fact that $$t(N+1) \ge t(N)$$, so $$t(N)\ge t \ge N/3$$ implies $$t(M)\ge t \ge M/3$$ for $$N\le M\le 3t$$.
 
 To recreate the hint-file `hint_1e6_1e11_heuristic_fast.txt` (or create a new one for a different range) you can type
 ```
@@ -43,7 +43,7 @@ t(1000000) >= 338782 (exhaustive fast) with (t-ceil(N/3)) = 5448 (0.041s)
 
 The following files contain bounds on $$t(N)$$ produced as above:
 - `tbounds_heuristic_greedy_1e4_1e9.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via heuristic search with the greedy algorithm (`egs N`)
-- `tbounds_heuristic_fast_1e4_1e14.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^14$$ obtained via heuristic search method with the fast variant of the greedy algorithm (`egs -f N`)
+- `tbounds_heuristic_fast_1e4_1e14.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^{14}$$ obtained via heuristic search method with the fast variant of the greedy algorithm (`egs -f N`)
 - `tbounds_exhaustive_greedy_1e4_1e9.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via exhaustive search with the greedy algorithm (`egs -e N`)
 - `tbounds_exhaustive_fast_1e4_1e9.txt` contains bounds on $$t(c\cdot 10^n)$$ in the range $$10^4\le 10^9$$ obtained via exhaustive search method with the fast variant of the greedy algorithm (`egs -e -f N`)
 

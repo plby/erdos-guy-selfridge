@@ -1,4 +1,4 @@
-This directory contains a fast, memory efficient implemention of a variant of the greedy algorithm that yields sligtly worse lower bounds on $$t(N)$$ in general, but is able to verify the Erdős-Guy-Selfridge conjecture for $$N \in [10^6,10^14]$$ in less then ten minutes using only a few GB of memory (the space complexity of our implemention is $$\tilde O(N^{\frac{5}{8}})$$).
+This directory contains a fast, memory efficient implemention of a variant of the greedy algorithm that yields sligtly worse lower bounds on $$t(N)$$ in general, but is able to verify the Erdős-Guy-Selfridge conjecture for $$N \in [10^6,10^{14}]$$ in less then ten minutes using just a few GB of memory (the space complexity of our implemention is $$O(N^{\frac{5}{8}+\epsilon})$$).
 
 An implementation of the standard greedy algorithm is included in the same program, but it's range is restricted to $$N\le 10^9$$ to keep the memory requirement low.
 
@@ -6,18 +6,18 @@ This implemention depends on Kim Walisch's [primesieve](https://github.com/kimwa
 
 These two libraries are used to efficiently handle factors divisible by primes in the range $$[\sqrt{t},N]$$. In this range the greedy algorithm can always use the optimal cofactor $$m = \lceil\frac{t}{p}\rceil$$ to construct $$n = v_p(N!)$$ factors $$mp \ge t$$ that are as small as possible (given that they are divisible by $p$).  To improve efficiency, the algorithm subdivides the interval $$[\sqrt{t},N]$$ into regions within which the values of $m$ and $n$ are constant and simply counts the primes in each region (for small regions it uses `primesieve` to enuemrate primes, for large regions $$[a,b]$$ it uses `primecount` to compute $$\pi(b)-\pi(a-1))$$.  See the paper for more details.
 
-To verify the Erdos-Guy-Selfridge conjecture for $$N$$ in $$[67425,10^{11}]$$, after installing primesieve and primecount and compiling `egs.c` using `build.sh`, you can type
+To verify the Erdos-Guy-Selfridge conjecture for $$N$$ in $$[67425,10^{11}]$$ (which is sufficient for the portion of our proof of Theorem 1(iii) that depends on the greedy algorithm), after installing primesieve and primecount and compiling `egs.c` using `build.sh`, you can type
 ```
 ./egs -h hint_67425_1e6_exhaustive_greedy.txt 67425-1e6
 ./egs -f -h hint_1e6_1e11_heuristic_fast.txt 1e6-1e11
 ```
-This should take no more than 10-20 seconds. Note that you need to include the `-f` option to use the fast variant of the greedy algorithm in the second line, as the standard greedy algorithm will be used by default, and our C implementation of the standard greedy algorithm only supports $$N\le 10^9$$.
+This should take 10-20 seconds (depending on your CPU). Note that you need to include the `-f` option to use the fast variant of the greedy algorithm in the second line, as the standard greedy algorithm will be used by default, and our C implementation of the standard greedy algorithm only supports $$N\le 10^9$$.
 
-To verify the range $$[10^11,10^{14}]$$ use
+To verify the range $$[10^{11},10^{14}]$$ use
 ```
 ./egs -f -h hint_1e11_1e14_heuristic_fast.txt 1e11-1e14
 ```
-which should take 5-10 minutes, depedning on the speed of your CPU
+which should take 5-10 minutes (again, depending on your CPU).
 
 The *hint-files* contain lists of pairs $$(N,t)$$ such that the algorithm is known to produce at least $$N$$ factors of size at least $$t \ge N/3$$ on these inputs, such that the range of $$N$$ is completely covered by the intervals $$[N,3t]$$ (here we are exploiting the fact that $$t(N+1) \ge t(N)$$, so $$t(N)\ge t \ge N/3$$ implies $$t(N')\ge N'/3$$ for $$N\le N'\le 3t$$.
 

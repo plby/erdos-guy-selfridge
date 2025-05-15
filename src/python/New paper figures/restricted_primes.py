@@ -58,7 +58,7 @@ def plot5():
 
     plt.figure(figsize=(8, 6))
     plt.plot(base, exact, label='$t_{2,3,5}(N)/N$' )
-    plt.plot(base, compare, label='$2/7$', color='brown' )
+    plt.plot(base, compare, label='$\\lfloor 2N/7\\rfloor/N$', color='brown' )
     plt.title('$t_{2,3,5}(N)/N$')
     plt.xlabel('$N$')
     plt.ylim(0.275,0.286)
@@ -73,7 +73,7 @@ def plot7():
     compare = [math.ceil(2*N//7)/N for N in base]
 
     plt.figure(figsize=(8, 6))
-    plt.plot(base, compare, label='$2/7$', color='brown' )
+    plt.plot(base, compare, label='$\\lfloor 2N/7\\rfloor/N$', color='brown' )
     plt.plot(base, exact, label='$t_{2,3,5,7}(N)/N$' )
     plt.title('$t_{2,3,5,7}(N)/N$')
     plt.xlabel('$N$')

@@ -209,7 +209,7 @@ see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublish
 \begin{equation}\label{Tbound}
    \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c}{\log N}
 \end{equation}
-for some constant $c>0$ and sufficiently large $N$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made (except for the first, they also appear in \cite{guy}):
+for some constant $c>0$ and sufficiently large $N$ (problem {\#}391 in \url{https://www.erdosproblems.com}; see also \cite[Section B22, p. 122--123]{guy}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made\footnote{The second and third conjectures also appear in \cite{guy}.}:
 \begin{enumerate}
 \item One has $t(N) \leq N/e$ for $N \neq 1,2,4$.
 \item One has $t(N) \geq \lfloor 2N/7 \rfloor$ for $N \neq 56$.
@@ -471,7 +471,7 @@ $\|b\|_{\mathrm{TV}(y,x]}$ is defined as the supremum of the quantities $\sum_{j
 $$
 \|b\|_{\mathrm{TV}^*(y,x]}
 \coloneqq |b(y^+)| + |b(x)| + \|b\|_{\mathrm{TV}(y,x]},$$
-$b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$ (which exists if $b$ is of finite total variation).  Equivalently, $\|b\|_{\mathrm{TV}^*(y,x]}$ is the total variation of $b$ if extended by zero outside of $(y,x]$. The indicator function $1_{(y,x]}$ clearly has an augmented total variation of $2$.
+where $b(y^+) \coloneqq \lim_{t \to y^+} b(t)$ denotes the right limit of $b$ at $y$ (which exists if $b$ is of finite total variation).  Equivalently, $\|b\|_{\mathrm{TV}^*(y,x]}$ is the total variation of $b$ if extended by zero outside of $(y,x]$. The indicator function $1_{(y,x]}$ clearly has an augmented total variation of $2$.
 
 We will use this augmented total variation to control sums over primes.  More precisely, in \Cref{primes-sec} we will show
 
@@ -518,10 +518,10 @@ Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,
 
 \begin{itemize}
 \setlength{\itemsep}{2pt}
-  \item[Step 0.] Start with a heuristic lower bound $t$ for $t(N)$.
-  \item[Step 1.] Use the provided algorithm to compute a lower bound $M(N,t)\ge M$.
-  \item[Step 2.] If $M \ge N$, either \texttt{HALT} and report $t(N)\ge t$, or increase $t$ by some amount (possibly guided by the extent to which the lower bound $M$ exceeds $N$), and return to Step 1.
-  \item[Step 3.] If $M < N$, decrease $t$ by some amount (possibly guided by the extent to which the lower bound $M$ falls short of $N$) and return to Step 1.
+  \item[Step 0:] Start with a heuristic lower bound $t$ for $t(N)$.
+  \item[Step 1:] Use the provided algorithm to compute a lower bound $M(N,t)\ge M$.
+  \item[Step 2:] If $M \ge N$, either \texttt{HALT} and report $t(N)\ge t$, or increase $t$ by some amount (possibly guided by the extent to which the lower bound $M$ exceeds $N$), and return to Step 1.
+  \item[Step 3:] If $M < N$, decrease $t$ by some amount (possibly guided by the extent to which the lower bound $M$ falls short of $N$) and return to Step 1.
 \end{itemize}
 
 One can similarly use an algorithm that produces upper bounds for $M(N,t)$ to produce upper bounds for $t(N)$.
@@ -600,9 +600,9 @@ In the second phase, rather than precomputing a list of all candidate $m_i\le N$
 For this fast variant of the greedy algorithm, in contrast to the original greedy algorithm the computation is dominated by the first phase, which takes $O(N^{\nicefrac{3}{4}+\epsilon})$ time to handle the primes $p_i>M$; the rest of the algorithm takes only $O(N^{\nicefrac{2}{3}+\epsilon})$ time.
 
 \subsection{Optimizing bounds produced by the greedy algorithm}
-On inputs $N$ and~$t$ the greedy algorithm produces a lower bound on $M(N,t)$. If this lower bound is greater than or equal to $N$ we can deduce $t(N)\ge t$, but it may be possible to prove a better lower bound on $t(N)$ using a larger value of $t$, and this is desirable in the context of proving Theorem \Cref{main}(iii).  The function $t(N)$ is nondecreasing, since adding $N+1$ to a $t$-admissible factorization of $N!$ yields a $t$-admissible factorization of $(N+1)!$. It follows that if $t(N) \ge (N+\delta)/3$ for some integer $\delta >0$ then $t(N')\ge N'/3$ for all $N'\in [N,N+\delta]$ (a range that may include $N'$ for which the greedy algorithm cannot directly prove $t(N',t)\ge N'/3$).
+On inputs $N$ and~$t$ the greedy algorithm produces a lower bound on $M(N,t)$. If this lower bound is greater than or equal to $N$ we can deduce $t(N)\ge t$, but it may be possible to prove a better lower bound on $t(N)$ using a larger value of $t$, and this is desirable in the context of proving \Cref{main}(iii).  The function $t(N)$ is nondecreasing, since adding $N+1$ to a $t$-admissible factorization of $N!$ yields a $t$-admissible factorization of $(N+1)!$. It follows that if $t(N) \ge (N+\delta)/3$ for some integer $\delta >0$ then $t(N')\ge N'/3$ for all $N'\in [N,N+\delta]$ (a range that may include $N'$ for which the greedy algorithm cannot directly prove $t(N',t)\ge N'/3$).
 
-For large $N$ we expect to be able to choose $t$ so that the greedy algorithm (and its fast variant) can prove $M(N,t)\ge N$, and therefore $t(N)\ge t$, using $t=\lceil (N+\delta)/3\rceil$ with $\delta \ge cN$ for some $c>0$ that approaches $1/e-1/3$ as $N\to \infty$.  In the context of proving Theorem~\ref{main}, this allows us to establish $t(N)\ge N/3$ for all $N$ in any dyadic interval using just $O(1)$ calls to the greedy algorithm or its fast variant, provided that we are able to choose (or precompute) suitable values of $t$.
+For large $N$ we expect to be able to choose $t$ so that the greedy algorithm (and its fast variant) can prove $M(N,t)\ge N$, and therefore $t(N)\ge t$, using $t=\lceil (N+\delta)/3\rceil$ with $\delta \ge cN$ for some $c>0$ that approaches $1/e-1/3$ as $N\to \infty$.  In the context of proving \Cref{main}, this allows us to establish $t(N)\ge N/3$ for all $N$ in any dyadic interval using just $O(1)$ calls to the greedy algorithm or its fast variant, provided that we are able to choose (or precompute) suitable values of $t$.
 
 Let $t_0(N)$ denote the least $t$ for which the greedy algorithm proves $M(N,t)\ge N$ for all $t\le t_0(N)$.  Let $t_1(N)$ denote the largest $t$ for which the greedy algorithm proves $M(N,t_1(N))\ge N$ but cannot prove $M(N,t)\ge N$ for any $t>t_1(N)$.  There will typically be a substantial gap between $t_0(N)$ and $t_1(N)$, but for large $N$ we expect both to exceed $N/3$ by a constant factor.  In this section we consider two problems:
 
@@ -633,9 +633,9 @@ We may then take $B_1 + \lfloor \log R / \log t\rfloor$ as an upper bound on the
 Computing the lower and upper bounds on $t_1(N)$ involves only $O(\log N)$ calls the the greedy algorithm (or just its first phase) and can be done quickly.  But the interval determined by these lower and upper bounds is typically large and appears to grow linearly with $N$.  We cannot apply a bisection search because there will typically be many $t$ in this interval for which the greedy algorithm produces more than $N$ factors that are interspersed with $t$ for which this is not the case.  Lacking a better alternative, we use an exhaustive search (which can easily be run in parallel on multiple cores) to find the largest such $t$ between our upper and lower bounds fo r which the greedy algorithm outputs at least $N/3$ factors, which gives us the value of $t_1(N)$.
 
 \subsection{Proving \texorpdfstring{\Cref{main}}{Theorem 1.3}(iii) for \texorpdfstring{$\boldsymbol{67425 \le N \le 10^{14}}$}{67245 <= N <= 1e14}}
-To establish \Cref{main}(iii) for $67425 \leq N \leq 10^{14}$ we may now proceed as follows
+To establish \Cref{main}(iii) for $67425 \leq N \leq 10^{14}$ we may now proceed as follows:
 \begin{enumerate}
-\item[Step 0:] Let $N=67425$
+\item[Step 0:] Let $N=67425$.
 \item[Step 1:] While $N\le 10^6$, compute $t_1(N)$ via (b) above using the standard greedy algorithm, verify that $t_1(N) > \lceil N/3\rceil$, and replace $N$ by $3t_1(N)$.
 \item[Step 2:] While $N\le 10^{14}$, compute $t\in [t_0(N),t_1(N)]$ via (a) above using the fast variant of the greedy algorithm, verify that $t_1(N) > \lceil N/3\rceil$, and replace $N$ by $3t_1(N)$.
 \end{enumerate}

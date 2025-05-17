@@ -951,7 +951,7 @@ giving \eqref{hyp}.  The claim follows.
 \end{proof}
 
 
-In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, \Cref{fig-zoom}.
+In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially when $N$ is large, although for medium $N$ the linear programming method is superior: see \Cref{fig1}, \Cref{fig1-alt}, and \Cref{fig-zoom}.
     
 \begin{figure}
   \centering
@@ -975,8 +975,8 @@ We can now prove the upper bound portion of \Cref{main}(iv):
     where
     \begin{align}
       c'_1 &\coloneqq \frac{1}{e} \int_0^1 f_e(x) \log \frac{1}{x}\ dx = 0.3702015\dots \label{c1p-def}\\
-      c''_1 &\coloneqq \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) \approx 1.6796\label{c1pp-def}\\
-      c_1 &\coloneqq c'_1 + c_0 c''_1 - ec_0^2/2 \approx 0.75554808.\label{c1-def}
+      c''_1 &\coloneqq \sum_{k=1}^\infty \frac{1}{k}  \log\left( \frac{e}{k} \left\lceil \frac{k}{e} \right\rceil \right) = 1.679578996\dots\label{c1pp-def}\\
+      c_1 &\coloneqq c'_1 + c_0 c''_1 - ec_0^2/2 =0.75554808\dots.\label{c1-def}
     \end{align}
   \end{proposition}
 
@@ -1323,7 +1323,7 @@ Suppose for contradiction that there is an $N/4$-admissible factorization of $N!
   $$ \sum_{k < \ell} a_k \leq \frac{1}{N} \sum_{d \in \N^{\langle 2,3 \rangle}} \sum^*_{N/4\ell \leq m \leq N/d} 1,$$
   where $\N^{\langle 2,3 \rangle}$ is the set of $3$-smooth numbers.
   The inner sum vanishes for $d > 4\ell$, and is at most $1$ for $d = 4\ell$.  For $d < 4\ell$ we can apply \Cref{lit} to conclude
-  $$ \sum_{k < \ell} a_k \leq \sum_{d \in \N^{\langle 2,3 \rangle}: d < 4\ell} (\frac{1}{d}-\frac{1}{4\ell} + \frac{4}{3N}) + \frac{1}{N}.$$ 
+  $$ \sum_{k < \ell} a_k \leq \sum_{d \in \N^{\langle 2,3 \rangle}: d < 4\ell} \left(\frac{1}{d}-\frac{1}{4\ell} + \frac{4}{3N}\right) + \frac{1}{N}.$$ 
   Thus, for any non-negative weights $c_2, c_3$, and $w_\ell$ for $3$-smooth $\ell$ such that
   \begin{equation}\label{ell-cond}
      c_2 \nu_2(\ell) + c_3 \nu_3(\ell) + \sum_{\ell' > \ell} w_{\ell'} \geq 1
@@ -1337,7 +1337,7 @@ Suppose for contradiction that there is an $N/4$-admissible factorization of $N!
   where
   $$ \eps \coloneqq 1 -  
 c_2 - \frac{c_3}{2} - \sum_{\ell} w_\ell \sum_{d \in \N^{\langle 2,3 \rangle}: d < 4\ell} \left( \frac{1}{d} - \frac{1}{4\ell} \right)$$
-  $$ C \coloneqq \sum_\ell w_\ell (\frac{4}{3} \# \left\{ d \in \N^{\langle 2,3 \rangle}: d < 4\ell \right\} + 1).$$
+  $$ C \coloneqq \sum_\ell w_\ell \left(\frac{4}{3} \# \left\{ d \in \N^{\langle 2,3 \rangle}: d < 4\ell \right\} + 1\right).$$
  Thus, once one produces weights for which $\eps>0$, one obtains a contradiction for $N > C/\eps$.
   Numerical computation reveals that if one selects\footnote{These coefficients were discovered by applying a linear program to a finite truncation of the problem, choosing the truncation so as to optimize the threshold.} $c_2 = 2/32$, $c_3 = 3/32$, $w_1 = 2/32$, and $w_\ell = 1/32$ for all $3$-smooth $1 < \ell \leq 2^2 3^9$ with $\nu_2(\ell) \leq 2$, with $w_\ell=0$ otherwise, then  \eqref{ell-cond} holds for all $3$-smooth $\ell$ (note that this is automatic once $\nu_2(\ell)$ or $\nu_3(\ell)$ is large enough, so this is a finite check) with
 $$\eps = \frac{218038591}{4458050224128} > 0$$
@@ -1348,7 +1348,7 @@ and one then we obtain the desired contradiction for $N > 1328148 = \lceil\frac{
 As in \Cref{onethird-large}, we verified\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/one_fourth.py}} the linear programming certificate in exact arithmetic.
 However, in this case we note that the proof is fundamentally human-checkable.
 There are only a few dozen $3$-smooth numbers up to $2^2 3^9$ and the coefficients and weights are very simple.
-It's possible that examining this construction in more detail would reveal some greater human understanding of the asymptotic efficiency of these rearrangement methods.
+It is possible that examining this construction in more detail would reveal some greater human understanding of the asymptotic efficiency of these rearrangement methods.
 \end{proof}
 
 \begin{figure}
@@ -1374,7 +1374,7 @@ Finally, we can recover a weak version of \Cref{main}(iv) with this method:
   \item A sufficiently large natural number $M$ (which can depend $c_0$, $\alpha$);
   \item A sufficiently large natural number $C_0$ (which can depend on $M$, $c_0$, $\alpha$);
   \item A sufficiently large prime $p_-$ (which can depend on $C_0$, $M$, $c_0$, $\alpha$); and
-  \item A prime $p_+$ with $\log p_+ \asymp \log^2 \log p_-$; and
+  \item A prime $p_+$ with $\log p_+ \asymp \log^2 \log p_-$.
   \end{itemize}
 Let ${\mathcal D}$ be the set of all numbers $d$ which are either of the form $2^m$ for $0 \leq m \leq M$, or $2^m p$ for $0 \leq m \leq M$ and $p_- \leq p \leq p_+$.  This is a downset, and the densities $\sigma_{d,{\mathcal D}}$ can be computed explicitly as
 $$ \sigma_{2^m,{\mathcal D}} = \frac{1}{2} \mu_+; \sigma_{2^m p,{\mathcal D}} = \frac{1}{2} \mu_p$$
@@ -2115,7 +2115,7 @@ This completes the proof of \Cref{main}(iii) (and hence \Cref{main}(ii)) in the 
 $\delta_5, \delta_7, \alpha_2, \alpha_5$, thus potentially verifying the conditions \eqref{delta-cond}, \eqref{alpha-cond} simultaneously for all $N$ in such an interval.  As it turns out, there is enough room to spare in these estimates, particularly for large $N$, that this strategy works using only a small number of intervals; specifically, by considering $N$ in the intervals
 $$ [10^{11}, 5 \times 10^{11}]; \quad [5 \times 10^{11}, 10^{14}]; \quad [10^{14}, 10^{20}]; \quad [10^{20}, 10^{70}]$$
 one can check that such bounds are sufficient to verify \eqref{delta-cond}, \eqref{alpha-cond} in these cases.  This now verifies \Cref{main}(ii), (iii) for all $N \geq 10^{11}$.
-(In fact, with more effort, this verification can be pushed down to $N \geq 6 \times 10^{10}$ using the same choice of parameters $A,K,L$ \footnote{Specifically by checking $$ [6 \times 10^{10}, 6.05 \times 10^{10}]; \quad [6.05 \times 10^{10}, 6.1 \times 10^{10}]; \quad [6.1 \times 10^{10}, 6.5 \times 10^{10}]; \quad [6.5 \times 10^{10}, 7 \times 10^{10}]; \quad [7 \times 10^{10}, 10^{11}]$$}.)
+(In fact, with more effort, this verification can be pushed down to $N \geq 6 \times 10^{10}$ using the same choice of parameters $A,K,L$ \footnote{Specifically by checking $$ [6 \times 10^{10}, 6.05 \times 10^{10}]; \quad [6.05 \times 10^{10}, 6.1 \times 10^{10}]; \quad [6.1 \times 10^{10}, 6.5 \times 10^{10}]; \quad [6.5 \times 10^{10}, 7 \times 10^{10}]; \quad [7 \times 10^{10}, 10^{11}].$$}.)
   
 \appendix
 

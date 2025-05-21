@@ -1,5 +1,7 @@
 from fractions import Fraction
 
+# helper file used in verify.py
+
 multiples = {
 1: Fraction(624084, 10000000),
 2: Fraction(504533, 10000000),

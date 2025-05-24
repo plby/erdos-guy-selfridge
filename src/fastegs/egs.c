@@ -390,6 +390,7 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
     }
     if ( verbosity > 2 ) fprintf(stderr,"cnt=%ld for %ld p in [s,t) (%.6fs)\n", cnt, lastpi-maxpi, get_time()-start);
     assert (lastpi == pi(t-1));
+
     // Finally, handle primes p  in [t,N]
     if ( 3*t <= N ) {
         nextpi = pi(N/3);
@@ -580,7 +581,7 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
     }
     if ( v ) fac_free(v);
 
-    free (E); E = 0;
+    free (E);
     return cnt;
 }
 

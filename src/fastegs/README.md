@@ -6,7 +6,7 @@ This implemention depends on Kim Walisch's [primesieve](https://github.com/kimwa
 
 These two libraries are used to efficiently handle factors divisible by primes in the range $$[\sqrt{t},N]$$. In this range the greedy algorithm can always use the optimal cofactor $$m = \lceil\frac{t}{p}\rceil$$ to construct $$n = v_p(N!)$$ factors $$mp \ge t$$ that are as small as possible (given that they are divisible by $p$).  To improve efficiency, the algorithm subdivides the interval $$[\sqrt{t},N]$$ into regions within which the values of $m$ and $n$ are constant and simply counts the primes in each region (for small regions it uses `primesieve` to enuemrate primes, for large regions $$[a,b]$$ it uses `primecount` to compute $$\pi(b)-\pi(a-1))$$.  See the paper for more details.
 
-To verify the Erdos-Guy-Selfridge conjecture for $$N$$ in $$[67425,10^{11}]$$ (which is sufficient for the portion of our proof of Theorem 1(iii) that depends on the greedy algorithm), after installing primesieve and primecount and compiling `egs.c` using `build.sh`, you can type
+To verify the Erdos-Guy-Selfridge conjecture for $$N$$ in $$[67425,10^{11}]$$ (which is sufficient for the portion of our proof of Theorem 1(iii) that depends on the greedy algorithm), after installing [primesieve](https://github.com/kimwalisch/primesieve) (version 12.6 or later, note that many libprimesieve-dev apt packages are older than this) and [primecount](https://github.com/kimwalisch/primecount) (version 7.14 or later), and compiling `egs.c` using `build.sh`, you can type
 ```
 ./egs -h hint_67425_1e6_exhaustive_greedy.txt 67425-1e6
 ./egs -f -h hint_1e6_1e11_heuristic_fast.txt 1e6-1e11

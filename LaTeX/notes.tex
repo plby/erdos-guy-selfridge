@@ -1,5 +1,5 @@
 %\pdfoutput=1
-\documentclass[12pt,a4paper,reqno]{amsart}
+\documentclass[10pt,a4paper,reqno]{amsart}
 \newcommand\hmmax{0}
 \newcommand\bmmax{0}
 \usepackage{amssymb}
@@ -8,6 +8,7 @@
 \usepackage{enumerate}
 \usepackage{comment}
 \usepackage{placeins}
+\usepackage{enumitem}
 %\usepackage{psfig}
 \usepackage{graphicx}
 \usepackage{cleveref}
@@ -120,8 +121,9 @@
 \renewcommand{\mod}{\bmod}
 
 \parindent 0mm
-\parskip   5mm
+\parskip   2.5mm
 
+\setlist{itemsep=2pt}
 
 \begin{document}
 
@@ -143,7 +145,7 @@
 \address{MIT Department of Mathematics, Cambridge, MA 02139.}
 \email{drew@math.mit.edu}
 
-\author[Tao]{Terence Tao}
+\author[Tao]{\\Terence Tao}
 \address{UCLA Department of Mathematics, Los Angeles, CA 90095-1555.}
 \email{tao@math.ucla.edu}
 
@@ -171,9 +173,9 @@ for an explicit constant $c_0 = 0.30441901\dots$ and some absolute constant $c>0
 
 \section{Introduction}
 
-Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ of natural numbers such that the product
-$$ \prod \tuple \coloneqq \prod_{a \in \tuple} a$$
-(where the elements are counted with multiplicity) is equal to $M$; more generally, define a \emph{subfactorization} of $M$ to be a finite multiset $\tuple$ such that $\prod \tuple$ divides $M$.  Given a threshold $t$, we say that a multiset $\tuple$ is \emph{$t$-admissible} if $a \geq t$ for all $a \in \tuple$.  For a given natural number $N$, we then define $t(N)$ to be the largest $t$ for which there exists a $t$-admissible factorization $\tuple$ of $N!$ of cardinality $|\tuple|=N$.  
+Given a natural number $M$, define a \emph{factorization} of $M$ to be a finite multiset $\tuple$ of natural numbers with product
+$$ \prod \tuple \coloneqq \prod_{a \in \tuple} a = M,$$
+where each $a$ appears according to its multiplicity in $\tuple$. More generally, define a \emph{subfactorization} of $M$ to be a finite multiset $\tuple$ such that $\prod \tuple$ divides $M$.  Given a threshold $t$, we say that a multiset $\tuple$ is \emph{$t$-admissible} if $a \geq t$ for all $a \in \tuple$.  For a given natural number $N$, we then define $t(N)$ to be the largest $t$ for which there exists a $t$-admissible factorization $\tuple$ of $N!$ of cardinality $|\tuple|=N$.
 
 \begin{example}\label{nine}  The multiset
   $$ \{ 3,3,3,3,4,4,5,7,8\}$$
@@ -188,9 +190,8 @@ It is easy to see that $t(N)$ is non-decreasing in $N$ (any cardinality $N$ fact
 $$ 1,1,1,2,2,2,2,2,3,3,3,3,3,4, \dots$$
 (\href{https://oeis.org/A034258}{OEIS A034258}). The values of $t(N)$ for $N \leq 79$ were computed in \cite{guy-selfridge}, and the values for $N \leq 200$ can be extracted from \href{https://oeis.org/A034259}{OEIS A034259}, which describes the inverse sequence to $t$.  As part of our work, we extend this sequence to $N \leq 10^4$; see \cite{github} and \Cref{fig-long}.
 
-When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ essentially becomes the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it more tractable to estimate $t(N)$ with far higher precision than if one were factoring an arbitrary number.  For instance, we can show that
-$$ 0 \leq t(9 \times 10^8) - \num{316560601} \leq 113;$$
-see \Cref{long-table}.
+When the factorial $N!$ is replaced with an arbitrary number the problem of determining $t(N)$ is essentially the bin covering problem, which is known to be NP-hard; see e.g., \cite{bincover}.  However, as we shall see in this paper, the special structure of the factorial (and in particular, the profusion of factors at the ``tiny primes'' $2,3$) make it possible to estimate $t(N)$ with very high precision.  For instance, we are able to show (see \Cref{long-table}) that
+$$ 0 \leq t(9 \times 10^8) - \num{316560601} \leq 113.$$
 
 \begin{remark}\label{subfac}  One can equivalently define $t(N)$ as the greatest $t$ for which there exists a $t$-admissible \emph{subfactorization} of $N!$ of cardinality \emph{at least} $N$.  This is because every such subfactorization can be converted into a $t$-admissible factorization of cardinality exactly $N$ by first deleting elements from the subfactorization to make the cardinality $N$, and then multiplying one of the elements of the subfactorization by a natural number to upgrade the subfactorization to a factorization.  This ``relaxed'' formulation of the problem turns out to be more convenient both for theoretical analysis of $t(N)$ and for numerical computations.
 \end{remark}
@@ -210,27 +211,15 @@ see \Cref{fig1}.  In \cite[p.75]{erdos-graham} it was reported that an unpublish
 \begin{equation}\label{Tbound}
    \frac{t(N)}{N} \leq \frac{1}{e} - \frac{c}{\log N}
 \end{equation}
-for some constant $c>0$ and sufficiently large $N$ (see \cite[Section B22, p. 122--123]{guy} and problem {\#}391 in \url{https://www.erdosproblems.com}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is not the case; see \Cref{main}(v) below.  The following conjectures in \cite{guy-selfridge} were also made\footnote{The second and third conjectures also appear in \cite{guy}.}:
+for some constant $c>0$ and sufficiently large $N$ (see \cite[Section B22, p.\ 122--123]{guy} and problem {\#}391 in \url{https://www.erdosproblems.com}); it was also noted that similar results were obtained in \cite{algr77} if one restricted the $a_i$ to be prime powers.  However, as later reported in \cite{erdos-96}, Erd\H{o}s ``believed that Straus had written up our proof [of \eqref{t1}]. Unfortunately Straus suddenly died and no trace was ever found of his notes. Furthermore, we never could reconstruct our proof, so our assertion now can be called only a conjecture''.   In \cite{guy-selfridge} it was observed that the lower bound $\frac{t(N)}{N} \geq \frac{3}{16}-o(1)$ could be obtained by rearranging powers of $2$ in the standard factorization $N! = \prod \{1,\dots,N\}$, i.e., by removing some powers of $2$ from some of the terms and redistributing them to other terms.  It was also claimed that this bound could be improved to $\frac{t(N)}{N} \geq \frac{1}{4}$ for sufficiently large $N$ by rearranging powers of $2$ and $3$, however we have found surprisingly that this is not the case; see \Cref{main}(v) below.
+
+The following conjectures in \cite{guy-selfridge} were also made\footnote{The second and third conjectures also appear in \cite{guy}.}:
 \begin{enumerate}
 \item One has $t(N) \leq N/e$ for $N \neq 1,2,4$.
 \item One has $t(N) \geq \lfloor 2N/7 \rfloor$ for $N \neq 56$.
 \item One has $t(N) \geq N/3$ for $N \geq 3 \times 10^5$.  (It was also asked if the threshold $3 \times 10^5$ could be lowered.) 
 \end{enumerate}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{newplot_200.png}
-  \vspace{-8pt}
-  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main}(iv) implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange), although we believe that \eqref{tna} (gray) asymptotically becomes a sharper approximation.  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
-  }\label{fig1}
-  \end{figure}
-  
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{newplot_600_all.png}
-    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$. }\label{fig1-alt}
-  \end{figure}
-  
 In this paper we answer all of these questions.
 
 \begin{theorem}[Main theorem]\label{main} Let $N$ be a natural number.
@@ -251,7 +240,7 @@ for some constant $c>0$, where $c_0$ is the explicit constant
 \end{equation}
 and for any $\alpha>0$, $f_\alpha \colon (0,\infty) \to \R$ denotes the piecewise smooth function
 \begin{equation}\label{falpha-def} 
-  f_\alpha(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil 1/\alpha x \rceil}{1/\alpha x}.
+  f_\alpha(x) \coloneqq \left\lfloor \frac{1}{x} \right\rfloor \log \frac{\lceil \nicefrac{1}{\alpha x} \rceil}{\nicefrac{1}{\alpha x}}.
 \end{equation}
 In particular, \eqref{t1} and \eqref{Tbound} hold.  In fact the upper bound can be sharpened to
 \begin{equation}\label{tna} 
@@ -262,10 +251,32 @@ for an explicit constant $c_1=0.75554808\dots$; see \Cref{upper-bound}.
 \end{itemize}
 \end{theorem}
 
+\begin{figure}[hbp!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{newplot_200.png}
+  \vspace{-8pt}
+  \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main}(iv) implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange), although we believe that \eqref{tna} (gray) asymptotically becomes a sharper approximation.  The threshold $1/3$ (red) is permanently crossed at $N=43632$.
+  }\label{fig1}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{newplot_600_all.png}
+    \vspace{-8pt}
+    \caption{A continuation of \Cref{fig1} to the region $80 \leq N \leq 599$. }\label{fig1-alt}
+  \end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{integ.png}
+  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.30441901\dots$ and the upper bound $\nicefrac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \nicefrac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming only slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
+\end{figure}
+
+
 For future reference, we observe the simple bounds
 \begin{equation}\label{falpha-bound}
  \begin{split}
-   0 \leq f_\alpha(x) &\leq \frac{1}{x} \log \frac{1/\alpha x+1}{1/\alpha x}\\
+   0 \leq f_\alpha(x) &\leq \frac{1}{x} \log \frac{\nicefrac{1}{\alpha x}+1}{\nicefrac{1}{\alpha x}}\\
 &= \frac{1}{x} \log\left( 1 + \alpha x \right) \\
 &\leq \alpha
 \end{split}
@@ -279,11 +290,6 @@ In \Cref{c0-app} we give some details on the numerical computation of the consta
 were established, which were enough to recover \eqref{t1}, \eqref{Tbound}, and \Cref{main}(i). Numerically, the upper bound in \eqref{tna} appears to be a rather good approximation, and we conjecture that it is a lower bound as well.
 \end{remark}  
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{integ.png}
-  \caption{The piecewise continuous function $x\mapsto \frac{1}{e} f_e(x)$, together with its mean value $c_0 = 0.30441901\dots$ and the upper bound $\frac{\log(1+ex)}{ex}$.  The function exhibits an oscillatory singularity at $x=0$ similar to $\sin \frac{1}{x}$ (but it is always nonnegative and bounded). Informally, the function $f_e$ quantifies the difficulty that large primes in the factorization of $N!$ have in becoming only slightly larger than $N/e$ after multiplying by a natural number.}\label{fig-mean}
-\end{figure}
 
 As one might expect, the proof of \Cref{main} proceeds by a combination of both theoretical analysis and numerical calculations.  Our main tools to obtain upper and lower bounds on $t(N)$ can be summarized as follows (and in \Cref{cases-table}):
 
@@ -367,7 +373,6 @@ If one applies a logarithm to the fundamental theorem of arithmetic, one obtains
   \sum_p \nu_p(r) \log p = \log r
 \end{equation}
 for any positive rational $r$.  
-
 For a natural number $n$, we can write
 \begin{equation}\label{nup-form} 
   \nu_p(n) = \sum_{j=1}^\infty 1_{p^j|n}.
@@ -406,7 +411,7 @@ For any $L \geq 1$, let $\kappa_L$ be the least quantity such that
 \end{equation}
 holds for all $x \geq L$; see \Cref{fig:nextsmooth}.  In \Cref{power-sec} we establish the following facts:
 
-\begin{figure}
+\begin{figure}[hbp!]
   \centering
   \includegraphics[width=0.8\textwidth]{next_smooth.png}
   \vspace{-8pt}
@@ -521,7 +526,6 @@ We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on
 Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds $M$ on $M(N,t)$ can also produce lower bounds on $t(N)$, as follows:
 
 \begin{itemize}
-\setlength{\itemsep}{2pt}
   \item[Step 0:] Start with a heuristic lower bound $t$ for $t(N)$.
   \item[Step 1:] Use the provided algorithm to compute a lower bound $M(N,t)\ge M$.
   \item[Step 2:] If $M \ge N$, either \texttt{HALT} and report $t(N)\ge t$, or increase $t$ by some amount (possibly guided by the extent to which the lower bound $M$ exceeds $N$), and return to Step 1.
@@ -537,7 +541,6 @@ We therefore turn to the question of how to algorithmically obtain good upper an
 The following \textit{greedy algorithm} produces reasonably good lower bounds on $M(N,t)$:
 
 \begin{enumerate}
-\setlength{\itemsep}{2pt}
 \item[Step 0:] Initialize $\tuple$ to be the empty multiset. 
 \item[Step 1:] If $\tuple$ is not a factorization of $N!$, determine the largest $p$ in surplus: $\nu_p\bigl(N!/\prod \tuple\bigr) > 0$. 
 \item[Step 2:] If $N! / \prod \tuple$ is divisible by a multiple of $p$ greater than or equal to $t$, determine the smallest such multiple, add it to $\tuple$, and return to Step 1.  Otherwise, \texttt{HALT}. 
@@ -555,7 +558,6 @@ The greedy approach works well for small $N$, producing the exact value of $t(N)
 To handle the larger values of $N$ needed to establish Theorem~\ref{main}(iii) for $N\in [ 8\times 10^4, 10^{11}]$, and also for the broader range $N\in [67425,10^{14}]$ that comfortably overlaps regions in which we may apply other methods, we now consider how to efficiently implement Steps 1 and 2 of the greedy algorithm outlined above.  Let $p_1\ge p_2\ge \ldots \ge 2$ be the prime factors of $N>1$ listed with multiplicity in non-increasing order, and let $m_ip_i\ge t$ be the factor of $N!$ chosen by the greedy algorithm for the prime $p_i$ on input $t < N/2$.  Our implementation of the greedy algorithm is based on the following observations:
 
 \begin{itemize}
-\setlength{\itemsep}{6pt}
 \item[(a)] For large primes $p_i$ the greedy algorithm will always use $m_i=\lceil t/p_i\rceil$, with $m_j=m_i$ for all $p_j\in \left[\lceil t/m_i\rceil,\lceil t/(m_i-1)\rceil\right)$, including all $p_j\ge t$ for $m_i=1$.
 \item[(b)] The sequence $m_i$ is nondecreasing ($m_{i+1}p_{i+1}\ge t$ implies $m_{i+1}p_i\ge t$ with $m_{i+1}$ dividing $\tuple$ after the $i$th step, so the greedy choice of $m_i$ satisfies $m_i\le m_{i+1}$).
 \item[(c)] Each $m_i$ is $p_i$-smooth, and the ratio of the largest and smallest prime divisors of $m_i$ cannot exceed $t/m_i$ (if it did we could remove the smallest prime divisor from $m_i$).
@@ -614,7 +616,6 @@ For large $N$ we expect to be able to choose $t$ so that the greedy algorithm (a
 Let $t_0(N)$ denote the least $t$ for which the greedy algorithm proves $M(N,t)\ge N$ for all $t\le t_0(N)$.  Let $t_1(N)$ denote the largest $t$ for which the greedy algorithm proves $M(N,t_1(N))\ge N$ but cannot prove $M(N,t)\ge N$ for any $t>t_1(N)$.  There will typically be a substantial gap between $t_0(N)$ and $t_1(N)$, but for large $N$ we expect both to exceed $N/3$ by a constant factor.  In this section we consider two problems:
 
 \begin{itemize}
-\setlength{\itemsep}{4pt}
 \item[(a)] Given $N$, quickly produce some $t\in [t_0(N),t_1(N)]$.
 \item[(b)] Compute the exact value of $t_1(N)$.
 \end{itemize}
@@ -796,7 +797,7 @@ and hence by \eqref{lp-upper}
 for this choice of $N,t$.  In fact, as discussed later in this section, we know that equality holds in this particular case.  For $N \leq 10^4$, we found that the linear programming upper bound on $t(N)$ is tight except for
 $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, in which case integer programming was needed to precisely compute $t(N)$.  The values of $t(N)$ thus computed are  plotted in \Cref{fig-long}.
 
-\begin{figure}
+\begin{figure}[hbp!]
   \centering
   \includegraphics[width=0.8\textwidth]{longplot.png}
   \vspace{-8pt}
@@ -832,7 +833,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
     \centering
     \includegraphics[width=0.75\textwidth]{longerplot.png}
     \vspace{-12pt}
-    \caption{\small The linear programming upper bound and smooth factorization lower bound on $t(N)/N$ for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
+    \caption{The linear programming upper bound and smooth factorization lower bound on $t(N)/N$ for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
     \label{fig-longer}
     \end{figure}
 
@@ -840,7 +841,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
       \centering
       \includegraphics[width=0.8\textwidth]{surplus.png}
       \vspace{-12pt}
-      \caption{\small Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  In this range, at least one of the integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals (blue) methods turn out to match this bound exactly, with the smooth factorization method (orange) not far behind.}
+      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  In this range, at least one of the integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals (blue) methods turn out to match this bound exactly, with the smooth factorization method (orange) not far behind.}
       \label{fig-surplus}
       \end{figure}
 
@@ -848,7 +849,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
         \centering
         \includegraphics[width=0.8\textwidth]{surplus2.png}
         \vspace{-16pt}
-        \caption{\small Two weaker lower bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$ beyond those depicted in \Cref{fig-surplus}: the floor of a linear programming method (blue) without gathering residuals, and the greedy method (green), which performs erratically but usually gives worse bounds than any of the other methods in this range.}
+        \caption{Two weaker lower bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$ beyond those depicted in \Cref{fig-surplus}: the floor of a linear programming method (blue) without gathering residuals, and the greedy method (green), which performs erratically but usually gives worse bounds than any of the other methods in this range.}
         \label{fig-surplus2}
         \end{figure}
 
@@ -856,7 +857,7 @@ For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+resi
   \centering
   \includegraphics[width=0.8\textwidth]{verylarge.png}
   \vspace{-16pt}
-  \caption{\small Lower bounds on $t(N)/N$ coming from various linear programming and greedy methods for sample values of $N$ in the range $10^4 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. }\label{fig-verylarge}
+  \caption{Lower bounds on $t(N)/N$ coming from various linear programming and greedy methods for sample values of $N$ in the range $10^4 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. }\label{fig-verylarge}
 \end{figure}
     
     \begin{table}[ht]
@@ -2237,10 +2238,10 @@ $$ \frac{3^{q_{2j}}}{2^{p_{2j}}}, \frac{2^{p_{2j+1}}}{3^{q_{2j+1}}}\leq \exp\lef
 From \Cref{lemcount-0} we obtain
 $$
 \kappa_{\min(2^{p_{2j} + p_{2j+1}}, 3^{q_{2j}+q_{2j+1}})/6} \ll \frac{1}{q_{2j}}.$$
-The claim then follows from \eqref{bj1}, \eqref{bj2} (and the obvious fact that $\kappa$ is monotone non-increasing after optimizing in $j$.
+The claim then follows from \eqref{bj1}, \eqref{bj2} (and the fact that $\kappa$ is monotone non-increasing after optimizing in $j$).
 
 \begin{remark}
-It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that the irrationality measure of $\log 3 / \log 2$ is equal to $2$.
+It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that the irrationality measure of $\log 3 / \log 2$ is $2$.
 \end{remark}
 
 
@@ -2328,7 +2329,7 @@ Next, observe\footnote{We thank an anonymous commenter on the blog of one of the
   &= \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)\\
   &= 0.1797439053\dots;
 \end{align*}
-The value here was computed in interval arithmetic by subtracting off the asymptotically similar sum $\frac{1}{2e} \sum_{k=1}^\infty \frac{1}{k^2} = \frac{1}{2e} \frac{\pi^2}{6}$, summing the resulting partial sum up to $k=10^5$, bounding the tail of the sum rigorously.
+The value here was computed in interval arithmetic by subtracting off the asymptotically similar sum $\frac{1}{2e} \sum_{k=1}^\infty \frac{1}{k^2} = \frac{1}{2e} \frac{\pi^2}{6}$, summing the resulting partial sum up to $k=10^5$, and bounding the tail of the sum rigorously. We have
 $$ \frac{1}{e} \int_1^e \lfloor y \rfloor \log \frac{e}{y}\ \frac{dy}{y^2} = \frac{2}{e^2} - \frac{\log 2}{2e} = 0.143173268\dots$$
 and hence
 $$ c_0 = \frac{1}{2e} \sum_{k=1}^\infty \log^2 \left(1 + \frac{1}{k}\right)
@@ -2376,7 +2377,7 @@ and hence on summing the telescoping series
 $$ |S_{n,K}| \leq \frac{2}{|e^{-2\pi i n/e}-1| (K+1)^2} = \frac{1}{(K+1)^2 \sin(\pi n/e)}.$$
 Because the irrationality measure of $e$ is $2$, this will give error terms of the shape $O(\log K/K^2)$ if one sets $N \approx K / \log K$.  Setting for instance $K = 10^6$, $N = 10^5$, an interval arithmetic computation then gives
 $$c''_1 = 1.679578996\dots$$
-and thus by \eqref{c1-def}
+and thus by \eqref{c1-def} we have
 $$ c_1 = 0.7554808\dots.$$
 
 

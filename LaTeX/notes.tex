@@ -7,6 +7,7 @@
 \usepackage[pdftex,pdfpagelabels]{hyperref}
 \usepackage{enumerate}
 \usepackage{comment}
+\usepackage{placeins}
 %\usepackage{psfig}
 \usepackage{graphicx}
 \usepackage{cleveref}
@@ -219,6 +220,7 @@ for some constant $c>0$ and sufficiently large $N$ (see \cite[Section B22, p. 12
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_200.png}
+  \vspace{-8pt}
   \caption{The function $t(N)/N$ (blue) for $N \leq 200$, using the data from \href{https://oeis.org/A034258}{OEIS A034258}, as well as the trivial upper bound $(N!)^{1/N}/N$ (green), the improved upper bound from \Cref{upper-crit} (pink), which is asymptotic to \eqref{asym} (purple), and the function $\lfloor 2N/7 \rfloor/N$ (brown), which we show to be a lower bound for $N \neq 56$.  \Cref{main}(iv) implies that $t(N)/N$ is asymptotic to \eqref{asym} (purple), which in turn converges to $1/e$ (orange), although we believe that \eqref{tna} (gray) asymptotically becomes a sharper approximation.  The threshold $1/3$ (red) is permanently crossed at $N=43632$. 
   }\label{fig1}
   \end{figure}
@@ -297,27 +299,27 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
   \centering
   \begin{tabular}{|l|r@{}c@{}l|l|}
   \hline
-  Part & \multicolumn{3}{c|}{Range of $N$} & Method used \\
+\rule{0pt}{11pt}  Part & \multicolumn{3}{c|}{Range of $N$} & Method used \\
   \hline
-(i) & & $N$ & ${}\leq 10^4$ & Linear programming \\
+\rule{0pt}{12pt}(i) & & $N$ & ${}\leq 10^4$ & Linear programming \\
  & $80<{}$ &$N$ & & \Cref{upper-crit} \\
 \hline
-(ii) & & $N$ & ${}\leq 1.2\times 10^7$ & Integer programming \\
+\rule{0pt}{12pt}(ii) & & $N$ & ${}\leq 1.2\times 10^7$ & Integer programming \\
  & $8\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
 \hline
-(iii) & & $N$ & ${}\leq 8 \times 10^4$ & Integer programming \\
+\rule{0pt}{12pt}(iii) & & $N$ & ${}\leq 8 \times 10^4$ & Integer programming \\
  & $\num{67425} \leq{}$ & $N$ & ${}\leq 10^{14}$ & Greedy  \\
  & $10^{11} \leq{}$ & $N$ & & Modified approximate factorization \\
  & \multicolumn{3}{c|}{$N$ sufficiently large} & Rearrangement \\
 \hline
-(iv) (upper) & \multicolumn{3}{c|}{$N$ sufficiently large} & \Cref{upper-crit} \\
+\rule{0pt}{12pt}(iv) (upper) & \multicolumn{3}{c|}{$N$ sufficiently large} & \Cref{upper-crit} \\
 \phantom{(iv)} (lower) & \multicolumn{3}{c|}{$N$ sufficiently large} & Modified approximate factorization \\
 \hline
-(v) & & $N$ & ${}\leq 5 \times 10^6$ & Linear (or dynamic) programming \\
+\rule{0pt}{12pt}(v) & & $N$ & ${}\leq 5 \times 10^6$ & Linear (or dynamic) programming \\
  & $1.4\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
   \hline
 \end{tabular}
-\medskip
+\bigskip
 
 \caption{The techniques in this paper can establish the various components of \Cref{main}, for various overlapping  ranges of $N$.}\label{cases-table}
 \end{table}
@@ -407,6 +409,7 @@ holds for all $x \geq L$; see \Cref{fig:nextsmooth}.  In \Cref{power-sec} we est
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{next_smooth.png}
+  \vspace{-8pt}
   \caption{The function $\log \frac{\lceil x \rceil^{\langle 2,3 \rangle}}{x}$, compared against $\kappa_x$. 
   }\label{fig:nextsmooth}
   \end{figure}
@@ -448,6 +451,7 @@ We use the notation $\sum^*$ to denote summation restricted to $3$-rough numbers
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{sawtooth.png}
+  \vspace{-8pt}
   \caption{The function $\sum_{k \leq x}^* 1 - \frac{x}{3}$.}\label{fig-saw}
 \end{figure}
 
@@ -514,7 +518,7 @@ We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on
 
 \section{Greedy algorithms}\label{greedy-sec}
 
-Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds $M$ on $M(N,t)$, can also produce lower bounds on $t(N)$, as follows:
+Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds $M$ on $M(N,t)$ can also produce lower bounds on $t(N)$, as follows:
 
 \begin{itemize}
 \setlength{\itemsep}{2pt}
@@ -548,7 +552,7 @@ which recovers the bound $M(9,3) \geq 9$ (and hence $t(9) \geq 3$) from \Cref{ni
 
 The greedy approach works well for small $N$, producing the exact value of $t(N)$ for $N \leq 79$, but the quality of the bounds on $t(N)$ it produces declines as $N$ grows; see \Cref{fig-zoom}.  Its performance is also respectable (though not optimal) for medium $N$; for instance, when $N=3 \times 10^5$ and $t=N/3$, it establishes the lower bound $M(N,t) \geq N+372$, which is close to the exact value $M(N,t) = N+455$ we able establish using the linear programming methods of the next section; see \eqref{mnt} and \eqref{mnt-lower}.
 
-To handle the larger values of $N$ needed to establish Theorem~\ref{main}(iii) for $N\in [ 8\times 10^4, 10^{11}]$, and also for the broader range $N\in [67245,10^{14}]$ that comfortably overlaps regions in which we may apply other methods, we now consider how to efficiently implement Steps 1 and 2 of the greedy algorithm outlined above.  Let $p_1\ge p_2\ge \ldots \ge 2$ be the prime factors of $N>1$ listed with multiplicity in non-increasing order, and let $m_ip_i\ge t$ be the factor of $N!$ chosen by the greedy algorithm for the prime $p_i$ on input $t < N/2$.  Our implementation of the greedy algorithm is based on the following observations:
+To handle the larger values of $N$ needed to establish Theorem~\ref{main}(iii) for $N\in [ 8\times 10^4, 10^{11}]$, and also for the broader range $N\in [67425,10^{14}]$ that comfortably overlaps regions in which we may apply other methods, we now consider how to efficiently implement Steps 1 and 2 of the greedy algorithm outlined above.  Let $p_1\ge p_2\ge \ldots \ge 2$ be the prime factors of $N>1$ listed with multiplicity in non-increasing order, and let $m_ip_i\ge t$ be the factor of $N!$ chosen by the greedy algorithm for the prime $p_i$ on input $t < N/2$.  Our implementation of the greedy algorithm is based on the following observations:
 
 \begin{itemize}
 \setlength{\itemsep}{6pt}
@@ -635,7 +639,7 @@ We may then take $B_1 + \lfloor \log R / \log t\rfloor$ as an upper bound on the
 
 Computing the lower and upper bounds on $t_1(N)$ involves only $O(\log N)$ calls to (the first phase of) the greedy algorithm and can be done quickly.  But the interval determined by these lower and upper bounds is typically large and appears to grow linearly with $N$.  We cannot apply a bisection search because there will typically be many $t$ in this interval for which the greedy algorithm produces more than $N$ factors that are interspersed with $t$ for which this is not the case.  Lacking a better alternative, we use an exhaustive search (which can easily be run in parallel on multiple cores) to find the largest such $t$ between our upper and lower bounds for which the greedy algorithm outputs at least $N/3$ factors, which gives us the value of $t_1(N)$.
 
-\subsection{Proving \texorpdfstring{\Cref{main}}{Theorem 1.3}(iii) for \texorpdfstring{$\boldsymbol{67425 \le N \le 10^{14}}$}{67245 <= N <= 1e14}}
+\subsection{Proving \texorpdfstring{\Cref{main}}{Theorem 1.3}(iii) for \texorpdfstring{$\boldsymbol{67425 \le N \le 10^{14}}$}{67425 <= N <= 1e14}}
 To establish \Cref{main}(iii) for $67425 \leq N \leq 10^{14}$ we may proceed as follows:
 \begin{enumerate}
 \item[Step 0:] Let $N=67425$.
@@ -651,9 +655,9 @@ It thus remains to establish \Cref{main}(iii) in the regime $43632 \leq N < 6742
   \centering
   \begin{tabular}{|c|c|c|c|c|c|}
   \hline
-  $N$ & $t(N)_-$ & Fast heuristic & Time (s) & Standard exhaustive & Time (s) \\
+\rule{0pt}{11pt}  $N$ & $t(N)_-$ & Fast heuristic & Time (s) & Standard exhaustive & Time (s) \\
   \hline
-$1 \times 10^5$ & $\num{33642}$ & $t(N)_- - \num{458}$ & 0.002 & $t(N)_- - \num{70}$ & 0.013 \\
+\rule{0pt}{12pt}$1 \times 10^5$ & $\num{33642}$ & $t(N)_- - \num{458}$ & 0.002 & $t(N)_- - \num{70}$ & 0.013 \\
 $2 \times 10^5$ & $\num{67703}$ & $t(N)_- - \num{1046}$ & 0.000 & $t(N)_- - \num{90}$ & 0.015 \\
 $3 \times 10^5$ & $\num{101903}$ & $t(N)_- - \num{1495}$ & 0.000 & $t(N)_- - \num{54}$ & 0.023 \\
 $4 \times 10^5$ & $\num{136143}$ & $t(N)_- - \num{2610}$ & 0.001 & $t(N)_- - \num{147}$ & 0.036 \\
@@ -662,7 +666,7 @@ $6 \times 10^5$ & $\num{204811}$ & $t(N)_- - \num{2878}$ & 0.001 & $t(N)_- - \nu
 $7 \times 10^5$ & $\num{239187}$ & $t(N)_- - \num{3834}$ & 0.001 & $t(N)_- - \num{279}$ & 0.061 \\
 $8 \times 10^5$ & $\num{273604}$ & $t(N)_- - \num{4216}$ & 0.001 & $t(N)_- - \num{226}$ & 0.086 \\
 $9 \times 10^5$ & $\num{308029}$ & $t(N)_- - \num{4444}$ & 0.001 & $t(N)_- - \num{226}$ & 0.172 \\\hline
-$1 \times 10^6$ & $\num{342505}$ & $t(N)_- - \num{4863}$ & 0.001 & $t(N)_- - \num{202}$ & 0.238 \\
+\rule{0pt}{12pt}$1 \times 10^6$ & $\num{342505}$ & $t(N)_- - \num{4863}$ & 0.001 & $t(N)_- - \num{202}$ & 0.238 \\
 $2 \times 10^6$ & $\num{687796}$ & $t(N)_- - \num{7850}$ & 0.002 & $t(N)_- - \num{293}$ & 0.408 \\
 $3 \times 10^6$ & $\num{1033949}$ & $t(N)_- - \num{10395}$ & 0.003 & $t(N)_- - \num{564}$ & 0.385 \\
 $4 \times 10^6$ & $\num{1380625}$ & $t(N)_- - \num{14637}$ & 0.005 & $t(N)_- - \num{705}$ & 0.550 \\
@@ -671,7 +675,7 @@ $6 \times 10^6$ & $\num{2074962}$ & $t(N)_- - \num{25872}$ & 0.006 & $t(N)_- - \
 $7 \times 10^6$ & $\num{2422486}$ & $t(N)_- - \num{31513}$ & 0.008 & $t(N)_- - \num{829}$ & 6.479 \\
 $8 \times 10^6$ & $\num{2770212}$ & $t(N)_- - \num{31401}$ & 0.008 & $t(N)_- - \num{1183}$ & 3.978 \\
 $9 \times 10^6$ & $\num{3118129}$ & $t(N)_- - \num{35468}$ & 0.007 & $t(N)_- - \num{1100}$ & 2.941 \\\hline
-$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- - \num{43529}$ & 0.010 & $t(N)_- - \num{1222}$ & 3.144 \\
+\rule{0pt}{12pt}$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- - \num{43529}$ & 0.010 & $t(N)_- - \num{1222}$ & 3.144 \\
 $2 \times 10^7$ & $\num{6952243}$ & $t(N)_- - \num{73103}$ & 0.014 & $t(N)_- - \num{2730}$ & 10.825 \\
 $3 \times 10^7$ & $\num{10444441}$ & $t(N)_- - \num{110137}$ & 0.011 & $t(N)_- - \num{1653}$ & 39.501 \\
 $4 \times 10^7$ & $\num{13940484}$ & $t(N)_- - \num{107106}$ & 0.018 & $t(N)_- - \num{1544}$ & 22.470 \\
@@ -680,7 +684,7 @@ $6 \times 10^7$ & $\num{20940210}$ & $t(N)_- - \num{263788}$ & 0.031 & $t(N)_- -
 $7 \times 10^7$ & $\num{24442818}$ & $t(N)_- - \num{286343}$ & 0.028 & $t(N)_- - \num{1047}$ & 273.384 \\
 $8 \times 10^7$ & $\num{27946958}$ & $t(N)_- - \num{255063}$ & 0.031 & $t(N)_- - \num{3833}$ & 213.208 \\
 $9 \times 10^7$ & $\num{31452431}$ & $t(N)_- - \num{335639}$ & 0.041 & $t(N)_- - \num{4121}$ & 823.168 \\\hline
-$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- - \num{342699}$ & 0.027 & $t(N)_- - \num{2785}$ & 331.221 \\
+\rule{0pt}{12pt}$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- - \num{342699}$ & 0.027 & $t(N)_- - \num{2785}$ & 331.221 \\
 $2 \times 10^8$ & $\num{70064782}$ & $t(N)_- - \num{738180}$ & 0.063 & $t(N)_- - \num{4800}$ & 4531.127 \\
 $3 \times 10^8$ & $\num{105218403}$ & $t(N)_- - \num{956003}$ & 0.068 & $t(N)_- - \num{3502}$ & 2488.738 \\
 $4 \times 10^8$ & $\num{140401212}$ & $t(N)_- - \num{1264714}$ & 0.073 & $t(N)_- - \num{6111}$ & 4852.155 \\
@@ -794,7 +798,8 @@ $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, in which case integer 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{longplot.png}
+  \includegraphics[width=0.8\textwidth]{longplot.png}
+  \vspace{-8pt}
   \caption{Exact values of $t(N)/N$ for $80 \leq N \leq 10^4$, obtained via integer programming.  The upper bound from \Cref{upper-crit} is surprisingly sharp, as is the refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$, though the cruder asymptotics $1/e$ or $1/e - c_0/\log N$ are significantly poorer approximations.}
   \label{fig-long}
   \end{figure}
@@ -820,39 +825,47 @@ M(N,t) \geq N + 455
 to \eqref{mnt} when $N = 3 \times 10^5$ and $t=N/3$.
 \end{itemize}
 
-For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+residuals method becomes slow due to the large number $\pi(N)$ of variables $w_p$ that are involved in the linear program.  We developed a \emph{smooth factorization lower bound} method\footnote{Details of this algorithm may be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo}.} to handle this range, by first using the greedy approach from the previous section to allocate all factors involving $p \geq \sqrt{N}$, and then using a version of the floor+residuals method to handle the smaller primes $p < \sqrt{N}$ (with $j$ now restricted to ``smooth'' numbers - numbers whose prime factors are less than $\sqrt{N}$).  Thus, the linear program now involves only $\pi(\sqrt{N})$ variables $w_p$, and runs considerably faster in ranges such as $10^4 < N \leq 9 \times 10^8$.  The lower bounds obtained by this method remain quite close to the linear programming upper bound \eqref{lp-upper} (or the floor+residuals method), and outperforms the greedy algorithm; see Table \ref{long-table} and \Cref{fig-longer}.
+For larger $N$ (e.g., $3 \times 10^5 \leq N \leq 9 \times 10^8$), the floor+residuals method becomes slow due to the large number $\pi(N)$ of variables $w_p$ that are involved in the linear program.  We developed a \emph{smooth factorization lower bound} method\footnote{See \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/src/mojo} for details.} to handle this range, by first using the greedy approach from the previous section to allocate all factors involving $p \geq \sqrt{N}$, and then using a version of the floor+residuals method to handle the smaller primes $p < \sqrt{N}$ (with $j$ now restricted to ``smooth'' numbers - numbers whose prime factors are less than $\sqrt{N}$).  Thus, the linear program now involves only $\pi(\sqrt{N})$ variables $w_p$, and runs considerably faster in ranges such as $10^4 < N \leq 9 \times 10^8$.  The lower bounds obtained by this method remain quite close to the linear programming upper bound \eqref{lp-upper} (or the floor+residuals method), and outperforms the greedy algorithm; see Table \ref{long-table} and \Cref{fig-longer}.
 
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{longerplot.png}
-    \caption{The linear programming upper bound and smooth factorization lower bound on $t(N)/N$ for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
+    \includegraphics[width=0.75\textwidth]{longerplot.png}
+    \vspace{-12pt}
+    \caption{\small The linear programming upper bound and smooth factorization lower bound on $t(N)/N$ for $10^3 \leq N \leq 10^5$ that are multiples of $100$. The refined asymptotic $1/e - c_0/\log N - c_1/\log^2 N$ is now a slight underestimate, hinting at further terms in the asymptotic expansion. For another view of the situation near the crossover point $N=43632$ for \Cref{main}(iii), see \Cref{fig-surplus}.}
     \label{fig-longer}
     \end{figure}
 
-
     \begin{figure}
       \centering
-      \includegraphics[width=0.5\textwidth]{surplus.png}
-      \caption{Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  In this range, at least one of the integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals (blue) methods turn out to match this bound exactly, with the smooth factorization method (orange) not far behind.}
+      \includegraphics[width=0.8\textwidth]{surplus.png}
+      \vspace{-12pt}
+      \caption{\small Bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$.  The linear programming upper bound (red) can be rounded down to the nearest integer, as per \eqref{lp-upper}.  In this range, at least one of the integer programming (green, implemented in an \emph{ad hoc} fashion) and the floor+residuals (blue) methods turn out to match this bound exactly, with the smooth factorization method (orange) not far behind.}
       \label{fig-surplus}
       \end{figure}
 
       \begin{figure}
         \centering
-        \includegraphics[width=0.5\textwidth]{surplus2.png}
-        \caption{Two weaker lower bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$ beyond those depicted in \Cref{fig-surplus}: the floor of a linear programming method (blue) without gathering residuals, and the greedy method (green), which performs erratically but usually gives worse bounds than any of the other methods in this range.}
+        \includegraphics[width=0.8\textwidth]{surplus2.png}
+        \vspace{-16pt}
+        \caption{\small Two weaker lower bounds on $M(N,N/3)-N$ for $4 \times 10^4 \leq N \leq 4.5 \times 10^4$ beyond those depicted in \Cref{fig-surplus}: the floor of a linear programming method (blue) without gathering residuals, and the greedy method (green), which performs erratically but usually gives worse bounds than any of the other methods in this range.}
         \label{fig-surplus2}
         \end{figure}
-  
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{verylarge.png}
+  \vspace{-16pt}
+  \caption{\small Lower bounds on $t(N)/N$ coming from various linear programming and greedy methods for sample values of $N$ in the range $10^4 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. }\label{fig-verylarge}
+\end{figure}
     
     \begin{table}[ht]
       \centering
       \begin{tabular}{|c|c|c|c|c|}
       \hline
-      $N$ & $t(N)_-$ & $t(N)_+$ & \Cref{upper-crit} & $\frac{N}{e}-\frac{c_0 N}{\log N} - \frac{c_1 N}{\log^2 N}$  \\
+\rule{0pt}{14pt} $N$ & $t(N)_-$ & $t(N)_+$ & \Cref{upper-crit} & $\frac{N}{e}-\frac{c_0 N}{\log N} - \frac{c_1 N}{\log^2 N}$  \\[5pt]
       \hline
-$1 \times 10^5$ & $\num{33642}$ & $t(N)_- + 4$ & $t(N)_- + 26$ & $t(N)_- - \num{69}$ \\
+\rule{0pt}{12pt}$1 \times 10^5$ & $\num{33642}$ & $t(N)_- + 4$ & $t(N)_- + 26$ & $t(N)_- - \num{69}$ \\
 $2 \times 10^5$ & $\num{67703}$ & $t(N)_- + 1$ & $t(N)_- + 36$ & $t(N)_- - \num{130}$ \\
 $3 \times 10^5$ & $\num{101903}$ & $t(N)_- + 3$ & $t(N)_- + 42$ & $t(N)_- - \num{206}$ \\
 $4 \times 10^5$ & $\num{136143}$ & $t(N)_- + 6$ & $t(N)_- + 43$ & $t(N)_- - \num{248}$ \\
@@ -862,7 +875,7 @@ $7 \times 10^5$ & $\num{239187}$ & $t(N)_- + 9$ & $t(N)_- + 54$ & $t(N)_- - \num
 $8 \times 10^5$ & $\num{273604}$ & $t(N)_- + 6$ & $t(N)_- + 64$ & $t(N)_- - \num{490}$ \\
 $9 \times 10^5$ & $\num{308029}$ & $t(N)_- + 13$ & $t(N)_- + 70$ & $t(N)_- - \num{539}$ \\
 \hline
-$1 \times 10^6$ & $\num{342505}$ & $t(N)_- + 3$ & $t(N)_- + 62$ & $t(N)_- - \num{619}$ \\
+\rule{0pt}{12pt}$1 \times 10^6$ & $\num{342505}$ & $t(N)_- + 3$ & $t(N)_- + 62$ & $t(N)_- - \num{619}$ \\
 $2 \times 10^6$ & $\num{687796}$ & $t(N)_- + 4$ & $t(N)_- + 87$ & $t(N)_- - \num{1180}$ \\
 $3 \times 10^6$ & $\num{1033949}$ & $t(N)_- + 11$ & $t(N)_- + 107$ & $t(N)_- - \num{1736}$ \\
 $4 \times 10^6$ & $\num{1380625}$ & $t(N)_- + 12$ & $t(N)_- + 122$ & $t(N)_- - \num{2286}$ \\
@@ -872,7 +885,7 @@ $7 \times 10^6$ & $\num{2422486}$ & $t(N)_- + 22$ & $t(N)_- + 165$ & $t(N)_- - \
 $8 \times 10^6$ & $\num{2770212}$ & $t(N)_- + 29$ & $t(N)_- + 177$ & $t(N)_- - \num{4316}$ \\
 $9 \times 10^6$ & $\num{3118129}$ & $t(N)_- + 24$ & $t(N)_- + 173$ & $t(N)_- - \num{4834}$ \\
 \hline
-$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- + 12$ & $t(N)_- + 179$ & $t(N)_- - \num{5392}$ \\
+\rule{0pt}{12pt}$1 \times 10^7$ & $\num{3466235}$ & $t(N)_- + 12$ & $t(N)_- + 179$ & $t(N)_- - \num{5392}$ \\
 $2 \times 10^7$ & $\num{6952243}$ & $t(N)_- + 18$ & $t(N)_- + 234$ & $t(N)_- - \num{10284}$ \\
 $3 \times 10^7$ & $\num{10444441}$ & $t(N)_- + 13$ & $t(N)_- + 253$ & $t(N)_- - \num{14975}$ \\
 $4 \times 10^7$ & $\num{13940484}$ & $t(N)_- + 64$ & $t(N)_- + 354$ & $t(N)_- - \num{19582}$ \\
@@ -882,7 +895,7 @@ $7 \times 10^7$ & $\num{24442818}$ & $t(N)_- + 37$ & $t(N)_- + 415$ & $t(N)_- - 
 $8 \times 10^7$ & $\num{27946958}$ & $t(N)_- + 43$ & $t(N)_- + 445$ & $t(N)_- - \num{37417}$ \\
 $9 \times 10^7$ & $\num{31452431}$ & $t(N)_- + 23$ & $t(N)_- + 428$ & $t(N)_- - \num{41882}$ \\
 \hline
-$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- + 48$ & $t(N)_- + 482$ & $t(N)_- - \num{46039}$ \\
+\rule{0pt}{12pt}$1 \times 10^8$ & $\num{34958725}$ & $t(N)_- + 48$ & $t(N)_- + 482$ & $t(N)_- - \num{46039}$ \\
 $2 \times 10^8$ & $\num{70064782}$ & $t(N)_- + 45$ & $t(N)_- + 644$ & $t(N)_- - \num{87837}$ \\
 $3 \times 10^8$ & $\num{105218403}$ & $t(N)_- + 41$ & $t(N)_- + 752$ & $t(N)_- - \num{128227}$ \\
 $4 \times 10^8$ & $\num{140401212}$ & $t(N)_- + 80$ & $t(N)_- + 887$ & $t(N)_- - \num{167495}$ \\
@@ -891,21 +904,15 @@ $6 \times 10^8$ & $\num{210825848}$ & $t(N)_- + 68$ & $t(N)_- + 1058$ & $t(N)_- 
 $7 \times 10^8$ & $\num{246059851}$ & $t(N)_- + 89$ & $t(N)_- + 1147$ & $t(N)_- - \num{282167}$ \\
 $8 \times 10^8$ & $\num{281305291}$ & $t(N)_- + 1440$ & $t(N)_- + 1158$ & $t(N)_- - \num{319700}$ \\
 $9 \times 10^8$ & $\num{316560601}$ & $t(N)_- + 113$ & $t(N)_- + 1238$ & $t(N)_- - \num{357029}$ \\
-      \hline
+\hline
 \end{tabular}
-\medskip
+\bigskip
 
 \caption{For sample values of $N \in [10^5, 9 \times 10^8]$, the (remarkably precise) lower and upper bounds $t(N)_- \leq t(N) \leq t(N)_+$ obtained by smooth factorization and linear programming respectively, the (slightly weaker) upper bound on $t(N)$ from \Cref{upper-crit}, and the conjectural approximation $\frac{N}{e} - \frac{c_0 N}{\log N} - \frac{c_1N}{\log^2 N}$ (rounded to the nearest integer). }\label{long-table}
 \end{table}
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{verylarge.png}
-  \caption{Lower bounds on $t(N)/N$ coming from various linear programming and greedy methods for sample values of $N$ in the range $10^4 \leq N \leq 10^{12}$, as well as upper bounds coming from linear programming and \Cref{upper-crit}.  Even if one simply takes floors from the linear program and discards residuals, the resulting lower bound is asymptotically almost indistinguishable from the upper bound. }\label{fig-verylarge}
-\end{figure}
-
-
+\FloatBarrier
 
 \section{Some upper bounds}\label{upper-sec}
 
@@ -959,6 +966,7 @@ In practice, \Cref{upper-crit} gives quite good upper bounds on $N$, especially 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{newplot_600.png}
+  \vspace{-8pt}
   \caption{An enlarged version of \Cref{fig1-alt}, displaying the lower bound from the greedy algorithm and the upper bound from \Cref{upper-crit}.  The linear programming upper bound and floor+residual bounds are exact in this region, except for $N=155$ in which the upper bound is off by one.}\label{fig-zoom}
 \end{figure}
 
@@ -1067,7 +1075,8 @@ The right-hand side is increasing in $N$ and the left-hand side is decreasing fo
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{lhs_rhs.png}
-  \caption{A plot of the left and right-hand sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
+  \vspace{-8pt}
+  \caption{A plot of the left and right sides of \eqref{base-test-ineq}, \eqref{test-ineq} for $80 \leq N < 5000$.}\label{fig2}
 \end{figure}
 
 
@@ -1231,10 +1240,11 @@ for any $r \geq 1$.  From this one can readily check that the hypotheses of \Cre
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{t2.png}
+  \vspace{-8pt}
   \caption{The function $t_2(N)/N$ was computed exactly in \cite{guy-selfridge}, and converges quickly to $3/16$.}\label{fig-t2}
 \end{figure}
 
-Unfortunately, our further applications of \Cref{rearrange-crit} and \Cref{asym-crit} are not as human-readable as this example.
+Unfortunately, our further applications of Propositions \ref{rearrange-crit} and \ref{asym-crit} are not as human-readable as this example.
 However, these two criteria are (infinite) linear programs, so they are very amenable to computer-assisted proofs.
 Furthermore, the solutions to the linear programs can be verified with relatively simple code and in exact arithmetic, thereby avoiding some potential pitfalls of computer-assisted proofs.
 
@@ -1304,6 +1314,7 @@ By a modification of the above techniques, we can now establish \Cref{main}(v) f
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{t3.png}
+  \vspace{-8pt}
   \caption{The function $t_{2,3}(N)/N$ can be readily computed by linear programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
 \end{figure}
 
@@ -1357,12 +1368,14 @@ It is possible that examining this construction in more detail would reveal some
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{t5.png}
+  \vspace{-8pt}
   \caption{The function $t_{2,3,5}(N)/N$ is asymptotically larger than $1/4$, but falls well short of $\lfloor 2N/7 \rfloor/N$, let alone $1/3$ or $1/e$.}\label{fig-t5}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{t7.png}
+  \vspace{-8pt}
   \caption{The function $t_{2,3,5,7}(N)/N$ numerically converges to a limit between $2/7$ and $1/3$.}\label{fig-t7}
 \end{figure}
 
@@ -1706,6 +1719,8 @@ and thus by \eqref{excess-3}, \eqref{delta-cond} we have
 $$ \excess_t(\tuple^{(3)}) + \sum_p \nu_p\left( \frac{N!}{\prod \tuple^{(3)}}\right) \log p \leq \log N! - N \log t.$$
 Applying \Cref{t-descrip}, we conclude that $t(N) \geq t$ as claimed.
 
+\FloatBarrier
+
 \section{Estimating terms}\label{construction-sec}
 
 In order to use \Cref{repair} for a given choice of $N,t$, we need to find a $t$-admissible multiset $\tuple^{(0)}$ and parameters $K, \kappa_*, \gamma_2, \gamma_3$ obeying \eqref{conditions} as well as good upper bounds on the quantities $\delta_i$, $i=1,\dots,8$ and $\alpha_i$, $i=1,\dots,7$, that can either be evaluated asymptotically or numerically.  Many of these terms will be straightforward to estimate; we discuss only the more difficult ones here.
@@ -1958,15 +1973,11 @@ The inequality for $K'>100$ is then easily verified from the $K' \leq 100$ data 
   
   \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{key_ineq.png}
+  \includegraphics[width=0.8\textwidth]{key_ineq.png}
+  \vspace{-8pt}
   \caption{A plot of \eqref{kb}, \eqref{kb-2}.}
   \label{fig:kb}
   \end{figure}
-
-
-
-
-
 
 
 \section{Guy--Selfridge conjecture} \label{10^{11}}
@@ -2171,23 +2182,25 @@ Some efficient choices of parameters for this lemma are given in \Cref{approx-ta
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-$n_1$ & $m_1$ & $n_2$ & $m_2$ & $\min(2^{n_1+n_2},3^{m_1+m_2})/6$ & $\log \max(3^{m_1}/2^{n_1}, 2^{n_2}/3^{m_2})$ \\
+\rule{0pt}{12pt}$n_1$ & $m_1$ & $n_2$ & $m_2$ & $\min(2^{n_1+n_2},3^{m_1+m_2})/6$ & $\log \max(3^{m_1}/2^{n_1}, 2^{n_2}/3^{m_2})$ \\[2pt]
 \hline
-$1$ & $1$ & $\mathbf{1}$ & $\mathbf{0}$ & $1/2 = 0.5$ & $\log 2 = 0.69314\dots$ \\
+\rule{0pt}{12pt}$1$ & $1$ & $\mathbf{1}$ & $\mathbf{0}$ & $1/2 = 0.5$ & $\log 2 = 0.69314\dots$ \\
 \hline
-$\mathbf{1}$ & $\mathbf{1}$ & $2$ & $1$ & $2^2/3 = 1.33\dots$ & $\log (3/2) = 0.40546\dots$\\
+\rule{0pt}{12pt}$\mathbf{1}$ & $\mathbf{1}$ & $2$ & $1$ & $2^2/3 = 1.33\dots$ & $\log (3/2) = 0.40546\dots$\\
 \hline
-$3$ & $2$ & $\mathbf{2}$ & $\mathbf{1}$ & $3^2/2 = 4.5$ & $\log (2^2/3) = 0.28768\dots$ \\
+\rule{0pt}{12pt}$3$ & $2$ & $\mathbf{2}$ & $\mathbf{1}$ & $3^2/2 = 4.5$ & $\log (2^2/3) = 0.28768\dots$ \\
 $3$ & $2$ & $\mathbf{5}$ & $\mathbf{3}$ & $3^4/2 = 40.5$ & $\log (2^5/3^3) = 0.16989\dots$ \\
 \hline
-$\mathbf{3}$ & $\mathbf{2}$ & $8$ & $5$ & $2^{10}/3 = 341.33\dots$ & $\log (3^2/2^3) = 0.11778\dots$\\ 
+\rule{0pt}{12pt}$\mathbf{3}$ & $\mathbf{2}$ & $8$ & $5$ & $2^{10}/3 = 341.33\dots$ & $\log (3^2/2^3) = 0.11778\dots$\\ 
 $\mathbf{11}$ & $\mathbf{7}$ & $8$ & $5$ & $2^{18}/3 = 87381.33\dots$ & $\log (3^7/2^{11}) = 0.06566\dots$ \\
 \hline
-$19$ & $12$ & $\mathbf{8}$ & $\mathbf{5}$ & $3^{17}/2 \approx 6.4 \times 10^7$ & $\log (2^8/3^5) = 0.05211\dots$ \\
+\rule{0pt}{12pt}$19$ & $12$ & $\mathbf{8}$ & $\mathbf{5}$ & $3^{17}/2 \approx 6.4 \times 10^7$ & $\log (2^8/3^5) = 0.05211\dots$ \\
 $19$ & $12$ & $\mathbf{27}$ & $\mathbf{17}$ & $3^{29}/2 \approx 3.4 \times 10^{13}$ & $\log (2^{27}/3^{17}) = 0.03856\dots$ \\
 $19$ & $12$ & $\mathbf{46}$ & $\mathbf{29}$ & $3^{41}/2 \approx 1.8 \times 10^{19} $ & $\log (2^{46}/3^{29}) = 0.02501\dots$ \\
 \hline
 \end{tabular}
+\bigskip
+
 \caption{Efficient parameter choices for \Cref{lemcount-0}.  The parameters used to attain the minimum or maximum are indicated in \textbf{boldface}. Note how the number of rows in each group matches the terms $1,1,2,2,3,\dots$ in the continued fraction expansion.}\label{approx-table}
 \end{table}
 
@@ -2229,7 +2242,6 @@ The claim then follows from \eqref{bj1}, \eqref{bj2} (and the obvious fact that 
 \begin{remark}
 It seems reasonable to conjecture that $c$ can be taken to be arbitrarily close to $1$, but this is essentially equivalent to the open problem of determining that the irrationality measure of $\log 3 / \log 2$ is equal to $2$.
 \end{remark}
-
 
 
 \section{Estimating sums over primes}\label{primes-sec}

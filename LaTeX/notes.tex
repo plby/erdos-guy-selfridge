@@ -518,7 +518,7 @@ We remark that the accuracy in \eqref{bv-exact}, \eqref{pix} in particular is on
 
 \section{Greedy algorithms}\label{greedy-sec}
 
-Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds $M$ on $M(N,t)$, can also produce lower bounds on $t(N)$, as follows:
+Recall that $t(N)$ can be interpreted as the largest $t$ for which one has $M(N,t) \geq N$. Because of this, any algorithm that can produce lower bounds $M$ on $M(N,t)$ can also produce lower bounds on $t(N)$, as follows:
 
 \begin{itemize}
 \setlength{\itemsep}{2pt}
@@ -552,7 +552,7 @@ which recovers the bound $M(9,3) \geq 9$ (and hence $t(9) \geq 3$) from \Cref{ni
 
 The greedy approach works well for small $N$, producing the exact value of $t(N)$ for $N \leq 79$, but the quality of the bounds on $t(N)$ it produces declines as $N$ grows; see \Cref{fig-zoom}.  Its performance is also respectable (though not optimal) for medium $N$; for instance, when $N=3 \times 10^5$ and $t=N/3$, it establishes the lower bound $M(N,t) \geq N+372$, which is close to the exact value $M(N,t) = N+455$ we able establish using the linear programming methods of the next section; see \eqref{mnt} and \eqref{mnt-lower}.
 
-To handle the larger values of $N$ needed to establish Theorem~\ref{main}(iii) for $N\in [ 8\times 10^4, 10^{11}]$, and also for the broader range $N\in [67245,10^{14}]$ that comfortably overlaps regions in which we may apply other methods, we now consider how to efficiently implement Steps 1 and 2 of the greedy algorithm outlined above.  Let $p_1\ge p_2\ge \ldots \ge 2$ be the prime factors of $N>1$ listed with multiplicity in non-increasing order, and let $m_ip_i\ge t$ be the factor of $N!$ chosen by the greedy algorithm for the prime $p_i$ on input $t < N/2$.  Our implementation of the greedy algorithm is based on the following observations:
+To handle the larger values of $N$ needed to establish Theorem~\ref{main}(iii) for $N\in [ 8\times 10^4, 10^{11}]$, and also for the broader range $N\in [67425,10^{14}]$ that comfortably overlaps regions in which we may apply other methods, we now consider how to efficiently implement Steps 1 and 2 of the greedy algorithm outlined above.  Let $p_1\ge p_2\ge \ldots \ge 2$ be the prime factors of $N>1$ listed with multiplicity in non-increasing order, and let $m_ip_i\ge t$ be the factor of $N!$ chosen by the greedy algorithm for the prime $p_i$ on input $t < N/2$.  Our implementation of the greedy algorithm is based on the following observations:
 
 \begin{itemize}
 \setlength{\itemsep}{6pt}
@@ -639,7 +639,7 @@ We may then take $B_1 + \lfloor \log R / \log t\rfloor$ as an upper bound on the
 
 Computing the lower and upper bounds on $t_1(N)$ involves only $O(\log N)$ calls to (the first phase of) the greedy algorithm and can be done quickly.  But the interval determined by these lower and upper bounds is typically large and appears to grow linearly with $N$.  We cannot apply a bisection search because there will typically be many $t$ in this interval for which the greedy algorithm produces more than $N$ factors that are interspersed with $t$ for which this is not the case.  Lacking a better alternative, we use an exhaustive search (which can easily be run in parallel on multiple cores) to find the largest such $t$ between our upper and lower bounds for which the greedy algorithm outputs at least $N/3$ factors, which gives us the value of $t_1(N)$.
 
-\subsection{Proving \texorpdfstring{\Cref{main}}{Theorem 1.3}(iii) for \texorpdfstring{$\boldsymbol{67425 \le N \le 10^{14}}$}{67245 <= N <= 1e14}}
+\subsection{Proving \texorpdfstring{\Cref{main}}{Theorem 1.3}(iii) for \texorpdfstring{$\boldsymbol{67425 \le N \le 10^{14}}$}{67425 <= N <= 1e14}}
 To establish \Cref{main}(iii) for $67425 \leq N \leq 10^{14}$ we may proceed as follows:
 \begin{enumerate}
 \item[Step 0:] Let $N=67425$.

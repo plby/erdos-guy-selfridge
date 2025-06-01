@@ -647,7 +647,7 @@ To establish \Cref{main}(iii) for $67425 \leq N \leq 10^{14}$ we may proceed as 
 \item[Step 1:] While $N\le 10^6$, compute $t_1(N)$ via (b) above using the standard greedy algorithm, verify that $t_1(N) > \lceil N/3\rceil$, and replace $N$ by $3t_1(N)$.
 \item[Step 2:] While $N\le 10^{14}$, compute $t\in [t_0(N),t_1(N)]$ via (a) above using the fast variant of the greedy algorithm, verify that $t_1(N) > \lceil N/3\rceil$, and replace $N$ by $3t_1(N)$.
 \end{enumerate}
-The GitHub repository \cite{github} associated to this paper contains lists of the pairs $(N,t)$ that arise from the procedure above, 223 pairs for Step~1 and 336 pairs for Step~2, which can be used to quickly verify its success by invoking the greedy algorithm for each pair arising in Step~1 and the fast variant of the greedy algorithm for each pair arising in Step~2, and verifying in each case that a subfactorization of $N!$ with at least $N/3$ factors is produced.  The script \texttt{/src/fastegs/verifyhints.sh} in the GitHub repository \cite{github} performs this verification, which takes much less time (under a minute) than it does to run the procedure above.
+The GitHub repository \cite{github} associated to this paper contains lists of the pairs $(N,t)$ that arise from the procedure above, 223 pairs for Step~1 and 336 pairs for Step~2, which can be used to quickly verify its success by invoking the greedy algorithm for each pair from Step~1, and the fast variant of the greedy algorithm for each pair from Step~2, and verifying in each case that a subfactorization of $N!$ with at least $N/3$ factors is produced.  The script \url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/fastegs/verifyhints.sh} performs this verification, which takes much less time (under a minute) than it does to run the procedure above.
 
 It thus remains to establish \Cref{main}(iii) in the regime $43632 \leq N < 67425$ and $N > 10^{14}$, and to show that $t(N)<N/3$ for $N=43631$.
 
@@ -801,7 +801,7 @@ The linear programming upper bound is sufficiently tight to establish that $t(N)
 The dual certificate for this computation\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/verification/prove43631.py}} was verified in exact arithmetic.
 The exact bound obtained is $M(43631,14544) \le 43631 - \frac{47}{1257}$.
 
-\begin{figure}[hbp!]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.8\textwidth]{longplot.png}
   \vspace{-8pt}

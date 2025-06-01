@@ -797,6 +797,10 @@ and hence by \eqref{lp-upper}
 for this choice of $N,t$.  In fact, as discussed later in this section, we know that equality holds in this particular case.  For $N \leq 10^4$, we found that the linear programming upper bound on $t(N)$ is tight except for
 $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, in which case integer programming was needed to precisely compute $t(N)$.  The values of $t(N)$ thus computed are  plotted in \Cref{fig-long}.
 
+The linear programming upper bound is sufficiently tight to establish that $t(N)<N/3$ for $N=43631$, which proves that the threshold $43632$ of \Cref{main}(iii) is best possible.
+The dual certificate for this computation\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/python/verification/prove43631.py}} was verified in exact arithmetic.
+The exact bound obtained is $M(43631,14544) \le 43631 - \frac{47}{1257}$.
+
 \begin{figure}[hbp!]
   \centering
   \includegraphics[width=0.8\textwidth]{longplot.png}
@@ -807,7 +811,7 @@ $N=155,765,1528,1618,1619,2574,2935,3265,5122,5680,9633$, in which case integer 
 
 
 With integer programming, we could also establish\footnote{Explicit factorizations in this range can be found at \url{https://github.com/teorth/erdos-guy-selfridge/tree/main/Data/factorizations}.} $t(N) \geq N/3$ for all $43632 \leq N \leq 8 \times 10^4$. 
-  In particular, when combined with the greedy algorithm computations from the previous section, this resolves \Cref{main}(ii), (iii) except in the asymptotic range $N > 10^{14}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
+  In particular, when combined with the greedy algorithm computations from the previous section, this resolves \Cref{main}(iii) except in the asymptotic range $N > 10^{14}$, where it suffices to establish the lower bound $t(N) \geq N/3$.
 
 
 For $N \geq 10^4$, the integer programming method to lower bound $M(N,t)$ becomes slow.  We found two faster methods to give slightly weaker lower bounds on this quantity, which we call the ``floor+residuals'' method, and the ``smooth factorization'' method.

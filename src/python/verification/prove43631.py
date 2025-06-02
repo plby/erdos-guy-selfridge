@@ -6,11 +6,11 @@ from sympy import factorint, primerange
 # Terence Tao:
 # https://terrytao.wordpress.com/2025/03/26/decomposing-a-factorial-into-large-factors/#comment-687665
 
-# This program proves that t(N) >= T using a certificate obtained from
+# This program proves that t(N) < T using a certificate obtained from
 # linear programming.  It uses exact arithmetic.
 N = 43631
 T = int(math.ceil(N/3))
-print(f"This program attempts to prove t({N}) >= {T}.")
+print(f"This program attempts to prove t({N}) < {T}.")
 
 # We will use the following bounds.  Note that they are made slightly
 # less redundant by avoiding repetition.  For example, a_p will be 1

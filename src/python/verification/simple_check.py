@@ -29,17 +29,19 @@
 import gzip
 import sys
 
-if len(sys.argv) != 2:
-    print(f"Usage: {sys.argv[0]} filename")
+if len(sys.argv) == 1:
+    f = sys.stdin
+elif len(sys.argv) == 2:
+    filename = sys.argv[1]
+    if filename.lower().endswith(".gz"):
+        f = gzip.open(filename, "rt")
+    else:
+        f = open(filename, "r")
+else:
+    print(f"Usage: {sys.argv[0]} [filename]")
     sys.exit(1)
 
-filename = sys.argv[1]
-if filename.lower().endswith(".gz"):
-    with gzip.open(filename, "rt") as f:
-        integers = [int(x) for x in f.read().split()]
-else:
-    with open(filename, "r") as f:
-        integers = [int(x) for x in f.read().split()]
+integers = [int(x) for x in f.read().split()]
 
 N, F, M, *factors = integers
 

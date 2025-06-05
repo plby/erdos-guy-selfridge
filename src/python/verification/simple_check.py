@@ -3,6 +3,9 @@
 # This program checks that a file containing a putative factorization
 # of N! into F factors, each of which is at least M, is correct.
 
+# If no file is provided, it reads from standard input.  If the flag
+# "-s" is given, then it checks a subfactorization.
+
 # If the factorization is correct, the program simply prints "N F M".
 
 # The program is designed to be very simple to read so that it's very
@@ -29,6 +32,11 @@
 import gzip
 import sys
 
+subfactorization = False
+if len(sys.argv) >= 2 and sys.argv[1] == "-s":
+    subfactorization = True
+    del sys.argv[1]
+
 if len(sys.argv) == 1:
     f = sys.stdin
 elif len(sys.argv) == 2:
@@ -38,23 +46,22 @@ elif len(sys.argv) == 2:
     else:
         f = open(filename, "r")
 else:
-    print(f"Usage: {sys.argv[0]} [filename]")
+    print(f"Usage: {sys.argv[0]} [-s] [filename]")
     sys.exit(1)
 
 integers = [int(x) for x in f.read().split()]
 
 N, F, M, *factors = integers
 
-# Check that there are exactly F factors
-if len(factors) != F:
-    print(f"Expected {F} factors, but received {len(factors)} factors instead.")
-    sys.exit(10)
+# Check that there are exactly F factors, or >= F factors for a subfactorization
+if subfactorization:
+    assert len(factors) >= F, f"Expected >={F} factors, but received {len(factors)} factors instead."
+else:
+    assert len(factors) == F, f"Expected exacty {F} factors, but received {len(factors)} factors instead."
 
 # Check that each factor is at least M
 for factor in factors:
-    if not(factor >= M):
-        print(f"Expected each factor to be at least {M}, but received a factor {factor} instead.")
-        sys.exit(20)
+    assert factor >= M, f"Expected each factor to be at least {M}, but received a factor {factor} instead."
 
 # Check that the product of the factors is N!
 N_factorial = 1
@@ -65,10 +72,11 @@ putative_factorization = 1
 for factor in factors:
     putative_factorization *= factor
 
-if N_factorial != putative_factorization:
+if subfactorization:
+    assert (N_factorial % putative_factorization) == 0, f"Expected a (sub)factorization of {N}!, but received something else instead."
+else:
+    assert N_factorial == putative_factorization, f"Expected a factorization of {N}!, but received something else instead."
     # We don't print the numbers in our error message because they might be very big.
-    print(f"Expected a factorization of {N}!, but received something else instead.")
-    sys.exit(30)
         
 # Looks correct!
 print(N,F,M)

@@ -24,8 +24,8 @@ int main( ) {
 			factors.pop();
 			factors.push(2*f);
 		}
-		int t = factors.top();
-		std::cout << N << " " << t << std::endl;
+		int T = factors.top();
+		std::cout << 2 << " " << N << " " << T << std::endl;
 	}
 	
 	return 0;

@@ -1,6 +1,6 @@
 # Rearrangement-related utilities
 
-This directory contains three programs related to Section
+This directory contains five programs related to Section
 "6. Rearranging the standard factorization":
 
 * `rearrange_2.cc` computes $t_2(N)$ very efficiently.  In particular,
@@ -27,6 +27,15 @@ real	0m1.805s
 user	0m1.329s
 sys	0m2.059s
 ```
+
+* `rearrange_2_gs.cc` also computes $t_2(N)$ very efficiently, but
+  this time using the explicit formula given by Guy & Selfridge in
+  their paper "Factorial Factorial n".  The output of this program
+  agrees with the previous one for all $N \le 10^6$.
+
+* `rearrange_2_gs.py` is a Python implementation of this same explicit
+  formula given by Guy & Selfridge.  The output of this program agrees
+  with the previous two for all $N \le 10^6$.
 
 * `rearrange_3.cc` helps compute $t_{2,3}(N)$ using dynamic
   programming.  (The program `rearrange_lp.py` below is more general;

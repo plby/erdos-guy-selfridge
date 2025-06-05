@@ -1,6 +1,6 @@
 # Rearrangement-related utilities
 
-This directory contains five programs related to Section
+This directory contains six programs related to Section
 "6. Rearranging the standard factorization":
 
 * `rearrange_2.cc` computes $t_2(N)$ very efficiently.  In particular,
@@ -104,4 +104,18 @@ This problem is infeasible
 real	0m0.574s
 user	0m0.518s
 sys	0m0.074s
+```
+
+* `rearrange_lp_sol.py` helps verify the lower bound produced by the
+  `lp_solve` output of a program produced by the previous program.  It
+  checks some of the smoothness conditions, but otherwise outputs a
+  file that can be checked by `simple_check.py`.  For example:
+
+```
+erdos-guy-selfridge$ time python3 src/rearrange/rearrange_lp.py --ilp 7 50000 14530 | lp_solve | python3 src/rearrange/rearrange_lp_sol.py 7 50000 14530 | python3 src/python/verification/simple_check.py
+50000 50000 14530
+
+real	0m8.050s
+user	0m5.187s
+sys	0m0.125s
 ```

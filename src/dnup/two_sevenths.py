@@ -17,7 +17,7 @@ def valuation(N: int, P: int) -> int:
     return result
 
 # We hope to prove that everything works if N >= N0 here:
-N0 = 9*10**6
+N0 = 8200000
 
 # This is the asymptotic fraction we are targeting.
 alpha = Fraction(2,7)

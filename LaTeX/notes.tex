@@ -311,7 +311,7 @@ As one might expect, the proof of \Cref{main} proceeds by a combination of both 
  & $80<{}$ &$N$ & & \Cref{upper-crit} \\
 \hline
 \rule{0pt}{12pt}(ii) & & $N$ & ${}\leq 1.2\times 10^7$ & Integer programming \\
- & $8\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
+ & $8.2\times 10^6 \leq{}$ & $N$ & & Rearrangement \\
 \hline
 \rule{0pt}{12pt}(iii) & & $N$ & ${}\leq 8 \times 10^4$ & Integer programming \\
  & $\num{67425} \leq{}$ & $N$ & ${}\leq 10^{14}$ & Greedy  \\
@@ -1311,7 +1311,7 @@ and
 $$ \sum_{d \in {\mathcal D}} \frac{\# (A_{d,{\mathcal D}} \cap [1,\min(N/d, \alpha N/\ell)])}{N} = \sum_{d \in {\mathcal D}} \left(\sigma_{d,{\mathcal D}} \min\left( \frac{1}{d}, \frac{\alpha}{\ell}\right) + O_{\le}\left(\frac{53}{35N}\right)\right) .$$
 
 Combining all of these error estimates, we can now programmatically compute the terms of \eqref{i-eq-1} and \eqref{l-eq-1} and verify that the inequalities hold for a particular~$N$, even if all terms $O_{\le}(C/N)$ are as extreme as possible.
-We performed this verification\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/two_sevenths.py}} (in exact arithmetic as with all other proofs in this section), for $N=8\times 10^6$, which is better than the results of our small $N$ computation above required, so we are done.
+We performed this verification\footnote{\url{https://github.com/teorth/erdos-guy-selfridge/blob/main/src/dnup/two_sevenths.py}} (in exact arithmetic as with all other proofs in this section), for $N=8.2\times 10^6$, which is better than the results of our small $N$ computation above required, so we are done.
 \end{proof}
 
 By a modification of the above techniques, we can now establish \Cref{main}(v) for large $N$.  Let $t_{2,3}(N)$ denote the largest $t$ for which it is possible to create a $t$-admissible factorization (or subfactorization) of $N!$ purely by rearranging powers of $2$ and $3$ in the standard factorization $\{1,\dots,N\}$.  For instance, the lower bounds produced above on $t(N)$ in fact will bound the smaller quantity $t_{2,3}(N)$ as long as ${\mathcal D}$ consists solely of $3$-smooth numbers. On the other hand, there is a limit to this method (see also \Cref{fig-t3}):

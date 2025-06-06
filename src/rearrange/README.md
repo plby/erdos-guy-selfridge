@@ -108,14 +108,22 @@ sys	0m0.074s
 
 * `rearrange_lp_sol.py` helps verify the lower bound produced by the
   `lp_solve` output of a program produced by the previous program.  It
-  checks some of the smoothness conditions, but otherwise outputs a
-  file that can be checked by `simple_check.py`.  For example:
+  checks all of the rearrangement conditions, so if it succeeds, the
+  input is verified.  Optionally, it is also possible to output a file
+  that can be checked by `simple_check.py`.  For example:
 
 ```
-erdos-guy-selfridge$ time python3 src/rearrange/rearrange_lp.py --ilp 7 50000 14530 | lp_solve | python3 src/rearrange/rearrange_lp_sol.py 7 50000 14530 | python3 src/python/verification/simple_check.py
+erdos-guy-selfridge$ time python3 src/rearrange/rearrange_lp.py --ilp 7 50000 14530 | lp_solve | python3 src/rearrange/rearrange_lp_sol.py 7 50000 14530
+7 50000 14530
+
+real	0m2.736s
+user	0m2.001s
+sys	0m0.099s
+
+erdos-guy-selfridge$ time python3 src/rearrange/rearrange_lp.py --ilp 7 50000 14530 | lp_solve | python3 src/rearrange/rearrange_lp_sol.py --simple_check 7 50000 14530 | python3 src/python/verification/simple_check.py
 50000 50000 14530
 
-real	0m8.050s
-user	0m5.187s
-sys	0m0.125s
+real	0m6.608s
+user	0m5.149s
+sys	0m0.117s
 ```

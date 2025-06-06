@@ -2,8 +2,9 @@ import math
 from sympy import primerange
 import sys
 
-def main(P: int, N: int, T: int):
+def main(P: int, N: int, T: int, simple_check: bool = False):
     primes = list(primerange(2, P+1))
+    budget = {p: 0 for p in primes}
 
     divided_factors = []
     for i in range(1, N+1):
@@ -12,6 +13,7 @@ def main(P: int, N: int, T: int):
         for p in primes:
             while (t % p) == 0:
                 t //= p
+                budget[p] += 1
         divided_factors.append(t)
 
     divided_factors.sort()
@@ -30,22 +32,32 @@ def main(P: int, N: int, T: int):
     multiply_factors = []
     for line in sys.stdin:
         variable, value = line.split()
-        value = int(value)
         assert variable.startswith("a")
         n = int(variable[1:])
+        value = int(value)
         t = n
         for p in primes:
             while (t % p) == 0:
                 t //= p
+                budget[p] -= value
         assert t == 1, f"Variable {variable} which corresponds to n={n} was not {P}-smooth!"
         for i in range(value):
             multiply_factors.append(n)
 
+    # Check prime budgets
+    for p in primes:
+        assert budget[p] >= 0, "Prime budget exhausted for prime {p}."
+
     assert len(divided_factors) == len(multiply_factors), f"Unexpected number of factors."
     factors = [divided_factor * multiply_factor for divided_factor, multiply_factor in zip(divided_factors, multiply_factors)]
-    print(N, N, T)
     for factor in factors:
-        print(factor)
+        assert factor >= T, f"The resulting factor {factor} should have been at least {T}."
+    if simple_check:
+        print(N, N, T)
+        for factor in factors:
+            print(factor)
+    else:
+        print(P, N, T)
 
 if __name__ == '__main__':
     import argparse
@@ -56,6 +68,7 @@ if __name__ == '__main__':
     parser.add_argument('P', type=int)
     parser.add_argument('N', type=int)
     parser.add_argument('T', type=int, nargs='?', default=0)
+    parser.add_argument('--simple_check', action='store_true', help='Output file for simple_check.py to check.')
 
     args = parser.parse_args()
 
@@ -63,4 +76,4 @@ if __name__ == '__main__':
     N = args.N
     T = args.T or math.ceil(N/4)
 
-    main(P, N, T)
+    main(P, N, T, args.simple_check)

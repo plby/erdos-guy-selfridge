@@ -586,10 +586,11 @@ int64_t tfac (int64_t N, int64_t t, int fast, int feasible, int verbosity, int v
 }
 
 
-// returns a value of t >= N/3 that yields a good lower bound on t(N), or 0 if no such t can be found
-int64_t tbound (int64_t N, int fast, int exhaustive, int verbosity, int verify)
+// returns a value of t >= aN/b that yields a good lower bound on t(N), or 0 if no such t can be found
+int64_t tbound (int64_t N, int a, int b, int fast, int exhaustive, int verbosity, int verify)
 {
-    int64_t t = cdiv(N,3);
+    assert (a*5 <= 2*b && a*4 >= b);
+    int64_t t = cdiv(a*N,b);
     int64_t cnt = tfac(N,t,fast,0,verbosity,verify,0);
     while ( cnt < N ) cnt = tfac(N,--t,fast,0,verbosity,verify,0);
     int64_t tmin = t, tmax = (2*N)/5;
@@ -645,7 +646,7 @@ int64_t tbound (int64_t N, int fast, int exhaustive, int verbosity, int verify)
 static void usage (void)
 {
     fprintf(stderr,
-        "Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t]\n"
+        "Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t or t/N ratio]\n"
         "       -v level      integer verbosity level -1 to 4 (optional, default is 0)\n"
         "       -h filename   hint-file with records N:t (required if range of N is specified)\n"
         "       -d filename   output-file to dump factorization to (one factor per line, only valid if t is specified)\n"
@@ -655,7 +656,8 @@ static void usage (void)
         "       -f            use fast version of greedy algorithm\n"
         "       -m            exponent for primecount/primesieve cutuff, must lie in [1/6,1/3]\n"
         "       N-range       integer N or range of integers minN-maxN (required, scientific notation supported)\n"
-        "       t             integer t to use for single N (optional, a good t will be determined if unspecified)\n");
+        "       t             integer t to use for single N (optional, a good t will be determined if unspecified)\n"
+        "       t/N ratio     a/b with integers a,b>0 specifying t = ceil(aN/b), set to 1/3 if unspecified\n");
 
 }
 
@@ -666,10 +668,11 @@ int main (int argc, char *argv[])
     int verbosity=0, exhaustive=0, create=0, fast=0, verify=0;
     char *hintfile = 0, *dumpfile = 0;
     int64_t minN=0, maxN=0, t=0;
+    int a=1, b=3;
 
     for ( int i = 1 ; i < argc ; i++ ) {
         char *s = argv[i];
-        if ( maxN > minN || t ) { fprintf(stderr, "ignoring extraneous argument %s\n",s); continue; }
+        if ( maxN > minN && t ) { fprintf(stderr, "ignoring extraneous argument %s\n",s); continue; }
         if ( *s == '-' ) {
             switch(*(s+1)) {
             case 'v': { if ( i+1 >= argc) { usage(); return -1; } verbosity = atoi(argv[i+1]); i++; break; }
@@ -698,7 +701,14 @@ int main (int argc, char *argv[])
                     maxN = minN;
                 }
             } else {
-                t = strtold(s,0);
+                char *x;
+                if ( (x=strchr(s,'/')) ) {
+                    a = atoi(s); b = atoi(x+1);
+                    assert (a > 0 && b > 0 && 4*a >= b && 5*a <= 2*b);
+                } else {
+                    if ( maxN > minN && t ) { fprintf(stderr, "For a range of N you need to specify the t/N ratio (e.g. 1/3) not a fixed value of t\n"); return -1; }
+                    t = strtold(s,0);
+                }
             }
         }
     }
@@ -720,6 +730,9 @@ int main (int argc, char *argv[])
     setup(maxp,maxm);
     if ( verbosity > 0 ) fprintf(stderr,"Computed %d-smooth factorizations of m <= %d using %.3fMB of memory (%.3fs)\n", MAXP,MAXM,4.0*(MAXM+(Fend-F))/(1<<20),get_time()-start);
 
+    char rbuf[32];
+    if ( a == 1 ) sprintf(rbuf,"N/%d",b); else sprintf(rbuf,"%dN/%d",a,b);
+
     start = get_time();
     if ( maxN > minN ) {
         if ( create || !hintfile) {
@@ -729,15 +742,17 @@ int main (int argc, char *argv[])
             if ( hintfile && !fp ) { fprintf(stderr, "Error creating hint-file %s\n", hintfile); return -1; }
             int64_t N = minN;
             while ( N <= maxN ) {
-                t = tbound(N,fast,exhaustive,verbosity,verify);
-                if ( 3*t < N ) break;
-                if ( verbosity >= 0 ) fprintf (stderr,"t(%ld) >= %ld (t-N/3 >= %ld) (%.3fs)\n", N, t, t-cdiv(N,3), get_time()-start);
+                t = tbound(N,a,b,fast,exhaustive,verbosity,verify);
+                if ( b*t < a*N ) break;
+                if ( verbosity >= 0 ) fprintf (stderr,"t(%ld) >= %ld (t-%s >= %ld) (%.3fs)\n", N, t, rbuf, t-cdiv(a*N,b), get_time()-start);
                 if ( fp ) fprintf(fp,"%ld:%ld\n",N,t);
-                N = 3*t+1;
+                N = b*t/a+1;
             }
-            if ( N > maxN ) fprintf (stderr,"Verified the Erdős-Guy-Selfridge conjecture for N in [%ld,%ld] (%.3fs)\n",minN,maxN,get_time()-start);
-            else if ( N == minN ) fprintf (stderr,"Unable to verify Erdős-Guy-Selfridge conjecture for N=%ld (%.3fs)\n",minN,get_time()-start);
-            else fprintf (stderr,"Only able to verify the Erdős-Guy-Selfridge conjecture for N in [%ld,%ld] (%.3fs)\n",minN,N-1,get_time()-start);
+            if ( N > maxN ) {
+                fprintf (stderr,"Verified the %s Erdős-Guy-Selfridge conjecture for all N in [%ld,%ld] (%.3fs)\n",rbuf,minN,maxN,get_time()-start);
+            }
+            else if ( N == minN ) fprintf (stderr,"Unable to verify the %s Erdős-Guy-Selfridge conjecture for N=%ld in (%.3fs)\n",rbuf,minN,get_time()-start);
+            else fprintf (stderr,"Only able to verify the %s Erdős-Guy-Selfridge conjecture for N in [%ld,%ld] (%.3fs)\n",rbuf,minN,N-1,get_time()-start);
         } else {
             FILE *fp = fopen(hintfile,"r"); if (!fp) { fprintf(stderr, "Error opening hint-file %s\n", hintfile); return -1; }
             char buf[256];
@@ -746,30 +761,30 @@ int main (int argc, char *argv[])
                 int64_t N = atol(buf);
                 char *s = strchr(buf,':'); if (!s) { fprintf(stderr, "Error parsing line %s\n", buf); return -1; }
                 t = atol(s+1);
-                if ( 3*t < N ) { fprintf(stderr, "Invalid N:t in hint file: 3*%ld < %ld\n", t, N); return -1; }
+                if ( b*t < a*N ) { fprintf(stderr, "Invalid N:t in hint file: %d*%ld < %d*%ld\n", b, t, a, N); return -1; }
                 double timer = get_time();
                 if ( tfac(N,t,fast,0,verbosity,verify,0) < N ) { fprintf (stderr, "Failed to verify t(%ld) >= %ld !\n", N,t); return -1; }
                 if (!minV) {
                     if ( N > minN ) { fprintf(stderr, "Hint file starting N=%ld above range minimum %ld\n", N, minN); return -1; }
                     minV = N;
-                    maxV = 3*t;
+                    maxV = b*t/a;
                 } else {
                     if ( N > maxV+1 ) { fprintf(stderr, "Hint file starting N=%ld leaves a gap!\n", N); return -1; }
-                    if ( 3*t <= maxV ) { fprintf (stderr, "Hint at N=%ld did not extend verified range!\n", N); return -1; }
-                    maxV = 3*t;
+                    if ( b*t <= a*maxV ) { fprintf (stderr, "Hint at N=%ld did not extend verified range!\n", N); return -1; }
+                    maxV = b*t/a;
                 }
                 if ( verbosity >= 0 ) printf ("t(%ld) >= %ld (%.3fs)\n", N, t, get_time()-timer);
                 if ( maxV >= maxN ) break;
             }
             if ( minV > minN || maxV < maxN ) { fprintf (stderr, "Hint file only allowed verification [%ld,%ld]\n", minV,maxV); return -1; }
-            fprintf (stderr,"Verified the Erdős-Guy-Selfridg conjecture for N in [%ld,%ld] (%.3fs)\n",minN,maxN,get_time()-start);
+            fprintf (stderr,"Verified the %s Erdős-Guy-Selfridg conjecture for N in [%ld,%ld] (%.3fs)\n",rbuf,minN,maxN,get_time()-start);
         }
     } else {
         int64_t N = minN;
         if ( t && exhaustive ) { t=0; fprintf(stderr,"Ignoring specified value of t and searching for optimal value\n"); }
         if ( !t ) {
-            t = tbound(N,fast,exhaustive,verbosity,verify);
-            if ( t ) printf("t(%ld) >= %ld (%s %s) with (t-ceil(N/3)) = %ld (%.3fs)\n", N, t, exhaustive ? "exhaustive" : "heuristic", fast ? "fast" : "greedy",(t-cdiv(N,3)),get_time()-start);
+            t = tbound(N,a,b,fast,exhaustive,verbosity,verify);
+            if ( t ) printf("t(%ld) >= %ld (%s %s) with t-%s = %ld (%.3fs)\n", N, t, exhaustive ? "exhaustive" : "heuristic", fast ? "fast" : "greedy",rbuf,t-cdiv(a*N,b),get_time()-start);
             else fprintf(stderr,"failed to prove t(%ld) >= %ld (%.3fs)\n", N, cdiv(N,3), get_time()-start);
         } else {
             int64_t cnt = tfac(N,t,fast,0,verbosity,verify,dumpfile);

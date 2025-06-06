@@ -50,7 +50,7 @@ The following files contain bounds on $$t(N)$$ produced as above:
 To see all the command line options that are supported, run `egs` without specifying any arguments:
 ```
 $ ./egs
-Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t]
+Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t or t/N ratio]
        -v level      integer verbosity level -1 to 4 (optional, default is 0)
        -h filename   hint-file with records N:t (required if range of N is specified)
        -d filename   output-file to dump factorization to (one factor per line, only valid if t is specified)
@@ -61,4 +61,5 @@ Usage: egs [-v level] [-h filename] [-d filename] [-r] [-c] [-e] [-f] N-range [t
        -m            exponent for primecount/primesieve cutuff, must lie in [1/6,1/3]
        N-range       integer N or range of integers minN-maxN (required, scientific notation supported)
        t             integer t to use for single N (optional, a good t will be determined if unspecified)
+       t/N ratio     a/b with integers a,b>0 specifying t = ceil(aN/b) (optional, set to 1/3 if unspecified)
 ```

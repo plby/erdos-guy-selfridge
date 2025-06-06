@@ -18,7 +18,7 @@ file using `python3`.
 
 * `two_sevenths.py` proves that $t_{2,3,5,7}(N) \ge 2N/7$ for
   sufficiently large $N$.  The asymptotic and effective bounds are
-  checked separately; the effective bound verified is $N \ge 9000000$.
+  checked separately; the effective bound verified is $N \ge 8200000$.
 
 The programs produce the following output:
 
@@ -56,10 +56,10 @@ Asymptotic conditions (6.8) and (6.9) verified:
 t(N) >= alpha N for alpha=2/7 and sufficiently large N.
 
 Conditions (6.2) and (6.3) verified for the modified sequence:
-t(N) >= alpha N for alpha=2/7 and N >= 9000000.
+t(N) >= alpha N for alpha=2/7 and N >= 8200000.
 
 
-real	0m0.065s
-user	0m0.062s
-sys	0m0.000s
+real	0m0.199s
+user	0m0.089s
+sys	0m0.012s
 ```

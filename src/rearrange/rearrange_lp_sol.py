@@ -43,6 +43,7 @@ def main(P: int, N: int, T: int, simple_check: bool = False):
         assert t == 1, f"Variable {variable} which corresponds to n={n} was not {P}-smooth!"
         for i in range(value):
             multiply_factors.append(n)
+    multiply_factors.sort(reverse=True)
 
     # Check prime budgets
     for p in primes:

@@ -334,7 +334,32 @@ The final approach is significantly more complicated than the other four, but gi
 $$ N! \approx \left(\prod_{j \in I} j\right)^A$$
 for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloor$) and a suitable set $I$ of natural numbers greater than or equal to $t$; there is some freedom to select parameters here, and we will take $I$ to be the natural numbers in $(t, t(1+\sigma)]$ that are $3$-rough (coprime to $6$), where $t$ is the target lower bound for $t(N)$ we wish to establish, and $\sigma \coloneqq \frac{3N}{tA}$ is chosen to bring the number of terms in the approximate factorization close to $N$.  With this choice of $I$, this product contains approximately the right number of copies of $p$ for medium-sized primes $p$; but it has the ``wrong'' number of copies of large primes, and is also constructed to avoid the ``tiny'' primes $p=2,3$.  One then performs a number of alterations to this approximate factorization to correct for the ``surpluses'' or ``deficits'' at various primes $p>3$, using the supply of available tiny primes $p=2,3$ as a sort of ``liquidity pool'' to efficiently reallocate primes in the factorization.  A key point will be that the incommensurability of $\log 2$ and $\log 3$ (i.e., the irrationality of $\log 3/\log 2$) means that the $3$-smooth numbers (numbers of the form $2^n 3^m$) are asymptotically dense (in logarithmic scale), allowing for other factors to be exchanged for $3$-smooth factors with little loss\footnote{The weaker results alluded to in \Cref{old} only used the prime $2$ as a supply of ``liquidity'', and thus encountered inefficiencies due to the inability to ``make change'' when approximating another factor by a power of two.}.
 
+\subsection{Linear and integer programming solvers}
 
+This paper uses linear programming as a mathematical tool, and we also use linear and integer programming solvers for computations.
+The solvers used were Gurobi~\cite{gurobi} and \texttt{lp\_solve}~\cite{lpsolve}.
+A comment on the blog of one of the authors brought to our attention a question on MathOverflow\footnote{\url{https://mathoverflow.net/questions/419722/reliability-of-ilp-approach-to-number-theoretic-optimization}} regarding the reliability of integer linear programming solvers.
+There, Max Alekseyev considers the related problem of factoring $N!$ into \emph{two} integer factors and maximizing the smaller factor.
+For a fixed small $N$, it is tempting to express this problem as an integer linear program in a relatively straightforward way, and then asking a integer linear programming solver for the solution.
+Unfortunately, many solvers produce incorrect (and worse, inadmissible) solutions to these programs, even for $N\le 40$.
+
+Despite the similarity of the statement of the problems, most of the linear programs we analyze are much better-behaved than the ones discussed in this question.
+Specifically, the linear programs mentioned by Alekseyev have coefficients (of the form $\log p$) which are transcendental, and the primary cause of the numerical issues is the numerical difficulty in verifying inequalities.
+Our coefficients are small integers (often of the form $\nu_p(j)$), and as a result, solvers should not encounter numerical issues in simply verifying that inequalities between integers hold, even when $N$ is many millions.
+(Some of our linear programs have coefficients which are rational numbers with large denominators, such as in \Cref{onethird-large}, but all of these solutions are verified in exact arithmetic precisely because of these numerical concerns.)
+
+Nonetheless, we sought to verify all uses of a linear program solver in our work.
+One of the particularly pleasing properties of the use of linear program solvers is that they often produce output that can be verified for correctness, even if the solver has a bug or numerical issue.
+Specifically, when an integer program solver produces a lower bound on $t(N)$ (or a related quantity like $t_{2,3,5,7}(N)$), this corresponds to an explicit factorization of $N!$, so we can verify the factorization directly.
+Alternatively, when a linear program solver produces an upper bound on $t(N)$ (or a related quantity like $t_{2,3}(N)$), we can verify that the dual linear program solution output is admissible in exact arithmetic, possibly after rounding the output.
+We have done this for all parts of our main \Cref{main}, so our results do not depend on the correctness of any linear program solver.
+(Note that the solvers did not produce any incorrect solutions to our programs.)
+
+We have also used integer program solvers to produce the data in \Cref{fig-t5,fig-t7,fig-long}.
+The lower bounds from these figures, which correspond to explicit factorizations, have been verified directly.
+The upper bounds have not been verified, but we do expect them all to be exactly correct.
+The data from these Figures is not used in any of the results.
+(The data in other tables and figures, such as \Cref{fig-t2,fig-t3}, has been verified.)
 
 
 \subsection{Author contributions and data}
@@ -342,7 +367,7 @@ for some relatively small natural number $A$ (e.g., $A = \lfloor \log^2 N \rfloo
 This project was initially conceived as a single-author manuscript by Terence Tao, but since the release of the initial preprint \cite{tao}, grew to become a collaborative project organized via the GitHub repository \cite{github}, which also contains the supporting code and data for the project.  The contributions of the individual authors, according to the CRediT categories\footnote{\url{https://credit.niso.org/}}, are as follows:
 
 \begin{itemize}
-\item Boris Alexeev: Formal Analysis, Investigation, Software, Writing -- review \& editing.
+\item Boris Alexeev: Formal Analysis, Investigation, Methodology, Software, Validation, Writing -- review \& editing.
 \item Evan Conway: Formal Analysis, Investigation, Software.
 \item Matthieu Rosenfeld: Software.
 \item Andrew Sutherland: Formal Analysis, Investigation, Methodology, Software, Validation, Writing -- review \& editing.
@@ -353,7 +378,7 @@ This project was initially conceived as a single-author manuscript by Terence Ta
 
 \subsection{Acknowledgments}
 
-TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where TT learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections. AVS is supported by Simons Foundation Grant 550033.
+AVS is supported by Simons Foundation Grant 550033.  TT is supported by NSF grant DMS-2347850.  We thank Thomas Bloom for the web site \url{https://www.erdosproblems.com}, where TT learned of this problem, as well as Bryna Kra and Ivan Pan for  corrections.
 
 
 \section{Notation and basic estimates}
@@ -1320,7 +1345,7 @@ By a modification of the above techniques, we can now establish \Cref{main}(v) f
   \centering
   \includegraphics[width=0.8\textwidth]{t3.png}
   \vspace{-8pt}
-  \caption{The function $t_{2,3}(N)/N$ can be readily computed by linear programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
+  \caption{The function $t_{2,3}(N)/N$ can be readily computed by integer or dynamic programming, and asymptotically just barely falls below $1/4$.}\label{fig-t3}
 \end{figure}
 
 \begin{proposition}\label{onefourth}  Let $N > 26244$.  Then $t_{2,3}(N) < N/4$.  The threshold is the best possible.
@@ -2389,7 +2414,7 @@ $$ c_1 = 0.7554808\dots.$$
 
 \begin{thebibliography}{10}
 
-  
+
 \bibitem{algr77}
 K. Alladi, C. Grinstead, \emph{On the decomposition of $n!$ into prime powers}, J. Number Theory \textbf{9} (1977) 452--458.
 
